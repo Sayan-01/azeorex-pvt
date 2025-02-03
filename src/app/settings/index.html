@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drag &amp; Drop - Azul Coding</title>
+    <style>
+      body {
+        margin: 30px;
+      }
+      * {
+        font-family: "Roboto", sans-serif;
+      }
+      p,
+      li {
+        font-size: 18px;
+      }
+      .container {
+        display: flex;
+        gap: 15px;
+      }
+      .dropzone {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        border: 2px solid #1576c1;
+        background-color: #94dbfd;
+        border-radius: 10px;
+        transition: transform 0.5s;
+      }
+      .dropzone.dragover {
+        transform: scale(0.9);
+      }
+
+      /* Part 2 */
+      .box {
+        width: 100px;
+        height: 100px;
+        cursor: move;
+        user-select: none;
+        padding: 10px 10px;
+      }
+      /* .box[data-item="A"] {
+        background-color: #ffdca9;
+        border-color: #f97d02;
+      }
+      .box[data-item="B"] {
+        background-color: #bcf8b9;
+        border-color: #3cb43c;
+      } */
+    </style>
+    <script src="js.js"></script>
+  </head>
+  <body>
+    <h1>Drag &amp; Drop</h1>
+
+    <!-- Part 2 -->
+    <div class="container dropzone p-4 border border-primary">
+      <div
+        draggable="true"
+        class="dropzone box"
+        data-item="A"
+      >
+       A
+      </div>
+      <div
+        draggable="true"
+        class="dropzone box"
+        data-item="B"
+      >
+        B
+      </div>
+      <div
+        draggable="true"
+        class="dropzone box"
+        data-item="C"
+      >
+        C
+      </div>
+    </div>
+  </body>
+</html>
