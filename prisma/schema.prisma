@@ -64,6 +64,7 @@ model User {
   role         Role           @default(Agency_USER)
   agencyId     String?
   Agency       Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+  Funnels      Funnel[]
   Permissions  Permissions[]
   Ticket       Ticket[]
   Notification Notification[]
@@ -304,8 +305,10 @@ model Funnel {
   published     Boolean      @default(false)
   subDomainName String?      @unique
   favicon       String?      @db.Text
-  agencyId      String
-  Agency        Agency       @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+  agencyId      String?
+  Agency        Agency?      @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+  userId        String?
+  User          User?        @relation(fields: [userId], references: [id])
   FunnelPages   FunnelPage[]
   liveProducts  String?      @default("[]")
   ClassName     ClassName[]

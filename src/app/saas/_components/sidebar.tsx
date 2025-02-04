@@ -15,22 +15,6 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col justify-between w-[270px] p-6 h-full">
       <div>
-        {/* <div className="relative flex items-center mt-2 mb-7 px-3">
-          <div className="relative right-0 flex items-center w-full overflow-x-hidden">
-            <Image
-              src={"/azeorex.png"}
-              alt="logo"
-              width={400}
-              height={400}
-              className="!rounded-lg w-8 h-8"
-            />
-            <h1 className="text mx-2">Azeorex</h1>
-          </div>
-          <Bolt
-            size={18}
-            color="#86868D"
-          />
-        </div> */}
         <Popover>
           <PopoverTrigger
             asChild
@@ -58,84 +42,6 @@ const Sidebar = () => {
               </div> */}
             </div>
           </PopoverTrigger>
-          {/* <PopoverContent className=" h-64 w-60 mt-4 p-3 z-[200] box">
-            <Command className="rounded-lg">
-              <CommandInput placeholder="Search Accounts..." />
-              <CommandList className="pb-16">
-                <CommandEmpty> No results found</CommandEmpty>
-                {(user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") && user?.Agency && (
-                  <CommandGroup heading="Agency">
-                    <CommandItem className="!bg-transparent my-2 text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
-                      {defaultOption ? (
-                        <Link
-                          href={`/agency/${user?.Agency?.id}`}
-                          className="flex gap-4 w-full h-full"
-                        >
-                          <div className="relative w-16">
-                            <Image
-                              src={user?.Agency?.agencyLogo}
-                              alt="Agency Logo"
-                              fill
-                              className="rounded-md object-contain"
-                            />
-                          </div>
-                          <div className="flex flex-col flex-1">
-                            {user?.Agency?.name}
-                            <span className="text-muted-foreground">{user?.Agency?.address}</span>
-                          </div>
-                        </Link>
-                      ) : (
-                        <SheetClose asChild>
-                          <Link
-                            href={`/agency/${user?.Agency?.id}`}
-                            className="flex gap-4 w-full h-full"
-                          >
-                            <div className="relative w-16">
-                              <Image
-                                src={user?.Agency?.agencyLogo}
-                                alt="Agency Logo"
-                                fill
-                                className="rounded-md object-contain"
-                              />
-                            </div>
-                            <div className="flex flex-col flex-1">
-                              {user?.Agency?.name}
-                              <span className="text-muted-foreground">{user?.Agency?.address}</span>
-                            </div>
-                          </Link>
-                        </SheetClose>
-                      )}
-                    </CommandItem>
-                  </CommandGroup>
-                )}
-              </CommandList>
-              {(user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") && (
-                <SheetClose>
-                  <Button
-                    size={"sm"}
-                    className="w-full flex gap-2  bg-blue-500 text-white hover:bg-blue-700 "
-                    onClick={() => {
-                      setOpen(
-                        <CustomModal
-                          title="Create A Subaccount"
-                          subheading="You can switch between your agency account and the subaccount from the sidebar"
-                        >
-                          <SubAccountDetails
-                            agencyDetails={user?.Agency as Agency}
-                            userId={user?.id as string}
-                            userName={user?.name}
-                          />
-                        </CustomModal>
-                      );
-                    }}
-                  >
-                    <PlusCircleIcon size={15} />
-                    Create Sub Account
-                  </Button>
-                </SheetClose>
-              )}
-            </Command>
-          </PopoverContent> */}
         </Popover>
         {GROUPLE_CONSTANTS?.saasSideBar?.map((sidebarOptions, idx) => {
           return (

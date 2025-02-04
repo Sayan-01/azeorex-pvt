@@ -375,3 +375,26 @@ html {
 .circle {
   animation: spin 2s alternate infinite;
 }
+
+.nav-blur {
+  backdrop-filter: blur(16px);
+  z-index: 1;
+  mask: linear-gradient(
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.99) 15.5%,
+    rgba(0, 0, 0, 0.953) 28.9%,
+    rgba(0, 0, 0, 0.894) 40.4%,
+    rgba(0, 0, 0, 0.824) 50.3%,
+    rgba(0, 0, 0, 0.74) 58.6%,
+    rgba(0, 0, 0, 0.647) 65.6%,
+    rgba(0, 0, 0, 0.55) 71.4%,
+    rgba(0, 0, 0, 0.45) 76.3%,
+    rgba(0, 0, 0, 0.353) 80.5%,
+    rgba(0, 0, 0, 0.26) 84.1%,
+    rgba(0, 0, 0, 0.176) 87.3%,
+    rgba(0, 0, 0, 0.106) 90.3%,
+    rgba(0, 0, 0, 0.047) 93.3%,
+    rgba(0, 0, 0, 0.01) 96.4%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}

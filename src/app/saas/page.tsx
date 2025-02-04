@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import React from "react";
+import Card from "./_components/card";
+import { ArrowRight, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const Home = () => {
   return (
-    <div>
+    <div className="">
       <nav className="flex justify-between items-center">
-        <div className=" text-muted-foreground rounded-full w-max">* Home</div>
+        <div className=" flex items-center gap-3 rounded-full w-max">
+          <h3 className="text-white/70">Home</h3>
+          <SearchBar />
+        </div>
         <div className=" flex gap-3">
           <Button
             size="sm"
@@ -63,8 +71,56 @@ const Home = () => {
           </p>
         </div>
       </section>
+      <section>
+        <div className="grid grid-cols-5 gap-6">
+          {[1, 2, 3, 4, 5].map(() => {
+            return <Card></Card>;
+          })}
+        </div>
+        <div className="flex items-center justify-center mt-6">
+          <Link
+            href={"/saas/projects"}
+            className="px-3 py-1.5 flex items-center gap-3 rounded-full bg-[#1e1f22] text-[12px] text-zinc-500"
+          >
+            <p>See all projects</p>
+            <ArrowRight size={13} />
+          </Link>
+        </div>
+      </section>
+      <section>
+        <h3 className="text-white/70">Templates</h3>
+      </section>
     </div>
   );
 };
 
 export default Home;
+
+const SearchBar = ({ className }: { className?: string }) => {
+  // const router = useRouter();
+  // const [query, setQuery] = useState("");
+  // const inputHandler = (e) => {
+  //   e.preventDefault();
+  //   router.push(`/templates/products/search/${query}`);
+  // };
+  return (
+    <form
+      // onSubmit={inputHandler}
+      className={cn("w-full h-full flex items-center relative", className)}
+    >
+      <Input
+        className=" m-0 h-8 pr-0  rounded-lg border-none outline-none focus-visible:ring-0 bg-[#1e1f22] text-white/60"
+        placeholder="Search here..."
+        // value={query}
+        // onChange={(e) => setQuery(e.target.value)}
+        type="text"
+      />
+      <button
+        className="absolute right-[5px] w-6 h-10 flex items-center opacity-60 justify-center "
+        type="submit"
+      >
+        <Search size={14} />
+      </button>
+    </form>
+  );
+};

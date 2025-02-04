@@ -1,0 +1,37 @@
+<svg width="304" height="190" viewBox="0 0 304 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1531_3652)">
+<rect width="304" height="190" fill="#191A1A"/>
+<path opacity="0.22" d="M25.5 8H278.5" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 21.7671L323 21.7671" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 36.983L323 36.983" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 50.75L323 50.75" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 65.9662L323 65.9662" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 79.733L323 79.733" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 94.9492L323 94.9492" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 108.716L323 108.716" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 122.483L323 122.483" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 137.699L323 137.699" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 151.466L323 151.466" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 166.682L323 166.682" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M25.5 180L278.5 180" stroke="white" stroke-width="1.13464" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0.36 14.49"/>
+<rect x="44" y="27" width="217" height="136" fill="url(#paint0_radial_1531_3652)"/>
+<g opacity="0.07">
+<path d="M169.082 86.459H155.229V82.7295V79H176.541L169.082 86.459Z" fill="white"/>
+<path d="M155.229 103.508L179.738 79H184V86.459L159.492 110.967H155.229V103.508Z" fill="white"/>
+<path d="M184 110.967H162.689L170.148 103.508L184 103.508V110.967Z" fill="white"/>
+</g>
+<g opacity="0.07">
+<path d="M119 106.705L142.443 84.3279V94.9836L126.459 110.967L119 110.967V106.705Z" fill="white"/>
+<path d="M144.574 110.967V82.1967L147.771 79H152.033V110.967H144.574Z" fill="white"/>
+</g>
+</g>
+<defs>
+<radialGradient id="paint0_radial_1531_3652" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(152.5 95) rotate(90) scale(68 108.5)">
+<stop offset="0.68" stop-color="#191A1A"/>
+<stop offset="1" stop-color="#191A1A" stop-opacity="0"/>
+</radialGradient>
+<clipPath id="clip0_1531_3652">
+<rect width="304" height="190" fill="white"/>
+</clipPath>
+</defs>
+</svg>
