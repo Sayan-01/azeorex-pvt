@@ -26,7 +26,7 @@ const page = async ({ params }: Props) => {
         />
         <Command className="rounded-lg bg-transparent">
           <CommandInput placeholder="Search Account..." />
-          <CommandList>
+          <CommandList>x``
             <CommandEmpty>No Results Found.</CommandEmpty>
             <CommandGroup heading="Sub Accounts">
               {!!user.Agency?.SubAccount.length ? (

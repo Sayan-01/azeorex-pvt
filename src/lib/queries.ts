@@ -39,7 +39,7 @@ export const getUserDetails = async () => {
 
 //=============================================================
 
-export const saveActivityLogsNotification = async ({ agencyId, description }: { agencyId: string | undefined; description: string}) => {
+export const saveActivityLogsNotification = async ({ agencyId, description }: { agencyId: string | undefined; description: string }) => {
   const session = await auth();
   if (!session) redirect("/agency/sign-in");
 
@@ -422,7 +422,34 @@ export const getFunnels = async (agencyId: string) => {
 
   return funnels;
 };
+//==============================================================================
 
+export const getProject = async (projectId: string) => {
+  const project = await db.project.findUnique({
+    where: { id: projectId },
+    include: {
+      FunnelPages: {
+        orderBy: {
+          order: "asc",
+        },
+      },
+    },
+  });
+
+  return project;
+};
+
+//=============================================================================
+
+export const getProjects = async (userId: string ) => {
+  if(userId === undefined) return
+  const projects = await db.project.findMany({
+    where: { userId: userId },
+    include: { FunnelPages: true },
+  });
+
+  return projects;
+};
 //===============================================================================
 
 export const upsertFunnel = async (agencyId: string, funnel: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, funnelId: string) => {
@@ -438,10 +465,25 @@ export const upsertFunnel = async (agencyId: string, funnel: z.infer<typeof Crea
 
   return response;
 };
+//===============================================================================
+
+export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string) => {
+  const response = await db.project.upsert({
+    where: { id: projectId },
+    update: project,
+    create: {
+      ...project,
+      id: projectId || v4(),
+      userId: userId,
+    },
+  });
+
+  return response;
+};
 
 //==============================================================================
 
-export const upsertFunnelPage = async (agencyId: string, funnelPage: Prisma.FunnelPageCreateWithoutFunnelInput, funnelId: string) => {
+export const upsertFunnelPage = async (agencyId: string, funnelPage: any, funnelId: string) => {
   if (!agencyId || !funnelId) return;
   const response = await db.funnelPage.upsert({
     where: { id: funnelPage.id || "" },
@@ -460,6 +502,31 @@ export const upsertFunnelPage = async (agencyId: string, funnelPage: Prisma.Funn
             },
           ]),
       funnelId,
+    },
+  });
+
+  return response;
+};
+
+export const upsertFunnelPageForProject = async ( funnelPage: any, projectId: string) => {
+  if (!projectId) return;
+  const response = await db.funnelPage.upsert({
+    where: { id: funnelPage.id || "" },
+    update: { ...funnelPage },
+    create: {
+      ...funnelPage,
+      content: funnelPage.content
+        ? funnelPage.content
+        : JSON.stringify([
+            {
+              content: [],
+              id: "__body",
+              name: "Body",
+              styles: {},
+              type: "__body",
+            },
+          ]),
+      projectId,
     },
   });
 

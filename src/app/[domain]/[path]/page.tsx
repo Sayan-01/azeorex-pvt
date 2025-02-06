@@ -2,7 +2,6 @@ import { getDomainContent } from '@/lib/queries'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import EditorProvider from '../../../../providers/editor/editor-provider'
-import FunnelEditor from '@/app/(website)/subaccount/[subaccountId]/funnels/[funnelId]/editor/[funnelPageId]/_components/funnel-editor'
 
 const Page = async ({
   params,

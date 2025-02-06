@@ -16,9 +16,11 @@ datasource db {
 enum Role {
   AGENCY_OWNER
   AGENCY_ADMIN
-  Agency_USER
+  AGENCY_USER
   SUBACCOUNT_USER
   SUBACCOUNT_GUEST
+  USER
+  ADMIN
 }
 
 enum Icon {
@@ -57,19 +59,25 @@ enum Icon {
 model User {
   id           String         @id @default(uuid())
   name         String
+  password     String?
+  isVarified   Boolean        @default(false)
+  isAdmin      Boolean        @default(false)
   avatarUrl    String         @db.Text
   email        String         @unique
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  role         Role           @default(Agency_USER)
+  role         Role           @default(USER)
   agencyId     String?
   Agency       Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade)
-  Funnels      Funnel[]
   Permissions  Permissions[]
   Ticket       Ticket[]
   Notification Notification[]
+  projectId    String?
+  Projects     Project[]
+  googleId     String?
 
   @@index([agencyId])
+  @@index([projectId])
 }
 
 model Permissions {
@@ -116,37 +124,6 @@ model Agency {
   AddOns           AddOns[]
   customerId       String                @default("")
 }
-
-// model SubAccount {
-//   id               String                    @id @default(uuid())
-//   connectAccountId String?                   @default("")
-//   name             String
-//   subAccountLogo   String                    @db.Text
-//   createdAt        DateTime                  @default(now())
-//   updatedAt        DateTime                  @updatedAt
-//   companyEmail     String                    @db.Text
-//   companyPhone     String
-//   goal             Int                       @default(5)
-//   address          String
-//   city             String
-//   zipCode          String
-//   state            String
-//   country          String
-//   agencyId         String
-//   Agency           Agency                    @relation(fields: [agencyId], references: [id], onDelete: Cascade)
-//   SidebarOption    SubAccountSidebarOption[]
-//   Permissions      Permissions[]
-//   Funnels          Funnel[]
-//   Media            Media[]
-//   Contact          Contact[]
-//   Trigger          Trigger[]
-//   Automation       Automation[]
-//   Pipeline         Pipeline[]
-//   Tags             Tag[]
-//   Notification     Notification[]
-
-//   @@index([agencyId])
-// }
 
 model Tag {
   id        String   @id @default(uuid())
@@ -305,15 +282,31 @@ model Funnel {
   published     Boolean      @default(false)
   subDomainName String?      @unique
   favicon       String?      @db.Text
-  agencyId      String?
-  Agency        Agency?      @relation(fields: [agencyId], references: [id], onDelete: Cascade)
-  userId        String?
-  User          User?        @relation(fields: [userId], references: [id])
+  agencyId      String
+  Agency        Agency       @relation(fields: [agencyId], references: [id], onDelete: Cascade)
   FunnelPages   FunnelPage[]
   liveProducts  String?      @default("[]")
   ClassName     ClassName[]
 
   @@index([agencyId])
+}
+
+model Project {
+  id            String       @id @default(uuid())
+  name          String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  description   String?
+  published     Boolean      @default(false)
+  subDomainName String?      @unique
+  favicon       String?      @db.Text
+  userId        String
+  User          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  FunnelPages   FunnelPage[]
+  liveProducts  String?      @default("[]")
+  ClassName     ClassName[]
+
+  @@index([userId])
 }
 
 model ClassName {
@@ -322,11 +315,14 @@ model ClassName {
   color      String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  funnelId   String
   customData String?
   Funnel     Funnel   @relation(fields: [funnelId], references: [id], onDelete: Cascade)
+  funnelId   String
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  String?
 
   @@index([funnelId])
+  @@index([projectId])
 }
 
 model FunnelPage {
@@ -339,10 +335,13 @@ model FunnelPage {
   content      String?
   order        Int
   previewImage String?  @db.Text
-  funnelId     String
-  Funnel       Funnel   @relation(fields: [funnelId], references: [id], onDelete: Cascade)
+  funnelId     String?
+  Funnel       Funnel?  @relation(fields: [funnelId], references: [id], onDelete: Cascade)
+  projectId    String?
+  Project      Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([funnelId])
+  @@index([projectId])
 }
 
 model warframeObj {

@@ -3,10 +3,46 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { db } from "@/lib/db";
+import bcrypt from "bcryptjs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    CredentialsProvider({}),
+    CredentialsProvider({
+      name: "Cradentials",
+      credentials: {
+        email: {},
+        password: {},
+      },
+      async authorize(credentials) {
+         const email = credentials.email as string;
+         const password = credentials.password as string
+
+        if (!email || !password) {
+          throw new Error("Please fill all fields");
+        }
+        const user = await db.user.findUnique({
+          where: {
+            email: email as string,
+          },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            password: true,
+          },
+        });
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        const isAuth = await bcrypt.compare(password, user.password as string);
+        if (!isAuth) {
+          throw new Error("Password does not match");
+        }
+        const { password: _, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+      },
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -44,6 +80,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.id = alreadyUser.id;
           token.name = alreadyUser.name;
           token.role = alreadyUser.role; // Assign user's role
+          token.isVarified = alreadyUser.isVarified;
+          token.isAdmin = alreadyUser.isAdmin;
         }
       }
       return token; // Return the updated token
@@ -56,6 +94,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.name = token.name;
         // @ts-ignore: Ignore type error for role
         session.user.role = token.role;
+        // @ts-ignore: Ignore type error for role
+        session.user.isVarified = token.isVarified;
+        // @ts-ignore: Ignore type error for role
+        session.user.isAdmin = token.isAdmin;
       }
       return session;
     },

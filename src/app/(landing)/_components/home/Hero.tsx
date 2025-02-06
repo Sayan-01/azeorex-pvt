@@ -30,10 +30,10 @@ const Hero = async () => {
               </p>
               <div className="flex gap-0 sm:gap-5 mt-5 w-full items-center justify-center">
                 <Button
-                  url={!session ? "/auth/agency/login" : "/demo"}
+                  url={!session ? "/auth/agency/login" : "/saas"}
                   className={"w-[80vw] sm:w-full"}
                 >
-                  Get a Demo
+                  Start for free
                 </Button>
                 <Button
                   url={"/projects"}

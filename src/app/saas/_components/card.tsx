@@ -1,20 +1,42 @@
+"use client";
+
+import { timeAgo } from "@/lib/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const Card = () => {
+type Props = {
+  title: string;
+  description?: string;
+  updatedAt: any;
+  id: string;
+};
+
+const Card = ({ title, description, updatedAt, id }: Props) => {
+  const router = useRouter();
+  const time = timeAgo(updatedAt);
+
+  const handleDoubleClick = () => {
+    router.push(`saas/projects/${id}`);
+  };
+
   return (
-    <div className=" overflow-hidden rounded-2xl bg-[#202124]">
+    <div
+      className="overflow-hidden rounded-2xl bg-[#202124]"
+      onDoubleClick={handleDoubleClick}
+    >
       <Image
-        className="bg-[#191919] w-full object-cover duration-500 rounded-2xl border-2 aspect-[4/2.5] "
+        className="bg-[#191919] hover:border-blue-500/80 w-full object-cover duration-200 rounded-2xl border-2 aspect-[4/2.5]"
         width={600}
         height={600}
         src={"/funnel-placeholder.svg"}
-        alt={`image-placeholder`}
+        alt="image-placeholder"
       />
-      <div className="p-3">
-        <h3 className="text-xs text-zinc-300 mb-0.5">Untitled</h3>
-        <p className="text-[11px] text-zinc-500">Edited 16 hours ago</p>
+      <div className="p-3 pt-2">
+        <h3 className="text-[13px] text-zinc-300/90 ">{String(title).charAt(0).toUpperCase()+String(title).slice(1)}</h3>
+        <p className="text-[11px] text-zinc-500">Edited {time}.</p>
       </div>
+      
     </div>
   );
 };

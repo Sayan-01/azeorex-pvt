@@ -88,6 +88,6 @@ export const defaultStyles: React.CSSProperties = {
   opacity: "100%",
 };
 
-export type CreateMediaType = Prisma.MediaCreateWithoutSubaccountInput;
+export type CreateMediaType = Prisma.MediaCreateWithoutAgencyInput;
 export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
 
