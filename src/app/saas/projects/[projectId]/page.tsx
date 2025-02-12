@@ -5,47 +5,43 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import FunnelSteps from "../_components/funnel-stapes";
 import { auth } from "../../../../../auth";
-
+import { ChevronRight, LeafIcon, MoveDown, MoveLeft } from "lucide-react";
+import FunnelPageCreateBtn from "../_components/funnel-page-create-btn";
 
 type Props = { params: { projectId: string } };
 const FunnelPage = async ({ params }: Props) => {
-  const session = await auth()
-  const funnelId = params.projectId
-  const agencyId = session?.user?.id || ""
+  const session = await auth();
+  const funnelId = params.projectId;
+  const agencyId = session?.user?.id || "";
   const funnelPages = await getProject(funnelId);
-  
-  if (!funnelPages) return redirect(`/agency/${agencyId}/funnels`);
+
+  if (!funnelPages) return redirect(`/projects`);
 
   return (
-    <BlurPage>
-      <div className="flex gap-2 my-4  items-center">
+    <div className="pb-7 h-full flex flex-col gap-3">
+      <div className="flex gap-2 !h-8 py-1 items-center text-white/70 ">
         <Link
-          href={`/agency/${agencyId}/funnels`}
-          className="flex justify-between gap-4 text-muted-foreground"
-        ></Link>
-        <h1 className="text-3xl">{funnelPages.name}</h1>
+          href={`/ssas/projects`}
+          className="flex justify-between gap-4 "
+        >
+          Projects
+        </Link>
+        <ChevronRight size={16} />
+        <p className="">{String(funnelPages.name).charAt(0).toUpperCase() + String(funnelPages.name).slice(1)}</p>
       </div>
-      <Tabs
-        defaultValue="steps"
-        className="w-full"
-      >
-        <TabsList className="grid  grid-cols-2 w-[50%] bg-transparent ">
-          <TabsTrigger value="steps">Steps</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
-        </TabsList>
-        <TabsContent value="steps">
-          <FunnelSteps
-            funnel={funnelPages}
-            agencyId={agencyId}
-            pages={funnelPages.FunnelPages}
-            funnelId={funnelId}
-          />
-        </TabsContent>
-        <TabsContent value="settings">
-          <div>ggg</div>
-        </TabsContent>
-      </Tabs>
-    </BlurPage>
+      <div className="relative bg-[#ffffff02] border-2 border-[#29282d69] rounded-2xl p-5 h-[calc(100%-44px)] flex flex-col gap-5">
+        <div>
+          <h2 className="text-[24px] font-semibold ">Setup your website !</h2>
+        </div>
+
+        <FunnelSteps
+          funnel={funnelPages}
+          agencyId={agencyId}
+          pages={funnelPages.FunnelPages}
+          funnelId={funnelId}
+        />
+      </div>
+    </div>
   );
 };
 

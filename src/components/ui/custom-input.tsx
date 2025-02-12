@@ -29,7 +29,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, children, type, ...props }, ref) => {
   return (
-    <label className={cn("mt- w-full h-[30px] flex rounded-md border-2 shadow-sm hover:border-[#6A6A6A] transition-colors overflow-hidden", "focus-within:!border-[#726FFF]")}>
+    <label className={cn("flex-1 h-[30px] flex rounded-l-md rounded-r-md border-2 shadow-sm hover:border-[#6A6A6A] transition-colors overflow-hidden", "focus-within:!border-[#726FFF]",className)}>
       {children && <div className="h-full w-12 flex items-center justify-center text-xs text-muted-foreground bg-[#272727]">{children}</div>}
 
       <input

@@ -87,15 +87,17 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, agencyId }: Props
         },
         funnelId
       );
-      await saveActivityLogsNotification({
-        description: `Updated a funnel page | ${response?.name}`,
-        agencyId: agencyId,
-      });
+      // await saveActivityLogsNotification({
+      //   description: `Updated a funnel page | ${response?.name}`,
+      //   agencyId: agencyId,
+      // });
       setLoade(false);
       toast({
         description: "✨Saved Editor",
       });
-    } catch {
+    } catch (e){
+      console.log(e);
+      
       toast({
         description: "😫Could not save editor",
       });

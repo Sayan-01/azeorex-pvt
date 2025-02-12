@@ -6,7 +6,7 @@ import RecursiveElement from "./recursive";
 import { v4 } from "uuid";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
-import { defaultStyles, EditorBtns } from "@/types/types";
+import { defaultStyles, EditorBtns, flexStyle } from "@/types/types";
 import { moveObject, updateId } from "@/lib/moveElement";
 
 type Props = {
@@ -65,7 +65,7 @@ const Section = (props: Props) => {
               content: [],
               id: v4(),
               name: "Section",
-              styles: { ...defaultStyles },
+              styles: { ...defaultStyles, ...flexStyle },
               type: "section",
             },
           },

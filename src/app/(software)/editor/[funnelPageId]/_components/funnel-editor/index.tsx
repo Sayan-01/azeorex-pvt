@@ -102,7 +102,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
   ) : (
     <div
       id="perent"
-      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] pt-4 overflow-y-auto mx-[240px] bg-[#1c1c1c] transition-all az-bar !relative ", {
+      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] pt-2 overflow-y-auto mx-[240px] bg-[#2D2E32] transition-all az-bar !relative ", {
         "!p-0 !mr-0 !mx-0 h-full": state.editor.previewMode === true || state.editor.liveMode === true,
         "!w-[850px]": state.editor.device === "Tablet",
         "!w-[420px]": state.editor.device === "Mobile",

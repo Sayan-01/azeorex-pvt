@@ -7,6 +7,7 @@ import Card from "../_components/card";
 
 const page = async () => {
   const session = await auth();
+  if (!session) return 
   const funnels = await getProjects(session?.user?.id);
   if (!funnels) return null;
 

@@ -148,14 +148,14 @@ export const INTEGRATION_LIST_ITEMS: IntegrationsListItemProps[] = [
   },
 ];
 
-type SaasSideBar = {
+type saasSideBarOptions = {
   id: Number
   name:String
   link: String
   icon: JSX.Element
 };
 
-export const SAAS_SIDEBAR: SaasSideBar[] = [
+export const SAAS_SIDEBAR_OPTIONS: saasSideBarOptions[] = [
   {
     id: 0,
     name: "Home",

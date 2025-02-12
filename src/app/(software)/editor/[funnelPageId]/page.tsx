@@ -21,7 +21,9 @@ const inter = Inter({ subsets: ["latin"] });
 const page = async ({ params, searchParams }: Props) => {
   const agencyId = searchParams.userId
   const funnelId = searchParams.projectId;
-  console.log("sayan", agencyId, funnelId);
+  if( !agencyId || !funnelId){
+    return null
+  }
   
   const funnelPageDetails = await db.funnelPage.findFirst({
     where: {
@@ -48,7 +50,7 @@ const page = async ({ params, searchParams }: Props) => {
         <div className="h-full flex justify-center ">
           <FunnelEditor funnelPageId={params.funnelPageId} />
         </div>
-        <FunnelEditorSidebar agencyId={params.agencyId} />
+        <FunnelEditorSidebar agencyId={agencyId} funnelId={funnelId} />
       </EditorProvider>
     </div>
   );

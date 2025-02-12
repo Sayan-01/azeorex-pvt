@@ -441,8 +441,8 @@ export const getProject = async (projectId: string) => {
 
 //=============================================================================
 
-export const getProjects = async (userId: string ) => {
-  if(userId === undefined) return
+export const getProjects = async (userId: string | undefined) => {
+  if (userId === undefined) return;
   const projects = await db.project.findMany({
     where: { userId: userId },
     include: { FunnelPages: true },
@@ -497,7 +497,7 @@ export const upsertFunnelPage = async (agencyId: string, funnelPage: any, funnel
               content: [],
               id: "__body",
               name: "Body",
-              styles: {},
+              styles: { backgrondColor: "#f8f8f8" },
               type: "__body",
             },
           ]),
@@ -508,7 +508,7 @@ export const upsertFunnelPage = async (agencyId: string, funnelPage: any, funnel
   return response;
 };
 
-export const upsertFunnelPageForProject = async ( funnelPage: any, projectId: string) => {
+export const upsertFunnelPageForProject = async (funnelPage: any, projectId: string) => {
   if (!projectId) return;
   const response = await db.funnelPage.upsert({
     where: { id: funnelPage.id || "" },
@@ -522,7 +522,7 @@ export const upsertFunnelPageForProject = async ( funnelPage: any, projectId: st
               content: [],
               id: "__body",
               name: "Body",
-              styles: {},
+              styles: { backgrondColor: "#f8f8f8" },
               type: "__body",
             },
           ]),
@@ -585,6 +585,15 @@ export const getFunnelPageDetails = async (funnelPageId: string) => {
     },
   });
 
+  return response;
+};
+
+export const deleteFunnelePage = async (funnelPageId: string) => {
+  const response = await db.funnelPage.delete({
+    where: {
+      id: funnelPageId,
+    },
+  });
   return response;
 };
 

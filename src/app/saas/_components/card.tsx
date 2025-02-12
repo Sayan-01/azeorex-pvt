@@ -17,7 +17,7 @@ const Card = ({ title, description, updatedAt, id }: Props) => {
   const time = timeAgo(updatedAt);
 
   const handleDoubleClick = () => {
-    router.push(`saas/projects/${id}`);
+    router.push(`/saas/projects/${id}`);
   };
 
   return (

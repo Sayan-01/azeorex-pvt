@@ -1,63 +1,39 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { FunnelPage } from '@prisma/client'
-import { ArrowDown, Mail } from 'lucide-react'
-import { Draggable } from 'react-beautiful-dnd'
-import { createPortal } from 'react-dom'
+import { Card, CardContent } from "@/components/ui/card";
+import { timeAgo } from "@/lib/utils";
+import { FunnelPage } from "@prisma/client";
+import { ArrowDown, Flame, Mail } from "lucide-react";
+import { Draggable } from "react-beautiful-dnd";
+import { createPortal } from "react-dom";
 
 type Props = {
-  funnelPage: FunnelPage
-  index: number
-  activePage: boolean
-}
+  funnelPage: FunnelPage;
+  index: number;
+  activePage: boolean;
+};
 
 const FunnelStepCard = ({ activePage, funnelPage, index }: Props) => {
-  const portal = document.getElementById('blur-page')
+  console.log(funnelPage);
 
   return (
-    <Draggable
-      draggableId={funnelPage.id.toString()}
-      index={index}
-    >
-      {(provided, snapshot) => {
-        if (snapshot.isDragging) {
-          const offset = { x: 300 }
-          //@ts-expect-error xyz
-          const x = provided.draggableProps.style?.left - offset.x
-          //@ts-expect-error xyz
-          provided.draggableProps.style = {
-            ...provided.draggableProps.style,
-            
-            left: x,
-          }
-        }
-        const component = (
-          <Card
-            className="p-0 relative cursor-grab my-2 "
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-          >
-            <CardContent className="p-0 flex items-center gap-4 flex-row ">
-              <div className="h-14 w-14 bg-muted flex items-center justify-center rounded-l-[11px]">
-                <Mail />
-                <ArrowDown
-                  size={18}
-                  className="absolute -bottom-2 text-primary"
-                />
-              </div>
-              {funnelPage.name}
-            </CardContent>
-            {activePage && <div className="w-2 top-2 right-2 h-2 absolute bg-emerald-500 rounded-full" />}
-          </Card>
-        );
-        if (!portal) return component
-        if (snapshot.isDragging) {
-          return createPortal(component, portal)
-        }
-        return component
-      }}
-    </Draggable>
-  )
-}
+    <Card className="p-0 relative mb-3 bg-[#26262626]">
+      <CardContent className="p-3 flex items-center gap-4 flex-row ">
+        <div className="h-12 w-12 border border-zinc-700/90 bg-muted/90 flex items-center justify-center rounded-[11px]">
+          <Flame
+            strokeWidth={1}
+            className="opacity-70"
+          />
+        </div>
+        <div>
+          <p className=" text-sm opacity-90">{funnelPage.name}</p>
+          <p className="text-[12px] text-white/40 mt-0.5"> Last edited {timeAgo(String(funnelPage.updatedAt))}</p>
+        </div>
+        <div>
+          
+        </div>
+      </CardContent>
+      {activePage && <div className="w-2 top-3 right-3 h-2 absolute bg-emerald-500 rounded-full" />}
+    </Card>
+  );
+};
 
-export default FunnelStepCard
+export default FunnelStepCard;

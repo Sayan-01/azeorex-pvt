@@ -88,6 +88,12 @@ export const defaultStyles: React.CSSProperties = {
   opacity: "100%",
 };
 
+export const flexStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+}
+
 export type CreateMediaType = Prisma.MediaCreateWithoutAgencyInput;
 export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
 

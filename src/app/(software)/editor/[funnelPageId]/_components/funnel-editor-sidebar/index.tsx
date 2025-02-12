@@ -6,18 +6,21 @@ import React from "react";
 import TabList from "./tabs";
 import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-tab";
-import { useEditor } from "../../../../../../../providers/editor/editor-provider"; 
+import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
 import LayoutTab from "./tabs/Layout";
 import AiTab from "./tabs/AI-tab";
 import SettingsTab from "./tabs/settings-tab2";
+import Pages from "./tabs/pages";
+import Sayan from "./tabs/pages";
 
 type Props = {
   agencyId: string;
+  funnelId: string;
 };
 
-const FunnelEditorSidebar = ({ agencyId }: Props) => {
+const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
   const { state } = useEditor();
 
   return (
@@ -50,14 +53,20 @@ const FunnelEditorSidebar = ({ agencyId }: Props) => {
                         value="Components"
                         className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
                       >
-                        Components
+                        Comp
                       </TabsTrigger>
                       <TabsTrigger
                         value="Warframe"
                         className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
                       >
-                        Warframe
+                        War
                       </TabsTrigger>
+                      {/* <TabsTrigger
+                        value="Pages"
+                        className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
+                      >
+                        Page
+                      </TabsTrigger> */}
                     </TabsList>
                   </div>
                   <TabsContent value="Components">
@@ -74,6 +83,13 @@ const FunnelEditorSidebar = ({ agencyId }: Props) => {
                     </SheetHeader>
                     <WarframeTab />
                   </TabsContent>
+                  {/* <TabsContent value="Pages">
+                    <SheetHeader className="text-left py-3 ">
+                      <SheetTitle>Pages</SheetTitle>
+                      <SheetDescription>All pages of your website</SheetDescription>
+                    </SheetHeader>
+                    <Sayan funnelId={funnelId}/>
+                  </TabsContent> */}
                 </Tabs>
               </TabsContent>
               <TabsContent value="Layers">
@@ -89,7 +105,7 @@ const FunnelEditorSidebar = ({ agencyId }: Props) => {
                 <LayoutTab />
               </TabsContent>
               <TabsContent value="AiPoward">
-                <AiTab/>
+                <AiTab />
               </TabsContent>
             </div>
           </SheetContent>

@@ -80,15 +80,17 @@
 import React from "react";
 import Try1 from "./Try1";
 import ResizableMovableDiv from "./try4";
+import DraggableNumberInput from "./try6";
+import { Input } from "@/components/ui/draggable-input";
+import PinchZoomMove from "./try6";
+import ResizableDiv from "./try5";
 // import ResizableDiv from "./Try3";
 // import ResizableDivDs from "./Ds";
 
 const page = () => {
   return (
-    <div>
-      {/* <ResizableDiv /> */}
-      {/* <ResizableDivDs/> */}
-      <ResizableMovableDiv/>
+    <div className="p-4">
+      <ResizableDiv/>
     </div>
   );
 };

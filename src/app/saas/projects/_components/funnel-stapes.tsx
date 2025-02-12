@@ -8,13 +8,15 @@ import { useToast } from "@/hooks/use-toast";
 import FunnelPagePlaceholder from "@/icons/funnel-page-placeholder";
 import { upsertFunnelPage } from "@/lib/queries";
 import { Funnel, FunnelPage, Project } from "@prisma/client";
-import { CheckCheck, ExternalLink, LucideEdit } from "lucide-react";
+import { ArrowLeftIcon, CheckCheck, ExternalLink, LucideEdit, MoveRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { DragDropContext, DragStart, DropResult, Droppable } from "react-beautiful-dnd";
 import { useModal } from "../../../../../providers/model-provider";
 import FunnelStepCard from "../_components/funnel-step-card";
 import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
+import FunnelPageCreateBtn from "./funnel-page-create-btn";
+import Image from "next/image";
 
 type Props = { funnel: Project; agencyId: string; pages: FunnelPage[]; funnelId: string };
 
@@ -24,178 +26,102 @@ const FunnelSteps = ({ funnel, agencyId, pages, funnelId }: Props) => {
   const { toast } = useToast();
   const { setOpen } = useModal();
   console.log(agencyId);
-  
-
-  const onDragStart = () =>
-    // event: DragStart
-    {
-      //current chosen page
-      // const { draggableId } = event;
-      // const value = pagesState.find((page: any) => page.id === draggableId);
-    };
-
-  const onDragEnd = (dropResult: DropResult) => {
-    const { destination, source } = dropResult;
-
-    //no destination or same position
-    if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) {
-      return;
-    }
-    //change state
-    const newPageOrder = [...pagesState]
-      .toSpliced(source.index, 1)
-      .toSpliced(destination.index, 0, pagesState[source.index])
-      .map((page, idx) => {
-        return { ...page, order: idx };
-      });
-
-    setPagesState(newPageOrder);
-    newPageOrder.forEach(async (page, index) => {
-      try {
-        await upsertFunnelPage(
-          agencyId,
-          {
-            id: page.id,
-            order: index,
-            name: page.name,
-          },
-          funnelId
-        );
-      } catch (error) {
-        console.log(error);
-        toast({
-          variant: "destructive",
-          title: "Failed",
-          description: "Could not save page order",
-        });
-        return;
-      }
-    });
-
-    toast({
-      title: "Success",
-      description: "Saved page order",
-    });
-  };
 
   return (
-    <AlertDialog>
-      <div className="flex border-[1px] lg:!flex-row flex-col ">
-        <aside className="flex-[0.3] bg-background p-6  flex flex-col justify-between ">
-          <ScrollArea className="h-full ">
-            <div className="flex gap-3 mb-2 items-center">
-              <CheckCheck
-                size={20}
-                className=" text-blue-500"
-              />
-              Funnel Steps
-            </div>
-            {pagesState.length ? (
-              <DragDropContext
-                onDragEnd={onDragEnd}
-                onDragStart={onDragStart}
-              >
-                <Droppable
-                  droppableId="funnels"
-                  direction="vertical"
-                  key="funnels"
-                >
-                  {(provided) => (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {pagesState.map((page: FunnelPage, idx: number) => (
-                        <div
-                          className="relative"
-                          key={page.id}
-                          onClick={() => setClickedPage(page)}
-                        >
-                          <FunnelStepCard
-                            funnelPage={page}
-                            index={idx}
-                            key={page.id}
-                            activePage={page.id === clickedPage?.id}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            ) : (
-              <div className="text-center text-muted-foreground py-6">No Pages</div>
-            )}
-          </ScrollArea>
-          <Button
-            className="mt-4 w-full"
-            onClick={() => {
-              setOpen(
-                <CustomModal
-                  title=" Create or Update a Funnel Page"
-                  subheading="Funnel Pages allow you to create step by step processes for customers to follow"
-                >
-                  <CreateFunnelPage
-                    userId={agencyId}
-                    projectId={funnelId}
-                    order={pagesState.length}
-                  />
-                </CustomModal>
-              );
-            }}
+    <div className="flex lg:!flex-row flex-col overflow-hidden h-full">
+      <aside className="flex-[0.3]  flex flex-col gap-3 h-full border-r pr-5">
+        <div className="overflow-clip bg-[#202124] rounded-[16px]">
+          <Link
+            href={`/editor/${clickedPage?.id}?userId=${agencyId}&projectId=${funnelId}`}
+            className="relative group"
           >
-            Create New Steps
-          </Button>
-        </aside>
-        <aside className="flex-[0.7] ~ p-4 ">
-          {!!pages.length ? (
-            <Card className="h-full flex justify-between flex-col">
-              <CardHeader>
-                <p className="text-sm text-muted-foreground">Page name</p>
-                <CardTitle>{clickedPage?.name}</CardTitle>
-                <CardDescription className="flex flex-col gap-4">
-                  <div className="border-2 rounded-lg sm:w-80 w-full  overflow-clip">
-                    //editor link
-                    <Link
-                      href={`/editor/${clickedPage?.id}?userId=${agencyId}&projectId=${funnelId}`}
-                      className="relative group"
-                    >
-                      <div className="cursor-pointer group-hover:opacity-30 w-full">
-                        <FunnelPagePlaceholder />
-                      </div>
-                      <LucideEdit
-                        size={50}
-                        className="!text-muted-foreground absolute top-1/2 left-1/2 opacity-0 transofrm -translate-x-1/2 -translate-y-1/2 group-hover:opacity-100 transition-all duration-100"
-                      />
-                    </Link>
-                    <Link
-                      target="_blank"
-                      href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${funnel.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}/${clickedPage?.pathName}`}
-                      className="group flex items-center justify-start p-2 gap-2 hover:text-primary transition-colors duration-200"
-                    >
-                      <ExternalLink size={15} />
-                      <div className="w-64 overflow-hidden overflow-ellipsis ">
-                        {process.env.NEXT_PUBLIC_URL_SCHEME}
-                        {funnel.subDomainName}.{process.env.NEXT_PUBLIC_URL_DOMAIN}/{clickedPage?.pathName}
-                      </div>
-                    </Link>
-                  </div>
-
-                  <CreateFunnelPage
-                    userId={agencyId}
-                    defaultData={clickedPage}
-                    projectId={funnelId}
-                    order={(clickedPage?.order as number) || 0}
-                  />
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          ) : (
-            <div className="h-[600px] flex items-center justify-center text-muted-foreground">Create a page to view page settings.</div>
-          )}
-        </aside>
-      </div>
-    </AlertDialog>
+            <div className="cursor-pointer w-full">
+              <Image
+                className="bg-[#191919] h-[211.5px] hover:border-blue-500/80 hover:border-4 w-full object-cover duration-200 rounded-2xl border "
+                width={600}
+                height={600}
+                src={"/funnel-page-placeholder.svg"}
+                alt="image-placeholder"
+              />
+            </div>
+            <LucideEdit
+              strokeWidth={2}
+              size={22}
+              className=" absolute top-4 left-4 text-blue opacity-0  group-hover:opacity-60 transition-all duration-100"
+            />
+          </Link>
+          <Link
+            target="_blank"
+            href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${funnel.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}/${clickedPage?.pathName}`}
+            className="group text-sm text-white/70 flex items-center justify-center p-3  rounded-b-xl gap-2 hover:text-primary transition-colors duration-200"
+          >
+            <div className="overflow-hidden overflow-ellipsis ">
+              {process.env.NEXT_PUBLIC_URL_SCHEME}
+              {funnel.subDomainName}.{process.env.NEXT_PUBLIC_URL_DOMAIN}/{clickedPage?.pathName}
+            </div>
+            <ExternalLink size={15} />
+          </Link>
+        </div>
+        <div className="overflow-scroll rounded-[11px] box">
+          <div className=" rounded-[11px]">
+            {pagesState.map((page: FunnelPage, idx: number) => (
+              <div
+                className="relative "
+                key={page.id}
+                onClick={() => setClickedPage(page)}
+              >
+                <FunnelStepCard
+                  funnelPage={page}
+                  index={idx}
+                  key={page.id}
+                  activePage={page.id === clickedPage?.id}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="text-center flex items-center justify-center gap-2 mt-0 text-zinc-400">
+            <svg
+              width="12"
+              height="18"
+              viewBox="0 0 12 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.5 10.3333L7.375 1V7.66667H11.5L4.625 17V10.3333H0.5Z"
+                fill="#726fff"
+                stroke="#726fff"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            <p className="text-sm">Upgrade to build multiple pages</p> <MoveRight strokeWidth={1} />
+          </div>
+          <FunnelPageCreateBtn
+            userId={agencyId}
+            projectId={funnelId}
+            length={pagesState.length}
+          />
+        </div>
+      </aside>
+      <aside className=" flex-[0.7] pl-5 ">
+        {/* <div>
+          <h5>Webpage Settings</h5>
+        </div> */}
+        {!!pages.length ? (
+          <div className="flex gap-4">
+            <CreateFunnelPage
+              className="w-[550px] mx-auto"
+              userId={agencyId}
+              defaultData={clickedPage}
+              projectId={funnelId}
+              order={(clickedPage?.order as number) || 0}
+            />
+          </div>
+        ) : (
+          <div className="h-[600px] flex items-center justify-center text-muted-foreground">Create a page to view page settings.</div>
+        )}
+      </aside>
+    </div>
   );
 };
 

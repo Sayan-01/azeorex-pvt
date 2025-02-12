@@ -1,3 +1,4 @@
+'use client'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { EditorBtns } from "@/types/types";
 import React, { useState } from "react";

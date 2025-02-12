@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
-import { GROUPLE_CONSTANTS } from "@/constants";
-import { SAAS_SIDEBAR } from "@/constants/menus";
+import { GROUPLE_CONSTANT } from "@/constants";
+// import { SAAS_SIDEBAR } from "@/constants/menus";
 import { Bolt, ChevronsUpDown } from "lucide-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import React from "react";
 const Sidebar = () => {
   const pathname = usePathname();
   return (
-    <div className="flex flex-col justify-between w-[270px] p-6 h-full">
+    <div className="flex flex-col justify-between w-[270px] p-6 pb-7 h-full">
       <div>
         <Popover>
           <PopoverTrigger
@@ -43,7 +43,7 @@ const Sidebar = () => {
             </div>
           </PopoverTrigger>
         </Popover>
-        {GROUPLE_CONSTANTS?.saasSideBar?.map((sidebarOptions, idx) => {
+        {GROUPLE_CONSTANT?.saasSideBarOptions?.map((sidebarOptions, idx) => {
           return (
             <div
               key={idx}
