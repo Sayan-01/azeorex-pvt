@@ -415,7 +415,7 @@ const Container = ({ element }: Props) => {
       className={clsx("relative z-[1004] box !inset-0", {
         "h-fit   w-full": type === "container" || type === "2Col",
         "!relative w-full": type === "__body",
-        "scale-95 rounded-2xl ": type === "__body" && !state.editor.liveMode,
+        "scale-95 ": type === "__body" && !state.editor.liveMode,
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "cursor-grab": state.editor.selectedElement.id === id && !state.editor.liveMode,

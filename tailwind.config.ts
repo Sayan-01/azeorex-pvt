@@ -75,6 +75,7 @@ module.exports = withUt({
   			bor: {
   				'100': '#17192d',
   				'200': '#212121',
+          'editor': '#252525',
   				DEFAULT: '#6971a2'
   			},
   			black: {

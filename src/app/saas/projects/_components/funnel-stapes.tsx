@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import FunnelPagePlaceholder from "@/icons/funnel-page-placeholder";
 import { upsertFunnelPage } from "@/lib/queries";
 import { Funnel, FunnelPage, Project } from "@prisma/client";
-import { ArrowLeftIcon, CheckCheck, ExternalLink, LucideEdit, MoveRight } from "lucide-react";
+import { ArrowLeftIcon, ArrowRight, CheckCheck, ExternalLink, LucideEdit, MoveRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { DragDropContext, DragStart, DropResult, Droppable } from "react-beautiful-dnd";
@@ -17,6 +17,7 @@ import FunnelStepCard from "../_components/funnel-step-card";
 import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
 import FunnelPageCreateBtn from "./funnel-page-create-btn";
 import Image from "next/image";
+import { AzAsGray } from "@/icons/az-as-gray";
 
 type Props = { funnel: Project; agencyId: string; pages: FunnelPage[]; funnelId: string };
 
@@ -29,31 +30,40 @@ const FunnelSteps = ({ funnel, agencyId, pages, funnelId }: Props) => {
 
   return (
     <div className="flex lg:!flex-row flex-col overflow-hidden h-full">
-      <aside className="flex-[0.3]  flex flex-col gap-3 h-full border-r pr-5">
-        <div className="overflow-clip bg-[#202124] rounded-[16px]">
+      <aside className="flex-[0.3]  flex flex-col gap-3 h-full ">
+        <div className="overflow-clip bg-[#202124] rounded-[16px] p-2">
           <Link
             href={`/editor/${clickedPage?.id}?userId=${agencyId}&projectId=${funnelId}`}
             className="relative group"
           >
             <div className="cursor-pointer w-full">
               <Image
-                className="bg-[#191919] h-[211.5px] hover:border-blue-500/80 hover:border-4 w-full object-cover duration-200 rounded-2xl border "
+                className="bg-[#191919] h-[190px] hover: w-full object-cover duration-200 rounded-2xl border-2 border-[#202124] "
                 width={600}
                 height={600}
                 src={"/funnel-page-placeholder.svg"}
                 alt="image-placeholder"
               />
             </div>
-            <LucideEdit
+            {/* <LucideEdit
               strokeWidth={2}
               size={22}
               className=" absolute top-4 left-4 text-blue opacity-0  group-hover:opacity-60 transition-all duration-100"
-            />
+            /> */}
+            <div className=" absolute w-full h-full top-0 left-0 text-blue-400 opacity-0  group-hover:opacity-100 transition-all duration-100 rounded-[15px] text-sm px-3 pr-1 py-1 bg-white/10 border-2 flex items-center justify-center gap-1">
+              <div className="px-4 py-2 bg-white/90 flex items-center justify-center gap-2 rounded-full font-medium">
+                Edit the page
+                <MoveRight
+                  strokeWidth={1.7}
+                  size={18}
+                />
+              </div>
+            </div>
           </Link>
           <Link
             target="_blank"
             href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${funnel.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}/${clickedPage?.pathName}`}
-            className="group text-sm text-white/70 flex items-center justify-center p-3  rounded-b-xl gap-2 hover:text-primary transition-colors duration-200"
+            className="group text-sm text-white/70 flex items-center justify-center pt-3 pb-1 rounded-b-xl gap-2 hover:text-primary transition-colors duration-200"
           >
             <div className="overflow-hidden overflow-ellipsis ">
               {process.env.NEXT_PUBLIC_URL_SCHEME}
@@ -107,19 +117,25 @@ const FunnelSteps = ({ funnel, agencyId, pages, funnelId }: Props) => {
         {/* <div>
           <h5>Webpage Settings</h5>
         </div> */}
-        {!!pages.length ? (
-          <div className="flex gap-4">
-            <CreateFunnelPage
-              className="w-[550px] mx-auto"
-              userId={agencyId}
-              defaultData={clickedPage}
-              projectId={funnelId}
-              order={(clickedPage?.order as number) || 0}
-            />
+        <div className="overflow-y-scroll box flex-col flex h-full">
+          {!!pages.length ? (
+            <div className="flex gap-4 mb-5">
+              <CreateFunnelPage
+                className="w-full mx-auto"
+                userId={agencyId}
+                defaultData={clickedPage}
+                projectId={funnelId}
+                order={(clickedPage?.order as number) || 0}
+              />
+            </div>
+          ) : (
+            <div className="h-[600px] flex items-center justify-center text-muted-foreground">Create a page to view page settings.</div>
+          )}
+          <div className="bg-[#191919] border flex-1 flex gap-3 items-center justify-center flex-col rounded-xl">
+            <AzAsGray className=" scale-90" />
+            <p className="text-[#8488EE] text-sm">Currently This feature in Developing mode</p>
           </div>
-        ) : (
-          <div className="h-[600px] flex items-center justify-center text-muted-foreground">Create a page to view page settings.</div>
-        )}
+        </div>
       </aside>
     </div>
   );

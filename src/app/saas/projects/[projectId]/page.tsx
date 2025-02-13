@@ -15,7 +15,7 @@ const FunnelPage = async ({ params }: Props) => {
   const agencyId = session?.user?.id || "";
   const funnelPages = await getProject(funnelId);
 
-  if (!funnelPages) return redirect(`/projects`);
+  if (!funnelPages) return redirect(`saas/projects`);
 
   return (
     <div className="pb-7 h-full flex flex-col gap-3">

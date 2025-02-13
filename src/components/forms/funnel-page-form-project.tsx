@@ -81,40 +81,45 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
 
   return (
     <Card className={`bg-[#26262626] ${className} `}>
-      <CardHeader className="border-b p-4 flex items-center flex-row justify-between">
-        <h5 className="opacity-70 ">Webpage Settings</h5>
-        {defaultData?.id && (
-          <Button
-            className="bg-zinc-700 rounded-full !mt-0 text-white/70"
-            variant={"outline"}
-            size="default"
-            disabled={form.formState.isSubmitting}
-            type="button"
-            onClick={async () => {
-              const response = await getProjects(userId);
-              const lastFunnelPage = response?.find((funnel) => funnel.id === projectId)?.FunnelPages.length;
+      <CardHeader className="border-b p-4 flex flex-col">
+        <div className="flex items-center flex-row justify-between">
+          <h5 className="opacity-70 ">Webpage Settings</h5>
+          {defaultData?.id && (
+            <Button
+              className="bg-zinc-700 rounded-full !mt-0 text-white/70"
+              variant={"outline"}
+              size="default"
+              disabled={form.formState.isSubmitting}
+              type="button"
+              onClick={async () => {
+                const response = await getProjects(userId);
+                const lastFunnelPage = response?.find((funnel) => funnel.id === projectId)?.FunnelPages.length;
 
-              await upsertFunnelPageForProject(
-                {
-                  ...defaultData,
-                  order: lastFunnelPage ? lastFunnelPage : 0,
-                  visits: 0,
-                  name: `${defaultData.name} Copy`,
-                  pathName: `${defaultData.pathName}copy`,
-                  content: defaultData.content,
-                },
-                projectId
-              );
-              toast({
-                title: "Success",
-                description: "Saves Funnel Page Details",
-              });
-              router.refresh();
-            }}
-          >
-            {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : <p>Copy and Pest</p>}
-          </Button>
-        )}
+                await upsertFunnelPageForProject(
+                  {
+                    ...defaultData,
+                    order: lastFunnelPage ? lastFunnelPage : 0,
+                    visits: 0,
+                    name: `${defaultData.name} Copy`,
+                    pathName: `${defaultData.pathName}copy`,
+                    content: defaultData.content,
+                  },
+                  projectId
+                );
+                toast({
+                  title: "Success",
+                  description: "Saves Funnel Page Details",
+                });
+                router.refresh();
+              }}
+            >
+              {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : <p>Copy and Pest</p>}
+            </Button>
+          )}
+        </div>
+        <CardDescription>
+          <p className="">Funnel pages are flow in the order they are created by default. You can move<br/> them around to change their order.</p>
+        </CardDescription>
       </CardHeader>
       <CardContent className="p-4">
         <Form {...form}>
@@ -127,11 +132,11 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="flex-1 flex flex-col gap-3 justify-between ">
-                  <FormLabel className="w-40">Name</FormLabel>
+                <FormItem className="flex-1 flex items-center gap-3 justify-between ">
+                  <FormLabel className="w-40 opacity-80">Name</FormLabel>
                   <FormControl>
                     <Input
-                      className="!mt-0 outline-none rounded-lg"
+                      className="!mt-0 outline-none rounded-lg text-zinc-400"
                       placeholder="Name"
                       {...field}
                     />
@@ -145,11 +150,11 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
               control={form.control}
               name="pathName"
               render={({ field }) => (
-                <FormItem className="flex-1 flex flex-col gap-3 justify-between ">
-                  <FormLabel className="w-40">Path Name</FormLabel>
+                <FormItem className="flex-1 flex items-center gap-3 justify-between ">
+                  <FormLabel className="w-40 opacity-80">Path Name</FormLabel>
                   <FormControl>
                     <Input
-                      className="!mt-0 outline-none rounded-lg"
+                      className="!mt-0 outline-none rounded-lg text-zinc-400"
                       placeholder="Path for the page"
                       {...field}
                       value={field.value?.toLowerCase()}
@@ -159,7 +164,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                 </FormItem>
               )}
             />
-            <div className="flex items-center justify-end gap-2 mt-4 ">
+            <div className="flex items-center justify-end gap-2">
               <Button
                 className="w-22 rounded-full self-end"
                 disabled={form.formState.isSubmitting}

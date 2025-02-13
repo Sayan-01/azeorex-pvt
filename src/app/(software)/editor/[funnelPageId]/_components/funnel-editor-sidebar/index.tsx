@@ -53,13 +53,13 @@ const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
                         value="Components"
                         className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
                       >
-                        Comp
+                        Components
                       </TabsTrigger>
                       <TabsTrigger
                         value="Warframe"
                         className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
                       >
-                        War
+                        Warframes
                       </TabsTrigger>
                       {/* <TabsTrigger
                         value="Pages"

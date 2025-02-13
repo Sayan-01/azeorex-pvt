@@ -35,7 +35,7 @@ const page = async ({ params, searchParams }: Props) => {
   }
 
   return (
-    <div className={`fixed top-0 bottom-0 border-x border-main-az left-0 right-0 z-20 bg-zinc-950 overflow-hidden ${inter.className}`}>
+    <div className={`fixed top-0 bottom-0 border-x border-zinc-950 left-0 right-0 z-20 bg-zinc-950 overflow-hidden ${inter.className}`}>
       {/* starts from 16:39 */}
       <EditorProvider
         agencyId={agencyId}
