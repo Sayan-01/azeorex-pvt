@@ -1,16 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import CreateProjectButton from "../projects/_components/CreateProjectButton";
-import Card from "./card";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import {IoIosSearch} from "react-icons/io"
+import CreateProjectButton from "./CreateProjectButton";
+import Card from "../../_components/card";
+import { IoIosSearch } from "react-icons/io";
 type Props = {
   funnels: any[];
   userId: string;
 };
-const HomeComponent = ({ funnels, userId }: Props) => {
+const ProjectComponent = ({ funnels, userId }: Props) => {
   const [query, setQuery] = useState("");
   return (
     <div className="">
@@ -86,7 +84,6 @@ const HomeComponent = ({ funnels, userId }: Props) => {
         <div className="grid grid-cols-5 gap-6">
           {funnels
             .filter((item) => item.name.toLocaleLowerCase().includes(query))
-            .slice(0, 5)
             .map((item) => {
               return (
                 <Card
@@ -97,22 +94,9 @@ const HomeComponent = ({ funnels, userId }: Props) => {
               );
             })}
         </div>
-        <div className="flex items-center justify-center mt-6">
-          <Link
-            href={"/saas/projects"}
-            className="px-3 py-1.5 flex items-center gap-3 rounded-full bg-[#1e1f22] text-[12px] text-zinc-500"
-          >
-            <p>See all projects</p>
-            <ArrowRight size={13} />
-          </Link>
-        </div>
-      </section>
-      <section>
-        <h3 className="text-white/70">Templates</h3>
-        <p>{userId}</p>
       </section>
     </div>
   );
 };
 
-export default HomeComponent;
+export default ProjectComponent;

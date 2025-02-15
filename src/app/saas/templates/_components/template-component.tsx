@@ -1,17 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import CreateProjectButton from "../projects/_components/CreateProjectButton";
-import Card from "./card";
+import Card from "../../_components/card";
 import { IoIosSearch } from "react-icons/io";
+import { MoveRight } from "lucide-react";
+import TemplateCard from "@/components/design/TemplateCard";
+import ScrollableFilter from "./scrollable-filter";
 type Props = {
-  funnels: any[];
-  userId: string;
+  templates: any[];
 };
-const ProjectComponent = ({ funnels, userId }: Props) => {
+const TemplateComponent = ({ templates }: Props) => {
   const [query, setQuery] = useState("");
+  const [filterQuery, setFilterQuery] = useState("");
+  console.log(templates);
+  
   return (
-    <div className="">
+    <div className="pb-7">
       <nav className="flex justify-between items-center">
         <div className=" flex items-center gap-3 rounded-full w-max">
           <h3 className="text-white/70">Home</h3>
@@ -35,10 +39,15 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
           >
             Template's
           </Button>
-          <CreateProjectButton userId={userId} />
+          <Button
+            size="sm"
+            className={"bg-blue-500 hover:bg-blue-500/80 text-white items-center flex gap-2"}
+          >
+            Became a creator <MoveRight size={15} />
+          </Button>
         </div>
       </nav>
-      <section className="my-7">
+      <section className="my-7 mb-6">
         <div className="bg-[#ffffff08] rounded-xl p-6 flex gap-3 items-center">
           <svg
             width="12"
@@ -80,18 +89,16 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
           </p>
         </div>
       </section>
+      <ScrollableFilter
+        filterQuery={filterQuery}
+        setFilterQuery={setFilterQuery}
+      />
       <section>
         <div className="grid grid-cols-5 gap-6">
-          {funnels
-            .filter((item) => item.name.toLocaleLowerCase().includes(query))
+          {templates
+            .filter((item) => item.title.toLowerCase().includes(query) && (filterQuery === "" || item.category.includes(filterQuery)))
             .map((item) => {
-              return (
-                <Card
-                  id={item.id}
-                  title={item.name}
-                  updatedAt={item.updatedAt}
-                />
-              );
+              return <TemplateCard item={item} />;
             })}
         </div>
       </section>
@@ -99,4 +106,4 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
   );
 };
 
-export default ProjectComponent;
+export default TemplateComponent;

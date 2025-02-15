@@ -10,6 +10,7 @@ import MobileMenu from "@/components/design/MobileMenu";
 import { auth } from "../../../../../auth";
 import { navMenu } from "@/constants/azeorex-landing-page";
 import { Compass } from "lucide-react";
+import UserBtn from "../navbar/user-btn";
 
 const Header = async () => {
   const session = await auth();
@@ -69,20 +70,24 @@ const Header = async () => {
                           <Compass size={18} /> Creact
                         </Link>
                       </div>
-                      <ProfileBtnStuffs className="hidden overflow-hidden md:h-10 h-9 md:w-10 w-9 rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold sm:flex items-center justify-center outline-none border-none">
-                        {session?.user?.image ? (
-                          <>
-                            <Image
-                              width={50}
-                              height={50}
-                              src={session?.user?.image}
-                              alt="profile_pic"
-                            />
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </ProfileBtnStuffs>
+
+                      <UserBtn
+                        margin="mt-2 z-[101] rounded-2xl"
+                        className="hidden overflow-hidden md:h-10 h-9 md:w-10 w-9 rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold sm:flex items-center justify-center outline-none border-none"
+                        imageUrl={session?.user?.image || "/user.png"}
+                        username={session?.user?.name || ""}
+                        email={session?.user?.email || ""}
+                      >
+                        <div className="md:h-10 h-9 md:w-10 w-9 rounded-full overflow-hidden">
+                          <Image
+                            alt="profile-image"
+                            src={session?.user?.image || "/user.png"}
+                            className="w-full h-full"
+                            width={100}
+                            height={100}
+                          />
+                        </div>
+                      </UserBtn>
                       <button
                         className="sm:hidden overflow-hidden md:h-10 h-9 md:w-10 w-9 rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold flex items-center justify-center"
                         aria-label={session?.user?.image ? "Profile picture" : "User profile"}

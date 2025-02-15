@@ -24,7 +24,7 @@ export const PricingSection = () => {
     >
       <Heading
         h3="-: pricing :-"
-        h1="Pricing Plans For You"
+        h1="Pricing Plans For Saas"
         p="Discover innovative tools designed to optimize your workflows and drive success."
       />
       <div className="flex xl:flex-row flex-col gap-2">

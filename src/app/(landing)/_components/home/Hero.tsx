@@ -32,7 +32,7 @@ const Hero = async () => {
                 </span>
               </h1>
               <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-xl mt-6">
-                Azeorex has a huge collection of premium templates and components. We <br className="lg:block hidden" /> also create complete mern stack & nextjs website.
+                Azeorex is a Next.js website builder and management SaaS, and it has a<br className="lg:block hidden" /> huge collection of premium templates and components. &
               </p>
               <div className="flex gap-0 sm:gap-5 mt-5 w-full items-center justify-center">
                 <Button

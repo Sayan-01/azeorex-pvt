@@ -11,7 +11,14 @@ import { GoDatabase } from "react-icons/go";
 import { GoLock } from "react-icons/go";
 import Image from "next/image";
 
-export const navMenu = [
+type NavMenu ={
+  id: number
+  title: string
+  url: string
+  icon: string
+}
+
+export const navMenu: NavMenu[] = [
   {
     id: 1,
     title: "Home",
@@ -21,7 +28,7 @@ export const navMenu = [
   {
     id: 2,
     title: "Projects",
-    url: "/projects",
+    url: "/saas/projects",
     icon: "/icons/project.png",
   },
   {
@@ -33,7 +40,13 @@ export const navMenu = [
   {
     id: 4,
     title: "Templates",
-    url: "/templates/products",
+    url: "/saas/templates",
+    icon: "/icons/contact.png",
+  },
+  {
+    id: 5,
+    title: "Give review",
+    url: "/reviews",
     icon: "/icons/contact.png",
   },
 ];
@@ -46,6 +59,7 @@ type Card = {
   url: string;
   feature: string[];
 };
+
 export const card: Card[] = [
   {
     id: 1,
@@ -147,7 +161,13 @@ export const theme = [
   },
 ];
 
-export const category = [
+type Category = {
+  id: number
+  label: string
+  value: string
+}
+
+export const category: Category[] = [
   { id: 1, label: "All", value: "" },
   { id: 2, label: "Business", value: "business" },
   { id: 3, label: "Restaurant", value: "restaurant" },

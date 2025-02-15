@@ -28,8 +28,10 @@ const Footer = () => {
               <p className=" text-white/60">
                 Azeorex is a software company which provide many tech solution. Azeorex has a huge collection of premium templates and components. We also create complete mern stack & nextjs website.
               </p>
-              <Link href="/connection">
-                <h2 className="flex font-semibold text-[16px] items-center gap-3 mt-6">
+              <Link href="https://linkdin.com/sayan-01" className="flex item-center gap-4 mt-6">
+                          <p>Build with ❤️ Sayan Das</p>
+
+                <h2 className="flex font-semibold text-[16px] items-center gap-3 ">
                   Contact <MdOutlineArrowOutward />
                 </h2>
               </Link>
@@ -89,7 +91,7 @@ const Footer = () => {
           {/* bottom */}
 
           <div className="container flex sm:justify-between justify-center items-center gap-6 py-6 pb-4 px-0 max-sm:flex-col">
-            <p className=" caption text-n-4 lg:block">© {new Date().getFullYear()}. All rights</p>
+            <p className=" caption text-n-4 lg:block w-[220px]">© {new Date().getFullYear()}. All rights</p>
             <div className="flex gap-5 flex-wrap -mr-2">
               {socials.map((item) => (
                 <a

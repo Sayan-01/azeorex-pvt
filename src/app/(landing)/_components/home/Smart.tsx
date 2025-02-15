@@ -7,7 +7,7 @@ import Button from "@/components/buttons/Button";
 
 const Smart = () => {
   return (
-    <section className="py-1  -mb-32  md:mb-0 max-w-7xl md:px-0 px-5 mx-auto relative bottom-24 h-[25rem] mt-60">
+    <section className="py-1  -mb-32  md:mb-0 max-w-7xl md:px-0 px-5 mx-auto relative bottom-24 h-[25rem] mt-52">
       <div className="absolute -top-10 left-1/2 -translate-x-1/2">
         <Image
           src={"/earth.png"}

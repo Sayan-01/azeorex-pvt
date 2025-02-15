@@ -22,13 +22,16 @@ const Sidebar = () => {
           >
             <div className="inline-flex cursor-pointer  items-center justify-between whitespace-nowrap text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50  w-full mb-4 rounded-xl">
               <div className="flex  items-center text-left gap-4">
-                <Image
-                  src={"/azeorex.png"}
-                  alt="logo"
-                  width={400}
-                  height={400}
-                  className="!rounded-full w-10 h-10"
-                />
+                <Link href={"/"}>
+                  <Image
+                    src={"/azeorex.png"}
+                    alt="logo"
+                    width={400}
+                    height={400}
+                    className="!rounded-full w-10 h-10"
+                  />
+                </Link>
+
                 <div className="flex flex-col">
                   <h3 className=" text-base">Azeorex</h3>
                   <span className="text-muted-foreground">Break all the limits.</span>
@@ -79,7 +82,7 @@ const Sidebar = () => {
           {[
             {
               id: 0,
-              name: "Updates",
+              name: "Abouts",
               link: `#`,
               icon: <Package size={18} />,
             },

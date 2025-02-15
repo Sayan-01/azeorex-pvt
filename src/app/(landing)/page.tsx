@@ -7,6 +7,7 @@ import Technology from "./_components/home/Technology";
 import Approch from "./_components/home/Approch";
 import Smart from "./_components/home/Smart";
 import Footer from "./_components/home/Footer";
+import ReviewSection from "./_components/home/ReviewSection";
 
 const PriceSection = dynamic(() => import("./_components/pricing").then((component) => component.PricingSection), { ssr: true });
 
@@ -34,6 +35,7 @@ export default function Home() {
         {/* </Container_y> */}
         <PriceSection />
         {/* <Container_y> */}
+        <ReviewSection/>
         <Smart />
         {/* </Container_y> */}
       </div>
