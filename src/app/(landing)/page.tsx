@@ -16,7 +16,7 @@ const Category = dynamic(() => import("./_components/home/Category").then((compo
 
 export default function Home() {
   return (
-    <div className="bg-bcgc">
+    <div className="bg-bcgc x">
       <Header /> {/* sm:h-[85px] h-[70px] -> sm:pt-[95px] pt-[75px] sm:mb-[95px] mb-[75px] */}
       <div className=" overflow-hidden w-full ">
         <Hero />

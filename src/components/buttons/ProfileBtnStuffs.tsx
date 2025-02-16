@@ -8,7 +8,7 @@ import { HiOutlineCog6Tooth, HiOutlineHeart, HiOutlineHome, HiOutlineWindow } fr
 import VerifyBtn from "./VerifyBtn";
 import { Sign_Out } from "../../../server/auth";
 
-const ProfileBtnStuffs = async ({ className, children }) => {
+const ProfileBtnStuffs = async ({ className, children }:{className:string, children: React.ReactNode}) => {
   const session = await auth();
 
   return (
@@ -24,7 +24,7 @@ const ProfileBtnStuffs = async ({ className, children }) => {
       <DropdownMenuContent className="w-56 mt-2 rounded-xl">
         <DropdownMenuLabel className="flex justify-between items-center">
           <p>My Account</p>
-          {session?.user?.isVarified ? (
+          {/* {session?.user?.isVarified ? (
             <>
               {session?.user?.isAdmin ? (
                 <Image
@@ -45,7 +45,7 @@ const ProfileBtnStuffs = async ({ className, children }) => {
             </>
           ) : (
             <VerifyBtn />
-          )}
+          )} */}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -90,7 +90,7 @@ const ProfileBtnStuffs = async ({ className, children }) => {
           {session ? (
             <>
               <DropdownMenuItem className="p-0">
-                <Link
+                {/* <Link
                   href={`${process.env.NEXT_URL}/dashboard/${session?.user?.isAdmin ? "admin" : "client"}`}
                   className="w-full "
                 >
@@ -100,7 +100,7 @@ const ProfileBtnStuffs = async ({ className, children }) => {
                   >
                     Dashboard
                   </Button>
-                </Link>
+                </Link> */}
               </DropdownMenuItem>
               <DropdownMenuItem className="p-0 mt-2">
                 <form

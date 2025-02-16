@@ -57,24 +57,26 @@ enum Icon {
 }
 
 model User {
-  id           String         @id @default(uuid())
-  name         String
-  password     String?
-  isVarified   Boolean        @default(false)
-  isAdmin      Boolean        @default(false)
-  avatarUrl    String         @db.Text
-  email        String         @unique
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  role         Role           @default(USER)
-  agencyId     String?
-  Agency       Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade)
-  Permissions  Permissions[]
-  Ticket       Ticket[]
-  Notification Notification[]
-  projectId    String?
-  Projects     Project[]
-  googleId     String?
+  id                  String         @id @default(uuid())
+  name                String
+  password            String?
+  isVarified          Boolean        @default(false)
+  isAdmin             Boolean        @default(false)
+  varifiedToken       String?
+  varifiedTokenExpire DateTime?
+  avatarUrl           String?        @db.Text
+  email               String         @unique
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  role                Role           @default(USER)
+  agencyId            String?
+  Agency              Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+  Permissions         Permissions[]
+  Ticket              Ticket[]
+  Notification        Notification[]
+  projectId           String?
+  Projects            Project[]
+  googleId            String?
 
   @@index([agencyId])
   @@index([projectId])

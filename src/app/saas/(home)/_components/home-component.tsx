@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
 import CreateProjectButton from "../../projects/_components/CreateProjectButton";
@@ -19,8 +19,9 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
   return (
     <div className="">
       <nav className="flex justify-between items-center">
-        <div className=" flex items-center gap-3 rounded-full w-max">
+        <div className=" flex items-center gap-2 rounded-full w-max">
           <h3 className="text-white/70">Home</h3>
+          <ChevronRight size={16} />
         </div>
         <div className=" flex gap-3">
           <div className="flex items-center h-8 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30">
@@ -141,11 +142,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             .filter((item) => item.title.toLocaleLowerCase().includes(query))
             .slice(0, 5)
             .map((item) => {
-              return (
-                <TemplateCard
-                  item={item}
-                />
-              );
+              return <TemplateCard item={item} />;
             })}
         </div>
       </section>

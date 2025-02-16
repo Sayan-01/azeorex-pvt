@@ -12,8 +12,7 @@ import WarframeTab from "./tabs/warframe-tab";
 import LayoutTab from "./tabs/Layout";
 import AiTab from "./tabs/AI-tab";
 import SettingsTab from "./tabs/settings-tab2";
-import Pages from "./tabs/pages";
-import Sayan from "./tabs/pages";
+
 
 type Props = {
   agencyId: string;

@@ -3,7 +3,7 @@ import { getDomainContent } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import React from "react";
 import EditorProvider from "../../../providers/editor/editor-provider";
-import FunnelEditor from "../(website)/agency/[agencyId]/funnels/[funnelId]/editor/[funnelPageId]/_components/funnel-editor";
+import FunnelEditor from "../(software)/editor/[funnelPageId]/_components/funnel-editor";
 
 const Page = async ({ params }: { params: { domain: string } }) => {
   const domainData = await getDomainContent(params.domain);

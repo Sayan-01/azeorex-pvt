@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import CreateProjectButton from "./CreateProjectButton";
 import Card from "../../_components/card";
 import { IoIosSearch } from "react-icons/io";
+import { ChevronRight } from "lucide-react";
 type Props = {
   funnels: any[];
   userId: string;
@@ -13,8 +14,8 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
   return (
     <div className="">
       <nav className="flex justify-between items-center">
-        <div className=" flex items-center gap-3 rounded-full w-max">
-          <h3 className="text-white/70">Home</h3>
+        <div className=" flex items-center gap-2 rounded-full w-max">
+          <h3 className="text-white/70">Projects</h3> <ChevronRight size={16} />
         </div>
         <div className=" flex gap-3">
           <div className="flex items-center h-8 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30">

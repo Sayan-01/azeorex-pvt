@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
-import { Input } from "../ui/input_ace";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -11,6 +10,7 @@ import { registerSchema } from "../../../validators/auth-validator.ts";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import Socials from "./Socials";
 import { SubmitButton } from "../buttons/SubmitBtn";
+// import { Input } from "../ui/input.jsx";
 
 const RegisterForm = () => {
   const [error, setError] = useState("");
@@ -60,7 +60,7 @@ const RegisterForm = () => {
     <div className="z-20 w-full sm:pt-[95px] pt-[75px] ">
       <div className="max-w-md w-full mx-auto  rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black/60">
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">Welcome to Azeorex - Register</h2>
-        <Form {...form}>
+        {/* <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-5 my-8 mb-4"
@@ -137,7 +137,7 @@ const RegisterForm = () => {
               </span>
             </h4>
           </form>
-        </Form>
+        </Form> */}
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
         <Socials />
       </div>

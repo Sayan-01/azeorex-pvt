@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Wrapper from "@/components/design/Wrapper";
-import ProfileBtnStuffs from "@/components/buttons/ProfileBtnStuffs";
 import Button from "@/components/buttons/Button";
 import MobileMenuButton from "@/components/buttons/MobileMenuButton";
 import MobileMenu from "@/components/design/MobileMenu";

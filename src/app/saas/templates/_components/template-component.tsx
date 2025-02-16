@@ -6,6 +6,9 @@ import { IoIosSearch } from "react-icons/io";
 import { MoveRight } from "lucide-react";
 import TemplateCard from "@/components/design/TemplateCard";
 import ScrollableFilter from "./scrollable-filter";
+import { ChevronRight } from "lucide-react";
+import CreatorBtn from "./creator-btn";
+
 type Props = {
   templates: any[];
 };
@@ -13,12 +16,13 @@ const TemplateComponent = ({ templates }: Props) => {
   const [query, setQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("");
   console.log(templates);
-  
+
   return (
     <div className="pb-7">
       <nav className="flex justify-between items-center">
-        <div className=" flex items-center gap-3 rounded-full w-max">
-          <h3 className="text-white/70">Home</h3>
+        <div className=" flex items-center gap-2 rounded-full w-max">
+          <h3 className="text-white/70">Templates</h3>
+          <ChevronRight size={16} />
         </div>
         <div className=" flex gap-3">
           <div className="flex items-center h-8 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30">
@@ -32,19 +36,8 @@ const TemplateComponent = ({ templates }: Props) => {
               placeholder="Search..."
             />
           </div>
-
-          <Button
-            size="sm"
-            className="bg-main hover:bg-main/80 text-white w-28"
-          >
-            Template's
-          </Button>
-          <Button
-            size="sm"
-            className={"bg-blue-500 hover:bg-blue-500/80 text-white items-center flex gap-2"}
-          >
-            Became a creator <MoveRight size={15} />
-          </Button>
+          <CreatorBtn></CreatorBtn>
+          
         </div>
       </nav>
       <section className="my-7 mb-6">

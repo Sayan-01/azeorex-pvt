@@ -1,7 +1,7 @@
-import { set1 } from "@/constants";
+import Heading from "@/components/design/Heading";
+import { set1 } from "@/constants/azeorex-landing-page";
 import Image from "next/image";
 import React from "react";
-import Heading from "../design/Heading";
 
 const Project = () => {
   return (
@@ -31,6 +31,7 @@ const ProjectMarquee = () => {
            className={`${i.Id == 1 || i.Id == 4 ? "h-60  " : "h-60 w-[410px]"} overflow-hidden rounded-2xl p-3 bg-blue-600/20`}
          >
            <Image
+           alt={`image${i.Id}`}
              className={"w-full h-full rounded-2xl"}
              width={1000}
              height={800}

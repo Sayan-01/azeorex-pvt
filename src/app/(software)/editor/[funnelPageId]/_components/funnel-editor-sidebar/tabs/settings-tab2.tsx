@@ -304,7 +304,7 @@ const SettingsTab = () => {
                   <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-0">
                     <TabsTrigger
                       value="visible"
-                      className="w-10 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                      className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                     >
                       <Eye
                         size={13}
@@ -313,7 +313,7 @@ const SettingsTab = () => {
                     </TabsTrigger>
                     <TabsTrigger
                       value="hidden"
-                      className="w-10 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                      className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                     >
                       <EyeClosed
                         size={13}
@@ -392,25 +392,25 @@ const SettingsTab = () => {
                 <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
                   <TabsTrigger
                     value="left"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <AlignLeft size={15} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="right"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <AlignRight size={15} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="center"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <AlignCenter size={15} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="justify"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555] "
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
                   >
                     <AlignJustify size={15} />
                   </TabsTrigger>
@@ -541,31 +541,31 @@ const SettingsTab = () => {
                 <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
                   <TabsTrigger
                     value="none"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <CircleOff size={13} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="underline"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <Underline size={15} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="italic"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     🌟
                   </TabsTrigger>
                   <TabsTrigger
                     value="overline"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <AlignCenter size={15} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="line-through"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-[#555555] "
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
                   >
                     <AlignJustify size={15} />
                   </TabsTrigger>
@@ -847,19 +847,19 @@ const SettingsTab = () => {
                 <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
                   <TabsTrigger
                     value="cover"
-                    className="w-full h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <ChevronsLeftRightIcon size={18} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="contain"
-                    className="w-full h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <AlignVerticalJustifyCenter size={15} />
                   </TabsTrigger>
                   <TabsTrigger
                     value="auto"
-                    className="w-full h-[24.4px] p-0 data-[state=active]:bg-[#555555]"
+                    className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                   >
                     <LucideImageDown size={15} />
                   </TabsTrigger>
