@@ -30,7 +30,7 @@ const MobileMenu = async () => {
             <Button
               className=" rounded-lg w-full bg-black border border-[#2c2c2c]"
               variant="outline"
-              loading="loading..."
+              // loading="loading..."
             >
               Sign Out
             </Button>
@@ -61,7 +61,7 @@ const MobileMenu = async () => {
         <>
           <div className="mt-10 flex justify-between items-center">
             <p className=" opacity-35 max-w-[230px] ">{session?.user?.email}</p>
-            {session?.user?.isVarified ? (
+            {/* {session?.user?.isVarified ? (
               <>
                 {session?.user?.isAdmin ? (
                   <div className="flex gap-2 items-center">
@@ -89,7 +89,7 @@ const MobileMenu = async () => {
               </>
             ) : (
               <VerifyBtn />
-            )}
+            )} */}
           </div>
           <div className="h-[1.2px] my-5 bg-white/10" />
           <div className="flex items-center justify-between my-5">
@@ -100,7 +100,9 @@ const MobileMenu = async () => {
           </div>
           <div className="flex items-center justify-between my-5">
             <p>
-              <Link href={session?.user?.isAdmin ? `${process.env.NEXT_URL}/dashboard/admin` : `${process.env.NEXT_URL}/dashboard/client`}>User / Admin dashboard</Link>
+              <Link href={"#"}
+              // href={session?.user?.isAdmin ? `${process.env.NEXT_URL}/dashboard/admin` : `${process.env.NEXT_URL}/dashboard/client`}
+              >User / Admin dashboard</Link>
             </p>
             <HiOutlineWindow size={22} />
           </div>

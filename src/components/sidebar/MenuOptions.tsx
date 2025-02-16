@@ -12,7 +12,6 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Fa500Px } from "react-icons/fa";
 import { useModal } from "../../../providers/model-provider";
-import SubAccountDetails from "../forms/Subaccount_form";
 import CustomModal from "../global/CustomModal";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Button } from "../ui/button";
@@ -185,11 +184,7 @@ function MenuOptions({ type, defaultOption, sideBarOpt, sidebarLogo, details, us
                             title="Create A Subaccount"
                             subheading="You can switch between your agency account and the subaccount from the sidebar"
                           >
-                            <SubAccountDetails
-                              agencyDetails={user?.Agency as Agency}
-                              userId={user?.id as string}
-                              userName={user?.name}
-                            />
+                            Subaccount details
                           </CustomModal>
                         );
                       }}

@@ -107,6 +107,7 @@ export const verifyAndAcceptInvitation = async () => {
   });
 
   if (invitationExist) {
+    //@ts-expect-error xyz
     const userDetails = await createTeamUser(invitationExist?.agencyId, {
       email: invitationExist.email,
       agencyId: invitationExist.agencyId,
