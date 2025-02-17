@@ -120,6 +120,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 email,
                 name: name,
                 avatarUrl: image,
+                isVarified: true
               },
             });
           }
