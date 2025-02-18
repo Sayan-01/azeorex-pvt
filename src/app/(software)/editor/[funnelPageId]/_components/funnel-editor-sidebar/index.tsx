@@ -36,11 +36,14 @@ const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
           <SheetContent
             showX={false}
             side="left"
-            className={clsx("mt-[48.8px] h-full border-b border-main-black ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  rounded-none select-none ", {
-              hidden: state.editor.previewMode,
-            })}
+            className={clsx(
+              "mt-[48.8px] mb-3 h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  select-none absolute left-3 top-3 rounded-2xl overflow-hidden",
+              {
+                hidden: state.editor.previewMode,
+              }
+            )}
           >
-            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box bg-editor-bcgc border-r border-main-black">
+            <div className="grid gap-4 h-full w-[240px]  overflow-auto overflow-x-hidden box bg-editor-bcgc border-main-black">
               <TabsContent
                 value="Components"
                 className="p-4"
@@ -95,7 +98,7 @@ const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
                 <LayersTab />
               </TabsContent>
               <TabsContent value="Media">
-                <MediaBucketTab agencyId={agencyId} />
+                <MediaBucketTab agencyId={funnelId} />
               </TabsContent>
               <TabsContent value="Layout">
                 <LayoutTab />
@@ -115,17 +118,20 @@ const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
         modal={false}
       >
         <Tabs
-          className="w-full"
+          className="w-full h-full"
           defaultValue="Settings"
         >
           <SheetContent
             showX={false}
             side="right"
-            className={clsx("mt-[48.8px] mr-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", {
-              hidden: state.editor.previewMode,
-            })}
+            className={clsx(
+              "mt-[48.8px] mb-3 h-[calc(100%)-170px] w-[240px] z-[40] shadow-none p-0  bg-background  transition-all border-none  select-none absolute right-3 top-3 rounded-2xl overflow-hidden ",
+              {
+                hidden: state.editor.previewMode,
+              }
+            )}
           >
-            <div className="grid gap-4 h-full w-[240px] pb-4 overflow-auto overflow-x-hidden box border-l border-main-black">
+            <div className="grid gap-4 h-full w-[240px] overflow-auto overflow-x-hidden box">
               <TabsContent value="Settings">
                 <SettingsTab />
               </TabsContent>

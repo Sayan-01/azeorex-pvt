@@ -82,7 +82,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
   return (
     <Card className={`bg-[#26262626] ${className} `}>
       <CardHeader className="border-b p-4 flex flex-col">
-        <div className="flex items-center flex-row justify-between">
+        <div className="flex items-center flex-row justify-between mt-2">
           <h5 className="opacity-70 ">Webpage Settings</h5>
           {defaultData?.id && (
             <Button

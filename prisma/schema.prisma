@@ -267,12 +267,15 @@ model Media {
   type      String?
   name      String
   link      String   @unique
-  agencyId  String
+  agencyId  String?
+  projectId String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Agency    Agency   @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+  Agency    Agency?  @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+  Project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([agencyId])
+  @@index([projectId])
 }
 
 model Funnel {
@@ -307,6 +310,7 @@ model Project {
   FunnelPages   FunnelPage[]
   liveProducts  String?      @default("[]")
   ClassName     ClassName[]
+  Media         Media[]
 
   @@index([userId])
 }

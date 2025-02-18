@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { twMerge } from "tailwind-merge";
@@ -8,9 +8,9 @@ import { redirect } from "next/navigation";
 import ProjectForm from "@/components/forms/project-form";
 
 type Props = {
-  className?: string
-  userId: string | undefined
-}
+  className?: string;
+  userId: string | undefined;
+};
 
 const CreateProjectButton = ({ className, userId }: Props) => {
   const { setOpen } = useModal();
@@ -22,10 +22,7 @@ const CreateProjectButton = ({ className, userId }: Props) => {
       className={twMerge("bg-blue-500 hover:bg-blue-500/80 text-white w-28", className)}
       onClick={() => {
         setOpen(
-          <CustomModal
-            title="Create a Subaccount"
-            subheading="You can switch bettween"
-          >
+          <CustomModal>
             <ProjectForm userId={userId}></ProjectForm>
           </CustomModal>
         );

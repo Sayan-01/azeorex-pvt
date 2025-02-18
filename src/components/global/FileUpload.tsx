@@ -20,7 +20,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
     return (
       <div className="flex flex-col items-center justify-center">
         {type != "pdf" ? (
-          <div className={`relative w-60 h-60 rounded-md overflow-hidden`}>
+          <div className={`relative w-60 h-60 rounded-md overflow-hidden g-[#202124] border border-[#2c2d30]`}>
             <Image
               src={value}
               alt="upload image"
@@ -29,7 +29,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
             />
           </div>
         ) : (
-          <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
+          <div className="relative flex items-center p-2 mt-2 rounded-md bg-[#202124] border border-[#2c2d30]">
             <File />
             <Link
               href={value}
@@ -52,15 +52,20 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
       </div>
     );
   }
-  return <div className={clsx(" w-full bg-muted/30 rounded-xl", className)}>
-    <UploadDropzone endpoint={apiEndpoint} onClientUploadComplete={(res)=>{
-      onChange(res?.[0].url)
-    }}
-    onUploadError={(error: Error)=> {
-      console.log(error);
-      
-    }}/>
-  </div>
+  return (
+    <div className={clsx(" w-full g-[#202124] border border-[#2c2d30] rounded-xl", className)}>
+      <UploadDropzone
+      className="outline-none"
+        endpoint={apiEndpoint}
+        onClientUploadComplete={(res) => {
+          onChange(res?.[0].url);
+        }}
+        onUploadError={(error: Error) => {
+          console.log(error);
+        }}
+      />
+    </div>
+  );
 };
 
 export default FileUpload;

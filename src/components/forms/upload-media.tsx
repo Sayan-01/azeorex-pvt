@@ -35,6 +35,8 @@ const formSchema = z.object({
 })
 
 const UploadMediaForm = ({ agencyId }: Props) => {
+  console.log(agencyId);
+  
   const { toast } = useToast()
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
@@ -49,10 +51,6 @@ const UploadMediaForm = ({ agencyId }: Props) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const response = await createMedia(agencyId, values)
-      await saveActivityLogsNotification({
-        description: `Uploaded a media file | ${response.name}`,
-        agencyId: agencyId,
-      })
 
       toast({ title: 'Succes', description: 'Uploaded media' })
       router.refresh()
@@ -67,25 +65,23 @@ const UploadMediaForm = ({ agencyId }: Props) => {
   }
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Media Information</CardTitle>
-        <CardDescription>
-          Please enter the details for your file
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="w-full">
+      <div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>File Name</FormLabel>
+                <FormItem className="flex gap-2 items-center">
+                  <FormLabel className="w-[200px]">File Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Your agency name"
+                      className="bg-[#202124] border border-[#2c2d30]"
+                      placeholder="Your assets name"
                       {...field}
                     />
                   </FormControl>
@@ -102,6 +98,7 @@ const UploadMediaForm = ({ agencyId }: Props) => {
                   <FormLabel>Media File</FormLabel>
                   <FormControl>
                     <FileUpload
+                      className="bg-[#202124] border border-[#2c2d30]"
                       apiEndpoint="agencyLogo"
                       value={field.value}
                       onChange={field.onChange}
@@ -119,9 +116,9 @@ const UploadMediaForm = ({ agencyId }: Props) => {
             </Button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
-  )
+      </div>
+    </div>
+  );
 }
 
 export default UploadMediaForm

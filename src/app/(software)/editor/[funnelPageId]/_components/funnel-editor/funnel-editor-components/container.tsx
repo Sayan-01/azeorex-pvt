@@ -164,7 +164,7 @@ const Container = ({ element }: Props) => {
             containerId: id,
             elementDetails: {
               content: {
-                src: "/sayan.png",
+                src: "/image-placeholder.png",
               },
               id: v4(),
               name: "Image",
@@ -414,8 +414,8 @@ const Container = ({ element }: Props) => {
       }}
       className={clsx("relative z-[1004] box !inset-0", {
         "h-fit   w-full": type === "container" || type === "2Col",
-        "!relative w-full": type === "__body",
-        "scale-95 ": type === "__body" && !state.editor.liveMode,
+        "!relative w-full ": type === "__body",
+        "scale-95 -mt-2": type === "__body" && !state.editor.liveMode,
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "cursor-grab": state.editor.selectedElement.id === id && !state.editor.liveMode,
@@ -434,6 +434,7 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
           rotate: "0",
+          background: styles.background || "#f8f8f8",
         }}
         className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group", {
           // "px-4": type !== "__body",
@@ -463,7 +464,7 @@ const Container = ({ element }: Props) => {
       <Badge
         className={clsx("absolute bg-main z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
           flex: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
-          // "bg-transparent text-main border border-main hover:bg-transparent": type === "__body",
+          "top-0 rounded-br-md rounded-t-none": type === "__body",
         })}
       >
         {element.name}

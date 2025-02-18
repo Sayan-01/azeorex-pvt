@@ -3,7 +3,7 @@ import React from "react";
 import { useModal } from "../../../providers/model-provider";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 
-type Props = { title: string; subheading: string; children: React.ReactNode; defaultOption?: boolean };
+type Props = { title?: string; subheading?: string; children: React.ReactNode; defaultOption?: boolean };
 
 const CustomModal = ({ title, subheading, children, defaultOption }: Props) => {
   const {isOpen, setClose} = useModal()
@@ -12,10 +12,10 @@ const CustomModal = ({ title, subheading, children, defaultOption }: Props) => {
       open={isOpen || defaultOption}
       onOpenChange={setClose}
     >
-      <DialogContent className="overflow-scroll md:max-h-[700px] md:h-fit h-screen bg-card">
-        <DialogHeader className="pt-8 text-left">
-          <DialogTitle className="text-2xl font-bold">{title}</DialogTitle>
-          <DialogDescription>{subheading}</DialogDescription>
+      <DialogContent className="overflow-scroll md:max-h-[700px] md:h-fit h-screen bg-[#191a1d] border-none ">
+        <DialogHeader className=" text-left">
+          {title?<DialogTitle className="pb-2">{title}</DialogTitle>:<></>}
+          {subheading?<DialogDescription className="!mb-5">{subheading}</DialogDescription>:<></>}
           {children}
         </DialogHeader>
       </DialogContent>

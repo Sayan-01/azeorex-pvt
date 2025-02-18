@@ -3,14 +3,15 @@ import { useModal } from "../../../../../providers/model-provider";
 import { Button } from "@/components/ui/button";
 import CustomModal from "@/components/global/CustomModal";
 import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
+import clsx from "clsx";
 
-const FunnelPageCreateBtn = ({userId, projectId,length}:{userId:string, projectId:string, length: number}) => {
+const FunnelPageCreateBtn = ({ userId, projectId, length, className }: { userId: string; projectId: string; length: number; className?: string }) => {
   const { setOpen } = useModal();
 
   return (
     <Button
-    size="sm"
-      className="top-[22px] bg-blue-500 hover:bg-blue-500/80 text-white hover:text-white absolute right-5 "
+      size="sm"
+      className={clsx(" bg-blue-500 hover:bg-blue-500/80 text-white hover:text-white ", className)}
       onClick={() => {
         setOpen(
           <CustomModal

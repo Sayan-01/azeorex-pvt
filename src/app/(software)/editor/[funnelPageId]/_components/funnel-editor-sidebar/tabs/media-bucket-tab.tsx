@@ -17,7 +17,7 @@ const MediaBucketTab = (props: Props) => {
       setdata(response);
     };
     fetchData();
-  }, [props.agencyId]);
+  }, []);
 
   return (
     <div className="h-[900px] bg-editor-bcgc overflow-x-scroll box-1 p-4 select-none">

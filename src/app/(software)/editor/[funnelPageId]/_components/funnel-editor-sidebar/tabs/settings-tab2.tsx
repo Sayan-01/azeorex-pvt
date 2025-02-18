@@ -23,6 +23,7 @@ import {
   DraftingCompass,
   Eye,
   EyeClosed,
+  Link,
   LucideImageDown,
   Mouse,
   MoveDown,
@@ -109,27 +110,33 @@ const SettingsTab = () => {
           <AccordionTrigger className="!no-underline font-semibold">Special element</AccordionTrigger>
           <AccordionContent className="pb-0">
             {state.editor.selectedElement.type === "link" && !Array.isArray(state.editor.selectedElement.content) && (
-              <div className="flex flex-col pb-4">
-                <p className="text-muted-foreground text-xs">Link Path</p>
-                <Input
+              <div className="flex gap-2">
+                <div className="flex items-center pb-4">
+                  <p className="text-muted-foreground text-xs w-20">Link Path</p>
+                  <Input
                   id="href"
                   placeholder="https:domain.example.com/pathname"
                   onChange={handleChangeCustomValues}
                   value={state.editor.selectedElement.content.href}
                 />
+                </div>
               </div>
             )}
           </AccordionContent>
           <AccordionContent className="pb-0">
             {state.editor.selectedElement.type === "image" && !Array.isArray(state.editor.selectedElement.content) && (
-              <div className="flex flex-col pb-4">
-                <p className="text-muted-foreground text-xs">Link Path</p>
-                <Input
-                  id="src"
-                  placeholder="https:domain.example.com/pathname"
-                  onChange={handleChangeCustomValues}
-                  value={state.editor.selectedElement.content.src}
-                />
+              <div className="flex gap-2">
+                <div className="flex items-center pb-4">
+                  <p className="text-muted-foreground text-xs w-20">Link Path</p>
+                  <Input
+                    id="src"
+                    placeholder="https:domain.example.com/pathname"
+                    onChange={handleChangeCustomValues}
+                    value={state.editor.selectedElement.content.src}
+                  >
+                    <Link size={13} />
+                  </Input>
+                </div>
               </div>
             )}
           </AccordionContent>
@@ -144,6 +151,7 @@ const SettingsTab = () => {
             <div className="flex gap-2 mb-2">
               <div className="flex flex-col">
                 <Input
+                type="number"
                   placeholder="Auto"
                   id="width"
                   onChange={handleOnChanges}
@@ -278,7 +286,7 @@ const SettingsTab = () => {
               />
             </div>
           </div> */}
-            <div className="flex gap-2 mb-2">
+            <div className="flex gap-2">
               <div className="flex flex-col w-full">
                 <Input
                   id="opacity"
@@ -878,7 +886,7 @@ const SettingsTab = () => {
               <p className=" text-muted-foreground text-xs w-20">Display</p>
 
               <Tabs
-              className="flex-1"
+                className="flex-1"
                 onValueChange={(e) =>
                   handleOnChanges({
                     target: {
@@ -914,7 +922,7 @@ const SettingsTab = () => {
             <div className="w-full flex items-center">
               <p className=" text-muted-foreground text-xs w-20"> Direction</p>
               <Tabs
-              className="flex-1"
+                className="flex-1"
                 onValueChange={(e) =>
                   handleOnChanges({
                     target: {

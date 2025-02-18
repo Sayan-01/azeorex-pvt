@@ -18,6 +18,7 @@ import FileUpload from "../global/FileUpload";
 import { Loader } from "../global/Loader";
 import { Button } from "../ui/button";
 import { upsertProject } from "@/lib/queries";
+import { Separator } from "../ui/separator";
 
 interface CreateProjectProps {
   defaultData?: Funnel;
@@ -74,11 +75,8 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
     router.refresh();
   };
   return (
-    <Card className="flex-1">
-      <CardHeader>
-        <CardTitle>Project Details</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div className="flex-1 border-none">
+      <div className="border-none">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -87,12 +85,32 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
             <FormField
               disabled={isLoading}
               control={form.control}
-              name="name"
+              name="favicon"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Project Name</FormLabel>
+                  <FormLabel className="">Favicon</FormLabel>
+                  <FormControl>
+                    <FileUpload
+                      className="bg-[#202124] border border-[#2c2d30]"
+                      apiEndpoint="subaccountLogo"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              disabled={isLoading}
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="flex gap-2 items-center">
+                  <FormLabel className="w-[200px]">Project Name</FormLabel>
                   <FormControl>
                     <Input
+                      className="bg-[#202124] border border-[#2c2d30]"
                       placeholder="Name"
                       {...field}
                     />
@@ -105,10 +123,11 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Project Description</FormLabel>
+                <FormItem className="flex gap-2 items-center">
+                  <FormLabel className="w-[200px]">Project Description</FormLabel>
                   <FormControl>
                     <Textarea
+                      className="bg-[#202124] border border-[#2c2d30]"
                       placeholder="Tell us a little bit more about this Project."
                       {...field}
                     />
@@ -121,10 +140,11 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
               control={form.control}
               name="subDomainName"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sub domain</FormLabel>
+                <FormItem className="flex gap-2 items-center">
+                  <FormLabel className="w-[200px]">Sub domain</FormLabel>
                   <FormControl>
                     <Input
+                      className="bg-[#202124] border border-[#2c2d30]"
                       placeholder="Sub domain for funnel"
                       {...field}
                     />
@@ -132,26 +152,10 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
                 </FormItem>
               )}
             />
-            <FormField
-              disabled={isLoading}
-              control={form.control}
-              name="favicon"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Favicon</FormLabel>
-                  <FormControl>
-                    <FileUpload
-                      apiEndpoint="subaccountLogo"
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Separator className="mt-2"/>
+
             <Button
-              className="w-20 mt-4"
+              className="bg-main hover:bg-main/80 text-white w-full mt-2"
               disabled={isLoading}
               type="submit"
             >
@@ -159,8 +163,8 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
             </Button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

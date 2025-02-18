@@ -628,7 +628,7 @@ export const createMedia = async (agencyId: string, mediaFile: CreateMediaType) 
     data: {
       link: mediaFile.link,
       name: mediaFile.name,
-      agencyId: agencyId,
+      projectId: agencyId,
     },
   });
 
@@ -638,7 +638,7 @@ export const createMedia = async (agencyId: string, mediaFile: CreateMediaType) 
 //=========================================================================
 
 export const getMedia = async (agencyId: string) => {
-  const mediafiles = await db.agency.findUnique({
+  const mediafiles = await db.project.findUnique({
     where: {
       id: agencyId,
     },
@@ -646,7 +646,5 @@ export const getMedia = async (agencyId: string) => {
   });
   return mediafiles;
 };
-
-
 
 //=============================================================================
