@@ -37,10 +37,10 @@ const TemplateCard = ({ item }: { item: any }) => {
           </Carousel>
           <div className="pt-[10px] relative">
             <div className="flex justify-between items-center overflow-hidden mb-[4px]">
-              <h2 className="text-[14px] text-zinc-300/90 ">{formatTitle(item.title)}</h2>
-              <div className={" lowerc text-xs absolute top-3 right-0 bg-zinc-800 px-2 py-[2px] rounded-md text-blue-400 items-right justify-center "}>{item.access}</div>
+              <h2 className="md:text-sm text-base text-zinc-300/90 ">{formatTitle(item.title)}</h2>
+              <div className={" md:text-xs text-sm absolute top-3 right-0 bg-zinc-800 px-2 py-[2px] rounded-md text-blue-400 items-right justify-center "}>{item.access}</div>
             </div>
-            <p className="text-[12px] text_line text-zinc-500 leading-snug ">{item.description}</p>
+            <p className="md:text-xs text-sm text_line text-zinc-500 leading-snug ">{item.description}</p>
           </div>
         </div>
       </Link>

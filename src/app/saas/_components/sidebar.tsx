@@ -19,7 +19,7 @@ const Sidebar = () => {
         onClick={() => {
           setIsOpen(true);
         }}
-        className="h-9 w-9 flex items-center justify-center bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 absolute md:hidden left-5 top-5"
+        className="h-9 w-9 flex items-center justify-center bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 absolute z-[50] md:hidden left-5 top-5"
       >
         <Menu size={18} />
       </div>
@@ -27,9 +27,9 @@ const Sidebar = () => {
         onClick={() => {
           setIsOpen(false);
         }}
-        className={`bg-[#0000009c] absolute w-full h-full z-[10] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
+        className={`bg-[#0000009c] absolute w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
       ></div>
-      <div className={`bg-[#141414] flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full absolute z-[20] md:relative duration-200 ${isOpen ? "left-0" : "-left-[240px] md:left-0"}`}>
+      <div className={`bg-[#141414] flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full absolute z-[50] md:relative duration-200 ${isOpen ? "left-0" : "-left-[240px] md:left-0"}`}>
         <div>
           <Popover>
             <PopoverTrigger

@@ -19,7 +19,7 @@ const TemplateComponent = ({ templates }: Props) => {
 
   return (
     <div className="pb-7">
-      <nav className="flex justify-between items-center">
+      <nav className="flex justify-between items-center bg-[#141414] top-0">
         <div className=" md:flex items-center gap-2 rounded-full w-max hidden">
           <h3 className="text-white/70">Templates</h3>
           <ChevronRight size={16} />
@@ -36,8 +36,7 @@ const TemplateComponent = ({ templates }: Props) => {
               placeholder="Search..."
             />
           </div>
-          <CreatorBtn className="md:flex hidden"/>
-          
+          <CreatorBtn className="md:flex hidden" />
         </div>
       </nav>
       <section className="md:my-7 my-5 mb-4x` md:mb-6">
@@ -87,7 +86,7 @@ const TemplateComponent = ({ templates }: Props) => {
         setFilterQuery={setFilterQuery}
       />
       <section>
-        <div className="xxl  md:gap-6 map-5">
+        <div className="xxl  md:gap-6 gap-5">
           {templates
             .filter((item) => item.title.toLowerCase().includes(query) && (filterQuery === "" || item.category.includes(filterQuery)))
             .map((item) => {
