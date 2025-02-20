@@ -40,7 +40,7 @@ const TemplateCard = ({ item }: { item: any }) => {
               <h2 className="text-[14px] text-zinc-300/90 ">{formatTitle(item.title)}</h2>
               <div className={" lowerc text-xs absolute top-3 right-0 bg-zinc-800 px-2 py-[2px] rounded-md text-blue-400 items-right justify-center "}>{item.access}</div>
             </div>
-            <p className="text-[12px] text-zinc-500 leading-snug ">{`${item.description.substring(0, 70)}...`}</p>
+            <p className="text-[12px] text_line text-zinc-500 leading-snug ">{item.description}</p>
           </div>
         </div>
       </Link>

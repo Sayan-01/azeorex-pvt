@@ -24,8 +24,8 @@ const TemplateComponent = ({ templates }: Props) => {
           <h3 className="text-white/70">Templates</h3>
           <ChevronRight size={16} />
         </div>
-        <div className="md:ml-0 ml-11 flex gap-3">
-          <div className="flex items-center h-8 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30">
+        <div className="md:ml-0 ml-12 flex gap-3 w-full md:w-auto">
+          <div className="flex items-center md:h-8 h-9 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-full">
             <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
               <IoIosSearch size={18} />
             </div>
@@ -40,8 +40,8 @@ const TemplateComponent = ({ templates }: Props) => {
           
         </div>
       </nav>
-      <section className="my-7 mb-6">
-        <div className="bg-[#ffffff08] rounded-xl p-6 flex gap-3 items-center">
+      <section className="md:my-7 my-5 mb-4x` md:mb-6">
+        <div className="bg-[#ffffff08] rounded-xl md:p-6 p-4 flex gap-3 items-center">
           <svg
             width="12"
             height="18"
@@ -87,7 +87,7 @@ const TemplateComponent = ({ templates }: Props) => {
         setFilterQuery={setFilterQuery}
       />
       <section>
-        <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3  gap-6">
+        <div className="xxl  md:gap-6 map-5">
           {templates
             .filter((item) => item.title.toLowerCase().includes(query) && (filterQuery === "" || item.category.includes(filterQuery)))
             .map((item) => {

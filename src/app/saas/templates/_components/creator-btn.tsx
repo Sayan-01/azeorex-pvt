@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { MoveRight } from "lucide-react";
+import { MoveRight, Plus } from "lucide-react";
 import React from "react";
 
 const CreatorBtn = ({ className }: { className?: string }) => {
@@ -9,9 +9,14 @@ const CreatorBtn = ({ className }: { className?: string }) => {
       <AlertDialogTrigger asChild>
         <Button
           size="sm"
-          className={"bg-blue-500 hover:bg-blue-500/80 text-white items-center flex gap-2"}
+          className={`bg-blue-500 hover:bg-blue-500/80 text-white items-center flex gap-2 ${className}`}
         >
-          Became a creator <MoveRight size={15} />
+          <p className="hidden lg:flex items-center gap-2">
+            Became a creator <MoveRight size={15} />
+          </p>
+          <p className="lg:hidden block">
+            <Plus size={16} />
+          </p>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-[425px]">
@@ -19,9 +24,7 @@ const CreatorBtn = ({ className }: { className?: string }) => {
           <AlertDialogTitle>Edit profile</AlertDialogTitle>
           <AlertDialogDescription>Make changes to your profile here. Click save when you're done.</AlertDialogDescription>
         </AlertDialogHeader>
-        <div className="grid gap-4 py-4">
-          
-        </div>
+        <div className="grid gap-4 py-4"></div>
         <AlertDialogFooter>
           <Button type="submit">Save changes</Button>
         </AlertDialogFooter>
