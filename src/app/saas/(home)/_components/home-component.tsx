@@ -88,7 +88,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
         </div>
       </section>
       <section>
-        <div className="grid grid-cols-5 gap-6">
+        <div className="grid lg:grid-cols-5 grid-cols-4 gap-6">
           {funnels
             .filter((item) => item.name.toLocaleLowerCase().includes(query))
             .slice(0, 5)
@@ -137,7 +137,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             </Link>
           </div>
         </div>
-        <div className="grid grid-cols-5 gap-6 mt-5">
+        <div className="grid xl:grid-cols-5 lg:grid-cols-4 gap-6 mt-5">
           {templates
             .filter((item) => item.title.toLocaleLowerCase().includes(query))
             .slice(0, 5)

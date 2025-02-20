@@ -20,23 +20,23 @@ const TemplateComponent = ({ templates }: Props) => {
   return (
     <div className="pb-7">
       <nav className="flex justify-between items-center">
-        <div className=" flex items-center gap-2 rounded-full w-max">
+        <div className=" md:flex items-center gap-2 rounded-full w-max hidden">
           <h3 className="text-white/70">Templates</h3>
           <ChevronRight size={16} />
         </div>
-        <div className=" flex gap-3">
+        <div className="md:ml-0 ml-11 flex gap-3">
           <div className="flex items-center h-8 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30">
             <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
               <IoIosSearch size={18} />
             </div>
             <input
-              className="h-full bg-transparent rounded-r-md px-2 text-xs w-[210px] outline-none border-none"
+              className="h-full bg-transparent rounded-r-md px-2 text-xs md:w-[210px] w-full outline-none border-none"
               type="text"
               onChange={(e) => setQuery(e.target.value.toLowerCase())}
               placeholder="Search..."
             />
           </div>
-          <CreatorBtn></CreatorBtn>
+          <CreatorBtn className="md:flex hidden"/>
           
         </div>
       </nav>
@@ -57,7 +57,7 @@ const TemplateComponent = ({ templates }: Props) => {
             ></path>
           </svg>
           <h4>Upgrade to Super today!</h4>
-          <p className="flex gap-3 items-center text-[13px] text-zinc-500">
+          <p className="md:flex gap-3 items-center text-[13px] text-zinc-500 hidden">
             We improved Spline Super payments in your region.
             <svg
               width="16"
@@ -87,7 +87,7 @@ const TemplateComponent = ({ templates }: Props) => {
         setFilterQuery={setFilterQuery}
       />
       <section>
-        <div className="grid grid-cols-5 gap-6">
+        <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3  gap-6">
           {templates
             .filter((item) => item.title.toLowerCase().includes(query) && (filterQuery === "" || item.category.includes(filterQuery)))
             .map((item) => {
