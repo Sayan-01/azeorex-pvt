@@ -8,6 +8,7 @@ import Image from "next/image";
 import CreateProjectButton from "../../projects/_components/CreateProjectButton";
 import Card from "../../_components/card";
 import TemplateCard from "@/components/design/TemplateCard";
+import EmptyStatefunnel from "@/components/global/empty/empty-state-funnel";
 
 type Props = {
   funnels: any[];
