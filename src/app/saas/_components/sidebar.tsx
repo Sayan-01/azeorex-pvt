@@ -29,7 +29,7 @@ const Sidebar = () => {
         }}
         className={`bg-[#0000009c] fixed w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
       ></div>
-      <div className={`bg-[#141414] flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full fixed z-[50] md:relative duration-200 ${isOpen ? "left-0" : "-left-[240px] md:left-0"}`}>
+      <div className={`bg-[#141414] inset-y-0 flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full fixed z-[50] md:relative duration-200 ${isOpen ? "left-0" : "-left-[240px] md:left-0"}`}>
         <div>
           <Popover>
             <PopoverTrigger
