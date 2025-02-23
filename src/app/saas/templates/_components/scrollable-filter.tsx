@@ -3,7 +3,7 @@ import React from "react";
 
 const ScrollableFilter = ({ filterQuery, setFilterQuery }: { filterQuery: string; setFilterQuery: any }) => {
   return (
-    <div className=" w-full md:mb-6 mb-5 flex items-center md:gap-4 gap-4 overflow-x-auto box">
+    <div className=" w-full md:mb-6 mb-5 flex items-center md:gap-4 gap-4 overflow-x-auto box ">
       {category.map((item) => {
         return (
           <button

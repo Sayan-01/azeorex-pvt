@@ -19,7 +19,7 @@ const TemplateComponent = ({ templates }: Props) => {
 
   return (
     <div className="pb-7">
-      <nav className="flex justify-between items-center bg-[#141414] top-0">
+      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
         <div className=" md:flex items-center gap-2 rounded-full w-max hidden">
           <h3 className="text-white/70">Templates</h3>
           <ChevronRight size={16} />
@@ -39,7 +39,7 @@ const TemplateComponent = ({ templates }: Props) => {
           <CreatorBtn className="md:flex hidden" />
         </div>
       </nav>
-      <section className="md:my-7 my-5 mb-4x` md:mb-6">
+      <section className="mb-4 md:mb-6 md:px-7 px-5">
         <div className="bg-[#ffffff08] rounded-xl md:p-6 p-4 flex gap-3 items-center">
           <svg
             width="12"
@@ -81,12 +81,14 @@ const TemplateComponent = ({ templates }: Props) => {
           </p>
         </div>
       </section>
-      <ScrollableFilter
-        filterQuery={filterQuery}
-        setFilterQuery={setFilterQuery}
-      />
-      <section>
-        <div className="xxl  md:gap-6 gap-5">
+      <div className="md:px-7 px-5">
+        <ScrollableFilter
+          filterQuery={filterQuery}
+          setFilterQuery={setFilterQuery}
+        />
+      </div>
+      <section className="md:px-7 px-5">
+        <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6">
           {templates
             .filter((item) => item.title.toLowerCase().includes(query) && (filterQuery === "" || item.category.includes(filterQuery)))
             .map((item) => {

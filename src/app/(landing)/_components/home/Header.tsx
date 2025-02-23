@@ -108,7 +108,7 @@ const Header = async () => {
                   ) : (
                     <>
                       <Link
-                        href={`${process.env.NEXT_URL}/auth/login`}
+                        href={`${process.env.NEXT_URL}auth/login`}
                         className="hidden sm:flex"
                       >
                         <Button blue>Login</Button>
@@ -117,7 +117,7 @@ const Header = async () => {
                       <div className="hidden sm:flex">
                         <Link
                           className="rounded-full bg-gray-100 px-5 py-3 text-sm font-medium text-teal-600 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
-                          href={`${process.env.NEXT_URL}/auth/register`}
+                          href={`${process.env.NEXT_URL}auth/register`}
                         >
                           Register
                         </Link>

@@ -17,25 +17,24 @@ type Props = {
 const HomeComponent = ({ funnels, templates, userId }: Props) => {
   const [query, setQuery] = useState("");
   return (
-    <div className="">
-      <nav className="flex justify-between items-center">
-        <div className=" flex items-center gap-2 rounded-full w-max">
+    <div className="pb-7">
+      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
+        <div className=" md:flex items-center gap-2 rounded-full w-max hidden">
           <h3 className="text-white/70">Home</h3>
           <ChevronRight size={16} />
         </div>
-        <div className=" flex gap-3">
-          <div className="flex items-center h-8 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30">
+        <div className="md:ml-0 ml-12 flex gap-3 w-full md:w-auto">
+          <div className="flex items-center md:h-8 h-9 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-full">
             <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
               <IoIosSearch size={18} />
             </div>
             <input
-              className="h-full bg-transparent rounded-r-md px-2 text-xs w-[210px] outline-none border-none"
+              className="h-full bg-transparent rounded-r-md px-2 text-xs md:w-[210px] w-full outline-none border-none"
               type="text"
               onChange={(e) => setQuery(e.target.value.toLowerCase())}
               placeholder="Search..."
             />
           </div>
-
           <Button
             size="sm"
             className="bg-main hover:bg-main/80 text-white w-28"
@@ -45,7 +44,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           <CreateProjectButton userId={userId} />
         </div>
       </nav>
-      <section className="my-7">
+      <section className="mb-4 md:mb-6 md:px-7 px-5">
         <div className="bg-[#ffffff08] rounded-xl p-6 flex gap-3 items-center">
           <svg
             width="12"
@@ -62,7 +61,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             ></path>
           </svg>
           <h4>Upgrade to Super today!</h4>
-          <p className="flex gap-3 items-center text-[13px] text-zinc-500">
+          <p className="md:flex gap-3 items-center text-[13px] text-zinc-500 hidden">
             We improved Spline Super payments in your region.
             <svg
               width="16"
@@ -87,21 +86,25 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           </p>
         </div>
       </section>
-      <section>
-        <div className="grid lg:grid-cols-5 grid-cols-4 gap-6">
-          {funnels
-            .filter((item) => item.name.toLocaleLowerCase().includes(query))
-            .slice(0, 5)
-            .map((item) => {
-              return (
-                <Card
-                  id={item.id}
-                  title={item.name}
-                  updatedAt={item.updatedAt}
-                />
-              );
-            })}
-        </div>
+      <section className="mb-6 md:px-7 px-5">
+        {funnels.length === 0 ? (
+          <EmptyStatefunnel />
+        ) : (
+          <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
+            {funnels
+              .filter((item) => item.name.toLocaleLowerCase().includes(query))
+              .slice(0, 5)
+              .map((item) => {
+                return (
+                  <Card
+                    id={item.id}
+                    title={item.name}
+                    updatedAt={item.updatedAt}
+                  />
+                );
+              })}
+          </div>
+        )}
         <div className="flex items-center justify-center mt-6">
           <Link
             href={"/saas/projects"}
@@ -112,7 +115,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           </Link>
         </div>
       </section>
-      <section className="mb-6">
+      <section className="mb-6 md:px-7 px-5">
         <div className="flex items-center justify-between gap-3">
           {/* <h3 className="text-white/70">Templates</h3> */}
           <div className=" flex items-center gap-3 px-4 pl-1.5 py-1.5 rounded-full">
@@ -137,7 +140,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             </Link>
           </div>
         </div>
-        <div className="grid xl:grid-cols-5 lg:grid-cols-4 gap-6 mt-5">
+        <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
           {templates
             .filter((item) => item.title.toLocaleLowerCase().includes(query))
             .slice(0, 5)
@@ -146,7 +149,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             })}
         </div>
       </section>
-      <section className="mb-6">
+      <section className="mb-6 md:px-7 px-5">
         <div className="flex items-center justify-between gap-3">
           {/* <h3 className="text-white/70">Templates</h3> */}
           <div className=" flex items-center gap-3 px-4 pl-1.5 py-1.5 rounded-full">
@@ -171,7 +174,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             </Link>
           </div>
         </div>
-        <div className="grid grid-cols-5 gap-6 mt-5">
+        <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
           {templates
             .filter((item) => item.title.toLocaleLowerCase().includes(query))
             .slice(0, 5)

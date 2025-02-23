@@ -18,7 +18,9 @@ const FunnelPage = async ({ params }: Props) => {
   if (!funnelPages) return redirect(`saas/projects`);
 
   return (
-    <div className="pb-7 h-full flex flex-col gap-3">
+    <div
+      className="md:py-7 py-5 md:px-7 px-5 h-full flex flex-col gap-3"
+    >
       <div className="flex gap-2 !h-8 py-1 items-center text-white/70 ">
         <Link
           href={`/ssas/projects`}

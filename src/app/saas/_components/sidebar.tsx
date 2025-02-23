@@ -27,9 +27,9 @@ const Sidebar = () => {
         onClick={() => {
           setIsOpen(false);
         }}
-        className={`bg-[#0000009c] absolute w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
+        className={`bg-[#0000009c] fixed w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
       ></div>
-      <div className={`bg-[#141414] flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full absolute z-[50] md:relative duration-200 ${isOpen ? "left-0" : "-left-[240px] md:left-0"}`}>
+      <div className={`bg-[#141414] flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full fixed z-[50] md:relative duration-200 ${isOpen ? "left-0" : "-left-[240px] md:left-0"}`}>
         <div>
           <Popover>
             <PopoverTrigger
@@ -70,7 +70,7 @@ const Sidebar = () => {
               >
                 <Link
                   href={sidebarOptions.link as Url}
-                  className="flex items-center gap-2  h-full rounded-md transition-all md:w-full w-[320px]"
+                  className="flex items-center gap-2  h-full rounded-md transition-all md:w-full "
                 >
                   <div className="flex items-center gap-2  duration-300 text-sm text-zinc-400/80">
                     {sidebarOptions.icon}
@@ -85,7 +85,7 @@ const Sidebar = () => {
           <div className="bg-[#1e1f22] w-full rounded-xl flex flex-col gap-4 p-4 mb-4">
             <div>
               <h5 className="text-sm text-zinc-300 mb-0.5">Upgrade your plan</h5>
-              <p className="text-xs text-zinc-500">For unlock all feature on azeorex.</p>
+              <p className="text-xs text-zinc-500 md:block hidden">For unlock all feature on azeorex.</p>
             </div>
             <Button
               className="bg-main hover:bg-main/80 text-white"
@@ -122,7 +122,7 @@ const Sidebar = () => {
                 >
                   <Link
                     href={sidebarOptions.link as Url}
-                    className="flex items-center gap-2  h-full rounded-md transition-all md:w-full w-[320px]"
+                    className="flex items-center gap-2  h-full rounded-md transition-all md:w-full"
                   >
                     <div className="flex items-center gap-2  duration-300 text-sm text-zinc-400/80">
                       {sidebarOptions.icon}
