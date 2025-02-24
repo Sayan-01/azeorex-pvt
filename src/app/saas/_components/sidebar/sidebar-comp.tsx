@@ -31,7 +31,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
   if (!isMounted) return;
   return (
     <Sheet
-      modal={false}
+      modal={!defaultOption}
       {...openState}
     >
       <SheetTrigger
@@ -46,8 +46,9 @@ const SidebarComp = ({ defaultOption }: Props) => {
         className={`bg-[#0000009c] fixed w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
       ></div> */}
       <SheetContent
+      showX={!defaultOption}
         side="left"
-        className={clsx(`bg-[#141414] flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 fixed z-[150]  duration-200 border-r-0`, {
+        className={clsx(`bg-[#141414] flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7  duration-200 border-r-0`, {
           "hidden md:flex z-0 ": defaultOption,
           "flex md:hidden z-[100] ": !defaultOption,
         })}
