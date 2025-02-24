@@ -38,11 +38,14 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           </div>
           <Button
             size="sm"
-            className="bg-main hover:bg-main/80 text-white w-28"
+            className="bg-main hover:bg-main/80 text-white w-28 md:flex hidden"
           >
             Template's
           </Button>
-          <CreateProjectButton userId={userId} />
+          <CreateProjectButton
+            userId={userId}
+            className="md:flex hidden"
+          />
         </div>
       </nav>
       <section className="mb-4 md:mb-6 md:px-7 px-5">
