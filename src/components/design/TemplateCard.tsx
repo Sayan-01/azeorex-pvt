@@ -37,12 +37,11 @@ const TemplateCard = ({ item }: { item: any }) => {
             </CarouselContent>
           </Carousel>
           <div className="pt-[12px] relative">
-            
-            <div className="flex justify-between items-center overflow-hidden mb-[4px]">
-              <h2 className="md:text-sm text-base title_line text-zinc-300/90 w-[calc(100%-20px)]">{item.title}</h2>
+            <div className="flex justify-between items-center overflow-hidden mb-[1px]">
+              <h2 className="md:text-[14px] text-[16px] title_line text-zinc-300/90  w-[calc(100%-20px)]">{item.title}</h2>
               <div className={" md:text-xs text-sm absolute top-3 right-0 bg-zinc-800 px-2 py-[2px] rounded-md text-blue-400 items-right justify-center "}>{item.access}</div>
             </div>
-            <p className="md:text-xs text-sm description_line text-zinc-500 leading-snug">{item.description}</p>
+            <p className="md:text-[12px] text-[14px] title_line text-zinc-500">{item.description}</p>
           </div>
           {/* <div className="flex gap-3 pt-[12px]">
             <div>
