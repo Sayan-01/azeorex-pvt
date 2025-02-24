@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { GROUPLE_CONSTANT } from "@/constants";
 // import { SAAS_SIDEBAR } from "@/constants/menus";
 import { Bolt, ChevronsUpDown, HeartHandshake, Menu, Package, Star } from "lucide-react";
@@ -8,28 +9,49 @@ import { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useModal } from "../../../../../providers/model-provider";
+import clsx from "clsx";
 
-const Sidebar = () => {
+type Props = {
+  defaultOption?: boolean;
+};
+
+const SidebarComp = ({ defaultOption }: Props) => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const { setOpen } = useModal();
+  const [isMounted, setIsMounted] = useState(false);
+
+  const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return;
   return (
-    <>
-      <div
-        onClick={() => {
-          setIsOpen(true);
-        }}
+    <Sheet
+      modal={false}
+      {...openState}
+    >
+      <SheetTrigger
         className="h-9 w-9 flex items-center justify-center bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 absolute z-[50] md:hidden left-5 top-5"
       >
         <Menu size={18} />
-      </div>
-      <div
+      </SheetTrigger>
+      {/* <div
         onClick={() => {
           setIsOpen(false);
         }}
         className={`bg-[#0000009c] fixed w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
-      ></div>
-      <div className={`bg-[#141414] inset-y-0 flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full fixed z-[50] md:relative duration-200 ${isOpen ? "left-0" : "-left-[240px] md:left-0"}`}>
+      ></div> */}
+      <SheetContent
+        side="left"
+        className={clsx(`bg-[#141414] flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full fixed z-[150]  duration-200 border-r-0`, {
+          "hidden md:flex z-0 ": defaultOption,
+          "flex md:hidden z-[100] ": !defaultOption,
+        })}
+      >
         <div>
           <Popover>
             <PopoverTrigger
@@ -134,9 +156,9 @@ const Sidebar = () => {
             })}
           </div>
         </div>
-      </div>
-    </>
+      </SheetContent>
+    </Sheet>
   );
 };
 
-export default Sidebar;
+export default SidebarComp;
