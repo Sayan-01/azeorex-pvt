@@ -47,7 +47,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
       ></div> */}
       <SheetContent
         side="left"
-        className={clsx(`bg-[#141414] flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 h-full fixed z-[150]  duration-200 border-r-0`, {
+        className={clsx(`bg-[#141414] flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7 fixed z-[150]  duration-200 border-r-0`, {
           "hidden md:flex z-0 ": defaultOption,
           "flex md:hidden z-[100] ": !defaultOption,
         })}
