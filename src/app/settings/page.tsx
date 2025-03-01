@@ -78,19 +78,44 @@
 
 // export default Page;
 import React from "react";
-import Try1 from "./Try1";
-import ResizableMovableDiv from "./try4";
-import DraggableNumberInput from "./try6";
-import { Input } from "@/components/ui/draggable-input";
-import PinchZoomMove from "./try6";
-import ResizableDiv from "./try5";
-// import ResizableDiv from "./Try3";
-// import ResizableDivDs from "./Ds";
 
 const page = () => {
   return (
-    <div className="p-4">
-      <ResizableDiv/>
+    <div style={{ width: "100%", height: "100vh", backgroundColor: "#f9f9f9", display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          width: "320px",
+          maxWidth: "400px",
+          backgroundColor: "white",
+          borderRadius: "12px",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "1.5rem",
+          padding: "12px",
+        }}
+      >
+        <h1 style={{ fontSize: "2rem", fontWeight: "800", color: "#4a4a4a", marginBottom: "0.75rem" }}>Azeorex</h1>
+        <h3 style={{ color: "#27272a", fontSize: "1.125rem", fontWeight: "600" }}>Confirm your email!</h3>
+        <p style={{ color: "#71717a", textAlign: "center", fontSize: "0.875rem" }}>Thanks! Please use the following code to complete your registration.</p>
+        <div
+          style={{
+            backgroundColor: "#ECE3FF",
+            borderRadius: "8px",
+            padding: "12px 24px",
+            margin: "1rem 0",
+            letterSpacing: "6px",
+            color: "#27272a",
+            fontSize: "1.125rem",
+            fontWeight: "600",
+          }}
+        >
+          123456
+        </div>
+        <p style={{ color: "#444", fontSize: "0.875rem" }}>This code is valid for 1 hr</p>
+      </div>
     </div>
   );
 };

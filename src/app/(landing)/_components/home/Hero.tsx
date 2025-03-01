@@ -6,7 +6,7 @@ import { Container_y } from "./Container";
 import { auth } from "../../../../../auth";
 import { Paytone_One, Poppins } from "next/font/google";
 
-const poppins = Paytone_One({ subsets: ["latin"], weight: "400" });
+const poppin = Paytone_One({ subsets: ["latin"], weight: "400" });
 
 const Hero = async () => {
   const session = await auth();
@@ -21,7 +21,7 @@ const Hero = async () => {
             <div className=" flex flex-col items-center justify-center max-w-[89vw] md:max-w-2xl lg:max-w-[64vw]">
               <p className="uppercase mb-3 tracking-widest text-xs text-center text-blue-100 ">Dynamic Web Magic with Next.js</p>
 
-              <h1 className={`${poppins.className} text-center font-extrabold text-[35px] md:text-[48px] lg:text-[65px] leading-tight md:leading-[1.1]`}>
+              <h1 className={`${poppin.className} text-center font-extrabold text-[35px] md:text-[48px] lg:text-[65px] leading-tight md:leading-[1.1]`}>
                 Transform
                 <br className=" block sm:hidden" /> Your Dream
                 <br className=" sm:block hidden" /> Into Reality{" "}

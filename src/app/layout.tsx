@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "Convert your dream into design with precision",
 };
 
-const outf = Outfit({ subsets: ["latin"], weight: "400" });
+const outfi = Outfit({ subsets: ["latin"], weight: "400" });
 
 export default async function RootLayout({
   children,
@@ -26,7 +26,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={`bg-black scroll-smooth dark w-full overflow-auto min-h-screen antialiased box x ${outf.className}`}>
+        <body className={`bg-black scroll-smooth dark w-full overflow-auto min-h-screen antialiased box x ${outfi.className}`}>
           <ReactQueryProvider>
             <ModalProvider>
               <NextTopLoader

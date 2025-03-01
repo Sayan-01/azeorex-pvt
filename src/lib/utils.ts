@@ -27,10 +27,4 @@ export function timeAgo(timestamp: string): string {
   return `${years} years ago`;
 }
 
-export const generateVerificationToken = async () => {
-  //=> (email)
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const expires = new Date();
-  expires.setHours(expires.getHours() + 1);
-  return { otp, expires };
-};
+

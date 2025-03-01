@@ -7,23 +7,23 @@ import { FaGithub } from "react-icons/fa";
 const Socials = () => {
   return (
     <div className="flex flex-col space-y-4 mb-8">
-      <form action={Git_login}>
+      {/* <form action={Git_login}>
         <button
-          className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-[8px] h-10 font-medium shadow-input bg-[#10122C] dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+          className=" relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-white rounded-xl border-[1.7px] border-zinc-700 h-10 font-medium dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
           type="submit"
         >
           <FaGithub size={18} className=" text-neutral-800 dark:text-neutral-300" />
           <span className="text-neutral-700 dark:text-neutral-300 text-sm">GitHub</span>
           <BottomGradient />
         </button>
-      </form>
+      </form> */}
       <form action={Goo_login}>
         <button
-          className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-[8px] h-10 font-medium shadow-input bg-[#10122C] dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+          className=" relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-white rounded-xl border-[1.7px] border-zinc-700 h-10 font-medium shadow-[0px_0px_1px_1px_var(--neutral-800)]"
           type="submit"
         >
           <Google />
-          <span className="text-neutral-700 dark:text-neutral-300 text-sm">Google</span>
+          <span className="text-neutral-700 dark:text-neutral-300 text-sm">Log in with Google</span>
           <BottomGradient />
         </button>
       </form>

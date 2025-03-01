@@ -94,30 +94,32 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
         {funnels.length === 0 ? (
           <EmptyStatefunnel />
         ) : (
-          <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
-            {funnels
-              .filter((item) => item.name.toLocaleLowerCase().includes(query))
-              .slice(0, 5)
-              .map((item) => {
-                return (
-                  <Card
-                    id={item.id}
-                    title={item.name}
-                    updatedAt={item.updatedAt}
-                  />
-                );
-              })}
-          </div>
+          <>
+            <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
+              {funnels
+                .filter((item) => item.name.toLocaleLowerCase().includes(query))
+                .slice(0, 5)
+                .map((item) => {
+                  return (
+                    <Card
+                      id={item.id}
+                      title={item.name}
+                      updatedAt={item.updatedAt}
+                    />
+                  );
+                })}
+            </div>
+            <div className="flex items-center justify-center mt-6">
+              <Link
+                href={"/saas/projects"}
+                className="px-3 py-1.5 flex items-center gap-3 rounded-full bg-[#1e1f22] text-[12px] text-zinc-500 hover:text-zinc-300 duration-200"
+              >
+                <p>See all projects</p>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+          </>
         )}
-        <div className="flex items-center justify-center mt-6">
-          <Link
-            href={"/saas/projects"}
-            className="px-3 py-1.5 flex items-center gap-3 rounded-full bg-[#1e1f22] text-[12px] text-zinc-500 hover:text-zinc-300 duration-200"
-          >
-            <p>See all projects</p>
-            <ArrowRight size={13} />
-          </Link>
-        </div>
       </section>
       <section className="mb-6 md:px-7 px-5">
         <div className="flex items-center justify-between gap-3">

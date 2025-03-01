@@ -2,17 +2,14 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import connectDb from "@/lib/dbConnect";
 // import { User } from "../../../../../Models/user";
-import { generateVerificationToken } from "@/lib/utils";
 import verificationEmailSend from "@/lib/verificationEmailSend";
 import { db } from "@/lib/db";
 
-export const POST = async (req: any) => {
+export const POST = async (req: Request) => {
   // `await connectDb();
   // const { username, email, password } = await req.json();
   // const { otp, expires } = await generateVerificationToken();
-
   // if (!username || !email || !password) return NextResponse.json({ message: "Filled all details" }, { status: 500 });
-
   // const existingUserVerifiedByUsername = await db.user.findFirst({ where: { name: username } });
   // //=> User ache and se verified ooo
   // if (existingUserVerifiedByUsername) {
@@ -48,11 +45,28 @@ export const POST = async (req: any) => {
   //   },
   // });
   // // }
-
   // //send verification email
   // const emailRes = await verificationEmailSend({ email, username, varifiedToken: otp });
-
   // //after console.log(emailRes) we know this give a .status
   // if (emailRes.status != 200) return NextResponse.json({ message: "Something was wrong via send email" }, { status: 500 });
   // return NextResponse.json({ message: "Verification email send" }, { status: 200 });`
+
+  const { username, email, password, otp, expires } = await req.json();
+  let hashPass = await bcrypt.hash(password, 10);
+  const newUser = await db.user.create({
+    data: {
+      name: username,
+      email,
+      password: hashPass, // Assuming password hashing is done before this step
+      varifiedToken: otp, // Ensure field names match Prisma schema
+      varifiedTokenExpire: expires,
+      isVarified: true,
+      role: "USER",
+    },
+  });
+  if (newUser) {
+    return NextResponse.json({ message: "User created successfully" }, { status: 200 });
+  } else {
+    return NextResponse.json({ message: "User creation failed" }, { status: 500 });
+  }
 };

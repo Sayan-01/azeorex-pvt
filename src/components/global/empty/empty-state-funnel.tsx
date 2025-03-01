@@ -3,7 +3,7 @@ import React from "react";
 
 const EmptyStatefunnel = ({className}:{className?: string}) => {
   return (
-    <div className="flex flex-col gap-1 items-center justify-center">
+    <div className="flex flex-col gap-1 items-center justify-center my-14">
       <h3 className="text-lg font-semibold">No project found</h3>
       <p className="text-zinc-400 text-center">
         This area light up with your projects for that first create <br></br>your project or plese try again.

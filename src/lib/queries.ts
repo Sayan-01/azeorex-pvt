@@ -9,6 +9,7 @@ import { db } from "./db";
 import { v4 } from "uuid";
 import { Agency, Media, Prisma, User } from "@prisma/client";
 import { EditorElement } from "../../providers/editor/editor-provider";
+import verificationEmailSend from "./verificationEmailSend";
 
 //============================================================
 
@@ -36,6 +37,19 @@ export const getUserDetails = async () => {
 
   return userData;
 };
+//=============================================================
+
+export const IsUserEmailExist = async (email: string) => {
+  const response = await db.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+
+  if (response) return true;
+  else return false;
+  
+}
 
 //=============================================================
 
@@ -648,3 +662,10 @@ export const getMedia = async (agencyId: string) => {
 };
 
 //=============================================================================
+
+export const sendCode = async (email: string, username: string, otp: string) => {
+  const emailRes = await verificationEmailSend({ email, username, varifiedToken: otp });
+  if (emailRes) {
+    return { success: true, message: "Email error is", status: 200 };
+  } else return { success: false, message: "Email error is", status: 500 };
+};
