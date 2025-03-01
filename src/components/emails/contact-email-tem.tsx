@@ -1,4 +1,4 @@
-export const EmailTemplate = ({ firstName, email, budget, select, description, topic }) => (
+export const EmailTemplate = ({ firstName, email, budget, select, description, topic }:any) => (
   <div className="w-full h-full flex items-center justify-center">
     <div className="flex items-center justify-center flex-col gap-y-5">
       <h2>
