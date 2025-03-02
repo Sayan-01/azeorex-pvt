@@ -9,6 +9,7 @@ import ScrollableFilter from "./scrollable-filter";
 import { ChevronRight } from "lucide-react";
 import CreatorBtn from "./creator-btn";
 import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
+import { IoSearchOutline } from "react-icons/io5";
 
 type Props = {
   templates: any[];
@@ -91,9 +92,9 @@ const TemplateComponent = ({ templates }: Props) => {
       <section className="text-3xl mb-4 md:px-7 px-5 font-semibold sm:hidden">
         {/* <p>Hello Sayan</p>
               <p className="text-violet-400">Start your journey.</p> */}
-        <div className="flex items-center h-9 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-full ">
+        <div className="flex items-center h-11 bg-[#2d2f33] hover:bg-[#242529] rounded-full border border-[#545454]/30 w-full px-2">
           <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
-            <IoIosSearch size={18} />
+            <IoSearchOutline size={20} />
           </div>
           <input
             className="h-full bg-transparent rounded-r-md px-2 text-xs max-w-[210px] w-full outline-none border-none"

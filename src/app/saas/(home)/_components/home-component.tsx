@@ -10,6 +10,7 @@ import Card from "../../_components/card";
 import TemplateCard from "@/components/design/TemplateCard";
 import EmptyStatefunnel from "@/components/global/empty/empty-state-funnel";
 import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
+import { IoSearchOutline } from "react-icons/io5";
 
 type Props = {
   funnels: any[];
@@ -100,9 +101,9 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
       <section className="text-3xl mb-4 md:px-7 px-5 font-semibold sm:hidden">
         {/* <p>Hello Sayan</p>
         <p className="text-violet-400">Start your journey.</p> */}
-        <div className="flex items-center h-9 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-full ">
+        <div className="flex items-center h-11 bg-[#2d2f33] hover:bg-[#242529] rounded-full border border-[#545454]/30 w-full px-2">
           <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
-            <IoIosSearch size={18} />
+            <IoSearchOutline size={20} />
           </div>
           <input
             className="h-full bg-transparent rounded-r-md px-2 text-xs max-w-[210px] w-full outline-none border-none"
@@ -190,7 +191,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
                 height={200}
                 alt="figma"
               />
-            </div> 
+            </div>
             Figma Templates
           </div>
           <div className="flex items-center justify-end">
