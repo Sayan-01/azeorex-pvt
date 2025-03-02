@@ -43,12 +43,8 @@ const LandingPageNavbar = async () => {
                   </Link>
                 )}
                 <div className="md:flex gap-4 hidden">
-                  <UserBtn
-                    imageUrl={session?.user?.image || "/user.png"}
-                    username={session?.user?.name || ""}
-                    email={session?.user?.email || ""}
-                  >
-                    <div className="w-9 h-9 rounded-full overflow-hidden">
+                  <UserBtn size="-9 h-9">
+                    <div className=" rounded-full overflow-hidden">
                       <Image
                         alt="profile-image"
                         src={session?.user?.image || "/user.png"}
