@@ -1,3 +1,4 @@
+"use client";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import clsx from "clsx";
 import { Heart, HeartHandshake, LogOut, Settings } from "lucide-react";
@@ -6,27 +7,38 @@ import Link from "next/link";
 import React from "react";
 import { Sign_Out } from "../../../../../server/auth";
 import VerifyBtn from "@/components/buttons/VerifyBtn";
+import { auth } from "../../../../../auth";
+import { useSession } from "next-auth/react";
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
-  imageUrl?: string;
   margin?: string;
-  username: string;
-  email: string;
-  isVarified?: string;
-  isAdmin?: string;
+  size: string;
 };
 
-const UserBtn = async ({ children, className, imageUrl, margin, username, email, isVarified, isAdmin }: Props) => {
+const UserBtn = ({ children, className, margin, size }: Props) => {
+  const { data: session } = useSession();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
           aria-label={"User profile"}
-          className={clsx(className, " border-none outline-none")}
+          className={clsx(className, " border-none outline-none", size)}
         >
-          {children}
+          {children ? (
+            children
+          ) : (
+            <div className={`rounded-full overflow-hidden ${size}`}>
+              <Image
+                alt="profile-image"
+                src={session?.user?.image || "/avater.svg"}
+                className="w-full h-full"
+                width={100}
+                height={100}
+              />
+            </div>
+          )}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className={margin}>
@@ -36,39 +48,16 @@ const UserBtn = async ({ children, className, imageUrl, margin, username, email,
               <Image
                 alt="user-image"
                 className="w-11 h-11  rounded-full"
-                src={imageUrl || "/user.png"}
+                src={session?.user?.image || "/user.png"}
                 width={80}
                 height={80}
               />
             </div>
             <div>
-              <h1 className=" font-light">{username}</h1>
-              <p className=" font-thin opacity-50 text-xs">{email}</p>
+              <h1 className=" font-light">{session?.user?.name}</h1>
+              <p className=" font-thin opacity-50 text-xs">{session?.user?.email}</p>
             </div>
           </div>
-          {/* {isVarified ? (
-            <>
-              {isAdmin ? (
-                <Image
-                  alt="blue tick"
-                  className="w-4 h-4"
-                  src="/isAuth/bluetick.svg"
-                  width={20}
-                  height={20}
-                />
-              ) : (
-                <Image
-                  alt="green tick"
-                  className="w-4 h-4"
-                  src="/isAuth/greentick.svg"
-                  width={20}
-                  height={20}
-                />
-              )}
-            </>
-          ) : (
-            <VerifyBtn />
-          )} */}
         </DropdownMenuLabel>
         <DropdownMenuGroup>
           <Link
