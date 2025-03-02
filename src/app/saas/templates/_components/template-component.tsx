@@ -42,7 +42,7 @@ const TemplateComponent = ({ templates }: Props) => {
           <UserBtn
             size="md:h-8 h-9 md:w-8 w-9"
             margin="mt-2 z-[101] rounded-2xl"
-            className=" overflow-hidden  min-w-fit rounded-full bg-gradient-to-br from-[#08C741] to-[#0F39C8] text-violet-200 text-[20px] font-semibold items-center justify-center outline-none border-none"
+            className=" overflow-hidden  min-w-fit rounded-full bg-gradient-to-br from-[#08C741] to-[#0F39C8] text-violet-200 text-[20px] font-semibold items-center justify-center outline-none border-none "
           ></UserBtn>
         </div>
       </nav>

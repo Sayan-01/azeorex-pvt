@@ -58,7 +58,7 @@ const Header = async () => {
               </div>
 
               <div className="flex items-center justify-end gap-4 w-[100px]">
-                <div className="sm:flex sm:gap-4 items-center">
+                <div className="flex sm:gap-4 items-center">
                   {session ? (
                     <>
                       <div className="hidden sm:flex">
@@ -72,10 +72,10 @@ const Header = async () => {
 
                       <UserBtn
                         size="md:h-10 h-9 md:w-10 w-9"
-                        margin="mt-2 z-[101] rounded-2xl"
-                        className="hidden overflow-hidden  rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold sm:flex items-center justify-center outline-none border-none"
+                        margin=" z-[101] rounded-2xl"
+                        className=" overflow-hidden  rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold sm:flex items-center justify-center outline-none border-none"
                       ></UserBtn>
-                      <button
+                      {/* <button
                         className="sm:hidden overflow-hidden md:h-10 h-9 md:w-10 w-9 rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold flex items-center justify-center"
                         aria-label={session?.user?.image ? "Profile picture" : "User profile"}
                       >
@@ -91,7 +91,7 @@ const Header = async () => {
                         ) : (
                           ""
                         )}
-                      </button>
+                      </button> */}
                     </>
                   ) : (
                     <>
