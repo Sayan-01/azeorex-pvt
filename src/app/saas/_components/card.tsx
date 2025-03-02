@@ -33,7 +33,7 @@ const Card = ({ title, description, updatedAt, id }: Props) => {
           alt="image-placeholder"
         />
         <div className="p-3 pt-2">
-          <h3 className="md:text-[14px] text-[16px] text-zinc-300/90 -mb-[1px]">{String(title).charAt(0).toUpperCase() + String(title).slice(1)}</h3>
+          <h3 className="md:text-[14px] sm:text-[16px] text-[18px] text-zinc-300/90 -mb-[1px]">{String(title).charAt(0).toUpperCase() + String(title).slice(1)}</h3>
           <p className="md:text-[13px] text-[15px] text-zinc-500">Edited {time}.</p>
         </div>
       </div>

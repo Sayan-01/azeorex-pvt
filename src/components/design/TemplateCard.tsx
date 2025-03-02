@@ -38,10 +38,10 @@ const TemplateCard = ({ item }: { item: any }) => {
           </Carousel>
           <div className="pt-[12px] relative">
             <div className="flex justify-between items-center overflow-hidden -mb-[1px]">
-              <h2 className="md:text-[14px] text-[16px] title_line text-zinc-300/90  w-[76%]">{item.title}</h2>
+              <h2 className="md:text-[14px] sm:text-[16px] text-[18px] title_line text-zinc-300/90  w-[76%]">{item.title}</h2>
               <div
                 className={
-                  "flex items-center gap-1 md:text-xs text-sm absolute top-[14px] right-[2px] bg-[#0099ff26] hover:bg-[#0099ff26] backdrop-blur-lg w-9 h-9 rounded-full text-[#009bd8]   items-right justify-center "
+                  "flex items-center gap-1 md:text-xs text-sm absolute top-[14px] right-[2px] bg-[#0099ff26] hover:bg-[#0099ff26] backdrop-blur-lg sm:w-9 w-10 sm:h-9 h-10 rounded-full text-[#009bd8]   items-right justify-center "
                 }
               >
                 {item.access === "pro" ? (
