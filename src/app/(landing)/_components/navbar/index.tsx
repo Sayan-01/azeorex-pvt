@@ -48,7 +48,7 @@ const LandingPageNavbar = async () => {
                       <Image
                         alt="profile-image"
                         src={session?.user?.image || "/user.png"}
-                        className="w-full h-full"
+                        className=" w-full h-full"
                         width={100}
                         height={100}
                       />
