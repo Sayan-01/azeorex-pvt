@@ -22,7 +22,7 @@ const Card = ({ title, description, updatedAt, id }: Props) => {
   return (
     <Link href={`/saas/projects/${id}`}>
       <div
-        className="overflow-hidden rounded-2xl bg-[#202124]"
+        className="overflow-hidden rounded-2xl "
         // onDoubleClick={handleDoubleClick}
       >
         <Image
@@ -33,8 +33,8 @@ const Card = ({ title, description, updatedAt, id }: Props) => {
           alt="image-placeholder"
         />
         <div className="p-3 pt-2">
-          <h3 className="md:text-[14px] text-[16px] text-zinc-300/90 ">{String(title).charAt(0).toUpperCase() + String(title).slice(1)}</h3>
-          <p className="md:text-[12px] text-[14px] text-zinc-500">Edited {time}.</p>
+          <h3 className="md:text-[14px] text-[16px] text-zinc-300/90 -mb-[1px]">{String(title).charAt(0).toUpperCase() + String(title).slice(1)}</h3>
+          <p className="md:text-[13px] text-[15px] text-zinc-500">Edited {time}.</p>
         </div>
       </div>
     </Link>

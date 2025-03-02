@@ -57,9 +57,11 @@ const LoginForm = () => {
     }
   };
   return (
-    <div className="z-20 sm:w-[310px] w-[100px] ">
+    <div className="z-20 sm:w-[310px] w-[300px] ">
       <div className="flex items-center justify-center">
-        <h2 className={` text-[38px] text-neutral-800 dark:text-neutral-200 ${pay.className}`}>Azeorex</h2>
+        <Link href={`/`}>
+          <h2 className={` text-[38px] text-neutral-800 dark:text-neutral-200 ${pay.className}`}>Azeorex</h2>
+        </Link>{" "}
       </div>
       <p className="mt-5 text-sm opacity-60 text-center">Only login via email, Google, or 86 plus phone number login is supported in your region.</p>
       <Form {...form}>

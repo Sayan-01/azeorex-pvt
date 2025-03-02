@@ -98,9 +98,11 @@ const RegisterForm = () => {
   console.log(code);
 
   return (
-    <div className="z-20 sm:w-[310px] w-[100px] ">
+    <div className="z-20 sm:w-[310px] w-[300px] ">
       <div className="flex items-center justify-center">
-        <h2 className={` text-[38px] text-neutral-800 dark:text-neutral-200 ${pay.className}`}>Azeorex</h2>
+        <Link href={`/`}>
+          <h2 className={` text-[38px] text-neutral-800 dark:text-neutral-200 ${pay.className}`}>Azeorex</h2>
+        </Link>
       </div>
       <p className="mt-5 text-sm opacity-60 text-center">Only login via email, Google, or 86 plus phone number login is supported in your region.</p>
       <Form {...form}>
@@ -185,8 +187,8 @@ const RegisterForm = () => {
             />
             <div
               onClick={code ? undefined : getCode}
-              className={` cursor-pointer h-[42px] bg-zinc-700 text-white/60 rounded-xl text-sm inline-flex items-center justify-center whitespace-nowrap px-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-800 ${
-                code ? "opacity-30 hover:!bg-zinc-700" : "bg-zinc-700 "
+              className={` cursor-pointer h-[42px] border-[1.7px] border-zinc-700 text-white/60 rounded-xl text-sm inline-flex items-center justify-center whitespace-nowrap px-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-800 ${
+                code ? "opacity-30 hover:!bg-zinc-700" : "border-zinc-700 "
               }`}
             >
               Send code
@@ -204,7 +206,7 @@ const RegisterForm = () => {
             </RadioGroup>
 
             <div className="text-sm text-neutral-500">
-              I confirm that I have read, consent and agree to Azeorex's{" "}
+              I confirm that I have read and agree to the Azeorex's{" "}
               <a
                 href="https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html"
                 target="_blank"

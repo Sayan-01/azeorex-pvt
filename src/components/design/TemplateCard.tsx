@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
-import { MoveRight, Star } from "lucide-react";
+import { Award, Crown, MoveRight, Star } from "lucide-react";
 
 const TemplateCard = ({ item }: { item: any }) => {
   const formatTitle = (title: string) => {
@@ -24,7 +24,7 @@ const TemplateCard = ({ item }: { item: any }) => {
                   <CarouselItem key={idx}>
                     <div className=" overflow-hidden rounded-[10px]">
                       <Image
-                        className="w-full object-cover duration-500  aspect-[3/2] "
+                        className="w-full object-cover duration-200  aspect-[3/2] "
                         width={600}
                         height={600}
                         src={item || "/funnel-placeholder.svg"}
@@ -37,11 +37,27 @@ const TemplateCard = ({ item }: { item: any }) => {
             </CarouselContent>
           </Carousel>
           <div className="pt-[12px] relative">
-            <div className="flex justify-between items-center overflow-hidden mb-[1px]">
-              <h2 className="md:text-[14px] text-[16px] title_line text-zinc-300/90  w-[calc(100%-20px)]">{item.title}</h2>
-              <div className={" md:text-xs text-sm absolute top-3 right-0 bg-zinc-800 px-2 py-[2px] rounded-md text-blue-400 items-right justify-center "}>{item.access}</div>
+            <div className="flex justify-between items-center overflow-hidden -mb-[1px]">
+              <h2 className="md:text-[14px] text-[16px] title_line text-zinc-300/90  w-[76%]">{item.title}</h2>
+              <div
+                className={
+                  "flex items-center gap-1 md:text-xs text-sm absolute top-[14px] right-[2px] bg-[#0099ff26] hover:bg-[#0099ff26] backdrop-blur-lg w-9 h-9 rounded-full text-[#009bd8]   items-right justify-center "
+                }
+              >
+                {item.access === "pro" ? (
+                  <Crown
+                    size={17}
+                    strokeWidth={1.5}
+                  />
+                ) : (
+                  <Award
+                    size={17}
+                    strokeWidth={1.5}
+                  />
+                )}
+              </div>
             </div>
-            <p className="md:text-[12px] text-[14px] title_line text-zinc-500">{item.description}</p>
+            <p className="md:text-[13px] text-[15px] title_line text-zinc-500 w-[80%]">{item.description}</p>
           </div>
           {/* <div className="flex gap-3 pt-[12px]">
             <div>
