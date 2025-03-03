@@ -42,7 +42,7 @@ const Hero = async () => {
                   Start for free
                 </Button>
                 <Button
-                  url={"/templates"}
+                  url={"/saas/templates"}
                   className={"hidden sm:block "}
                 >
                   All templates

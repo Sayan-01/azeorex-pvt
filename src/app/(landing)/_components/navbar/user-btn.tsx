@@ -18,7 +18,7 @@ type Props = {
 };
 
 const UserBtn = ({ children, className, margin, size }: Props) => {
-  const { data: session } = useSession();
+  const { data: session } = useSession();  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -32,7 +32,8 @@ const UserBtn = ({ children, className, margin, size }: Props) => {
             <div className={`rounded-full overflow-hidden ${size}`}>
               <Image
                 alt="profile-image"
-                src={session?.user?.image || "/avater.svg"}
+                // @ts-ignore: Ignore type error for role
+                src={session?.user?.avatarUrl || "/avater.svg"}
                 className="w-full h-full"
                 width={100}
                 height={100}
@@ -47,14 +48,15 @@ const UserBtn = ({ children, className, margin, size }: Props) => {
             <div className="flex items-center justify-center rounded-full">
               <Image
                 alt="user-image"
-                className="w-11 h-11  rounded-full"
-                src={session?.user?.image || "/user.png"}
+                className="w-10 h-10  rounded-full"
+                // @ts-ignore: Ignore type error for role
+                src={session?.user?.avatarUrl || "/avater.svg"}
                 width={80}
                 height={80}
               />
             </div>
             <div>
-              <h1 className=" font-light">{session?.user?.name}</h1>
+              <h1 className=" font-light text-base leading-snug">{session?.user?.name}</h1>
               <p className=" font-thin opacity-50 text-xs">{session?.user?.email}</p>
             </div>
           </div>

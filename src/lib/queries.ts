@@ -48,8 +48,7 @@ export const IsUserEmailExist = async (email: string) => {
 
   if (response) return true;
   else return false;
-  
-}
+};
 
 //=============================================================
 
@@ -669,3 +668,5 @@ export const sendCode = async (email: string, username: string, otp: string) => 
     return { success: true, message: "Email error is", status: 200 };
   } else return { success: false, message: "Email error is", status: 500 };
 };
+
+//===========================================================================

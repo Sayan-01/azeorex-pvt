@@ -82,6 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.role = alreadyUser.role; // Assign user's role
           token.isVarified = alreadyUser.isVarified;
           token.isAdmin = alreadyUser.isAdmin;
+          token.avatarUrl = alreadyUser.avatarUrl
         }
       }
       return token; // Return the updated token
@@ -98,6 +99,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.isVarified = token.isVarified;
         // @ts-ignore: Ignore type error for role
         session.user.isAdmin = token.isAdmin;
+        // @ts-ignore: Ignore type error for role
+        session.user.avatarUrl = token.avatarUrl;
       }
       return session;
     },

@@ -2,11 +2,26 @@ import { Template } from "../../../../models/template";
 import { NextResponse } from "next/server";
 import { auth } from "../../../../auth";
 import connectDb from "@/lib/dbConnect";
+import { db } from "@/lib/db";
 
 export const GET = async () => {
-  await connectDb();
-  let templates = await Template.find().sort({_id: -1});
-  return NextResponse.json({ templates });
+  try {
+    const templates = await db.template.findMany({
+      orderBy: { id: "desc" },
+      include: {
+        User: {
+          select: {
+            name: true,
+            avatarUrl: true,
+          },
+        },
+      },
+    });
+    return NextResponse.json({ templates });
+  } catch (error) {
+    return NextResponse.json({ error: "Error in fetching the templates" }, { status: 500 });
+  }
+  
 };
 
 // export const POST = async (req) => {

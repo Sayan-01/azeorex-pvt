@@ -36,9 +36,9 @@ const TemplateCard = ({ item }: { item: any }) => {
               })}
             </CarouselContent>
           </Carousel>
-          <div className="pt-[12px] relative flex items-center  gap-3 pl-[6px] w-full">
-            <div className={"flex items-center gap-1 md:text-xs text-sm  bg-[#0099ff26] hover:bg-[#0099ff26] backdrop-blur-lg w-10 h-10 rounded-full text-[#009bd8]   items-right justify-center "}>
-              {item.access === "pro" ? (
+          <div className="pt-[12px] relative flex items-start  gap-3 pl-[6px] w-full">
+            <div className={"flex items-center gap-1 md:text-xs text-sm  bg-[#0099ff26] hover:bg-[#0099ff26] backdrop-blur-lg w-9 h-9 rounded-full text-[#009bd8]   items-right justify-center mt-1"}>
+              {/* {item.access === "pro" ? (
                 <Crown
                   size={18}
                   strokeWidth={1.5}
@@ -48,11 +48,28 @@ const TemplateCard = ({ item }: { item: any }) => {
                   size={18}
                   strokeWidth={1.5}
                 />
-              )}
+              )} */}
+              <Image
+                src={item?.User.avatarUrl||"/avater.svg"}
+                width={200}
+                height={200}
+                className="w-9 h-9  rounded-full"
+                alt="profile img"
+              />
             </div>
-            <div className=" overflow-hidden -mb-[1px] w-[76%]">
+            {/* <div className=" overflow-hidden -mb-[1px] w-[76%]">
               <h2 className="text-[15px] title_line text-white ">{item.title}</h2>
               <p className="text-[13px] title_line text-gray-400 font-light">{item.description}</p>
+            </div> */}
+            <div className=" overflow-hidden -mb-[1px] w-[76%]">
+              <h2 className="text-[15px] title_line text-white mb-1">{item.title}</h2>
+              <p className="text-[13px] description_line text-gray-400 font-light mb-2">{item.description}</p>
+              <div className="md:text-xs text-sm gap-3 text-zinc-300/90 flex items-center mt-[1px]">
+                <span className="flex items-center gap-1 ">
+                  <Star size={14} /> 4.6
+                </span>
+                <p className="text-zinc-500">56 reviews</p>
+              </div>
             </div>
           </div>
           {/* <div className="flex gap-3 pt-[12px]">

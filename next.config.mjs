@@ -18,6 +18,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      { protocol: "https", hostname: "o3w1jifi2x.ufs.sh" },
     ],
   },
   eslint: {

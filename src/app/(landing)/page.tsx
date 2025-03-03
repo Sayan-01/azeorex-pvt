@@ -8,13 +8,14 @@ import Approch from "./_components/home/Approch";
 import Smart from "./_components/home/Smart";
 import Footer from "./_components/home/Footer";
 import ReviewSection from "./_components/home/ReviewSection";
+import { mainn } from "../../../scripts/mongoseed";
 
 const PriceSection = dynamic(() => import("./_components/pricing").then((component) => component.PricingSection), { ssr: true });
 
 const Marquee = dynamic(() => import("./_components/home/Marquee").then((component) => component.default), { ssr: true });
 const Category = dynamic(() => import("./_components/home/Category").then((component) => component.default), { ssr: true });
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="bg-bcgc x">
       <Header /> {/* sm:h-[85px] h-[70px] -> sm:pt-[95px] pt-[75px] sm:mb-[95px] mb-[75px] */}

@@ -77,9 +77,48 @@ model User {
   projectId           String?
   Projects            Project[]
   googleId            String?
+  Template            Template[]
+  Reviews             Review[]
 
   @@index([agencyId])
   @@index([projectId])
+}
+
+model Template {
+  id              String   @id @default(uuid())
+  title           String
+  description     String
+  longDescription String
+  theme           String
+  category        String[]
+  access          String
+  price           Float
+  platform        String[]
+  feature         String[]
+  image           String[]
+  file            String?
+  datePublished   DateTime @default(now())
+  Reviews         Review[] @relation("TemplateReviews")
+  userId          String
+  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes           Int      @default(0)
+  dislikes        Int      @default(0)
+
+  @@index([userId])
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  comment    String
+  rating     Int
+  createdAt  DateTime @default(now())
+  Template   Template @relation("TemplateReviews", fields: [templateId], references: [id], onDelete: Cascade)
+  templateId String
+  User       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String?
+
+  @@index([templateId])
+  @@index([userId])
 }
 
 model Permissions {
