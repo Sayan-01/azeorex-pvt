@@ -13,7 +13,7 @@ const TemplateCard = ({ item }: { item: any }) => {
   return (
     <div className="relative">
       <Link
-        href={`/saas/templates/${item.id}`}
+        href={`/template/${item.id}`}
         className="relative"
       >
         <div className="overflow-hidden cursor-pointer rounded-[10px]">
