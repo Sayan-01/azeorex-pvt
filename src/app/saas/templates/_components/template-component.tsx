@@ -20,7 +20,7 @@ const TemplateComponent = ({ templates }: Props) => {
   console.log(templates);
 
   return (
-    <div className="pb-7">
+    <div className="pb-7 ">
       <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
         <div className=" md:flex hidden items-center gap-2 rounded-full w-max ">
           <h3 className="text-white/70">Templates</h3>

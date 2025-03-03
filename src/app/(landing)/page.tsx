@@ -8,7 +8,6 @@ import Approch from "./_components/home/Approch";
 import Smart from "./_components/home/Smart";
 import Footer from "./_components/home/Footer";
 import ReviewSection from "./_components/home/ReviewSection";
-import { mainn } from "../../../scripts/mongoseed";
 
 const PriceSection = dynamic(() => import("./_components/pricing").then((component) => component.PricingSection), { ssr: true });
 

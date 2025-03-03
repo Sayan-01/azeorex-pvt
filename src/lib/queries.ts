@@ -670,3 +670,25 @@ export const sendCode = async (email: string, username: string, otp: string) => 
 };
 
 //===========================================================================
+
+export const searchSimilerProduct = async (category: string) => {
+  const similer_product = await db.template.findMany({
+    where: {
+      category: { has: category },
+    },
+    orderBy: {
+      datePublished: "desc",
+    },
+    include: {
+      User: {
+        select: {
+          name: true,
+          avatarUrl: true,
+        },
+      },
+    },
+    take: 6,
+  });
+  if (similer_product) return similer_product;
+  else return [];
+};

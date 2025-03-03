@@ -17,6 +17,7 @@ type Props = {
   templates: any[];
   userId: string;
 };
+
 const HomeComponent = ({ funnels, templates, userId }: Props) => {
   const [query, setQuery] = useState("");
   return (
@@ -148,8 +149,8 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
       <section className="mb-6 md:px-7 px-5">
         <div className="flex items-center justify-between">
           {/* <h3 className="text-white/70">Templates</h3> */}
-          <div className=" flex items-center gap-3 px-4 pl-1.5 py-1.5 rounded-full ">
-            <div className=" rounded-full bg-white/10 borde border-white/10 overflow-hidden w-10 h-10">
+          <div className=" flex items-center gap-3 px-4 pl-0 py-1.5 rounded-full ">
+            <div className=" rounded-full bg-white/10 borde border-white/10 overflow-hidden w-9 h-9">
               <Image
                 src="/azeorex.png"
                 className="w-full h-full"
@@ -182,8 +183,8 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
       <section className="mb-6 md:px-7 px-5">
         <div className="flex items-center justify-between">
           {/* <h3 className="text-white/70">Templates</h3> */}
-          <div className=" flex items-center gap-3 px-4 pl-1.5 py-1.5 rounded-full ">
-            <div className=" rounded-full bg-white/10 borde border-white/10 p-[8px] w-10 h-10">
+          <div className=" flex items-center gap-3 px-4 pl-0 py-1.5 rounded-full ">
+            <div className=" rounded-full bg-white/10 borde border-white/10 p-[8px] w-9 h-9">
               <Image
                 src="/platform/figma.png"
                 className="w-full h-full"

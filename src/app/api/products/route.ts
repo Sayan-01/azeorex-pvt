@@ -1,13 +1,10 @@
-import { Template } from "../../../../models/template";
 import { NextResponse } from "next/server";
-import { auth } from "../../../../auth";
-import connectDb from "@/lib/dbConnect";
 import { db } from "@/lib/db";
 
 export const GET = async () => {
   try {
     const templates = await db.template.findMany({
-      orderBy: { id: "desc" },
+      orderBy: { datePublished: "desc" },
       include: {
         User: {
           select: {

@@ -4,6 +4,108 @@ async function main() {
   await db.template.createMany({
     data: [
       {
+        id: "66df3b21f4a1c8b6978ef58d",
+        title: "Sports ecommerce website landing page",
+        description:
+          "Gear up for success with the best in sports apparel, footwear, and accessories. Discover top brands, performance-driven products, and exclusive deals to elevate your game. Shop now and stay ahead in style!",
+        longDescription:
+          "Welcome to the ultimate destination for sports enthusiasts! Whether you’re a professional athlete or just starting your fitness journey, we have everything you need to achieve your goals. Explore a wide range of premium sports apparel, high-performance footwear, and cutting-edge gear from the world’s leading brands. From running shoes to training equipment, outdoor essentials to yoga wear, we’ve got you covered. Enjoy exclusive offers, fast shipping, and seamless shopping. Step up your game with the right gear and push your limits like never before! Plus, take advantage of personalized recommendations, expert advice, and fitness tips tailored to your needs. With a focus on innovation and quality, we help you stay at the top of your game—every step of the way.",
+        theme: "light",
+        category: ["sports", "e_commerce", "light_theme", "2d", "landing_page"],
+        access: "Pro",
+        price: 19,
+        platform: ["figma"],
+        feature: ["Modern ecommerce design", "Professional sports template", "Creative landing page", "UI UX services"],
+        image: [
+          "https://res.cloudinary.com/dv86lqkcy/image/upload/v1725898367/image_qdwxmd.png",
+          "https://res.cloudinary.com/dv86lqkcy/image/upload/v1730610728/Mockup_htwl2t.png",
+          "https://res.cloudinary.com/dv86lqkcy/image/upload/v1730136103/MacBook_Pro_14__-_18_1_vhdpya.png",
+        ],
+        file: "",
+        datePublished: "2025-03-03T08:01:50.276Z",
+        userId: "509228e6-252e-4e49-883f-714fc44ebeae",
+        likes: 100,
+        dislikes: 8,
+      },
+      {
+        id: "66e273ef1857c699f5cdfd86",
+        title: "Fashion ecommerce website ",
+        description: "Hello everyone!  Here is a Fashion E-commerce web design concept.  Feel free to leave valuable feedback and don't forget to press ❤",
+        longDescription:
+          "The home page of this fashion eCommerce template is sleek and modern, designed to captivate visitors. It features a clean layout with high-quality images, bold typography, and intuitive navigation. A featured products section highlights the latest trends, while seamless product categorization ensures a smooth shopping experience for fashion enthusiasts.",
+        theme: "light",
+        category: ["business", "e_commerce", "light_theme", "2d", "landing_page"],
+        access: "Free",
+        price: 0,
+        platform: ["figma"],
+        feature: ["UI Design", "Modarn ecommerce design", "Fashion ecommerce home page", "Landing page", "Attractive design"],
+        image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726111617/Mockup16_vzsu3s.png"],
+        file: "",
+        datePublished: "2025-03-03T08:01:50.276Z",
+        userId: "509228e6-252e-4e49-883f-714fc44ebeae",
+        likes: 100,
+        dislikes: 8,
+      },
+      {
+        id: "66e2bfdffafc0bafd67c639d",
+        title: "Ed-tech website home page",
+        description:
+          "The EdTech homepage offers a clean layout with a featured courses section, easy navigation, and student testimonials. Vibrant visuals and clear call-to-actions guide users to explore content, sign up for courses, and stay updated with the latest learning resources.",
+        longDescription:
+          "The homepage of the EdTech website template is designed to engage learners and educators with a clean, intuitive layout. It features a hero section showcasing key courses, an easy-to-navigate course catalogs, and testimonials from successful students. With vibrant visuals and clear call-to-action buttons, visitors can effortlessly explore educational content, sign up for courses, and stay updated with the latest learning trends and resources",
+        theme: "light",
+        category: ["business", "ed-tech", "2d", "landing_page", "light_theme"],
+        access: "Pro",
+        price: 19,
+        platform: ["figma"],
+        feature: ["Website landing Design", "User-Friendly Interface", "Higher Retention", "Particular Course Catalog", "Leatest UI Design", "Provided Course Ratings"],
+        image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726135152/Mockup21_d2w1op.png"],
+        file: "",
+        datePublished: "2025-03-03T08:01:50.276Z",
+        userId: "509228e6-252e-4e49-883f-714fc44ebeae",
+        likes: 100,
+        dislikes: 8,
+      },
+      {
+        id: "66e2d1178cf9ed12e37d6ac9",
+        title: "Designer portfolio  website landing page",
+        description: "The homepage of the designer portfolio template features a clean, modern design with a hero section, an interactive project showcase section, and engage clients.",
+        longDescription:
+          "The homepage of the designer portfolio website template showcases a clean, modern layout to highlight your creative work. A hero section introduces your personal brand with a stunning image . Below, featured projects are displayed in an interactive grid, each linking to detailed case studies. The minimalistic design , ensuring your portfolio stands out and engages potential clients effortlessly.",
+        theme: "light",
+        category: ["light_theme", "2d", "landing_page", "personal", "business"],
+        access: "Pro",
+        price: 12,
+        platform: ["figma"],
+        feature: ["Attractive UI", "Clean Layout", "Social Media Integration", "Showcase Creativity", "Professional Appearance", "User-Friendly"],
+        image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726139507/Mockup22_fk8vpo.png"],
+        file: "",
+        datePublished: "2025-03-03T08:01:50.276Z",
+        userId: "509228e6-252e-4e49-883f-714fc44ebeae",
+        likes: 100,
+        dislikes: 8,
+      },
+      {
+        id: "66e2e9ce6987386fdb46bb0d",
+        title: "Blog home page",
+        description:
+          "Welcome to our blog! Explore trending topics, featured articles, and insightful posts on business, tech, and lifestyle. Stay updated and inspired with fresh content, all in a sleek, easy-to-navigate design.",
+        longDescription:
+          "Welcome to our blog, where ideas come to life! Our home page provides a clean, modern design with easy navigation, making it simple to explore various articles and categories. Stay updated with the latest insights on business, tech, and lifestyle. Discover trending topics, featured posts, and in-depth articles to inspire your next big project. Join our community of curious minds and start exploring today!",
+        theme: "light",
+        category: ["business", "2d", "light_theme", "blog", "landing_page", "personal"],
+        access: "Pro",
+        price: 19,
+        platform: ["figma"],
+        feature: ["Minimalistic UI Design", "Modern Design", "User-friendly", "User login option", "Easy navigation", "Search bar"],
+        image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726146388/Mockup23_rztv58.png"],
+        file: "",
+        datePublished: "2025-03-03T08:01:50.276Z",
+        userId: "509228e6-252e-4e49-883f-714fc44ebeae",
+        likes: 100,
+        dislikes: 8,
+      },
+      {
         id: "66e44e4099e254816eee6b40",
         title: "Sports Website UI",
         description: "A sleek, modern sports website UI featuring live scores, news, team stats, player profiles, and interactive match highlights.",
@@ -18,7 +120,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726236911/Mockup_r9ziig.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -38,7 +139,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726238999/Shopping_website_ardr3t.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -58,7 +158,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726311214/Mockup24_xv2hv4.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726311389/Mockup25_bbciew.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -79,7 +178,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726314208/Mockup26_qomfvx.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726314235/Mockup27_nope67.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -99,7 +197,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726319506/Mockup28_lsrxi1.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726319541/Mockup29_av4tiu.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -120,7 +217,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726320957/Mockup10_jh8cse.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726320900/Mockup9_uvm4bl.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -141,7 +237,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726322080/Mockup11_cvbqrq.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726322212/Mockup12_mjswmc.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -162,7 +257,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726464611/Mockup19_wmgmkf.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726464694/Mockup20_cdbxm9.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -182,7 +276,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726467433/Mockup32_mi9fow.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726467447/Mockup33_hysdah.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -203,7 +296,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726468035/Mockup30_ay0irj.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726468087/Mockup31_ncbrfx.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -224,7 +316,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726469657/Mockup34_pcgf4p.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726469601/Mockup35_xriihx.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -244,7 +335,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726470654/Mockup7_l2oib3.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726470686/Mockup8_gljqvq.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -265,7 +355,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726507208/Mockup36_gydpa1.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726507227/Mockup37_dafelm.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -286,7 +375,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726594062/Mockup17_aqbda3.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726594931/Mockup18_vu8afi.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -317,7 +405,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726595613/Mockup41_k2unkh.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726595579/Mockup40_hdumkb.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -338,7 +425,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726596710/Mockup42_jqtwee.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726596750/Mockup43_whlneq.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -358,7 +444,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726597430/Mockup44_r6exib.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726597436/Mockup45_mpe74s.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -379,7 +464,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726597701/Mockup5_e7u3o8.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726597721/Mockup6_p92yku.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -410,7 +494,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726598284/Mockup39_toyjk9.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726598277/Mockup38_xlrcxm.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -441,7 +524,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726660738/Mockup47_ib1nuh.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726660746/Mockup46_ciorcm.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -462,7 +544,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726661572/Mockup48_fvbq6h.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726661585/Mockup49_qzajyi.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -483,7 +564,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726662570/Mockup51_whyzyn.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726662582/Mockup50_d1g14m.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,
@@ -504,7 +584,6 @@ async function main() {
         image: ["https://res.cloudinary.com/dv86lqkcy/image/upload/v1726663788/Mockup52_plixbi.png", "https://res.cloudinary.com/dv86lqkcy/image/upload/v1726663802/Mockup53_ax8epf.png"],
         file: "",
         datePublished: "2025-03-03T08:01:50.276Z",
-
         userId: "509228e6-252e-4e49-883f-714fc44ebeae",
         likes: 120,
         dislikes: 5,

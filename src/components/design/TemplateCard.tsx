@@ -13,7 +13,7 @@ const TemplateCard = ({ item }: { item: any }) => {
   return (
     <div className="relative">
       <Link
-        href={`/templates/${item._id}`}
+        href={`/saas/templates/${item.id}`}
         className="relative"
       >
         <div className="overflow-hidden cursor-pointer rounded-[10px]">
@@ -36,8 +36,8 @@ const TemplateCard = ({ item }: { item: any }) => {
               })}
             </CarouselContent>
           </Carousel>
-          <div className="pt-[12px] relative flex items-start  gap-3 pl-[6px] w-full">
-            <div className={"flex items-center gap-1 md:text-xs text-sm  bg-[#0099ff26] hover:bg-[#0099ff26] backdrop-blur-lg w-9 h-9 rounded-full text-[#009bd8]   items-right justify-center mt-1"}>
+          <div className="pt-[12px] relative flex items-start  gap-3  w-full">
+            <div className={"flex items-center gap-1 md:text-xs text-sm backdrop-blur-lg w-9 h-9 rounded-full items-right justify-center mt-1"}>
               {/* {item.access === "pro" ? (
                 <Crown
                   size={18}
@@ -64,9 +64,9 @@ const TemplateCard = ({ item }: { item: any }) => {
             <div className=" overflow-hidden -mb-[1px] w-[76%]">
               <h2 className="text-[15px] title_line text-white mb-1">{item.title}</h2>
               <p className="text-[13px] description_line text-gray-400 font-light mb-2">{item.description}</p>
-              <div className="md:text-xs text-sm gap-3 text-zinc-300/90 flex items-center mt-[1px]">
+              <div className="md:text-xs text-[13px] gap-3 text-zinc-300/90 flex items-center mt-[0px]">
                 <span className="flex items-center gap-1 ">
-                  <Star size={14} /> 4.6
+                  <Star size={13} /> 4.6
                 </span>
                 <p className="text-zinc-500">56 reviews</p>
               </div>

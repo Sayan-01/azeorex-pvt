@@ -1,4 +1,3 @@
-// import { GetMediaFiles } from '@/lib/types'
 import React from 'react'
 import MediaUploadButton from './upload-buttons'
 import {

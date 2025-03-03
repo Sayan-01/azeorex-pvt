@@ -87,9 +87,8 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
               control={form.control}
               name="favicon"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="">Favicon</FormLabel>
-                  <FormControl>
+                <FormItem className="flex gap-2">
+                  <FormControl className="w-full">
                     <FileUpload
                       className="bg-[#202124] border border-[#2c2d30]"
                       apiEndpoint="subaccountLogo"
@@ -152,7 +151,7 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
                 </FormItem>
               )}
             />
-            <Separator className="mt-2"/>
+            <Separator className="mt-2" />
 
             <Button
               className="bg-main hover:bg-main/80 text-white w-full mt-2"
