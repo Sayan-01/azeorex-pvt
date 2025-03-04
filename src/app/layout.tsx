@@ -6,7 +6,7 @@ import { auth } from "../../auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
 import ModalProvider from "../../providers/model-provider";
-import { Lexend, Outfit, Questrial, Righteous } from "next/font/google";
+import { Inter, Lexend, Outfit, Questrial, Righteous } from "next/font/google";
 import { ReactQueryProvider } from "../../react-query/provider";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "Convert your dream into design with precision",
 };
 
-const outfi = Outfit({ subsets: ["latin"], weight: "400" });
+const outfi = Inter({ subsets: ["latin"], weight: "400" });
 
 export default async function RootLayout({
   children,

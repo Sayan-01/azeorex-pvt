@@ -50,7 +50,7 @@ const TemplateCard = ({ item }: { item: any }) => {
                 />
               )} */}
               <Image
-                src={item?.User.avatarUrl||"/avater.svg"}
+                src={item?.User.avatarUrl || "/avater.svg"}
                 width={200}
                 height={200}
                 className="w-9 h-9  rounded-full"
@@ -61,14 +61,20 @@ const TemplateCard = ({ item }: { item: any }) => {
               <h2 className="text-[15px] title_line text-white ">{item.title}</h2>
               <p className="text-[13px] title_line text-gray-400 font-light">{item.description}</p>
             </div> */}
-            <div className=" overflow-hidden -mb-[1px] w-[76%]">
-              <h2 className="text-[15px] title_line text-white mb-1">{item.title}</h2>
-              <p className="text-[13px] description_line text-gray-400 font-light mb-2">{item.description}</p>
-              <div className="md:text-xs text-[13px] gap-3 text-zinc-300/90 flex items-center mt-[0px]">
-                <span className="flex items-center gap-1 ">
-                  <Star size={13} /> 4.6
+            <div className=" -mb-[1px] w-[76%]">
+              <h2 className="text-[15px] title_line text-white mb-0.5">{item.title}</h2>
+              <p className="text-[13px] description_line text-gray-400 leading-tight font-light mb-[7px]  ">{item.description}</p>
+              <div className="md:text-xs text-[13px] gap-3 text-zinc-300/90 flex items-center font-[600]">
+                <span className="flex items-center gap-1 text-[#7e6cc5]">
+                  <Star
+                    strokeWidth={2.2}
+                    size={13}
+                    color="#7e6cc5"
+                    className="mb-[0.5px]"
+                  />
+                  4.6
                 </span>
-                <p className="text-zinc-500">56 reviews</p>
+                <p className="text-[#8D5394]">56 reviews</p>
               </div>
             </div>
           </div>

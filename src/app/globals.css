@@ -422,7 +422,7 @@ html {
   }
 }
 
-@media (min-width: 1490px) {
+@media (min-width: 1590px) {
   .xxl {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
