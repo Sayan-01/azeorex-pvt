@@ -491,6 +491,8 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
       userId: userId,
     },
   });
+  console.log(response);
+  
 
   return response;
 };

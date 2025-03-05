@@ -63,7 +63,7 @@ const UserBtn = ({ children, className, margin, size }: Props) => {
         </DropdownMenuLabel>
         <DropdownMenuGroup>
           <Link
-            href="/settings"
+            href="/user/settings"
             className=""
           >
             <DropdownMenuItem className="mt-3 opacity-50">

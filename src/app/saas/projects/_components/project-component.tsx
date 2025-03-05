@@ -89,15 +89,18 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
         {funnels.length === 0 ? (
           <EmptyStatefunnel />
         ) : (
-          <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
+          <div className="xxl md:gap-x-7 gap-x-5 md:gap-y-7 gap-y-6">
             {funnels
               .filter((item) => item.name.toLocaleLowerCase().includes(query))
               .map((item) => {
                 return (
                   <Card
                     id={item.id}
-                    title={item.name}
+                    name={item.name}
                     updatedAt={item.updatedAt}
+                    description={item.description}
+                    subDomainName={item.subDomainName}
+                    favicon={item.favicon}
                   />
                 );
               })}

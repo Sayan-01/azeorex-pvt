@@ -66,13 +66,13 @@ const TemplateCard = ({ item }: { item: any }) => {
               <p className="text-[13px] description_line text-gray-400 leading-tight font-light mb-[7px]  ">{item.description}</p>
               <div className="md:text-xs text-[13px] gap-3 text-zinc-300/90 flex items-center font-[600]">
                 <span className="flex items-center gap-1 text-[#7e6cc5]">
-                  <Star
+                  {/* <Star
                     strokeWidth={2.2}
                     size={13}
                     color="#7e6cc5"
                     className="mb-[0.5px]"
-                  />
-                  4.6
+                  /> */}
+                  4.6 Likes
                 </span>
                 <p className="text-[#8D5394]">56 reviews</p>
               </div>

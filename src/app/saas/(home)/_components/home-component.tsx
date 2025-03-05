@@ -120,16 +120,19 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           <EmptyStatefunnel />
         ) : (
           <>
-            <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
+            <div className="xxl md:gap-x-7 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
               {funnels
                 .filter((item) => item.name.toLocaleLowerCase().includes(query))
-                .slice(0, 5)
+                .slice(0, 4)
                 .map((item) => {
                   return (
                     <Card
                       id={item.id}
-                      title={item.name}
+                      name={item.name}
                       updatedAt={item.updatedAt}
+                      description={item.description}
+                      subDomainName={item.subDomainName}
+                      favicon={item.favicon}
                     />
                   );
                 })}
@@ -171,10 +174,10 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             </Link>
           </div>
         </div>
-        <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
+        <div className="xxl md:gap-x-7 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
           {templates
             .filter((item) => item.title.toLocaleLowerCase().includes(query))
-            .slice(0, 5)
+            .slice(0, 4)
             .map((item) => {
               return <TemplateCard item={item} />;
             })}
@@ -205,10 +208,10 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             </Link>
           </div>
         </div>
-        <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
+        <div className="xxl md:gap-x-7 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
           {templates
             .filter((item) => item.title.toLocaleLowerCase().includes(query))
-            .slice(0, 5)
+            .slice(0, 4)
             .map((item) => {
               return (
                 <TemplateCard

@@ -62,6 +62,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
         },
         projectId
       );
+      router.refresh()
 
       toast({
         title: "Success",

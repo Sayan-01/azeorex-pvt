@@ -111,7 +111,7 @@ const TemplateComponent = ({ templates }: Props) => {
         />
       </div>
       <section className="md:px-7 px-5">
-        <div className="xxl md:gap-x-6 gap-x-5 md:gap-y-7 gap-y-6">
+        <div className="xxl md:gap-x-7 gap-x-5 md:gap-y-7 gap-y-6">
           {templates
             .filter((item) => item.title.toLowerCase().includes(query) && (filterQuery === "" || item.category.includes(filterQuery)))
             .map((item) => {
