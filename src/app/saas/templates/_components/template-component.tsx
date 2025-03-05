@@ -41,14 +41,9 @@ const TemplateComponent = ({ templates }: Props) => {
             />
           </div>
           <CreatorBtn className="md:flex hidden" />
-          <div className="md:hidden flex md:items-center md:gap-12 w-[140px] gap-[12px]">
-            <UserBtn
-              size="md:h-8 h-9 md:w-8 w-9"
-              margin="mt-2 z-[101] rounded-2xl"
-              className=" overflow-hidden  min-w-fit rounded-full bg-gradient-to-br from-[#08C741] to-[#0F39C8] text-violet-200 text-[20px] font-semibold items-center justify-center outline-none border-none "
-            ></UserBtn>
+          <div className="md:hidden flex md:items-center md:gap-12 w-[100px] h-9">
             <Link
-              className=" flex items-center opacity-60"
+              className=" flex items-center"
               href="/"
             >
               <Image
@@ -60,6 +55,7 @@ const TemplateComponent = ({ templates }: Props) => {
               />
             </Link>
           </div>
+          
         </div>
       </nav>
       <section className="mb-4 md:mb-6 md:px-7 px-5 sm:block hidden">
