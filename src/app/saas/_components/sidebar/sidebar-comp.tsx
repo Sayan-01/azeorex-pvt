@@ -34,7 +34,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
       modal={!defaultOption}
       {...openState}
     >
-      <SheetTrigger className="h-9 w-9 flex flex-col items-center justify-center rounded-full border border-[#545454]/30 absolute z-[50] md:hidden right-5 top-5">
+      <SheetTrigger className="h-9 w-9 flex flex-col items-center justify-center rounded-xl border border-[#545454]/30 absolute z-[50] md:hidden right-5 top-5">
         {/* <Menu size={18} strokeWidth={1}/> */}
         <div className="h-[1px] bg-white/40 w-4 mb-[5px]" />
         <div className="h-[1px] bg-white/40 w-4" />

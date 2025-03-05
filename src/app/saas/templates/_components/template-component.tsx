@@ -23,7 +23,7 @@ const TemplateComponent = ({ templates }: Props) => {
 
   return (
     <div className="pb-7 ">
-      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
+      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5 ">
         <div className=" md:flex hidden items-center gap-2 rounded-full w-max ">
           <h3 className="text-white/70">Templates</h3>
           <ChevronRight size={16} />
@@ -41,7 +41,12 @@ const TemplateComponent = ({ templates }: Props) => {
             />
           </div>
           <CreatorBtn className="md:flex hidden" />
-          <div className="md:hidden flex md:items-center md:gap-12 w-[100px] h-9">
+          <div className="md:hidden flex md:items-center md:gap-12 w-[148px]  gap-3 h-9">
+            <UserBtn
+              size="md:h-8 h-9 md:w-8 w-9"
+              margin="mt-2 z-[101] rounded-2xl"
+              className=" overflow-hidden  min-w-fit rounded-full bg-gradient-to-br from-[#08C741] to-[#0F39C8] text-violet-200 text-[20px] font-semibold items-center justify-center outline-none border-none "
+            ></UserBtn>
             <Link
               className=" flex items-center"
               href="/"
@@ -55,7 +60,6 @@ const TemplateComponent = ({ templates }: Props) => {
               />
             </Link>
           </div>
-          
         </div>
       </nav>
       <section className="mb-4 md:mb-6 md:px-7 px-5 sm:block hidden">
@@ -100,7 +104,9 @@ const TemplateComponent = ({ templates }: Props) => {
           </p>
         </div>
       </section>
-      <section className="text-3xl mb-4 md:px-7 px-5 font-semibold sm:hidden">
+      <section className="text-3xl mb-4 md:px-7 px-5  sm:hidden flex flex-col items-center">
+        <h1 className="text-center font-bold text-2xl mb-2 mt-7">All Templates</h1>
+        <p className="text-center text-sm mb-5 opacity-60 w-[90%]">The best azeorex and figma templates and websites from Azeorex community.</p>
         <div className="flex items-center h-11 bg-[#2d2f33] hover:bg-[#242529] rounded-full border border-[#545454]/30 w-full px-2">
           <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
             <IoSearchOutline size={20} />
