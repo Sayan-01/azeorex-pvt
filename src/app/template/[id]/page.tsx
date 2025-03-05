@@ -16,30 +16,6 @@ import { Template } from "@prisma/client";
 import TemplateCard from "@/components/design/TemplateCard";
 import { searchSimilerProduct } from "@/lib/queries";
 
-// interface TemplateData {
-//   oneTemplate: {
-//     id: string;
-//     title: string;
-//     description: string;
-//     longDescription: string;
-//     category: string[];
-//     feature: string[];
-//     image: string[];
-//     price: number;
-//     access: string;
-//   };
-//   similer_product: {
-//     title: string;
-//     description: string;
-//     longDescription: string;
-//     category: string[];
-//     feature: string[];
-//     image: string[];
-//     price: number;
-//     access: string;
-//   }[];
-// }
-
 const getTemplateData = async (id: string): Promise<Template> => {
   
     let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, { cache: "no-store" });
@@ -56,7 +32,6 @@ const similer_product = async (category: string): Promise<Template[]> => {
 const page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const oneTemplate = await getTemplateData(id);
-  console.log(oneTemplate);
   
   const similerProduct= await similer_product(oneTemplate.category[0]);
 

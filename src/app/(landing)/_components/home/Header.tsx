@@ -20,7 +20,7 @@ const Header = async () => {
         <Wrapper className="h-full">
           <div className="mx-auto my-auto max-w-screen-xl h-full">
             <div className="flex h-full items-center justify-between">
-              <div className="md:flex md:items-center md:gap-12 w-[100px]">
+              <div className="md:flex md:items-center md:gap-12 w-[98px]">
                 <Link
                   className=" flex items-center"
                   href="/"

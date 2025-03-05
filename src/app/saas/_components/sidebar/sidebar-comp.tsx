@@ -34,10 +34,10 @@ const SidebarComp = ({ defaultOption }: Props) => {
       modal={!defaultOption}
       {...openState}
     >
-      <SheetTrigger
-        className="h-9 w-9 flex items-center justify-center bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 absolute z-[50] md:hidden left-5 top-5"
-      >
-        <Menu size={18} />
+      <SheetTrigger className="h-9 w-9 flex flex-col items-center justify-center rounded-full border border-[#545454]/30 absolute z-[50] md:hidden right-5 top-5">
+        {/* <Menu size={18} strokeWidth={1}/> */}
+        <div className="h-[1px] bg-white/40 w-4 mb-[5px]" />
+        <div className="h-[1px] bg-white/40 w-4" />
       </SheetTrigger>
       {/* <div
         onClick={() => {
@@ -46,7 +46,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
         className={`bg-[#0000009c] fixed w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
       ></div> */}
       <SheetContent
-      showX={!defaultOption}
+        showX={!defaultOption}
         side="left"
         className={clsx(`bg-[#141414] flex flex-col justify-between w-[240px] p-6 pr-6 md:pr-0 pb-7  duration-200 border-r-0`, {
           "hidden md:flex z-0 ": defaultOption,

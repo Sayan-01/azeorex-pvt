@@ -35,7 +35,7 @@ const Card = ({ name, description, updatedAt, id, subDomainName, favicon }: Prop
         <div className="pt-[12px] relative flex items-start  gap-3  w-full">
           <div className={"flex items-center gap-1 md:text-xs text-sm backdrop-blur-lg w-9 h-9 rounded-full items-right justify-center mt-1 bg-[url(/avater.svg)]"}>
             <Image
-              src={favicon || "/az.svg"}
+              src={favicon || "/azeorex.png"}
               width={200}
               height={200}
               className="w-8 h-8  rounded-full"
@@ -45,7 +45,7 @@ const Card = ({ name, description, updatedAt, id, subDomainName, favicon }: Prop
 
           <div className=" -mb-[1px] w-[90%]">
             <h2 className="text-[15px] title_line text-white mb-0.5">{String(name).charAt(0).toUpperCase() + String(name).slice(1)}</h2>
-            <p className="text-[13px] title_line text-gray-400 leading-tight font-light mb-[7px]  ">{description}</p>
+            {/* <p className="text-[13px] title_line text-gray-400 leading-tight font-light mb-[7px]  ">{description}</p> */}
             <div className="md:text-xs text-[13px] gap-3 text-zinc-300/90 flex items-center font-[600]">
               <span className="flex items-center gap-1 text-[#7e6cc5]">Edited {time}.</span>
               {/* <p className="text-[#8D5394]">56 reviews</p> */}

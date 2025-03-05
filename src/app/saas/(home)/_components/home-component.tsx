@@ -27,7 +27,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           <h3 className="text-white/70">Home</h3>
           <ChevronRight size={16} />
         </div>
-        <div className="md:ml-0 ml-12 flex gap-3 w-full md:w-auto sm:justify-between justify-between">
+        <div className="md:mr-0 mr-[52px] flex gap-3 w-full md:w-auto sm:justify-between justify-between">
           <div className="items-center h-8 ml-2 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-full md:flex hidden">
             <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
               <IoIosSearch size={18} />
@@ -49,12 +49,26 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             userId={userId}
             className="md:flex hidden"
           />
-          <h1 className="text-2xl font-extrabold tracking-wider flex md:hidden">Azeorex</h1>
-          <UserBtn
-            size="md:h-8 h-9 md:w-8 w-9"
-            margin="mt-2 z-[101] rounded-2xl"
-            className=" overflow-hidden  min-w-fit rounded-full bg-gradient-to-br from-[#08C741] to-[#0F39C8] text-violet-200 text-[20px] font-semibold items-center justify-center outline-none border-none"
-          ></UserBtn>
+          <div className="md:hidden flex md:items-center md:gap-12 w-[142px] gap-[12px]">
+            <UserBtn
+              size="md:h-8 h-9 md:w-8 w-9"
+              margin="mt-2 z-[101] rounded-2xl"
+              className=" overflow-hidden  min-w-fit rounded-full bg-gradient-to-br from-[#08C741] to-[#0F39C8] text-violet-200 text-[20px] font-semibold items-center justify-center outline-none border-none "
+            ></UserBtn>
+            <Link
+              className=" flex items-center opacity-80"
+              href="/"
+            >
+              <Image
+                src="/logo.svg"
+                height={400}
+                width={400}
+                className="w-[132px]"
+                alt="logo"
+              />
+            </Link>
+          </div>
+          
         </div>
       </nav>
       <section className="mb-4 md:mb-6 md:px-7 px-5 sm:block hidden">
