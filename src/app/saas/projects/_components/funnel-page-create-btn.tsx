@@ -1,9 +1,10 @@
+'use client'
 import React from "react";
-import { useModal } from "../../../../../providers/model-provider";
 import { Button } from "@/components/ui/button";
 import CustomModal from "@/components/global/CustomModal";
 import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
 import clsx from "clsx";
+import { useModal } from "../../../../../providers/model-provider";
 
 const FunnelPageCreateBtn = ({ userId, projectId, length, className }: { userId: string; projectId: string; length: number; className?: string }) => {
   const { setOpen } = useModal();

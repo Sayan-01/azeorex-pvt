@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
-import CreateProjectButton from "../../projects/_components/CreateProjectButton";
+import CreateProjectButton from "../../projects/_components/create-project-button";
 import Card from "../../_components/card";
 import TemplateCard from "@/components/design/TemplateCard";
 import EmptyStatefunnel from "@/components/global/empty/empty-state-funnel";

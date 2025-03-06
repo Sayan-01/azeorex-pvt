@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import Card from "../../_components/card";
-import CreateProjectButton from "./CreateProjectButton";
+import CreateProjectButton from "./create-project-button";
 import Link from "next/link";
 import Image from "next/image";
 import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
