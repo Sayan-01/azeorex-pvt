@@ -25,18 +25,24 @@ import { FileDuoToneBlack } from "@/icons";
 import { FunnelPage } from "@prisma/client";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
 
 const outfi = Roboto_Mono({ subsets: ["latin"], weight: "400" });
 
-export const columns: ColumnDef<FunnelPage>[] = [
+export const columns = (session: any): ColumnDef<FunnelPage>[] => [
   {
     accessorKey: "name",
     header: "Pages",
     cell: ({ row }) => (
-      <div className="flex items-center gap-2  md:min-w-[130px]">
+      <Link
+        className="flex items-center gap-2  md:min-w-[130px]"
+        href={`/editor/${row.original.id}?userId=${session?.user?.id}&projectId=${row.original.projectId}`}
+      >
         <FileDuoToneBlack />
-        <div className="capitalize">{row.getValue("name")}</div>
-      </div>
+        <div className="capitalize border-b border-dashed border-white/60">{row.getValue("name")}</div>
+      </Link>
     ),
   },
   {
@@ -84,11 +90,8 @@ export const columns: ColumnDef<FunnelPage>[] = [
 
       return (
         <div className="w-full flex justify-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              asChild
-              className="outline-none border-none"
-            >
+          <Dialog>
+            <DialogTrigger asChild>
               <Button
                 variant="ghost"
                 className="h-8 w-8 p-0 outline-none border-none"
@@ -99,39 +102,21 @@ export const columns: ColumnDef<FunnelPage>[] = [
                   size={15}
                 />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="sm:w-[14rem] p-2 rounded-xl m-0 mt-2"
-            >
-              <Dialog>
-                <DropdownMenuItem
-                  className="bg-white/5 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] mb-2"
-                  onSelect={(e) => e.preventDefault()} // Prevent dropdown from closing
-                >
-                  <DialogTrigger asChild>
-                    <div className="flex items-center gap-2 cursor-pointer">
-                      <PencilRuler size={15} />
-                      Edit details
-                    </div>
-                  </DialogTrigger>
-                </DropdownMenuItem>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Edit details</DialogTitle>
-                    <DialogDescription>Make changes to your profile here. Click save when you're done.</DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter>
-                    <Button type="submit">Save changes</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-              <DropdownMenuItem className="bg-white/5 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px]">
+            </DialogTrigger>
+            <DialogContent className="sm:w-[22rem] w-[18rem] p-2 border-white/5 rounded-xl gap-0.5 ">
+              <CreateFunnelPage
+                defaultData={row.original}
+                projectId={row?.original?.projectId}
+                order={row.original.order}
+                userId={session?.user?.id}
+                className="mb-2 border-white/5"
+              />
+              <div className="bg-white/5 border border-white/10 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] relative cursor-default select-none text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                 <Trash size={15} />
                 Delete the page
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       );
     },
@@ -144,11 +129,11 @@ export function FunnelPageTable({ pageDetails }: { pageDetails: FunnelPage[] }) 
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const [pagesState, setPagesState] = React.useState(pageDetails);
+  const { data: session } = useSession();
 
   const table = useReactTable({
     data: pageDetails,
-    columns,
+    columns: columns(session),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

@@ -20,7 +20,7 @@ import { useModal } from "../../../providers/model-provider";
 
 interface CreateFunnelPageProps {
   defaultData?: FunnelPage;
-  projectId: string;
+  projectId: string | null;
   order: number;
   userId: string;
   className?: string;
@@ -30,7 +30,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
   const { toast } = useToast();
   const router = useRouter();
   const { setClose } = useModal();
-  if (!userId) return;
+  if (!userId || !projectId) return null;
 
   const form = useForm<z.infer<typeof FunnelPageSchema>>({
     resolver: zodResolver(FunnelPageSchema),
@@ -62,7 +62,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
         },
         projectId
       );
-      router.refresh()
+      router.refresh();
 
       toast({
         title: "Success",
@@ -82,7 +82,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
 
   return (
     <Card className={`bg-[#26262626] ${className} `}>
-      <CardHeader className="border-b p-4 flex flex-col">
+      <CardHeader className="border-b p-4 flex flex-col gap-2">
         <div className="flex items-center flex-row justify-between mt-2">
           <h5 className="opacity-70 ">Webpage Settings</h5>
           {defaultData?.id && (
@@ -119,7 +119,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
           )}
         </div>
         <CardDescription>
-          <p className="">Funnel pages are flow in the order they are created by default. You can move<br/> them around to change their order.</p>
+          <p className=" text-sm">Funnel pages are flow in the order they are created by default. You can move them around to change their order.</p>
         </CardDescription>
       </CardHeader>
       <CardContent className="p-4">
@@ -166,15 +166,31 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
               )}
             />
             <div className="flex items-center justify-end gap-2">
-              <Button
-                className="w-22 rounded-full self-end"
-                disabled={form.formState.isSubmitting}
-                type="submit"
-              >
-                {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save Page"}
-              </Button>
+              {defaultData?.id ? (
+                <div className="flex flex-col w-full gap-2">
+                  <Button
+                    className="w-full rounded-lg self-end"
+                    disabled={form.formState.isSubmitting}
+                    type="submit"
+                  >
+                    {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save Page"}
+                  </Button>
+                  {/* <div className="bg-white/5 border border-white/10 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] relative cursor-default select-none text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                    <Trash size={15} />
+                    Delete the page
+                  </div> */}
+                </div>
+              ) : (
+                <Button
+                  className="w-22 rounded-full self-end"
+                  disabled={form.formState.isSubmitting}
+                  type="submit"
+                >
+                  {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save Page"}
+                </Button>
+              )}
 
-              {defaultData?.id && (
+              {/* {defaultData?.id && (
                 <Button
                   variant={"outline"}
                   className="w-22 rounded-full self-end border-destructive hover:bg-destructive border-2 bg-destructive/90 text-white/70"
@@ -192,7 +208,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                 >
                   {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : <p>Delete Page</p>}
                 </Button>
-              )}
+              )} */}
             </div>
           </form>
         </Form>
