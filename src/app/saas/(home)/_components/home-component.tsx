@@ -114,7 +114,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
       </section>
       <section className="text-3xl mb-4 md:px-7 px-5  sm:hidden flex flex-col items-center">
         <h1 className="text-center font-bold text-2xl mb-2 mt-7">Home section</h1>
-        <p className="text-center text-[14px] mb-5 opacity-60 w-[90%]">The best azeorex and figma templates and websites from Azeorex community.</p>
+        <p className="text-center text-sm mb-5 opacity-60 w-[90%]">The best azeorex and figma templates and websites from Azeorex community.</p>{" "}
         <div className="flex items-center h-11 bg-[#2d2f33] hover:bg-[#242529] rounded-full border border-[#545454]/30 w-full px-2">
           <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
             <IoSearchOutline size={20} />

@@ -58,6 +58,7 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
 
   const onSubmit = async (values: z.infer<typeof CreateFunnelFormSchema>) => {
     if (!userId) return;
+    
 
     const response = await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4());
     if (response)

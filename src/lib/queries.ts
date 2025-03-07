@@ -482,19 +482,31 @@ export const upsertFunnel = async (agencyId: string, funnel: z.infer<typeof Crea
 //===============================================================================
 
 export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string) => {
-  const response = await db.project.upsert({
-    where: { id: projectId },
-    update: project,
-    create: {
-      ...project,
-      id: projectId || v4(),
-      userId: userId,
-    },
-  });
-  console.log(response);
-  
+  try {
+    if (project.subDomainName) {
+      const existingProject = await db.project.findFirst({
+        where: { subDomainName: project.subDomainName },
+      });
+      if (existingProject) {
+        throw new Error("Subdomain already exists, please enter another subdomain name.");
+      }
+    }
 
-  return response;
+    const response = await db.project.upsert({
+      where: { id: projectId },
+      update: project,
+      create: {
+        ...project,
+        id: projectId || v4(),
+        userId: userId,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error upserting project:", error);
+    throw new Error("Failed to upsert project. Please try again later.");
+  }
 };
 
 //==============================================================================

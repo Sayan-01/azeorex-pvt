@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal, Pencil, PencilRuler, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -23,6 +23,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Roboto_Mono } from "next/font/google";
 import { FileDuoToneBlack } from "@/icons";
 import { FunnelPage } from "@prisma/client";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 const outfi = Roboto_Mono({ subsets: ["latin"], weight: "400" });
 
@@ -83,7 +85,10 @@ export const columns: ColumnDef<FunnelPage>[] = [
       return (
         <div className="w-full flex justify-end">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger
+              asChild
+              className="outline-none border-none"
+            >
               <Button
                 variant="ghost"
                 className="h-8 w-8 p-0 outline-none border-none"
@@ -95,12 +100,36 @@ export const columns: ColumnDef<FunnelPage>[] = [
                 />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy payment ID</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuContent
+              align="end"
+              className="sm:w-[14rem] p-2 rounded-xl m-0 mt-2"
+            >
+              <Dialog>
+                <DropdownMenuItem
+                  className="bg-white/5 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] mb-2"
+                  onSelect={(e) => e.preventDefault()} // Prevent dropdown from closing
+                >
+                  <DialogTrigger asChild>
+                    <div className="flex items-center gap-2 cursor-pointer">
+                      <PencilRuler size={15} />
+                      Edit details
+                    </div>
+                  </DialogTrigger>
+                </DropdownMenuItem>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Edit details</DialogTitle>
+                    <DialogDescription>Make changes to your profile here. Click save when you're done.</DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button type="submit">Save changes</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+              <DropdownMenuItem className="bg-white/5 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px]">
+                <Trash size={15} />
+                Delete the page
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -118,7 +147,7 @@ export function FunnelPageTable({ pageDetails }: { pageDetails: FunnelPage[] }) 
   const [pagesState, setPagesState] = React.useState(pageDetails);
 
   const table = useReactTable({
-    data: pagesState,
+    data: pageDetails,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -140,9 +169,9 @@ export function FunnelPageTable({ pageDetails }: { pageDetails: FunnelPage[] }) 
     <div className="w-full">
       <div className="flex items-center py-6">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("pathName")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("pathName")?.setFilterValue(event.target.value)}
+          placeholder="Filter page name..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

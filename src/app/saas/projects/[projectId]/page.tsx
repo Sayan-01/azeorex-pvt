@@ -66,7 +66,9 @@ const FunnelPage = async ({ params }: Props) => {
                 <div className="text-xs text-zinc-500 sm:text-left text-center">Domain Name</div>
                 <h1 className="text-2xl font-bold sm:text-left text-center">{project.subDomainName}.azeorex.com</h1>
               </div>
-              <div className="sm:ml-auto mx-auto sm:mt-0 mt-3 flex items-center gap-2">
+              <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
+                <Button
+                  className="flex items-center gap-1 h-8">Edit</Button>
                 <FunnelPageCreateBtn
                   userId={agencyId}
                   projectId={funnelId}
