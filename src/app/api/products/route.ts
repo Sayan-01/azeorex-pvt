@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { auth } from "../../../../auth";
+import { v4 } from "uuid";
+import { FunnelPage } from "@prisma/client";
 
 export const GET = async () => {
   try {
     const templates = await db.template.findMany({
-      orderBy: { datePublished: "desc" },
+      orderBy: { datePublished: "asc" },
       include: {
         User: {
           select: {
@@ -18,23 +21,60 @@ export const GET = async () => {
   } catch (error) {
     return NextResponse.json({ error: "Error in fetching the templates" }, { status: 500 });
   }
-  
 };
 
-// export const POST = async (req) => {
-//   await connectDb();
-//   const session = await auth();
+export const POST = async (req: Request) => {
+  const session = await auth();
 
-//   if (!session?.user) {
-//     return NextResponse.json({ error: "User not login" }, { status: 500 });
-//   } else {
-//     try {
-//       const { title, description, longDescription, theme, category, access, price, platform, feature, image, file } = await req.json(); //express a jemon req.body hoy temon ate just req ar maddhome body  e pass hoy
-//       if (category.length < 5 || feature.length < 3) return NextResponse.json({ error: "Error in creating the templates" }, { status: 500 });
-//       await Template.create({ title, description, longDescription, theme, category, access, price, platform, feature, image, file, owner: session?.user._id });
-//       return NextResponse.json({ message: "Template added successfully" }, { status: 200 });
-//     } catch (error) {
-//       return NextResponse.json({ error: "Error in creating the template" }, { status: 500 });
-//     }
-//   }
-// };
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "User not logged in" }, { status: 401 });
+  }
+
+  try {
+    const { title, description, longDescription, theme, category, access, price, platform, feature, image, file, FunnelPages } = await req.json();
+
+    if (category.length < 5 || feature.length < 3) {
+      return NextResponse.json({ error: "Error in creating the template" }, { status: 400 });
+    }
+
+    const template = await db.template.create({
+      data: {
+        id: v4(),
+        title,
+        description,
+        longDescription,
+        theme,
+        category,
+        access,
+        price,
+        platform,
+        feature,
+        image,
+        file,
+        userId: session.user.id, // Ensured userId is always a string
+      },
+    });
+
+    console.log(template);
+    
+
+    const copiedFunnelPages = FunnelPages.map((page:FunnelPage) => ({
+      id: v4(),
+      name: page.name,
+      pathName: page.pathName,
+      content: page.content,
+      previewImage: page.previewImage,
+      order: page.order,
+      templateId: template.id, // Link new pages to the Template
+    }));
+
+    await db.funnelPage.createMany({ data: copiedFunnelPages });
+
+    return NextResponse.json({ message: "Template added successfully" }, { status: 201 });
+  } catch (error) {
+    console.log("souvik",error);
+    
+    return NextResponse.json({ error: "Error in creating the template" }, { status: 500 });
+  }
+};
+

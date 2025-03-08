@@ -1,5 +1,7 @@
 import { AffiliateDuoToneBlack, Buisness, Chat, Courses, CreditCard, Document, Explore, GlobeDuoToneBlack, Home, IDuotoneBlack, PersonalDevelopment, ZapDouToneBlack } from "@/icons";
 import { AudioLines, Folder, HomeIcon, LayoutPanelTop, ShoppingBag, Sparkles, TvMinimalPlay } from "lucide-react";
+import Image from "next/image";
+import { FiBookmark, FiHeart } from "react-icons/fi";
 
 export type MenuProps = {
   id: number;
@@ -149,10 +151,10 @@ export const INTEGRATION_LIST_ITEMS: IntegrationsListItemProps[] = [
 ];
 
 type saasSideBarOptions = {
-  id: Number
-  name:String
-  link: String
-  icon: JSX.Element
+  id: Number;
+  name: String;
+  link: String;
+  icon: JSX.Element;
 };
 
 export const SAAS_SIDEBAR_OPTIONS: saasSideBarOptions[] = [
@@ -197,5 +199,35 @@ export const SAAS_SIDEBAR_OPTIONS: saasSideBarOptions[] = [
     name: "Az Store",
     link: `/saas/az-store`,
     icon: <ShoppingBag size={18} />,
+  },
+];
+
+export const access = [
+  {
+    id: 0,
+    title: "Pro",
+    name: "Pro",
+    image: <FiBookmark size={24} />,
+  },
+  {
+    id: 1,
+    title: "Free",
+    name: "Free",
+    image: <FiHeart size={24} />,
+  },
+];
+
+export const platform = [
+  {
+    id: 0,
+    title: "Figma",
+    name: "figma",
+    image: "/platform/figma.png",
+  },
+  {
+    id: 1,
+    title: "Azeorex",
+    name: "azeorex",
+    image: "/azeorex.png",
   },
 ];

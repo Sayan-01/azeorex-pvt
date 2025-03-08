@@ -19,7 +19,6 @@ type Props = {
 const TemplateComponent = ({ templates }: Props) => {
   const [query, setQuery] = useState("");
   const [filterQuery, setFilterQuery] = useState("");
-  console.log(templates);
 
   return (
     <div className="pb-7 ">

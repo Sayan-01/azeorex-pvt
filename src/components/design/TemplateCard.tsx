@@ -72,7 +72,7 @@ const TemplateCard = ({ item }: { item: any }) => {
                     color="#7e6cc5"
                     className="mb-[0.5px]"
                   /> */}
-                  4.6 Likes
+                  4.6 likes
                 </span>
                 <p className="text-[#8D5394]">56 reviews</p>
               </div>

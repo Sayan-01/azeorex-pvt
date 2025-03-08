@@ -1,12 +1,47 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { MoveRight, Plus } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import TemplatesUpload from "@/components/forms/templatesUpload";
+import MultiStepDialog from "@/components/multi-step-dialog-project";
+import { getProjects } from "@/lib/queries";
+import { auth } from "../../../../../auth";
+import { useSession } from "next-auth/react";
+import { Project } from "@prisma/client";
 
 const CreatorBtn = ({ className }: { className?: string }) => {
+  const { data: session } = useSession(); // ✅ Get session on client
+  const userId = session?.user?.id;
+
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
+    const loadProjects = async () => {
+      try {
+        const data = await getProjects(userId);
+        setProjects(data || []);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProjects();
+  }, [userId]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!userId || projects.length === 0) return null;
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
+    <MultiStepDialog
+      allProjects={projects}
+      triggerBtn={
         <Button
           size="sm"
           className={`bg-blue-500 hover:bg-blue-500/80 text-white items-center flex gap-2 ${className}`}
@@ -18,18 +53,8 @@ const CreatorBtn = ({ className }: { className?: string }) => {
             <Plus size={16} />
           </p>
         </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent className="sm:max-w-[425px]">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Edit profile</AlertDialogTitle>
-          <AlertDialogDescription>Make changes to your profile here. Click save when you're done.</AlertDialogDescription>
-        </AlertDialogHeader>
-        <div className="grid gap-4 py-4"></div>
-        <AlertDialogFooter>
-          <Button type="submit">Save changes</Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      }
+    />
   );
 };
 

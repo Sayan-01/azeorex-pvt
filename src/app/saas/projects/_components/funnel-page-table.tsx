@@ -29,7 +29,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
 
-const outfi = Roboto_Mono({ subsets: ["latin"], weight: "400" });
+const outf = Roboto_Mono({ subsets: ["latin"], weight: "400" });
 
 export const columns = (session: any): ColumnDef<FunnelPage>[] => [
   {
@@ -41,7 +41,7 @@ export const columns = (session: any): ColumnDef<FunnelPage>[] => [
         href={`/editor/${row.original.id}?userId=${session?.user?.id}&projectId=${row.original.projectId}`}
       >
         <FileDuoToneBlack />
-        <div className="capitalize border-b border-dashed border-white/60">{row.getValue("name")}</div>
+        <div className="capitalize border-b border-dashed border-sky-500 border-white/60">{row.getValue("name")}</div>
       </Link>
     ),
   },
@@ -191,7 +191,7 @@ export function FunnelPageTable({ pageDetails }: { pageDetails: FunnelPage[] }) 
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className={`rounded-md border bg-[#18181B] ${outfi.className}`}>
+      <div className={`rounded-md border bg-[#18181B] ${outf.className}`}>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

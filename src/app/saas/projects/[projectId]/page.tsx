@@ -24,9 +24,9 @@ const FunnelPage = async ({ params }: Props) => {
     <div className="h-full flex flex-col gap-3 md:pl-6">
       <div className="flex-1 flex flex-col md:border-l border-zinc-800">
         {/* Header */}
-        <header className="h-16 border-b border-zinc-800 flex items-center justify-between px-6">
-          <h1 className="sm:pl-3">Setup your website</h1>
-          <div className="sm:flex hidden items-center gap-4 ">
+        <header className="h-[88px] border-b border-zinc-800 flex items-center justify-between px-6">
+          <h1 className="sm:pl-3 text-sm opacity-70"></h1>
+          <div className="sm:flex hidden items-center gap-3">
             <Button
               variant="outline"
               size="sm"
