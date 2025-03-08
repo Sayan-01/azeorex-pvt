@@ -228,7 +228,8 @@ const MultiStepDialog = ({triggerBtn, allProjects}:Props) => {
               //     />
               //   </div>
               // </div>
-              <TemplatesUpload/>
+              // <TemplatesUpload/>
+              <></>
             )}
 
             {/* Step 5: Review */}

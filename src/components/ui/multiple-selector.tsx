@@ -19,7 +19,7 @@ type MultiSelectorProps = {
 
 
 
-const MultiSelectContext = createContext(null);
+const MultiSelectContext = createContext<any>(null);
 
 const useMultiSelect = () => {
   const context = useContext(MultiSelectContext);
@@ -127,7 +127,7 @@ const MultiSelector = ({ values: value, onValueChange: onChange, loop = false, c
 const MultiSelectorTrigger = forwardRef(({ className, children, ...props }:any, ref) => {
   const { value, onChange, activeIndex } = useMultiSelect();
 
-  const mousePreventDefault = useCallback((e) => {
+  const mousePreventDefault = useCallback((e:any) => {
     e.preventDefault();
     e.stopPropagation();
   }, []);
@@ -138,7 +138,7 @@ const MultiSelectorTrigger = forwardRef(({ className, children, ...props }:any, 
       className={cn("flex flex-wrap gap-x-4 gap-y-2 px-4 py-2 border border-muted rounded-lg bg-background", className)}
       {...props}
     >
-      {value.map((item, index) => (
+      {value.map((item:any, index:number) => (
         <Badge
           key={item}
           className={cn("px-2 rounded-xl flex items-center gap-1", activeIndex === index && "ring-2 ring-muted-foreground ")}
@@ -225,7 +225,7 @@ MultiSelectorList.displayName = "MultiSelectorList";
 const MultiSelectorItem = forwardRef(({ className, value, children, ...props }:any, ref) => {
   const { value: Options, onChange, setInputValue } = useMultiSelect();
 
-  const mousePreventDefault = useCallback((e) => {
+  const mousePreventDefault = useCallback((e:any) => {
     e.preventDefault();
     e.stopPropagation();
   }, []);
