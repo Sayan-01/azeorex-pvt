@@ -721,7 +721,7 @@ export const temToProject = async (template: any) => {
       id: v4(),
       name: template.title,
       description: template.description,
-      subDomainName: `${template.title.toLowerCase()}-${Math.floor(1000 + Math.random() * 9000).toString}`,
+      subDomainName: `${template.title.toLowerCase()}-${Math.floor(1000 + Math.random() * 9000).toString()}`,
       userId: userId as string,
     },
   });
@@ -739,6 +739,6 @@ export const temToProject = async (template: any) => {
   const res = await db.funnelPage.createMany({ data: copiedFunnelPages });
 
   if (res) {
-    return { success: true, message: "Email error is", status: 200 };
-  } else return { success: false, message: "Email error is", status: 500 };
+    return { success: true, message: "Purchased successfully!", status: 200 };
+  } else return { success: false, message: "Server error", status: 500 };
 };

@@ -16,6 +16,7 @@ import { Template } from "@prisma/client";
 import TemplateCard from "@/components/design/TemplateCard";
 import { searchSimilerProduct, temToProject } from "@/lib/queries";
 import { template } from "lodash";
+import BuyButtton from "@/components/buttons/BuyButtton";
 
 const getTemplateData = async (id: string): Promise<Template> => {
   let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`);
@@ -38,13 +39,6 @@ const page = async ({ params }: { params: { id: string } }) => {
   function formatNumber(input: number) {
     return parseFloat(`${input}`).toFixed(2);
   }
-
-  const templateToProject = async () => {
-    'use server'
-    let data = await temToProject(oneTemplate);
-    if (data?.status !== 200) throw new Error("Failed to fetch template");
-    
-  };
 
   return (
     <>
@@ -163,29 +157,8 @@ const page = async ({ params }: { params: { id: string } }) => {
               <div className="w-full">
                 <div className="flex flex-col sm:flex-row gap-y-5 sm:gap-y-0 gap-x-5  mt-2">
                   {/* btn 1 */}
-                  <form
-                    className="w-full"
-                    action={templateToProject}
-                  >
-                    {/* <input
-                      type="hidden"
-                      name="id" 
-                      value={oneTemplate._id}
-                    /> */}
-                    <button
-                      type="submit"
-                      className="flex gap-5 w-full"
-                    >
-                      <div className=" bg-blue-600 h-[40px] text-white rounded-lg flex items-center justify-center flex-1 font-lg ">Buy now</div>
-                    </button>
-                  </form>
-                  {/* <button
-                    className="w-full bg-blue-600 h-[40px] text-white rounded-lg flex items-center justify-center font-lg "
-                    onClick={async () => templateToProject}
-                  >
-                    Buy now
-                  </button> */}
-                  {/* btn 2 */}
+                  
+                  <BuyButtton oneTemplate={oneTemplate}/>
 
                   <PreviewButton
                     className="w-full"

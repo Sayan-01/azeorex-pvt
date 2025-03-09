@@ -41,7 +41,7 @@ export const columns = (session: any): ColumnDef<FunnelPage>[] => [
         href={`/editor/${row.original.id}?userId=${session?.user?.id}&projectId=${row.original.projectId}`}
       >
         <FileDuoToneBlack />
-        <div className="capitalize border-b border-dashed border-sky-500 border-white/60">{row.getValue("name")}</div>
+        <div className="capitalize border-b border-dashed border-sky-500">{row.getValue("name")}</div>
       </Link>
     ),
   },

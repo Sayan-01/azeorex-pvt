@@ -63,7 +63,7 @@ const FunnelPage = async ({ params }: Props) => {
                 </div>
               </div>
               <div>
-                <div className="text-xs text-zinc-500 sm:text-left text-center">Domain Name</div>
+                <div className="text-sm font-semibold text-zinc-500 sm:text-left text-center">Domain</div>
                 <h1 className="text-2xl font-bold sm:text-left text-center">{project.subDomainName}.azeorex.com</h1>
               </div>
               <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
