@@ -33,7 +33,7 @@ const BuyButtton = ({ oneTemplate }: Props) => {
 
   return (
     <button
-      className={`w-full ${loading ? " bg-blue-600/40" : "bg-blue-600"}  h-[40px] text-white rounded-lg flex items-center justify-center font-lg`}
+      className={`w-full ${loading ? " bg-main/40" : "bg-main"}  h-[40px] text-white rounded-lg flex items-center justify-center font-lg`}
       onClick={templateToProject}
     >
       {loading ? <Loader loading /> : "Buy now"}

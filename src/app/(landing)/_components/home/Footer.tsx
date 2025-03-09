@@ -5,9 +5,9 @@ import Link from "next/link";
 import Wrapper from "@/components/design/Wrapper";
 import { socials } from "@/constants/azeorex-landing-page";
 
-const Footer = () => {
+const Footer = ({ startingColor }: { startingColor?: string }) => {
   return (
-    <div className="pt-10 bg-gradient-to-t from-[#1c247c] ">
+    <div className={`pt-10 bg-gradient-to-t from-[#1c247c] ${startingColor && startingColor}`}>
       <div className="w-[88%] mx-auto bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 mb-12 h-[1px]" />
 
       <Wrapper className=" flex flex-col w-full">
@@ -28,8 +28,11 @@ const Footer = () => {
               <p className=" text-white/60">
                 Azeorex is a software company which provide many tech solution. Azeorex has a huge collection of premium templates and components. We also create complete mern stack & nextjs website.
               </p>
-              <Link href="https://linkdin.com/sayan-01" className="flex item-center gap-4 mt-6">
-                          <p>Build with ❤️ Sayan Das</p>
+              <Link
+                href="https://linkdin.com/sayan-01"
+                className="flex item-center gap-4 mt-6"
+              >
+                <p>Build with ❤️ Sayan Das</p>
 
                 <h2 className="flex font-semibold text-[16px] items-center gap-3 ">
                   Contact <MdOutlineArrowOutward />

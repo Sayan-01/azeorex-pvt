@@ -17,14 +17,14 @@ const TemplateCard = ({ item }: { item: any }) => {
         className="relative"
       >
         <div className="overflow-hidden cursor-pointer rounded-[10px]">
-          <Carousel className={"w-full mx-auto rounded-[12px] overflow-hidden hover:outline-blue-500/80 hover:outline-2 duration-200"}>
+          <Carousel className={"w-full mx-auto rounded-[12px] overflow-hidde duration-200 "}>
             <CarouselContent>
               {item?.image?.slice(0, 2).map((item: any, idx: number) => {
                 return (
                   <CarouselItem key={idx}>
-                    <div className=" overflow-hidden rounded-[10px]">
+                    <div className=" overflow-hidden rounded-[10px] group ">
                       <Image
-                        className="w-full object-cover duration-200  aspect-[3/1.9] "
+                        className="w-full object-cover duration-300  aspect-[3/1.9] group-hover:scale-110 transition-transform"
                         width={600}
                         height={600}
                         src={item || "/funnel-placeholder.svg"}
@@ -53,7 +53,7 @@ const TemplateCard = ({ item }: { item: any }) => {
                 src={item?.User.avatarUrl || "/avater.svg"}
                 width={200}
                 height={200}
-                className="w-9 h-9  rounded-full"
+                className="w-9 h-9  rounded-full "
                 alt="profile img"
               />
             </div>

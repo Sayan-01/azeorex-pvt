@@ -7,7 +7,7 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
     let { id } = params;
     const oneTemplate = await db.template.findUnique({
       where: { id },
-      include: { FunnelPages: true },
+      include: { FunnelPages: true, Reviews: {include: {User:true}} },
     });
     return NextResponse.json(oneTemplate);
   } catch (error) {

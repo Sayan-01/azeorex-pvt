@@ -17,6 +17,8 @@ import TemplateCard from "@/components/design/TemplateCard";
 import { searchSimilerProduct, temToProject } from "@/lib/queries";
 import { template } from "lodash";
 import BuyButtton from "@/components/buttons/BuyButtton";
+import { Heart, MoveRight, Star } from "lucide-react";
+import CommentSection from "../_components/comments-section";
 
 const getTemplateData = async (id: string): Promise<Template> => {
   let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`);
@@ -33,6 +35,8 @@ const similer_product = async (category: string): Promise<Template[]> => {
 const page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const oneTemplate = await getTemplateData(id);
+  console.log(oneTemplate);
+  
 
   const similerProduct = await similer_product(oneTemplate.category[0]);
 
@@ -42,7 +46,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div className="min-h-screen w-full bg-black sm:py-[95px] py-[75px]">
+      <div className="min-h-screen w-full bg-[#141414] sm:py-[95px] py-[75px]">
         <Wrapper>
           {/* route-path */}
           <p className="text-white/70 mb-6 mt-2 text-sm">
@@ -77,14 +81,14 @@ const page = async ({ params }: { params: { id: string } }) => {
                 </Carousel>
               </div>
               {/* left-bottom */}
-              <div className={"lg:w-full md:w-[60%] w-full mx-auto mt-10                                            "}>
+              <div className={"lg:w-full md:w-[60%] w-full mx-auto mt-10"}>
                 <div>
                   <Heading>Long Description</Heading>
                   <p className="mb-10">{oneTemplate.longDescription}</p>
                   <Heading>Template Category</Heading>
                   <div className="mb-10">
                     {oneTemplate.category.map((i) => {
-                      return <Badge className={"border rounded-lg mr-4 mb-4 py-2 bg-white/10"}>{i}</Badge>;
+                      return <Badge className={"border rounded-lg mr-4 mb-4 py-2 bg-[#ffffff08]"}>{i}</Badge>;
                     })}
                   </div>
                   <Heading>Features</Heading>
@@ -93,7 +97,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                       return (
                         <div
                           key={idx}
-                          className="p-5 py-4 rounded-xl my-4 bg-white/10"
+                          className="p-5 py-4 rounded-xl my-4 bg-[#ffffff08]"
                         >
                           {i}
                         </div>
@@ -157,8 +161,7 @@ const page = async ({ params }: { params: { id: string } }) => {
               <div className="w-full">
                 <div className="flex flex-col sm:flex-row gap-y-5 sm:gap-y-0 gap-x-5  mt-2">
                   {/* btn 1 */}
-                  
-                  <BuyButtton oneTemplate={oneTemplate}/>
+                  <BuyButtton oneTemplate={oneTemplate} />
 
                   <PreviewButton
                     className="w-full"
@@ -166,6 +169,9 @@ const page = async ({ params }: { params: { id: string } }) => {
                   >
                     Preview
                   </PreviewButton>
+                  <div className="min-w-[40px] flex items-center justify-center gap-3 h-10 rounded-full bg-white/10 text-white/60 text-sm">
+                    <Heart size={16} />
+                  </div>
                 </div>
                 <p className="sm:text-[20px] text-[16px] text-white mt-6 mb-4">How to Use Our Template</p>
                 <div className="flex sm:flex-row flex-col justify-between mb-2">
@@ -234,21 +240,35 @@ const page = async ({ params }: { params: { id: string } }) => {
             </div>
           </div>
           {/* bottom */}
-          <div className=" my-20">
+          <div className=" my-20 mb-10 relative">
             {/* heading */}
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">More Templates</h2>
-              <p className=" text-blue-500/60">see all</p>
+              <div className="h-8 px-3 text-sm gap-2 flex items-center justify-center backdrop-blur bg-white/80 text-black-100 rounded-full ">
+                Scroll{" "}
+                <MoveRight
+                  size={18}
+                  strokeWidth={1.8}
+                />
+              </div>{" "}
             </div>
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+
+            <div className=" flex overflow-x-auto gap-7 pb-4 scrollbar-hide snap-x box relative">
               {similerProduct.map((item, idx) => {
                 return (
-                  <div key={idx}>
+                  <div
+                    key={idx}
+                    className="flex-shrink-0 snap-start lg:w-[calc(25%-21px)] md:w-[calc(33.33%-21px)]  min-[500px]:w-[calc(50%-21px)] w-full"
+                  >
                     <TemplateCard item={item} />
                   </div>
                 );
               })}
             </div>
+          </div>
+          {/* comments */}
+          <div>
+            <CommentSection />
           </div>
         </Wrapper>
       </div>

@@ -6,7 +6,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Header />
       <main className="min-h-screen">{children}</main>
-      <Footer />
+      <Footer startingColor="to-[#141414]"/>
     </>
   );
 };
