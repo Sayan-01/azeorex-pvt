@@ -34,7 +34,7 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
               placeholder="Search..."
             />
           </div>
-          <div className="md:hidden flex md:items-center md:gap-12 w-[142px] gap-[12px]">
+          <div className="md:hidden flex md:items-center md:gap-12 w-[146px] gap-[12px]">
             <UserBtn
               size="md:h-8 h-9 md:w-8 w-9"
               margin="mt-2 z-[101] rounded-2xl"

@@ -2,13 +2,14 @@ import { db } from "@/lib/db";
 import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
-export const GET = async (req:Request, { params }: { params: { id: string } }) => {
+export const GET = async (req: Request, { params }: { params: { id: string } }) => {
   try {
     let { id } = params;
     const oneTemplate = await db.template.findUnique({
       where: { id },
+      include: { FunnelPages: true },
     });
-    return NextResponse.json( oneTemplate );
+    return NextResponse.json(oneTemplate);
   } catch (error) {
     console.error("Error in fetching", error);
     return NextResponse.json({ error: "Error in fetching for show one template" }, { status: 500 });

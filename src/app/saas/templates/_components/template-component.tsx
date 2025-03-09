@@ -40,14 +40,14 @@ const TemplateComponent = ({ templates }: Props) => {
             />
           </div>
           <CreatorBtn className="md:flex hidden" />
-          <div className="md:hidden flex md:items-center md:gap-12 w-[148px]  gap-3 h-9">
+          <div className="md:hidden flex md:items-center md:gap-12 w-[146px] gap-[12px]">
             <UserBtn
               size="md:h-8 h-9 md:w-8 w-9"
               margin="mt-2 z-[101] rounded-2xl"
               className=" overflow-hidden  min-w-fit rounded-full bg-gradient-to-br from-[#08C741] to-[#0F39C8] text-violet-200 text-[20px] font-semibold items-center justify-center outline-none border-none "
             ></UserBtn>
             <Link
-              className=" flex items-center"
+              className=" flex items-center opacity-80"
               href="/"
             >
               <Image

@@ -53,10 +53,7 @@ export const POST = async (req: Request) => {
         file,
         userId: session.user.id, // Ensured userId is always a string
       },
-    });
-
-    console.log(template);
-    
+    });    
 
     const copiedFunnelPages = FunnelPages.map((page:FunnelPage) => ({
       id: v4(),

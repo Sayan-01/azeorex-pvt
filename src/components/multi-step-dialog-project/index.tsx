@@ -41,9 +41,10 @@ type Project = {
 type Props = {
   triggerBtn: React.ReactNode;
   allProjects: Project[];
+  className?: string
 };
 
-const MultiStepDialog = ({ triggerBtn, allProjects }: Props) => {
+const MultiStepDialog = ({ triggerBtn, allProjects, className }: Props) => {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -96,7 +97,7 @@ const MultiStepDialog = ({ triggerBtn, allProjects }: Props) => {
   };
 
   return (
-    <div>
+    <div className={className}>
       <Dialog
         open={open}
         onOpenChange={setOpen}

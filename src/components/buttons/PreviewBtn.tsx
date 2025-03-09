@@ -7,10 +7,11 @@ import Link from "next/link";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import Image from "next/image";
 
-const PreviewButton = ({ className, children, fileUrl, preview }) => {
+type Props = {className?: string; children: React.ReactNode; preview: string | false};
+const PreviewButton = ({ className, children, preview }:Props) => {
   return (
     <div className="bg-black-100 border border-white/10 h-[42px] text-white rounded-lg flex items-center justify-center font-lg w-full">
-      <Dialog className="w-full">
+      <Dialog>
         <DialogTrigger asChild>
           <button className={`${className}`}>{children}</button>
         </DialogTrigger>
@@ -29,7 +30,7 @@ const PreviewButton = ({ className, children, fileUrl, preview }) => {
               </div>
             </>
           ) : (
-            <div>
+            <div className="h-full flex items-center justify-center">
               <h1 className="text-2xl font-semibold">No image provided for Preview</h1>
             </div>
           )}

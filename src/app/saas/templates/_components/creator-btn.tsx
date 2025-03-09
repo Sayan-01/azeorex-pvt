@@ -39,7 +39,7 @@ const CreatorBtn = ({ className }: { className?: string }) => {
   if (!userId || projects.length === 0) return null;
 
   return (
-    <MultiStepDialog
+    <MultiStepDialog className={className}
       allProjects={projects}
       triggerBtn={
         <Button

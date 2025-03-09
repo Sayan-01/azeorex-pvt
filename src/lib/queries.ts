@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 import { z } from "zod";
 import { db } from "./db";
 import { v4 } from "uuid";
-import { Agency, Media, Prisma, User } from "@prisma/client";
+import { Agency, FunnelPage, Media, Prisma, Template, User } from "@prisma/client";
 import { EditorElement } from "../../providers/editor/editor-provider";
 import verificationEmailSend from "./verificationEmailSend";
 
@@ -460,6 +460,7 @@ export const getProjects = async (userId: string | undefined) => {
   const projects = await db.project.findMany({
     where: { userId: userId },
     include: { FunnelPages: true },
+    orderBy: { updatedAt: "desc"}
   });
 
   return projects;
@@ -705,4 +706,39 @@ export const searchSimilerProduct = async (category: string) => {
   });
   if (similer_product) return similer_product;
   else return [];
+};
+
+//============================================================================
+
+export const temToProject = async (template: any) => {
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  if (!template) return null;
+
+  const project = await db.project.create({
+    data: {
+      id: v4(),
+      name: template.title,
+      description: template.description,
+      subDomainName: `${template.title.toLowerCase()}-${Math.floor(1000 + Math.random() * 9000).toString}`,
+      userId: userId as string,
+    },
+  });
+
+  const copiedFunnelPages = template.FunnelPages.map((page: FunnelPage) => ({
+    id: v4(),
+    name: page.name,
+    pathName: page.pathName,
+    content: page.content,
+    previewImage: page.previewImage,
+    order: page.order,
+    projectId: project.id,
+  }));
+
+  const res = await db.funnelPage.createMany({ data: copiedFunnelPages });
+
+  if (res) {
+    return { success: true, message: "Email error is", status: 200 };
+  } else return { success: false, message: "Email error is", status: 500 };
 };

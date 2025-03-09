@@ -16,7 +16,7 @@ const Header = async () => {
   return (
     <header>
       <div className="h-[2px] bg-bcgc"></div>
-      <div className="fixed top-0 z-[100] backdrop-blur-md  sm:h-[95px] h-[75px] w-full">
+      <div className="fixed top-0 z-[80] backdrop-blur-md  sm:h-[95px] h-[75px] w-full">
         <Wrapper className="h-full">
           <div className="mx-auto my-auto max-w-screen-xl h-full">
             <div className="flex h-full items-center justify-between">

@@ -14,30 +14,37 @@ import CopyButton from "@/components/buttons/CopyButton";
 import PreviewButton from "@/components/buttons/PreviewBtn";
 import { Template } from "@prisma/client";
 import TemplateCard from "@/components/design/TemplateCard";
-import { searchSimilerProduct } from "@/lib/queries";
+import { searchSimilerProduct, temToProject } from "@/lib/queries";
+import { template } from "lodash";
 
 const getTemplateData = async (id: string): Promise<Template> => {
-  
-    let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, { cache: "no-store" });
-    if (!data.ok) throw new Error("Failed to fetch template");
-    const res = await data.json();
-    return res;
+  let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`);
+  if (!data.ok) throw new Error("Failed to fetch template");
+  const res = await data.json();
+  return res;
 };
 
 const similer_product = async (category: string): Promise<Template[]> => {
-  const res = await searchSimilerProduct(category) 
+  const res = await searchSimilerProduct(category);
   return res;
 };
 
 const page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const oneTemplate = await getTemplateData(id);
-  
-  const similerProduct= await similer_product(oneTemplate.category[0]);
 
-  function formatNumber(input:number) {
+  const similerProduct = await similer_product(oneTemplate.category[0]);
+
+  function formatNumber(input: number) {
     return parseFloat(`${input}`).toFixed(2);
   }
+
+  const templateToProject = async () => {
+    'use server'
+    let data = await temToProject(oneTemplate);
+    if (data?.status !== 200) throw new Error("Failed to fetch template");
+    
+  };
 
   return (
     <>
@@ -156,31 +163,36 @@ const page = async ({ params }: { params: { id: string } }) => {
               <div className="w-full">
                 <div className="flex flex-col sm:flex-row gap-y-5 sm:gap-y-0 gap-x-5  mt-2">
                   {/* btn 1 */}
-                  {/* <form
+                  <form
                     className="w-full"
-                    action={buyProduct}
+                    action={templateToProject}
                   >
-                    <input
+                    {/* <input
                       type="hidden"
-                      name="id"
+                      name="id" 
                       value={oneTemplate._id}
-                    />
+                    /> */}
                     <button
                       type="submit"
                       className="flex gap-5 w-full"
                     >
                       <div className=" bg-blue-600 h-[40px] text-white rounded-lg flex items-center justify-center flex-1 font-lg ">Buy now</div>
                     </button>
-                  </form> */}
-                  {/* <CopyButton className="w-full bg-blue-600 h-[40px] text-white rounded-lg flex items-center justify-center font-lg ">Buy now</CopyButton> */}
+                  </form>
+                  {/* <button
+                    className="w-full bg-blue-600 h-[40px] text-white rounded-lg flex items-center justify-center font-lg "
+                    onClick={async () => templateToProject}
+                  >
+                    Buy now
+                  </button> */}
                   {/* btn 2 */}
 
-                  {/* <PreviewButton
+                  <PreviewButton
                     className="w-full"
                     preview={oneTemplate?.image.length == 3 ? oneTemplate?.image[2] : false}
                   >
                     Preview
-                  </PreviewButton> */}
+                  </PreviewButton>
                 </div>
                 <p className="sm:text-[20px] text-[16px] text-white mt-6 mb-4">How to Use Our Template</p>
                 <div className="flex sm:flex-row flex-col justify-between mb-2">
@@ -271,7 +283,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-const Heading = ({ children }:{children:React.ReactNode}) => {
+const Heading = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
