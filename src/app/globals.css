@@ -4,15 +4,18 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
-  height: -webkit-fill-available;
+  
 }
 
 html {
   --scroll-behavior: smooth !important;
   scroll-behavior: smooth !important;
-  min-height: 100vh;
-  height: -webkit-fill-available;
+ 
+}
+
+body, html {
+  min-height: 100dvh; /* Dynamic viewport height */
+  height: 100dvh;
 }
 
 @layer utilities {
