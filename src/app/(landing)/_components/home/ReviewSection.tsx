@@ -43,14 +43,14 @@ const ReviewSection = () => {
           h1={"Lovable Review"}
           p={"Hear from our happy clients about our fast, reliable, and high-quality website services and solutions."}
         />
-        <div className="mt-20 grid grid-cols-3 gap-6">
+        <div className="mt-20 grid md:grid-cols-3 grid-cols-1 gap-6">
           {comments.map((item) => {
             return (
               <div
                 key={item.id}
                 className="z-10 card p-6 w-full max-w-[490px] h-60 relative rounded-2xl border border-bor-100 bg-gradient-to-r from-[#04071d]/80 to-[#0d1027]/80 overflow-hidden flex flex-col justify-between"
               >
-                <div>"{item.comment}"</div>
+                <div className="description_5line">"{item.comment}"</div>
                 <div className="flex items-center gap-4 mt-5">
                   <div className="w-10 h-10 rounded-full bg-white/10"></div>
                   <div>

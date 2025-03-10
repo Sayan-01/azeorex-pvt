@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import FunnelEditor from "./_components/funnel-editor";
 import FunnelEditorNavigation from "./_components/funnel-editor-navigation";
 import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
-import { Inter } from "next/font/google";
+import { Inter, Lexend, Roboto_Mono } from "next/font/google";
 import EditorProvider from "../../../../../providers/editor/editor-provider";
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
   };
 };
 
-const inter = Inter({ subsets: ["latin"] });
+const inte = Inter({ subsets: ["latin"] });
 
 const page = async ({ params, searchParams }: Props) => {
   const agencyId = searchParams.userId
@@ -35,7 +35,7 @@ const page = async ({ params, searchParams }: Props) => {
   }
 
   return (
-    <div className={`fixed top-0 bottom-0  left-0 right-0 z-20 bg-[#272727] overflow-hidden ${inter.className}`}>
+    <div className={`fixed top-0 bottom-0  left-0 right-0 z-20 bg-main/80 overflow-hidden ${inte.className}`}>
       {/* starts from 16:39 */}
       <EditorProvider
         agencyId={agencyId}

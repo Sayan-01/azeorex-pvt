@@ -4,18 +4,21 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  
 }
 
 html {
   --scroll-behavior: smooth !important;
   scroll-behavior: smooth !important;
- 
 }
 
-body, html {
+body,
+html {
   min-height: 100dvh; /* Dynamic viewport height */
   height: 100dvh;
+}
+html {
+  touch-action: manipulation; /* Prevents double-tap zoom */
+  overflow: hidden; /* Prevents pinch zoom */
 }
 
 @layer utilities {
@@ -451,6 +454,12 @@ body, html {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.description_5line {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 @layer base {
   * {
@@ -459,4 +468,17 @@ body, html {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.dora {
+  transform: 
+    matrix3d(
+      0.8, 0, 0, 0,
+      0, 0.8, 0, 0, 
+      0, 0, 0.8, 0,
+      114.721, 39, 0, 1
+    );
+  transform-origin: left top;
+  width: 1440px;
+  height: 1024px;
 }

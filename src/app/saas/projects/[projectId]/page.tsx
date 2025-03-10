@@ -24,9 +24,9 @@ const FunnelPage = async ({ params }: Props) => {
     <div className="h-full flex flex-col gap-3 md:pl-6">
       <div className="flex-1 flex flex-col md:border-l border-zinc-800">
         {/* Header */}
-        <header className="h-[88px] border-b border-zinc-800 flex items-center justify-between px-6">
+        <header className="md:h-[88px] h-[76px] border-b border-zinc-800 flex items-center justify-between px-6">
           <h1 className="sm:pl-3 text-sm opacity-70"></h1>
-          <div className="sm:flex hidden items-center gap-3">
+          <div className="sm:flex hidden items-center gap-3 sm:mr-12 md:mr-0">
             <Button
               variant="outline"
               size="sm"
@@ -68,7 +68,7 @@ const FunnelPage = async ({ params }: Props) => {
               </div>
               <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
                 <Button
-                  className="flex items-center gap-1 h-8">Edit</Button>
+                  className="flex items-center gap-1 h-8 text-xs">Edit</Button>
                 <FunnelPageCreateBtn
                   userId={agencyId}
                   projectId={funnelId}
