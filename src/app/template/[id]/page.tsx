@@ -12,16 +12,45 @@ import { MdAdsClick, MdAlternateEmail, MdOutlineEmail, MdOutlineFileDownload, Md
 import Link from "next/link";
 import CopyButton from "@/components/buttons/CopyButton";
 import PreviewButton from "@/components/buttons/PreviewBtn";
-import { Template } from "@prisma/client";
+// import { Template } from "@prisma/client";
 import TemplateCard from "@/components/design/TemplateCard";
 import { searchSimilerProduct, temToProject } from "@/lib/queries";
 import { template } from "lodash";
 import BuyButtton from "@/components/buttons/BuyButtton";
-import { Heart, MoveRight, Star } from "lucide-react";
+import { Eye, Heart, MessageSquareMore, MoveRight, Star } from "lucide-react";
 import CommentSection from "../_components/comments-section";
 
+interface Template {
+  id: string;
+  title: string;
+  description: string;
+  longDescription: string;
+  theme: string;
+  category: string[];
+  access: string;
+  price: number;
+  platform: string[];
+  feature: string[];
+  image: string[];
+  file: string | null;
+  datePublished: Date;
+  userId: string;
+  likes: number;
+  dislikes: number;
+  Reviews: Review[]; // Ensure this exists
+}
+
+interface Review {
+  id: string;
+  userId: string | null; // Allow null
+  createdAt: Date;
+  comment: string;
+  rating: number;
+  templateId: string;
+}
+
 const getTemplateData = async (id: string): Promise<Template> => {
-  let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`);
+  let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, { cache: "no-store" });
   if (!data.ok) throw new Error("Failed to fetch template");
   const res = await data.json();
   return res;
@@ -35,8 +64,6 @@ const similer_product = async (category: string): Promise<Template[]> => {
 const page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const oneTemplate = await getTemplateData(id);
-  console.log(oneTemplate);
-  
 
   const similerProduct = await similer_product(oneTemplate.category[0]);
 
@@ -46,7 +73,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div className="min-h-screen w-full bg-[#141414] sm:py-[95px] py-[75px]">
+      <div className="min-h-screen w-full bg-[#141414] sm:py-[95px] py-[75px] text-[15px]">
         <Wrapper>
           {/* route-path */}
           <p className="text-white/70 mb-6 mt-2 text-sm">
@@ -55,7 +82,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           {/* top */}
           <div className="flex lg:flex-row flex-col-reverse items-start">
             {/* left */}
-            <div className={"flex w-full flex-col"}>
+            <div className={"flex md:flex-[0.6] w-full flex-col"}>
               {/* left-top */}
               <div className={"w-full mx-auto"}>
                 <Carousel>
@@ -65,7 +92,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                         <CarouselItem key={idx}>
                           <div className=" w-full mx-auto lg:mx-0">
                             <Image
-                              className="w-full aspect-[10/7] rounded-2xl"
+                              className="w-full aspect-[10/6.5] object-cover object-top rounded-2xl"
                               src={item}
                               width={500}
                               height={500}
@@ -126,7 +153,7 @@ const page = async ({ params }: { params: { id: string } }) => {
             </div>
 
             {/* right */}
-            <div className="lg:pl-[80px] lg:sticky sm:top-[153px] top-[70px] overflow-hidden flex w-full lg:w-[90%] md:flex-row  lg:flex-col  flex-col gap-x-10 mb-10 lg:mb-0">
+            <div className="lg:pl-[80px] lg:sticky sm:top-[153px] top-[70px] overflow-hidden flex md:flex-[0.4] w-full lg:w-[90%] md:flex-row  lg:flex-col  flex-col gap-x-10 mb-10 lg:mb-0">
               {/* part 1 */}
               <div className="w-full">
                 <div className="w-full  mb-4 leading-none">
@@ -169,12 +196,9 @@ const page = async ({ params }: { params: { id: string } }) => {
                   >
                     Preview
                   </PreviewButton>
-                  <div className="min-w-[40px] flex items-center justify-center gap-3 h-10 rounded-full bg-white/10 text-white/60 text-sm">
-                    <Heart size={16} />
-                  </div>
                 </div>
-                <p className="sm:text-[20px] text-[16px] text-white mt-6 mb-4">How to Use Our Template</p>
-                <div className="flex sm:flex-row flex-col justify-between mb-2">
+                {/* <p className="sm:text-[20px] text-[16px] text-white mt-6 mb-4">How to Use Our Template</p> */}
+                <div className="flex sm:flex-row flex-col justify-between my-8">
                   <div className=" w-full">
                     <p className="opacity-50 mb-1.5 sm:mb-2  flex gap-2 items-center">
                       <MdAdsClick /> Press buy now Button
@@ -195,46 +219,51 @@ const page = async ({ params }: { params: { id: string } }) => {
                         <MdOutlineFileDownload /> Download the file
                       </p>
                       <p className="opacity-50 mb-1.5 sm:mb-2  flex gap-2 items-center">
-                        <FaRegFileAlt /> Open your downloaded file
+                        <FaRegFileAlt /> Open downloaded file
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="mb-4 text-[20px]">Chose Your Template Type</div>
-                <div className=" flex gap-5 items-center">
-                  <button className="flex w-[45px] h-[45px] bg-[#ffffff]/10 items-center justify-center rounded-full">
-                    <Image
-                      src={"/platform/figma.png"}
-                      width={20}
-                      height={20}
-                      alt="figma"
-                    />
-                  </button>
-                  <button className="flex w-[45px] h-[45px] bg-[#ffffff]/10 items-center justify-center rounded-full">
-                    <Image
-                      src={"/platform/framer.svg"}
-                      width={20}
-                      height={20}
-                      alt="framer"
-                    />
-                  </button>
-                  <button className="flex w-[45px] h-[45px] bg-[#ffffff]/10 items-center justify-center rounded-full">
-                    <Image
-                      src={"/platform/webflow_icon.webp"}
-                      width={20}
-                      height={20}
-                      alt="webflow"
-                    />
-                  </button>
-                  <button className="flex w-[45px] h-[45px] bg-[#ffffff]/10 items-center justify-center rounded-full">
-                    <Image
-                      src={"/platform/code.svg"}
-                      width={24}
-                      height={24}
-                      alt="platform"
-                    />
-                  </button>
-                  <div className="ml-4 text-sm bg-gradient-to-r bg-[#7D2AE8] px-2 rounded-[40px] pb-[2px] border-2 border-purple-400 h-6">Beta</div>
+                <div className="bg-[#ffffff08] text-white p-6 rounded-xl">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center space-x-3">
+                      {/* Profile picture */}
+                      <div className="relative h-10 w-10">
+                        <img
+                          src={oneTemplate.User.avatarUrl}
+                          alt="aximoris profile"
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                      </div>
+
+                      {/* Author info */}
+                      <div className="flex flex-col">
+                        <span className="font-medium">{oneTemplate.User.name}</span>
+                        <span className="text-sm text-gray-400">9778 followers</span>
+                      </div>
+                    </div>
+
+                    {/* Stats section */}
+                    <div className="flex items-center space-x-2 text-sm text-zinc-400">
+                      {/* Views */}
+                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
+                        <Eye size={18}/>
+                        <span>46K</span>
+                      </div>
+
+                      {/* Comments */}
+                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
+                        <MessageSquareMore size={18}/>
+                        <span>169</span>
+                      </div>
+
+                      {/* Likes */}
+                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
+                        <Heart size={18}/>
+                        <span>2.2K</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -268,7 +297,11 @@ const page = async ({ params }: { params: { id: string } }) => {
           </div>
           {/* comments */}
           <div>
-            <CommentSection />
+            {/* @ignore-ts */}
+            <CommentSection
+              reviews={oneTemplate.Reviews ?? []}
+              templateId={oneTemplate.id}
+            />
           </div>
         </Wrapper>
       </div>

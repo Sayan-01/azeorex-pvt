@@ -701,6 +701,7 @@ export const searchSimilerProduct = async (category: string) => {
           avatarUrl: true,
         },
       },
+      Reviews: true
     },
     take: 6,
   });

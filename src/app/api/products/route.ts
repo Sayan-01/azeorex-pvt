@@ -15,6 +15,7 @@ export const GET = async () => {
             avatarUrl: true,
           },
         },
+        Reviews: true
       },
     });
     return NextResponse.json({ templates });
