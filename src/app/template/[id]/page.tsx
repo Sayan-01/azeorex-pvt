@@ -19,6 +19,7 @@ import { template } from "lodash";
 import BuyButtton from "@/components/buttons/BuyButtton";
 import { Eye, Heart, MessageSquareMore, MoveRight, Star } from "lucide-react";
 import CommentSection from "../_components/comments-section";
+import { User } from "@prisma/client";
 
 interface Template {
   id: string;
@@ -38,6 +39,7 @@ interface Template {
   likes: number;
   dislikes: number;
   Reviews: Review[]; // Ensure this exists
+  User: User
 }
 
 interface Review {
@@ -56,7 +58,7 @@ const getTemplateData = async (id: string): Promise<Template> => {
   return res;
 };
 
-const similer_product = async (category: string): Promise<Template[]> => {
+const similer_product = async (category: string) => {
   const res = await searchSimilerProduct(category);
   return res;
 };
@@ -71,13 +73,15 @@ const page = async ({ params }: { params: { id: string } }) => {
     return parseFloat(`${input}`).toFixed(2);
   }
 
+//TODO: Like feature and Type error
+
   return (
     <>
       <div className="min-h-screen w-full bg-[#141414] sm:py-[95px] py-[75px] text-[15px]">
         <Wrapper>
           {/* route-path */}
           <p className="text-white/70 mb-6 mt-2 text-sm">
-            <Link href="/">Home</Link> / <Link href="/templates/products">templates</Link> / <span className="text-white">{oneTemplate.title}</span>
+            <Link href="/">Home</Link> / <Link href="/templates">templates</Link> / <span className="text-white">{oneTemplate.title}</span>
           </p>
           {/* top */}
           <div className="flex lg:flex-row flex-col-reverse items-start">
@@ -153,13 +157,13 @@ const page = async ({ params }: { params: { id: string } }) => {
             </div>
 
             {/* right */}
-            <div className="lg:pl-[80px] lg:sticky sm:top-[153px] top-[70px] overflow-hidden flex md:flex-[0.4] w-full lg:w-[90%] md:flex-row  lg:flex-col  flex-col gap-x-10 mb-10 lg:mb-0">
+            <div className="lg:pl-[80px] lg:sticky sm:top-[115px] -mt-1 top-[70px] overflow-hidden flex md:flex-[0.4] w-full lg:w-[90%] md:flex-row  lg:flex-col  flex-col gap-x-10 mb-10 lg:mb-0 ">
               {/* part 1 */}
               <div className="w-full">
                 <div className="w-full  mb-4 leading-none">
-                  <h1 className="mb-5 font-semibold leading-tight md:text-[36px] sm:text-[32px] text-[30px] ">{oneTemplate?.title}</h1>
+                  <h1 className="mb-5 font-semibold leading-tight sm:text-[32px] text-[30px] ">{oneTemplate?.title}</h1>
                   <p className="leading-tight sm:text-[16px] text-[14px] text-white/70 mb-5">{oneTemplate?.description}</p>
-                  <div className="flex gap-5 mb-5">
+                  <div className="flex gap-5 mb-5 text-white/60">
                     <Image
                       src={"/star.svg"}
                       width={90}
@@ -170,13 +174,13 @@ const page = async ({ params }: { params: { id: string } }) => {
                     <p>{"4.4 : 24 reviews >"}</p>
                   </div>
                 </div>
-                <div className="mb-6 font-semibold leading-tight md:text-[36px] sm:text-[32px] text-[30px] flex gap-6">
+                <div className="mb-4 font-semibold leading-tight sm:text-[30px] text-[30px] flex gap-5">
                   {oneTemplate.access === "Free" ? (
                     <p>Free</p>
                   ) : (
                     <>
                       <p>₹{formatNumber(oneTemplate.price * 50)}</p>
-                      <p className=" line-through opacity-50 font-medium text-2xl flex items-end">
+                      <p className=" line-through opacity-50 font-medium text-xl flex items-end">
                         <i>{Math.floor((oneTemplate.price * 50 * 120) / 100)}.00</i>
                       </p>
                     </>
@@ -197,8 +201,52 @@ const page = async ({ params }: { params: { id: string } }) => {
                     Preview
                   </PreviewButton>
                 </div>
-                {/* <p className="sm:text-[20px] text-[16px] text-white mt-6 mb-4">How to Use Our Template</p> */}
-                <div className="flex sm:flex-row flex-col justify-between my-8">
+
+                <div className="bg-[#ffffff08] text-white p-4 rounded-xl mt-6">
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-center space-x-3">
+                      {/* Profile picture */}
+                      <div className="relative h-10 w-10">
+                        <Image
+                          src={oneTemplate?.User?.avatarUrl || ""}
+                          width={100}
+                          height={100}
+                          alt="aximoris profile"
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                      </div>
+
+                      {/* Author info */}
+                      <div className="flex flex-col">
+                        <span className="font-medium">{oneTemplate.User.name}</span>
+                        <span className="text-sm text-gray-400">9778 followers</span>
+                      </div>
+                    </div>
+
+                    {/* Stats section */}
+                    <div className="flex items-center space-x-2 text-sm text-zinc-400">
+                      {/* Views */}
+                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
+                        <Eye size={18} />
+                        <span>46K</span>
+                      </div>
+
+                      {/* Comments */}
+                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
+                        <MessageSquareMore size={18} />
+                        <span>169</span>
+                      </div>
+
+                      {/* Likes */}
+                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
+                        <Heart size={18} />
+                        <span>2.2K</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p className="sm:text-[20px] text-[16px] text-white mt-6">How to Use Our Template</p>
+                <div className="flex sm:flex-row flex-col justify-between my-5">
                   <div className=" w-full">
                     <p className="opacity-50 mb-1.5 sm:mb-2  flex gap-2 items-center">
                       <MdAdsClick /> Press buy now Button
@@ -221,47 +269,6 @@ const page = async ({ params }: { params: { id: string } }) => {
                       <p className="opacity-50 mb-1.5 sm:mb-2  flex gap-2 items-center">
                         <FaRegFileAlt /> Open downloaded file
                       </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-[#ffffff08] text-white p-6 rounded-xl">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-center space-x-3">
-                      {/* Profile picture */}
-                      <div className="relative h-10 w-10">
-                        <img
-                          src={oneTemplate.User.avatarUrl}
-                          alt="aximoris profile"
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
-                      </div>
-
-                      {/* Author info */}
-                      <div className="flex flex-col">
-                        <span className="font-medium">{oneTemplate.User.name}</span>
-                        <span className="text-sm text-gray-400">9778 followers</span>
-                      </div>
-                    </div>
-
-                    {/* Stats section */}
-                    <div className="flex items-center space-x-2 text-sm text-zinc-400">
-                      {/* Views */}
-                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
-                        <Eye size={18}/>
-                        <span>46K</span>
-                      </div>
-
-                      {/* Comments */}
-                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
-                        <MessageSquareMore size={18}/>
-                        <span>169</span>
-                      </div>
-
-                      {/* Likes */}
-                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
-                        <Heart size={18}/>
-                        <span>2.2K</span>
-                      </div>
                     </div>
                   </div>
                 </div>

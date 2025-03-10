@@ -33,12 +33,12 @@ const Card = ({ name, description, updatedAt, id, subDomainName, favicon }: Prop
         </div> */}
         {/*//*/}
         <div className="pt-[12px] relative flex items-start  gap-3  w-full">
-          <div className={"flex items-center gap-1 md:text-xs text-sm backdrop-blur-lg w-9 h-9 rounded-full items-right justify-center mt-1"}>
+          <div className={"flex items-center gap-1 md:text-xs text-sm backdrop-blur-lg w-10 h-9 rounded-full items-right justify-center mt-1"}>
             <Image
               src={favicon || "/azeorex.png"}
               width={200}
               height={200}
-              className="w-8 h-8  rounded-full"
+              className="w-9 h-9  rounded-full"
               alt="profile img"
             />
           </div>

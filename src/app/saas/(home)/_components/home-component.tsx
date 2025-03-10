@@ -128,7 +128,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
         </div>
       </section>
 
-      <section className="mb-6 md:px-7 px-5">
+      <section className="mb-2 md:px-7 px-5">
         {funnels.length === 0 ? (
           <EmptyStatefunnel />
         ) : (
@@ -150,7 +150,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
                   );
                 })}
             </div>
-            <div className="flex items-center justify-center mt-6">
+            <div className="flex items-center justify-center mt-7">
               <Link
                 href={"/saas/projects"}
                 className="px-3 py-1.5 flex items-center gap-3 rounded-full bg-[#1e1f22] text-[12px] text-zinc-500 hover:text-zinc-300 duration-200"
@@ -190,6 +190,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
         <div className="xxl md:gap-x-7 gap-x-5 md:gap-y-7 gap-y-6 mt-5">
           {templates
             .filter((item) => item.title.toLocaleLowerCase().includes(query))
+            .filter((item) => item.platform.includes("azeorex"))
             .slice(0, 4)
             .map((item) => {
               return <TemplateCard item={item} />;

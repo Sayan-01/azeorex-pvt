@@ -49,7 +49,7 @@ const CommentSection: React.FC<CommentProps> = ({ reviews, templateId }) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto text-gray-300 p-6 rounded-lg text-sm">
+    <div className="w-full max-w-4xl mx-auto text-gray-300 md:p-6 rounded-lg text-sm">
       <h2 className="text-xl font-semibold mb-6">{comments.length} Comments</h2>
 
       {/* New comment form */}
@@ -70,7 +70,7 @@ const CommentSection: React.FC<CommentProps> = ({ reviews, templateId }) => {
             <select
               value={rating}
               onChange={(e) => setRating(Number(e.target.value))}
-              className="bg-[#ffffff08]  text-gray-200 rounded-lg px-2 outline-none border-none py-2.5 text-sm 
+              className="bg-[#ffffff08]  text-gray-200 rounded-lg px-2 outline-none border-none h-9 text-sm 
              transition duration-200 hover:bg-[#2a2a2a]"
             >
               {[1, 2, 3, 4, 5].map((num) => (
