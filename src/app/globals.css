@@ -4,13 +4,14 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  height: 100vh;
+  min-height: 100vh;
   height: -webkit-fill-available;
 }
 
 html {
   --scroll-behavior: smooth !important;
   scroll-behavior: smooth !important;
+  min-height: 100vh;
   height: -webkit-fill-available;
 }
 
