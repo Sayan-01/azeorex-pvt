@@ -3,20 +3,13 @@ import { Review } from "@prisma/client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import CommentSuspence from "./comment-suspence";
-import { EllipsisVertical } from "lucide-react";
+import { ChevronDown, EllipsisVertical, Star } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+
 import { deleteReview } from "@/lib/queries";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+import DeleteButton from "@/components/buttons/DeleteButton";
 
 interface CommentProps {
   templateId: string;
@@ -30,6 +23,7 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
   const [error, setError] = useState<string | null>(null);
   const [comments, setComments] = useState<Review[]>([]);
   const [fetching, setFetching] = useState(true); // Loading state for fetching
+  const router = useRouter();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -75,6 +69,7 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
       setComments([...comments, newReview]);
       setNewComment("");
       setRating(5);
+      router.refresh();
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -100,26 +95,27 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
             className="w-full px-4 py-2 min-h-20  bg-[#ffffff08] rounded-xl text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <div className="flex items-center space-x-2 mt-4">
-            <label className="text-gray-400 text-sm font-medium">Rating:</label>
-            <select
-              value={rating}
-              onChange={(e) => setRating(Number(e.target.value))}
-              className="bg-[#ffffff08]  text-gray-200 rounded-lg px-2 outline-none border-none h-9 text-sm 
-             transition duration-200 hover:bg-[#2a2a2a]"
-            >
-              {[1, 2, 3, 4, 5].map((num) => (
-                <option
-                  key={num}
-                  value={num}
-                  className="bg-[#1a1a1a] text-white border-none"
-                >
-                  {num} ⭐
-                </option>
-              ))}
-            </select>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex h-9 items-center space-x-3 bg-zinc-800 text-zinc-500 rounded-full px-4 ">
+                  <p className="flex item-center gap-2 py-2 border-r border-zinc-600 pr-3">Rating: {rating} ⭐</p> <ChevronDown size={17} />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-[#1a1a1a] text-white !w-20 p-2">
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <DropdownMenuItem
+                    key={num}
+                    onClick={() => setRating(num)}
+                    className="cursor-pointer hover:bg-[#2a2a2a] transition"
+                  >
+                    {num} ⭐
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+              className="px-5 py-2 bg-blue-600 text-white rounded-full"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit"}
@@ -165,7 +161,15 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
                     <p className="mt-1.5 text-gray-300 whitespace-pre-line">{comment.comment}</p>
                   </div>
                 </div>
-                {comment.User.id === userId ? <MoreButton reviewId={comment.id} /> : <></>}
+                {comment.User.id === userId ? (
+                  <MoreButton
+                    reviewId={comment.id}
+                    setComments={setComments}
+                    setError={setError}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             ))
           ) : (
@@ -179,33 +183,44 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
 
 export default CommentSection;
 
-const MoreButton = ({ reviewId }: { reviewId: string }) => {
+const MoreButton = ({ reviewId, setComments, setError }: { reviewId: string; setComments: React.Dispatch<React.SetStateAction<Review[]>>; setError: any }) => {
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    console.log("first");
+
+    try {
+      const response = await fetch(`/api/products/${reviewId}/reviews`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) return setError("Failed to delete review");
+
+      setComments((prevComments) => prevComments.filter((comment) => comment.id !== reviewId));
+
+      router.refresh(); // Refresh the UI
+    } catch (err) {
+      console.error("Error deleting review:", err);
+    }
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <EllipsisVertical
           size={12}
-          className="absolute right-0 top-0"
+          className="absolute right-0 top-0 cursor-pointer"
         />
       </PopoverTrigger>
-      <PopoverContent className=" rounded-xl text-xs w-40 bg-transparent text-zinc-400 backdrop-blur flex flex-col gap-3  mr-48">
+      <PopoverContent className="rounded-xl text-xs w-40 bg-transparent text-zinc-400 backdrop-blur flex flex-col gap-3  mr-48">
         <div>Edit</div>
-
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <div>Delete</div>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>This action cannot be undone. This will permanently delete your account and remove your data from our servers.</AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => deleteReview(reviewId)}>Continue</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <DeleteButton
+          onClick={handleDelete}
+          title="Delete Your comment"
+          description="This action can’t be undone and your comment will be removed from this post permanently."
+        >
+          <div>Delete</div>
+        </DeleteButton>
       </PopoverContent>
     </Popover>
   );

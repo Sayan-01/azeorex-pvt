@@ -38,10 +38,24 @@ export const POST = async (req: Request, res: Response) => {
         templateId,
         userId: session?.user?.id,
       },
-      include: { User: { select: { name: true, avatarUrl: true } } },
+      include: { User: { select: { name: true, avatarUrl: true, id: true } } },
     });
     return NextResponse.json(newReview, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: "Error creating review" }, { status: 500 });
+  }
+};
+
+export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
+  console.log("enter", params.id);
+
+  try {
+    const data = await db.review.delete({
+      where: { id: params.id },
+    });
+
+    return NextResponse.json({ message: "Review deleted successfully" });
+  } catch (error) {
+    return NextResponse.json({ message: "Error deleting review" });
   }
 };
