@@ -39,6 +39,7 @@ export const POST = async (req: Request, res: Response) => {
         userId: session?.user?.id,
       },
       include: { User: { select: { name: true, avatarUrl: true, id: true } } },
+      
     });
     return NextResponse.json(newReview, { status: 201 });
   } catch (error) {

@@ -392,14 +392,15 @@ export const getUserPermissions = async (userId: string) => {
 
 //===============================================================================
 
-// export const deleteSubAccount = async (subaccountId: string) => {
-//   const response = await db.subAccount.delete({
-//     where: {
-//       id: subaccountId,
-//     },
-//   });
-//   return response;
-// };
+export const deleteProject = async (projectId: string) => {
+  const response = await db.project.delete({
+    where: {
+      id: projectId,
+    },
+  });
+  
+  return response;
+};
 
 //================================================================================
 

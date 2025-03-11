@@ -28,10 +28,14 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
+import DeleteButton from "@/components/buttons/DeleteButton";
+import { deleteFunnelePage } from "@/lib/queries";
+import { useRouter } from "next/navigation";
 
 const outf = Roboto_Mono({ subsets: ["latin"], weight: "400" });
 
-export const columns = (session: any): ColumnDef<FunnelPage>[] => [
+
+export const columns = (session: any, router:any): ColumnDef<FunnelPage>[] => [
   {
     accessorKey: "name",
     header: "Pages",
@@ -111,7 +115,14 @@ export const columns = (session: any): ColumnDef<FunnelPage>[] => [
                 userId={session?.user?.id}
                 className="mb-2 border-white/5"
               />
-              <div className="bg-white/5 border border-white/10 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] relative cursor-default select-none text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+
+              <div
+                onClick={() => {
+                  deleteFunnelePage(row.original.id);
+                  router.refresh();
+                }}
+                className="bg-white/5 border border-white/10 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] relative cursor-default select-none text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+              >
                 <Trash size={15} />
                 Delete the page
               </div>
@@ -130,10 +141,12 @@ export function FunnelPageTable({ pageDetails }: { pageDetails: FunnelPage[] }) 
   const [rowSelection, setRowSelection] = React.useState({});
 
   const { data: session } = useSession();
+  const router = useRouter();
+
 
   const table = useReactTable({
     data: pageDetails,
-    columns: columns(session),
+    columns: columns(session, router),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

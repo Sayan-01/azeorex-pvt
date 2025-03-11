@@ -3,13 +3,15 @@ import { Review } from "@prisma/client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import CommentSuspence from "./comment-suspence";
-import { ChevronDown, EllipsisVertical, Star } from "lucide-react";
+import { ChevronDown, EllipsisVertical, LoaderIcon, Star } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { deleteReview } from "@/lib/queries";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import DeleteButton from "@/components/buttons/DeleteButton";
+import { Loader } from "@/components/global/Loader";
+import { Button } from "@/components/ui/button";
 
 interface CommentProps {
   templateId: string;
@@ -66,7 +68,7 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
       if (!response.ok) throw new Error("Failed to submit review");
 
       const newReview = await response.json();
-      setComments([...comments, newReview]);
+      // setComments([newReview,...comments]);
       setNewComment("");
       setRating(5);
       router.refresh();
@@ -97,8 +99,12 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
           <div className="flex items-center space-x-2 mt-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <div className="flex h-9 items-center space-x-3 bg-zinc-800 text-zinc-500 rounded-full px-4 ">
-                  <p className="flex item-center gap-2 py-2 border-r border-zinc-600 pr-3">Rating: {rating} ⭐</p> <ChevronDown size={17} />
+                <div className="flex h-9 items-center space-x-3 bg-zinc-800 text-zinc-400 rounded-full px-4 ">
+                  <p className="flex item-center gap-2 py-2 border-r border-zinc-600 pr-2">Rating: {rating} 🌟</p>{" "}
+                  <ChevronDown
+                    size={17}
+                    className="!ml-2 !-mr-1"
+                  />
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-[#1a1a1a] text-white !w-20 p-2">
@@ -108,17 +114,24 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
                     onClick={() => setRating(num)}
                     className="cursor-pointer hover:bg-[#2a2a2a] transition"
                   >
-                    {num} ⭐
+                    {num} 🌟
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
             <button
               type="submit"
-              className="px-5 py-2 bg-blue-600 text-white rounded-full"
-              disabled={loading}
+              className="px-5 py-2 h-9 bg-blue-600 text-white rounded-full disabled:opacity-80"
+              disabled={loading || !(newComment.length > 0)}
             >
-              {loading ? "Submitting..." : "Submit"}
+              {loading ? (
+                <Loader loading={false}>
+                  {" "}
+                  <LoaderIcon size={14} />
+                </Loader>
+              ) : (
+                "Submit"
+              )}
             </button>
           </div>
           {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -133,6 +146,7 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
         <CommentSuspence />
       ) : (
         <div className="space-y-6">
+          {/*  */}
           {comments.length > 0 ? (
             comments.map((comment: any) => (
               <div
@@ -142,34 +156,34 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
                 <div className="flex items-start space-x-4">
                   {/* Avatar Placeholder */}
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-500 flex items-center justify-center text-white font-bold">
-                    <Image
-                      src={comment.User.avatarUrl}
-                      alt={comment.User.name}
+                    {/* <Image
+                      src={comment.User.avatarUrl || "/"}
+                      alt={comment.User.name || "abc"}
                       height={40}
                       width={40}
                       className="rounded-full"
-                    />
+                    /> */}
                   </div>
 
                   {/* Comment content */}
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 -mb-0.5">
-                      <span className=" text-gray-300">@{comment.User.name}</span>
-                      <p className="text-yellow-400">Rating: {comment.rating}⭐</p>
+                      {/* <span className=" text-gray-300">@{comment.User.name || "unknown"}</span> */}
+                      <p className="text-yellow-400">Rating: {comment.rating}🌟</p>
                     </div>
                     <span className="text-gray-500 text-[11px]">{new Date(comment.createdAt).toLocaleDateString()}</span>
                     <p className="mt-1.5 text-gray-300 whitespace-pre-line">{comment.comment}</p>
                   </div>
                 </div>
-                {comment.User.id === userId ? (
-                  <MoreButton
-                    reviewId={comment.id}
-                    setComments={setComments}
-                    setError={setError}
-                  />
-                ) : (
+                {/* {comment.User.id === userId ? ( */}
+                <MoreButton
+                  reviewId={comment.id}
+                  setComments={setComments}
+                  setError={setError}
+                />
+                {/* ) : (
                   <></>
-                )}
+                )} */}
               </div>
             ))
           ) : (
@@ -212,7 +226,7 @@ const MoreButton = ({ reviewId, setComments, setError }: { reviewId: string; set
           className="absolute right-0 top-0 cursor-pointer"
         />
       </PopoverTrigger>
-      <PopoverContent className="rounded-xl text-xs w-40 bg-transparent text-zinc-400 backdrop-blur flex flex-col gap-3  mr-48">
+      <PopoverContent className="rounded-xl text-xs w-40 bg-transparent text-zinc-400 backdrop-blur flex flex-col gap-3  sm:mr-48 mr-10 cursor-pointer">
         <div>Edit</div>
         <DeleteButton
           onClick={handleDelete}

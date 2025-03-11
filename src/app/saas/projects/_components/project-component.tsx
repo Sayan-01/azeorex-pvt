@@ -16,6 +16,7 @@ type Props = {
 };
 const ProjectComponent = ({ funnels, userId }: Props) => {
   const [query, setQuery] = useState("");
+  
   return (
     <div className="pb-7">
       <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
