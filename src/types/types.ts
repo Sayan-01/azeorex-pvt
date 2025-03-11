@@ -97,3 +97,7 @@ export const flexStyle: React.CSSProperties = {
 export type CreateMediaType = Prisma.MediaCreateWithoutAgencyInput;
 export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
 
+export interface LikeInfo {
+  likes: number;
+  isLikedByUser: boolean
+}

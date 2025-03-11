@@ -31,7 +31,7 @@ const PreviewButton = ({ className, children, preview }:Props) => {
             </>
           ) : (
             <div className="h-full flex items-center justify-center">
-              <h1 className="text-2xl font-semibold">No image provided for Preview</h1>
+              <h1 className="md:text-2xl sm:text-lg text-sm font-semibold">No image provided for Preview</h1>
             </div>
           )}
         </DialogContent>

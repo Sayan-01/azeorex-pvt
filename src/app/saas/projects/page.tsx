@@ -1,11 +1,12 @@
 import { getProjects } from "@/lib/queries";
 import { auth } from "../../../../auth";
 import ProjectComponent from "./_components/project-component";
+import Unauthorized from "@/components/unauthorized";
 
 const Home = async () => {
   const session = await auth();
   const funnels = await getProjects(session?.user?.id);
-  if (!funnels || !session?.user?.id) return null;
+  if (!funnels || !session?.user?.id) return <Unauthorized/>;
 
   return (
     <ProjectComponent

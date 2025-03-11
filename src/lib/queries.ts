@@ -25,14 +25,6 @@ export const getUserDetails = async () => {
     where: {
       email: user?.email as string,
     },
-    include: {
-      Agency: {
-        include: {
-          SidebarOption: true,
-        },
-      },
-      Permissions: true,
-    },
   });
 
   return userData;

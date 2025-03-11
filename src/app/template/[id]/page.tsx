@@ -20,6 +20,8 @@ import BuyButtton from "@/components/buttons/BuyButtton";
 import { Eye, Heart, MessageSquareMore, MoveRight, Star } from "lucide-react";
 import CommentSection from "../_components/comments-section";
 import { User } from "@prisma/client";
+import LikeButton from "@/components/buttons/LikeButton";
+import { auth } from "../../../../auth";
 
 interface Template {
   id: string;
@@ -39,7 +41,8 @@ interface Template {
   likes: number;
   dislikes: number;
   Reviews: Review[]; // Ensure this exists
-  User: User
+  User: User;
+  likesArray: string[];
 }
 
 interface Review {
@@ -64,6 +67,7 @@ const similer_product = async (category: string) => {
 };
 
 const page = async ({ params }: { params: { id: string } }) => {
+  const session = await auth()
   const { id } = params;
   const oneTemplate = await getTemplateData(id);
 
@@ -73,8 +77,7 @@ const page = async ({ params }: { params: { id: string } }) => {
     return parseFloat(`${input}`).toFixed(2);
   }
 
-//TODO: Like feature and Type error
-
+  const isLiked = !!oneTemplate.likesArray.includes(session?.user?.id as string);
   return (
     <>
       <div className="min-h-screen w-full bg-[#141414] sm:py-[95px] py-[75px] text-[15px]">
@@ -88,7 +91,7 @@ const page = async ({ params }: { params: { id: string } }) => {
             {/* left */}
             <div className={"flex md:flex-[0.6] w-full flex-col"}>
               {/* left-top */}
-              <div className={"w-full mx-auto"}>
+              <div className={"w-full mx-auto relative"}>
                 <Carousel>
                   <CarouselContent>
                     {oneTemplate?.image?.slice(0, 2).map((item, idx) => {
@@ -238,10 +241,12 @@ const page = async ({ params }: { params: { id: string } }) => {
                       </div>
 
                       {/* Likes */}
-                      <div className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2">
-                        <Heart size={18} />
-                        <span>2.2K</span>
-                      </div>
+                      <LikeButton
+                        temId={params.id}
+                        userId={session?.user?.id as string}
+                        isLiked={isLiked}
+                        totalLikes={oneTemplate.likes}
+                      />
                     </div>
                   </div>
                 </div>
