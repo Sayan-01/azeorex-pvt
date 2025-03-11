@@ -1,29 +1,63 @@
-'use client'
+"use client";
 import { Review } from "@prisma/client";
 import Image from "next/image";
-import React, { useState } from "react";
-import { v4 } from "uuid";
+import React, { useEffect, useState } from "react";
+import CommentSuspence from "./comment-suspence";
+import { EllipsisVertical } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { deleteReview } from "@/lib/queries";
 
 interface CommentProps {
-  reviews: any;
   templateId: string;
+  userId: string;
 }
 
-const CommentSection: React.FC<CommentProps> = ({ reviews, templateId }) => {
+const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
   const [newComment, setNewComment] = useState("");
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [comments, setComments] = useState<Review[]>(reviews);
+  const [comments, setComments] = useState<Review[]>([]);
+  const [fetching, setFetching] = useState(true); // Loading state for fetching
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`/api/products/${templateId}/reviews`);
+        if (!response.ok) throw new Error("Failed to fetch reviews");
+
+        const data: Review[] = await response.json();
+        setComments(data);
+      } catch (err: any) {
+        setError(err.message || "Something went wrong");
+      } finally {
+        setFetching(false);
+      }
+    };
+
+    if (templateId) {
+      fetchComments();
+    }
+  }, [templateId]);
 
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newComment.trim()) return;
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/reviews", {
+      const response = await fetch(`/api/products/${templateId}/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +71,7 @@ const CommentSection: React.FC<CommentProps> = ({ reviews, templateId }) => {
 
       if (!response.ok) throw new Error("Failed to submit review");
 
-      const newReview: Review = await response.json();
+      const newReview = await response.json();
       setComments([...comments, newReview]);
       setNewComment("");
       setRating(5);
@@ -53,7 +87,7 @@ const CommentSection: React.FC<CommentProps> = ({ reviews, templateId }) => {
       <h2 className="text-xl font-semibold mb-6">{comments.length} Comments</h2>
 
       {/* New comment form */}
-      <div className="flex items-start space-x-4 mb-8">
+      <div className="flex items-start space-x-4 mb-6">
         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold"></div>
         <form
           onSubmit={handleSubmitComment}
@@ -65,7 +99,7 @@ const CommentSection: React.FC<CommentProps> = ({ reviews, templateId }) => {
             placeholder="Share your thoughts, kudos or feedback"
             className="w-full px-4 py-2 min-h-20  bg-[#ffffff08] rounded-xl text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <div className="flex items-center space-x-2 mt-2">
+          <div className="flex items-center space-x-2 mt-4">
             <label className="text-gray-400 text-sm font-medium">Rating:</label>
             <select
               value={rating}
@@ -96,41 +130,83 @@ const CommentSection: React.FC<CommentProps> = ({ reviews, templateId }) => {
       </div>
 
       {/* Comment divider */}
-      <div className="border-t border-gray-700 my-6"></div>
+      <div className="border-t border-gray-800 my-6 mt-3"></div>
 
       {/* Comments list */}
-      <div className="space-y-6">
-        {comments.map((comment: any) => (
-          <div
-            key={comment.id}
-            className="space-y-3"
-          >
-            <div className="flex items-start space-x-4">
-              {/* Avatar Placeholder */}
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-500 flex items-center justify-center text-white font-bold">
-                <Image
-                  src={comment?.User?.avatarUrl}
-                  alt={comment?.User?.name}
-                  height={200}
-                  width={200}
-                />
-              </div>
+      {fetching ? (
+        <CommentSuspence />
+      ) : (
+        <div className="space-y-6">
+          {comments.length > 0 ? (
+            comments.map((comment: any) => (
+              <div
+                key={comment.id}
+                className="space-y-3 relative"
+              >
+                <div className="flex items-start space-x-4">
+                  {/* Avatar Placeholder */}
+                  <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-500 flex items-center justify-center text-white font-bold">
+                    <Image
+                      src={comment.User.avatarUrl}
+                      alt={comment.User.name}
+                      height={40}
+                      width={40}
+                      className="rounded-full"
+                    />
+                  </div>
 
-              {/* Comment content */}
-              <div className="flex-1">
-                <div className="flex items-center space-x-2">
-                  <span className="font-semibold text-gray-300">{comment.User.name}</span>
-                  <p className="text-yellow-400">Rating: {comment.rating}⭐</p>
+                  {/* Comment content */}
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 -mb-0.5">
+                      <span className=" text-gray-300">@{comment.User.name}</span>
+                      <p className="text-yellow-400">Rating: {comment.rating}⭐</p>
+                    </div>
+                    <span className="text-gray-500 text-[11px]">{new Date(comment.createdAt).toLocaleDateString()}</span>
+                    <p className="mt-1.5 text-gray-300 whitespace-pre-line">{comment.comment}</p>
+                  </div>
                 </div>
-                <span className="text-gray-500 text-xs">{new Date(comment.createdAt).toLocaleDateString()}</span>
-                <p className="mt-1 text-gray-300 whitespace-pre-line">{comment.comment}</p>
+                {comment.User.id === userId ? <MoreButton reviewId={comment.id} /> : <></>}
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            ))
+          ) : (
+            <p className="text-gray-400">No comments yet.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
 export default CommentSection;
+
+const MoreButton = ({ reviewId }: { reviewId: string }) => {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <EllipsisVertical
+          size={12}
+          className="absolute right-0 top-0"
+        />
+      </PopoverTrigger>
+      <PopoverContent className=" rounded-xl text-xs w-40 bg-transparent text-zinc-400 backdrop-blur flex flex-col gap-3  mr-48">
+        <div>Edit</div>
+
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <div>Delete</div>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>This action cannot be undone. This will permanently delete your account and remove your data from our servers.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => deleteReview(reviewId)}>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </PopoverContent>
+    </Popover>
+  );
+};

@@ -8,17 +8,6 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
     const oneTemplate = await db.template.findUnique({
       where: { id },
       include: {
-        FunnelPages: true,
-        Reviews: {
-          include: {
-            User: {
-              select: {
-                name: true,
-                avatarUrl: true,
-              },
-            },
-          },
-        },
         User: {
           select: {
             name: true,

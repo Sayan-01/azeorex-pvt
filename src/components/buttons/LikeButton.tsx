@@ -26,7 +26,7 @@ const LikeButton = ({ temId, userId, isLiked, className, totalLikes }: Props) =>
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ temId, userId, like: newLikeState }), // Send correct toggled value
+        body: JSON.stringify({ temId, userId, like: !newLikeState }), // Send correct toggled value
       });
 
       if (!res.ok) {

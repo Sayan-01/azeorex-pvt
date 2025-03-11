@@ -40,18 +40,8 @@ interface Template {
   userId: string;
   likes: number;
   dislikes: number;
-  Reviews: Review[]; // Ensure this exists
   User: User;
   likesArray: string[];
-}
-
-interface Review {
-  id: string;
-  userId: string | null; // Allow null
-  createdAt: Date;
-  comment: string;
-  rating: number;
-  templateId: string;
 }
 
 const getTemplateData = async (id: string): Promise<Template> => {
@@ -67,7 +57,7 @@ const similer_product = async (category: string) => {
 };
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const session = await auth()
+  const session = await auth();
   const { id } = params;
   const oneTemplate = await getTemplateData(id);
 
@@ -291,7 +281,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                   size={18}
                   strokeWidth={1.8}
                 />
-              </div>{" "}
+              </div>
             </div>
 
             <div className=" flex overflow-x-auto gap-7 pb-4 scrollbar-hide snap-x box relative">
@@ -311,7 +301,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           <div>
             {/* @ignore-ts */}
             <CommentSection
-              reviews={oneTemplate.Reviews ?? []}
+              userId={session?.user?.id as string}
               templateId={oneTemplate.id}
             />
           </div>

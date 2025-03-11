@@ -452,7 +452,7 @@ export const getProjects = async (userId: string | undefined) => {
   const projects = await db.project.findMany({
     where: { userId: userId },
     include: { FunnelPages: true },
-    orderBy: { updatedAt: "desc"}
+    orderBy: { updatedAt: "desc" },
   });
 
   return projects;
@@ -693,7 +693,7 @@ export const searchSimilerProduct = async (category: string) => {
           avatarUrl: true,
         },
       },
-      Reviews: true
+      Reviews: true,
     },
     take: 6,
   });
@@ -734,4 +734,10 @@ export const temToProject = async (template: any) => {
   if (res) {
     return { success: true, message: "Purchased successfully!", status: 200 };
   } else return { success: false, message: "Server error", status: 500 };
+};
+
+export const deleteReview = async (reviewId: string) => {
+  await db.review.delete({
+    where: { id: reviewId },
+  });
 };

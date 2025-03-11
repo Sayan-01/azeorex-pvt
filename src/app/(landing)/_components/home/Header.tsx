@@ -42,7 +42,7 @@ const Header = async () => {
                       return (
                         <li
                           key={item.id}
-                          className=" text-[15px]  "
+                          className=" text-[14px]  "
                         >
                           <Link
                             href={item.url}
