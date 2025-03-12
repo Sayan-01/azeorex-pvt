@@ -17,25 +17,17 @@ const TemplateCard = ({ item }: { item: any }) => {
         className="relative"
       >
         <div className="overflow-hidden cursor-pointer rounded-[10px]">
-          <Carousel className={"w-full mx-auto rounded-[12px] overflow-hidde duration-200 "}>
-            <CarouselContent>
-              {item?.image?.slice(0, 2).map((item: any, idx: number) => {
-                return (
-                  <CarouselItem key={idx}>
-                    <div className=" overflow-hidden rounded-[10px] group ">
-                      <Image
-                        className="w-full object-cover duration-300  aspect-[3/1.9] group-hover:scale-110 transition-transform"
-                        width={600}
-                        height={600}
-                        src={item || "/funnel-placeholder.svg"}
-                        alt={`image${idx}`}
-                      />
-                    </div>
-                  </CarouselItem>
-                );
-              })}
-            </CarouselContent>
-          </Carousel>
+          <div className={"w-full mx-auto rounded-[12px] overflow-hidde duration-200 "}>
+            <div className=" overflow-hidden rounded-[12px] group ">
+              <Image
+                className="w-full object-cover duration-300  aspect-[3/1.9] group-hover:scale-110 transition-transform"
+                width={600}
+                height={600}
+                src={item.image[0] || "/funnel-placeholder.svg"}
+                alt={`image`}
+              />
+            </div>
+          </div>
           <div className="pt-[12px] relative flex items-start  gap-3  w-full">
             <div className={"flex items-center gap-1 md:text-xs text-sm backdrop-blur-lg w-9 h-9 rounded-full items-right justify-center mt-1"}>
               {/* {item.access === "pro" ? (

@@ -18,10 +18,13 @@ type Props = {
 };
 
 const UserBtn = ({ children, className, margin, size }: Props) => {
-  const { data: session } = useSession();  
+  const { data: session } = useSession();
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger
+        disabled={!!(!session?.user)}
+        asChild
+      >
         <button
           aria-label={"User profile"}
           className={clsx(className, " border-none outline-none", size)}

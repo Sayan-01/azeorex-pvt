@@ -73,7 +73,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       <div className="min-h-screen w-full bg-[#141414] sm:py-[95px] py-[75px] text-[15px]">
         <Wrapper>
           {/* route-path */}
-          <p className="text-white/70 mb-6 mt-2 text-sm">
+          <p className="text-white/70 mb-6 mt-2 text-sm w-[85%] title_line">
             <Link href="/">Home</Link> / <Link href="/templates">templates</Link> / <span className="text-white">{oneTemplate.title}</span>
           </p>
           {/* top */}

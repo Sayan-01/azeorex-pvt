@@ -9,8 +9,8 @@ const CommentSuspence = () => {
         <div>
           <Skeleton className="w-[200px] h-4 rounded-full mb-1.5" />
           <Skeleton className="w-[80px] h-3 rounded-full mb-4" />
-          <Skeleton className="w-[600px] h-4 rounded-full mb-2" />
-          <Skeleton className="w-[400px] h-4 rounded-full" />
+          <Skeleton className="sm:w-[600px] w-[240px] h-4 rounded-full mb-2" />
+          <Skeleton className="sm:w-[400px] w-[80%] h-4 rounded-full" />
         </div>
       </div>
       <div className="flex gap-3">
@@ -18,8 +18,8 @@ const CommentSuspence = () => {
         <div>
           <Skeleton className="w-[200px] h-4 rounded-full mb-1.5" />
           <Skeleton className="w-[80px] h-3 rounded-full mb-4" />
-          <Skeleton className="w-[600px] h-4 rounded-full mb-2" />
-          <Skeleton className="w-[400px] h-4 rounded-full" />
+          <Skeleton className="sm:w-[600px] w-[240px] h-4 rounded-full mb-2" />
+          <Skeleton className="sm:w-[400px] w-[80%] h-4 rounded-full" />
         </div>
       </div>
       <div className="flex gap-3">
@@ -27,8 +27,8 @@ const CommentSuspence = () => {
         <div>
           <Skeleton className="w-[200px] h-4 rounded-full mb-1.5" />
           <Skeleton className="w-[80px] h-3 rounded-full mb-4" />
-          <Skeleton className="w-[600px] h-4 rounded-full mb-2" />
-          <Skeleton className="w-[400px] h-4 rounded-full" />
+          <Skeleton className="sm:w-[600px] w-[240px] h-4 rounded-full mb-2" />
+          <Skeleton className="sm:w-[400px] w-[80%] h-4 rounded-full" />
         </div>
       </div>
     </div>
