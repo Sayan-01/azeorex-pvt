@@ -10,9 +10,10 @@ import ProjectForm from "@/components/forms/project-form";
 type Props = {
   className?: string;
   userId: string | undefined;
+  children?: React.ReactNode;
 };
 
-const CreateProjectButton = ({ className, userId }: Props) => {
+const CreateProjectButton = ({ className, userId, children }: Props) => {
   const { setOpen } = useModal();
   if (userId === undefined) return redirect("/sign-in");
 
@@ -28,7 +29,7 @@ const CreateProjectButton = ({ className, userId }: Props) => {
         );
       }}
     >
-      + Create New
+      {children ? children : <p>+ Create New</p>}
     </Button>
   );
 };

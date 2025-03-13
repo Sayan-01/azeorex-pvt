@@ -12,10 +12,10 @@ const CustomModal = ({ title, subheading, children, defaultOption }: Props) => {
       open={isOpen || defaultOption}
       onOpenChange={setClose}
     >
-      <DialogContent className="overflow-scroll md:max-h-[700px] md:h-fit h-screen bg-[#191a1d] border-none ">
+      <DialogContent className="overflow-scroll md:max-h-[700px] sm:h-fit h-screen bg-[#191a1d] border-none max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center">
         <DialogHeader className=" text-left">
-          {title?<DialogTitle className="pb-2">{title}</DialogTitle>:<></>}
-          {subheading?<DialogDescription className="!mb-5">{subheading}</DialogDescription>:<></>}
+          {title ? <DialogTitle className="pb-2">{title}</DialogTitle> : <></>}
+          {subheading ? <DialogDescription className="!mb-5">{subheading}</DialogDescription> : <></>}
           {children}
         </DialogHeader>
       </DialogContent>
