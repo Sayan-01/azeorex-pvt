@@ -1,14 +1,9 @@
 'use client'
 import React, { useState, useRef, useEffect } from "react";
 
-interface ResizableZoomableMovableProps {
-  initialWidth?: number;
-  initialHeight?: number;
-  children?: React.ReactNode;
-  className?: string;
-}
 
-const ResizableZoomableMovable: React.FC<ResizableZoomableMovableProps> = ({ initialWidth = 300, initialHeight = 200, children, className = "" }) => {
+
+const ResizableZoomableMovable = ({ initialWidth = 300, initialHeight = 200, children, className = "" }:any) => {
   // States for tracking position, scale, and size
   const [matrix, setMatrix] = useState<number[]>([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
   const [width, setWidth] = useState<number>(initialWidth);
