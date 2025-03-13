@@ -13,13 +13,10 @@ html {
 
 body,
 html {
-  min-height: 100dvh; /* Dynamic viewport height */
-  height: 100dvh;
+  min-height: 100vh; /* Dynamic viewport height */
+  min-height: -webkit-fill-available
 }
-html {
-  touch-action: manipulation; /* Prevents double-tap zoom */
-  overflow: hidden; /* Prevents pinch zoom */
-}
+
 
 @layer utilities {
   .text-balance {
@@ -473,12 +470,12 @@ html {
 .dora {
   transform: 
     matrix3d(
-      0.8, 0, 0, 0,
-      0, 0.8, 0, 0, 
-      0, 0, 0.8, 0,
-      114.721, 39, 0, 1
+      0, 0, 0, 0,
+      0, 0, 0, 0, 
+      0, 0, 0, 0,
+      0, 0, 0, 1
     );
-  transform-origin: left top;
+  /* transform-origin: left top; */
   width: 1440px;
   height: 1024px;
 }

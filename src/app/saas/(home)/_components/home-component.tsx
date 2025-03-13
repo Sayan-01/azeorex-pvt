@@ -70,7 +70,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           </div>
         </div>
       </nav>
-      <section className="mb-4 md:mb-6 md:px-7 px-5 sm:block hidden">
+      <section className="md:mb-4 md:px-7 px-5 sm:block hidden mb-10">
         <div className="bg-[#ffffff08] rounded-xl p-6 flex gap-3 items-center">
           <svg
             width="12"
@@ -112,6 +112,10 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           </p>
         </div>
       </section>
+      <div className="my-8 md:px-7 px-5 hidden md:block">
+        <h1 className=" text-2xl font-semibold">Recent Projects</h1>
+        <p className=" text-zinc-400 text-sm mt-1">All of your letest project in one palce, explore</p>
+      </div>
       <section className="text-3xl mb-4 md:px-7 px-5  sm:hidden flex flex-col items-center">
         <h1 className="text-center font-bold text-2xl mb-2 mt-7">Home section</h1>
         <p className="text-center text-sm mb-5 opacity-60 w-[90%]">The best azeorex and figma templates and websites from Azeorex community.</p>{" "}

@@ -1,89 +1,168 @@
-// "use client";
-// import clsx from "clsx";
-// import React, { useRef, useState } from "react";
+'use client'
+import React, { useState, useRef, useEffect } from "react";
 
-// const Page = () => {
-//   const boxRef = useRef(null);
-//   const [boxSize, setBoxSize] = useState({ width: 160, height: 160 }); // Default size (width: 40px, height: 40px)
-//   const [isResizing, setIsResizing] = useState(false);
-//   const [resizeDirection, setResizeDirection] = useState(null);
+interface ResizableZoomableMovableProps {
+  initialWidth?: number;
+  initialHeight?: number;
+  children?: React.ReactNode;
+  className?: string;
+}
 
-//   const handleMouseDown = (direction) => {
-//     setIsResizing(true);
-//     setResizeDirection(direction);
-//   };
+const ResizableZoomableMovable: React.FC<ResizableZoomableMovableProps> = ({ initialWidth = 300, initialHeight = 200, children, className = "" }) => {
+  // States for tracking position, scale, and size
+  const [matrix, setMatrix] = useState<number[]>([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+  const [width, setWidth] = useState<number>(initialWidth);
+  const [height, setHeight] = useState<number>(initialHeight);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [startDragPos, setStartDragPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [startResizePos, setStartResizePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [startResizeSize, setStartResizeSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+  const [scale, setScale] = useState<number>(1);
 
-//   const handleMouseMove = (e) => {
-//     if (!isResizing || !resizeDirection) return;
+  const containerRef = useRef<HTMLDivElement>(null);
 
-//     const box = boxRef.current;
-//     const rect = box.getBoundingClientRect();
+  // Get matrix string for CSS transform
+  const getMatrixString = () => {
+    return `matrix3d(${matrix.join(",")})`;
+  };
 
-//     const newSize = { ...boxSize };
-//     if (resizeDirection === "e") {
-//       newSize.width = Math.max(40, e.clientX - rect.left); // Minimum width: 40px
-//     } else if (resizeDirection === "w") {
-//       newSize.width = Math.max(40, rect.right - e.clientX);
-//     } else if (resizeDirection === "n") {
-//       newSize.height = Math.max(40, rect.bottom - e.clientY);
-//     } else if (resizeDirection === "s") {
-//       newSize.height = Math.max(40, e.clientY - rect.top);
-//     }
+  // Handle zoom slider change
+  const handleZoomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newScale = parseFloat(e.target.value);
+    setScale(newScale);
 
-//     setBoxSize(newSize);
-//   };
+    // Update matrix - only updating scale elements (0, 5, 10)
+    const newMatrix = [...matrix];
+    newMatrix[0] = newScale;
+    newMatrix[5] = newScale;
+    newMatrix[10] = newScale;
+    setMatrix(newMatrix);
+  };
 
-//   const handleMouseUp = () => {
-//     setIsResizing(false);
-//     setResizeDirection(null);
-//   };
+  // Handle mouse down for dragging
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return; // Only left mouse button
 
-//   return (
-//     <div
-//       className="relative z-[1004] inset-0"
-//       style={{
-//         width: `${boxSize.width}px`,
-//         height: `${boxSize.height}px`,
-//       }}
-//       ref={boxRef}
-//       onMouseMove={handleMouseMove}
-//       onMouseUp={handleMouseUp}
-//       onMouseLeave={handleMouseUp} // Stop resizing if mouse leaves the box
-//     >
-//       <div className="w-full h-full bg-orange-600 z-[1002]">Page 1</div>
-//       <div className={clsx("absolute overflow-visible shadow-inner-border-blue-500 pointer-events-none z-[1002] inset-0")}></div>
-//       {/* East handle */}
-//       <div
-//         className={clsx("absolute overflow-visible shadow-inner-border-blue-500 bg-white w-2 h-2 z-[1002] top-1/2 right-0 -translate-y-1/2 translate-x-1/2 cursor-e-resize")}
-//         onMouseDown={() => handleMouseDown("e")}
-//       ></div>
-//       {/* West handle */}
-//       <div
-//         className={clsx("absolute overflow-visible shadow-inner-border-blue-500 bg-white w-2 h-2 z-[1002] top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 cursor-w-resize")}
-//         onMouseDown={() => handleMouseDown("w")}
-//       ></div>
-//       {/* North handle */}
-//       <div
-//         className={clsx("absolute overflow-visible shadow-inner-border-blue-500 bg-white w-2 h-2 z-[1002] top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 cursor-n-resize")}
-//         onMouseDown={() => handleMouseDown("n")}
-//       ></div>
-//       {/* South handle */}
-//       <div
-//         className={clsx("absolute overflow-visible shadow-inner-border-blue-500 bg-white w-2 h-2 z-[1002] bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2 cursor-s-resize")}
-//         onMouseDown={() => handleMouseDown("s")}
-//       ></div>
-//     </div>
-//   );
-// };
+    setIsDragging(true);
+    setStartDragPos({ x: e.clientX, y: e.clientY });
+  };
 
-// export default Page;
-import React from "react";
-import Try2 from "./Try2";
+  // Handle mouse down for resizing
+  const handleResizeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIsResizing(true);
+    setStartResizePos({ x: e.clientX, y: e.clientY });
+    setStartResizeSize({ width, height });
+  };
 
-const page = () => {
+  // Handle mouse move for both dragging and resizing
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isDragging) {
+        // Calculate the delta movement
+        const deltaX = e.clientX - startDragPos.x;
+        const deltaY = e.clientY - startDragPos.y;
+
+        // Update matrix - translation (12, 13)
+        const newMatrix = [...matrix];
+        newMatrix[12] += deltaX / scale;
+        newMatrix[13] += deltaY / scale;
+        setMatrix(newMatrix);
+
+        // Update start position
+        setStartDragPos({ x: e.clientX, y: e.clientY });
+      }
+
+      if (isResizing) {
+        // Calculate the delta for resizing (only allow bottom resize)
+        const deltaY = e.clientY - startResizePos.y;
+
+        // Update height
+        const newHeight = Math.max(50, startResizeSize.height + deltaY);
+        setHeight(newHeight);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      setIsResizing(false);
+    };
+
+    if (isDragging || isResizing) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, isResizing, startDragPos, startResizePos, startResizeSize, matrix, scale]);
+
   return (
-    <Try2/>
+    <div className="flex flex-col">
+      <div
+        ref={containerRef}
+        className={`relative ${className}`}
+        style={{ width, height }}
+      >
+        <div
+          className="absolute bg-white border border-gray-300 shadow-lg rounded-md overflow-hidden cursor-move transition-transform duration-75 ease-out"
+          style={{
+            width: "100%",
+            height: "100%",
+            transform: getMatrixString(),
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          {children}
+        </div>
+
+        {/* Bottom resize handle */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-2 bg-gray-200 cursor-ns-resize hover:bg-blue-400 transition-colors"
+          onMouseDown={handleResizeMouseDown}
+        />
+      </div>
+
+      {/* Zoom slider control */}
+      <div className="mt-4 flex items-center">
+        <span className="mr-2 text-sm font-medium text-gray-600">Zoom:</span>
+        <input
+          type="range"
+          min="0.1"
+          max="3"
+          step="0.1"
+          value={scale}
+          onChange={handleZoomChange}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        />
+        <span className="ml-2 text-sm font-medium text-gray-600">{(scale * 100).toFixed(0)}%</span>
+      </div>
+    </div>
   );
 };
 
-export default page;
+export default ResizableZoomableMovable;
+
+// Example usage:
+const App = () => {
+  return (
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="w-full max-w-md p-4">
+        <ResizableZoomableMovable className="z-10 mb-2">
+          <div className="p-4">
+            <h2 className="text-lg font-bold">Movable & Resizable Div</h2>
+            <p className="mt-2">
+              • Click and drag to move this div around
+              <br />
+              • Use the slider below to zoom in/out
+              <br />• Drag the bottom edge to resize
+            </p>
+          </div>
+        </ResizableZoomableMovable>
+      </div>
+    </div>
+  );
+};

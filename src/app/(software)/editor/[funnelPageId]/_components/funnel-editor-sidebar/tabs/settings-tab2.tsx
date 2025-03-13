@@ -812,6 +812,7 @@ const SettingsTab = () => {
             <div className="w-full flex items-center">
               <p className=" text-muted-foreground text-xs w-20">Blur</p>
               <Input
+              className="flex-1"
                 placeholder="px"
                 id="filter"
                 onChange={handleOnChanges}
