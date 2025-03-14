@@ -1,6 +1,6 @@
-'use client'
+"use client";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 import React, { useState } from "react";
 import TextPlaceholder from "./text-placeholder";
 import ContainerPlaceholder from "./container-placeholder";
@@ -14,16 +14,14 @@ import { EditorElement, useEditor } from "../../../../../../../../../providers/e
 import { Button } from "@/components/ui/button";
 import ImagePlaceholder from "./image-placeholder";
 
-
 const ComponentsTab = () => {
   const { state } = useEditor();
   const [components, setComponents] = useState<any>([]);
 
-
   const elements: {
     Component: React.ReactNode;
     label: string;
-    id: EditorBtns;
+    id: EditorContentType;
     group: "layout" | "elements";
   }[] = [
     {

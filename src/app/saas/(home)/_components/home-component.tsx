@@ -112,7 +112,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           </p>
         </div>
       </section>
-      <div className="my-8 md:px-7 px-5 hidden md:block">
+      <div className="my-8 md:px-7 px-5 hidden md:block ml-2">
         <h1 className=" text-2xl font-semibold">Recent Projects</h1>
         <p className=" text-zinc-400 text-sm mt-1">All of your letest project in one palce, explore</p>
       </div>
@@ -140,7 +140,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
         </div>
       </section>
 
-      <section className="mb-2 md:px-7 px-5">
+      <section className="mb-6 md:px-7 px-5">
         {funnels.length === 0 ? (
           <EmptyStatefunnel />
         ) : (
@@ -162,7 +162,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
                   );
                 })}
             </div>
-            <div className="flex items-center justify-center mt-7">
+            <div className="flex items-center justify-center mt-8">
               <Link
                 href={"/saas/projects"}
                 className="px-3 py-1.5 flex items-center gap-3 rounded-full bg-[#1e1f22] text-[12px] text-zinc-500 hover:text-zinc-300 duration-200"

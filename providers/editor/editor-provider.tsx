@@ -1,5 +1,5 @@
 "use client";
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 import { FunnelPage } from "@prisma/client";
 import { Dispatch, createContext, useContext, useReducer, useState } from "react";
 import { EditorAction } from "./editor-actions";
@@ -12,7 +12,7 @@ export type EditorElement = {
   id: string;
   styles: React.CSSProperties;
   name: string;
-  type: EditorBtns;
+  type: EditorContentType;
   content: EditorElement[] | { href?: string; innerText?: string; src?: string };
 };
 

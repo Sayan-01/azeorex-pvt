@@ -10,13 +10,14 @@ import Link from "next/link";
 import Image from "next/image";
 import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
 import { IoSearchOutline } from "react-icons/io5";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 type Props = {
   funnels: any[];
   userId: string;
 };
 const ProjectComponent = ({ funnels, userId }: Props) => {
   const [query, setQuery] = useState("");
-  
+
   return (
     <div className="pb-7">
       <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
@@ -108,6 +109,30 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
           </p>
         </div>
       </section>
+      <div className="my-8 md:px-7 px-5 hidden ml-2 md:flex items-center justify-between">
+        <div>
+          <h1 className=" text-2xl font-semibold">Your Projects</h1>
+          <p className=" text-zinc-400 text-sm mt-1">All of your letest project in one palce, explore</p>
+        </div>
+        <Tabs defaultValue="account">
+          <div className="flex items-center">
+            <TabsList className="w-full justify-between gap-2 p-[2px] h-[31px] rounded-lg bg-[#242424] ">
+              <TabsTrigger
+                className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
+                value="account"
+              >
+                Azeorex
+              </TabsTrigger>
+              <TabsTrigger
+                className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
+                value="password"
+              >
+                Figma
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </Tabs>
+      </div>
       <section className="text-3xl mb-4 md:px-7 px-5  sm:hidden flex flex-col items-center">
         <h1 className="text-center font-bold text-2xl mb-2 mt-7">All Projects</h1>
         <p className="text-center text-sm mb-5 opacity-60 w-[90%]">The best azeorex and figma templates and websites from Azeorex community.</p>{" "}

@@ -6,7 +6,7 @@ import clsx from "clsx";
 import Link from "next/link";
 
 import React, { useEffect } from "react";
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 
 type Props = {
   element: EditorElement;
@@ -15,7 +15,7 @@ type Props = {
 const LinkComponent = (props: Props) => {
   const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
-  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
+  const handleDragStart = (e: React.DragEvent, type: EditorContentType) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
     const target = e.target as HTMLElement;
@@ -94,7 +94,14 @@ const LinkComponent = (props: Props) => {
         marginRight: styles?.marginRight,
       }}
     >
-      {!Array.isArray(props.element.content) && (state.editor.previewMode || state.editor.liveMode) && <Link style={styles} href={props.element.content.href || "#"}>{props.element.content.innerText}</Link>}
+      {!Array.isArray(props.element.content) && (state.editor.previewMode || state.editor.liveMode) && (
+        <Link
+          style={styles}
+          href={props.element.content.href || "#"}
+        >
+          {props.element.content.innerText}
+        </Link>
+      )}
       {!state.editor.previewMode && !state.editor.liveMode && (
         <p
           style={styles}

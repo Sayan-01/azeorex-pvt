@@ -1,9 +1,9 @@
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 import { TvMinimalPlay } from "lucide-react";
 import React from "react";
 
 const VideoPlaceholder = () => {
-  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
+  const handleDragStart = (e: React.DragEvent, type: EditorContentType) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
   };

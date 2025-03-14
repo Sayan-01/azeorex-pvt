@@ -1,40 +1,40 @@
-'use client'
-import { Badge } from '@/components/ui/badge'
+"use client";
+import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../providers/editor/editor-provider";
-import clsx from 'clsx'
-import { Trash } from 'lucide-react'
-import React from 'react'
-import { EditorBtns } from '@/types/types';
+import clsx from "clsx";
+import { Trash } from "lucide-react";
+import React from "react";
+import { EditorContentType } from "@/types/types";
 
 type Props = {
-  element: EditorElement
-}
+  element: EditorElement;
+};
 
 const VideoComponent = (props: Props) => {
-  const { dispatch, state } = useEditor()
-  const styles = props.element.styles
+  const { dispatch, state } = useEditor();
+  const styles = props.element.styles;
 
-  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
-    if (type === null) return
-    e.dataTransfer.setData('componentType', type)
-  }
+  const handleDragStart = (e: React.DragEvent, type: EditorContentType) => {
+    if (type === null) return;
+    e.dataTransfer.setData("componentType", type);
+  };
 
   const handleOnClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
     dispatch({
-      type: 'CHANGE_CLICKED_ELEMENT',
+      type: "CHANGE_CLICKED_ELEMENT",
       payload: {
         elementDetails: props.element,
       },
-    })
-  }
+    });
+  };
 
   const handleDeleteElement = () => {
     dispatch({
-      type: 'DELETE_ELEMENT',
+      type: "DELETE_ELEMENT",
       payload: { elementDetails: props.element },
-    })
-  }
+    });
+  };
 
   return (
     <div
@@ -73,6 +73,6 @@ const VideoComponent = (props: Props) => {
       )}
     </div>
   );
-}
+};
 
-export default VideoComponent
+export default VideoComponent;

@@ -10,14 +10,6 @@ interface HoverStyle {
   display: "block" | "none";
 }
 
-interface HoverStyle {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-  display: "block" | "none";
-}
-
 interface OverlayContextProps {
   hoverStyle: HoverStyle;
   setHoverStyle: React.Dispatch<React.SetStateAction<HoverStyle>>;

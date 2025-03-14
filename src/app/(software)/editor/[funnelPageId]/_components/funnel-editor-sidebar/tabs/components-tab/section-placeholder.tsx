@@ -1,10 +1,9 @@
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 import { TextSelect } from "lucide-react";
 import React from "react";
 
-
 const SectionPlaceholder = () => {
-  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
+  const handleDragStart = (e: React.DragEvent, type: EditorContentType) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
   };

@@ -6,7 +6,7 @@ import RecursiveElement from "./recursive";
 import { v4 } from "uuid";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
-import { defaultStyles, EditorBtns } from "@/types/types";
+import { defaultStyles, EditorContentType } from "@/types/types";
 
 type Props = {
   element: EditorElement;
@@ -18,7 +18,7 @@ const TwoColumns = (props: Props) => {
 
   const handleOnDrop = (e: React.DragEvent) => {
     e.stopPropagation();
-    const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
+    const componentType = e.dataTransfer.getData("componentType") as EditorContentType;
     switch (componentType) {
       case "text":
         dispatch({

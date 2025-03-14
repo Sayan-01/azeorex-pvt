@@ -1,10 +1,10 @@
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 import { Bitcoin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
 const CheckoutPlaceholder = () => {
-  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
+  const handleDragStart = (e: React.DragEvent, type: EditorContentType) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
   };

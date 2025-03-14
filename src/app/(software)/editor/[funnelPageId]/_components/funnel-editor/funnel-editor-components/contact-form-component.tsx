@@ -2,7 +2,7 @@
 // import ContactForm from '@/components/forms/contact-form'
 import { Badge } from "@/components/ui/badge";
 // import { useToast } from "@/hooks/use-toast";
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 // import {
 //   // getFunnel,
 //   // saveActivityLogsNotification,
@@ -23,13 +23,15 @@ type Props = {
 };
 
 const ContactFormComponent = (props: Props) => {
-  const { dispatch, state, 
-    // subaccountId, funnelId, pageDetails 
+  const {
+    dispatch,
+    state,
+    // subaccountId, funnelId, pageDetails
   } = useEditor();
   // const router = useRouter();
   // const { toast } = useToast();
 
-  const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
+  const handleDragStart = (e: React.DragEvent, type: EditorContentType) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
   };

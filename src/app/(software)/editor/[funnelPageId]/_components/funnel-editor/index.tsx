@@ -10,53 +10,10 @@ import { Loader } from "@/components/global/Loader";
 
 type Props = { funnelPageId: string; liveMode?: boolean };
 
-// const useElementDimensions = (device, state) => {
-//   const [dimensions, setDimensions] = useState({ width: 0, height: 0, top: 0, left: 0, x: 0, y: 0 });
-
-//   useEffect(() => {
-//     const updateDimensions = () => {
-//       const element = document.getElementById(state.editor.selectedElement.id);
-//       const perentEelement = document.getElementById("perent")
-//       const perent = perentEelement?.getBoundingClientRect();
-
-//       if (element && perent) {
-//         const { width, height, top, left, x, y } = element.getBoundingClientRect();
-
-//         setDimensions({
-//           width: Math.round(width),
-//           height: Math.round(height),
-//           top: Math.round(top - perent.top),
-//           left: Math.round(left - perent.left),
-//           x: Math.round(x),
-//           y: Math.round(y),
-//         });
-//       }
-//     };
-
-//     // Update dimensions initially
-//     updateDimensions();
-//     console.log(device);
-
-//     // Add a resize event listener
-//     window.addEventListener("resize", updateDimensions);
-//     window.addEventListener("resize", updateDimensions);
-
-//     // Clean up the event listener
-//     return () => {
-//       window.removeEventListener("resize", updateDimensions);
-//     };
-//   }, [device]);
-
-//   return dimensions;
-// };
 
 const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
   const { dispatch, state } = useEditor();
   const [load, setLoade] = useState(true);
-
-  console.log(state.editor.selectedElement.id);
-
-  // const dimensions = useElementDimensions(state.editor.device, state);
 
   useEffect(() => {
     if (liveMode) {

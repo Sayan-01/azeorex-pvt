@@ -6,7 +6,7 @@ import React, { ReactEventHandler, ReactNode, useCallback, useEffect, useState }
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { moveObject, updateId } from "@/lib/moveElement";
-import { defaultStyles, EditorBtns } from "@/types/types";
+import { defaultStyles, EditorContentType } from "@/types/types";
 
 type Props = { element: EditorElement };
 
@@ -99,7 +99,7 @@ const Container = ({ element }: Props) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
+    const componentType = e.dataTransfer.getData("componentType") as EditorContentType;
     switch (componentType) {
       case "text":
         dispatch({

@@ -6,7 +6,7 @@ import RecursiveElement from "./recursive";
 import { v4 } from "uuid";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
-import { defaultStyles, EditorBtns, flexStyle } from "@/types/types";
+import { defaultStyles, EditorContentType, flexStyle } from "@/types/types";
 import { moveObject, updateId } from "@/lib/moveElement";
 
 type Props = {
@@ -21,7 +21,7 @@ const Section = (props: Props) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
+    const componentType = e.dataTransfer.getData("componentType") as EditorContentType;
     switch (componentType) {
       case "text":
         dispatch({

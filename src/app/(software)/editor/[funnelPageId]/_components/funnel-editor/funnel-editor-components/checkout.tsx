@@ -4,7 +4,7 @@
 // import { useToast } from "@/hooks/use-toast";
 // import { getFunnel, getSubaccountDetails } from "@/lib/queries";
 // import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
-// import { EditorBtns } from "@/types/types";
+// import { EditorContentType } from "@/types/types";
 
 // import clsx from "clsx";
 // import { Trash } from "lucide-react";
@@ -83,7 +83,7 @@
 //     }
 //   }, [livePrices, subaccountId, subAccountConnectAccId]);
 
-//   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
+//   const handleDragStart = (e: React.DragEvent, type: EditorContentType) => {
 //     if (type === null) return;
 //     e.dataTransfer.setData("componentType", type);
 //   };

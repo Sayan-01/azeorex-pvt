@@ -71,13 +71,13 @@ export const FunnelPageSchema = z.object({
   pathName: z.string().optional(),
 });
 
-export type EditorBtns = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col" | "element";
+export type EditorContentType = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col" | "element";
 
 export type Warframe = {
   id: string;
   warframe_name: string;
   warframe_image: string;
-  warframe: string
+  warframe: string;
 };
 
 export const defaultStyles: React.CSSProperties = {
@@ -91,13 +91,13 @@ export const defaultStyles: React.CSSProperties = {
 export const flexStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
-  justifyContent: "center"
-}
+  justifyContent: "center",
+};
 
 export type CreateMediaType = Prisma.MediaCreateWithoutAgencyInput;
 export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
 
 export interface LikeInfo {
   likes: number;
-  isLikedByUser: boolean
+  isLikedByUser: boolean;
 }

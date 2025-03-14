@@ -4,7 +4,7 @@ import { EditorElement, useEditor } from "../../../../../../../../providers/edit
 import clsx from "clsx";
 import { ImageIcon, Trash } from "lucide-react";
 import React, { useEffect } from "react";
-import { EditorBtns } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 import Image from "next/image";
 
 type Props = {
