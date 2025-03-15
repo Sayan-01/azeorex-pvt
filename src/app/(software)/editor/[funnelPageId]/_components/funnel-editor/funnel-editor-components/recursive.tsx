@@ -11,9 +11,10 @@ import { EditorElement } from "../../../../../../../../providers/editor/editor-p
 
 type Props = {
   element: EditorElement;
+  index: number;
 };
 
-const Recursive = ({ element }: Props) => {
+const Recursive = ({ element, index }: Props) => {
   switch (element.type) {
     case "text":
       return <TextComponent element={element} />;

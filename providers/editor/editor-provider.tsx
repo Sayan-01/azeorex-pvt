@@ -1,9 +1,12 @@
 "use client";
-import { EditorContentType } from "@/types/types";
-import { FunnelPage } from "@prisma/client";
-import { Dispatch, createContext, useContext, useReducer, useState } from "react";
-import { EditorAction } from "./editor-actions";
-import { object } from "zod";
+import type { EditorContentType } from "@/types/types";
+import type React from "react";
+
+import type { FunnelPage } from "@prisma/client";
+import { type Dispatch, createContext, useContext, useReducer, useState } from "react";
+import type { EditorAction } from "./editor-actions";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
@@ -126,6 +129,138 @@ const deleteAnElement = (editorArray: EditorElement[], action: EditorAction): Ed
       item.content = deleteAnElement(item.content, action);
     }
     return true;
+  });
+};
+
+// Improve the moveElement function to better handle parent-child relationships
+const moveElement = (elements: EditorElement[], sourceParentId: string, sourceIndex: number, destinationParentId: string, destinationIndex: number, elementId: string): EditorElement[] => {
+  // Special case for root level elements
+  if (sourceParentId === "__root" && destinationParentId === "__body") {
+    // Moving from root to body
+    const [movedElement] = elements.splice(sourceIndex, 1);
+    elements.splice(destinationIndex, 0, movedElement);
+    return [...elements];
+  }
+
+  if (sourceParentId === "__body" && destinationParentId === "__root") {
+    // Moving from body to root
+    const [movedElement] = elements.splice(sourceIndex, 1);
+    return [...elements, movedElement];
+  }
+
+  // Handle moving within the same parent
+  if (sourceParentId === destinationParentId) {
+    return elements.map((item) => {
+      if (item.id === sourceParentId && Array.isArray(item.content)) {
+        // Create a new array to avoid mutating the original
+        const newContent = [...item.content];
+        // Remove the element from its original position
+        const [movedElement] = newContent.splice(sourceIndex, 1);
+        // Insert it at the new position
+        newContent.splice(destinationIndex, 0, movedElement);
+
+        return {
+          ...item,
+          content: newContent,
+        };
+      } else if (Array.isArray(item.content)) {
+        // Recursively search in children
+        return {
+          ...item,
+          content: moveElement(item.content as EditorElement[], sourceParentId, sourceIndex, destinationParentId, destinationIndex, elementId),
+        };
+      }
+      return item;
+    });
+  }
+
+  // Handle moving between different parents
+  let elementToMove: EditorElement | null = null;
+
+  // First, find and remove the element from its source
+  const elementsAfterRemoval = elements.map((item) => {
+    if (item.id === sourceParentId && Array.isArray(item.content)) {
+      const newContent = [...item.content];
+      // Find and remove the element
+      const removedElements = newContent.splice(sourceIndex, 1);
+      if (removedElements.length > 0) {
+        elementToMove = removedElements[0];
+      }
+
+      return {
+        ...item,
+        content: newContent,
+      };
+    } else if (Array.isArray(item.content)) {
+      // Recursively search in children
+      const newContent = moveElement(
+        item.content as EditorElement[],
+        sourceParentId,
+        sourceIndex,
+        "__temp_removal__", // Temporary destination to just remove
+        0,
+        elementId
+      );
+
+      // Check if the element was found and removed in this branch
+      if (newContent !== item.content && !elementToMove) {
+        // Try to find the removed element by comparing the arrays
+        const originalIds = (item.content as EditorElement[]).map((el) => el.id);
+        const newIds = (newContent as EditorElement[]).map((el) => el.id);
+
+        const removedId = originalIds.find((id) => !newIds.includes(id));
+        if (removedId) {
+          elementToMove = (item.content as EditorElement[]).find((el) => el.id === removedId) || null;
+        }
+      }
+
+      return {
+        ...item,
+        content: newContent,
+      };
+    }
+    return item;
+  });
+
+  // Special case: if we're moving to the root level
+  if (destinationParentId === "__body") {
+    if (elementToMove) {
+      const result = [...elementsAfterRemoval];
+      result.splice(destinationIndex, 0, elementToMove);
+      return result;
+    }
+    return elementsAfterRemoval;
+  }
+
+  // If we didn't find the element, return the original array
+  if (!elementToMove) return elements;
+
+  // Then, add the element to its destination
+  return elementsAfterRemoval.map((item) => {
+    if (item.id === destinationParentId && Array.isArray(item.content)) {
+      const newContent = [...item.content];
+      // Insert the element at the destination
+      newContent.splice(destinationIndex, 0, elementToMove!);
+
+      return {
+        ...item,
+        content: newContent,
+      };
+    } else if (Array.isArray(item.content)) {
+      // Recursively search in children
+      return {
+        ...item,
+        content: moveElement(
+          item.content as EditorElement[],
+          "__temp_insertion__", // Temporary source since we're just inserting
+          0,
+          destinationParentId,
+          destinationIndex,
+          elementId
+        ),
+      };
+    }
+    return item;
   });
 };
 
@@ -329,7 +464,32 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
         },
       };
       return funnelPageIdState;
+
     case "MOVE_ELEMENT":
+      const { elementId, sourceParentId, sourceIndex, destinationParentId, destinationIndex } = action.payload;
+
+      const updatedElementsAfterMove = moveElement(state.editor.elements, sourceParentId, sourceIndex, destinationParentId, destinationIndex, elementId);
+
+      const updatedEditorStateAfterMove = {
+        ...state.editor,
+        elements: updatedElementsAfterMove,
+      };
+
+      const updatedHistoryAfterMove = [
+        ...state.history.history.slice(0, state.history.currentIndex + 1),
+        { ...updatedEditorStateAfterMove }, // Save a copy of the updated state
+      ];
+
+      const movedState = {
+        ...state,
+        editor: updatedEditorStateAfterMove,
+        history: {
+          ...state.history,
+          history: updatedHistoryAfterMove,
+          currentIndex: updatedHistoryAfterMove.length - 1,
+        },
+      };
+      return movedState;
 
     default:
       return state;
@@ -391,7 +551,7 @@ const EditorProvider = (props: EditorProps) => {
         pageDetails: props.pageDetails,
       }}
     >
-      {props.children}
+      <DndProvider backend={HTML5Backend}>{props.children}</DndProvider>
     </EditorContext.Provider>
   );
 };

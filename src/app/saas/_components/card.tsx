@@ -72,30 +72,33 @@ const MoreButton = ({ projectId }: { projectId: string }) => {
   const handleDelete = async () => {
     try {
       const response = await deleteProject(projectId);
-      setOpen(false)
+      setOpen(false);
       if (response) router.refresh();
     } catch (err) {}
   };
 
   return (
-    <Popover open={open}>
+    <Popover
+      open={open}
+      onOpenChange={setOpen}
+    >
       <PopoverTrigger asChild>
         <EllipsisVertical
           onClick={() => setOpen(true)}
           size={12}
-          className="absolute right-0 top-4 cursor-pointer"
+          className="absolute right-2 top-6 cursor-pointer opacity-40 "
         />
       </PopoverTrigger>
-      <PopoverContent className="rounded-xl text-xs w-40 bg-transparent text-zinc-400 backdrop-blur flex flex-col gap-3  sm:mr-48 mr-10 cursor-pointer">
-        <div onClick={handleDelete}>Delete<br/>Id: {projectId}</div>
-        {/* <div>Edit</div>
+      <PopoverContent className="rounded-xl p-0 text-xs w-40 text-zinc-400 backdrop-blur flex flex-col  sm:mr-28 mr-10 cursor-pointer bg-zinc-950/30">
+        {/* <div className="p-3 border-b">Id: {projectId}</div> */}
+        <div className="p-3">Edit</div>
         <DeleteButton
           onClick={handleDelete}
           title="Delete Your comment"
           description="This action can’t be undone and your comment will be removed from this post permanently."
         >
-          <div>Delete</div>
-        </DeleteButton> */}
+          <div className="p-3 pt-0">Delete</div>
+        </DeleteButton>
       </PopoverContent>
     </Popover>
   );
