@@ -112,7 +112,6 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
       {Array.isArray(state.editor.elements) &&
         state.editor.elements.map((childElement, idx) => (
           <Recursive
-          index={idx}
             key={childElement.id}
             element={childElement}
           />
