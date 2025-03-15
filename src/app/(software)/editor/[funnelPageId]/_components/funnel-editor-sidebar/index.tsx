@@ -15,11 +15,11 @@ import SettingsTab from "./tabs/settings-tab2";
 
 
 type Props = {
-  agencyId: string;
-  funnelId: string;
+  userId: string;
+  projectId: string;
 };
 
-const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
+const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
   const { state } = useEditor();
 
   return (
@@ -90,7 +90,7 @@ const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
                       <SheetTitle>Pages</SheetTitle>
                       <SheetDescription>All pages of your website</SheetDescription>
                     </SheetHeader>
-                    <Sayan funnelId={funnelId}/>
+                    <Sayan projectId={projectId}/>
                   </TabsContent> */}
                 </Tabs>
               </TabsContent>
@@ -98,7 +98,7 @@ const FunnelEditorSidebar = ({ agencyId, funnelId }: Props) => {
                 <LayersTab />
               </TabsContent>
               <TabsContent value="Media">
-                <MediaBucketTab agencyId={funnelId} />
+                <MediaBucketTab agencyId={projectId} />
               </TabsContent>
               <TabsContent value="Layout">
                 <LayoutTab />

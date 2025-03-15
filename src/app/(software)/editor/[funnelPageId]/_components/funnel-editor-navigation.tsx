@@ -6,7 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
-import { saveActivityLogsNotification, upsertFunnelPage } from "@/lib/queries";
+import { upsertFunnelPageForProject } from "@/lib/queries";
 import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
 import { ChevronDown, DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
@@ -18,12 +18,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { useEditor, DeviceTypes } from "../../../../../../providers/editor/editor-provider";
 
 type Props = {
-  funnelId: string;
+  projectId: string;
   funnelPageDetails: FunnelPage;
-  agencyId: string;
+  userId: string;
 };
 
-const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, agencyId }: Props) => {
+const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props) => {
   const router = useRouter();
   const { state, dispatch } = useEditor();
   const [load, setLoade] = useState(false);
@@ -40,14 +40,13 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, agencyId }: Props
   const handleOnBlurTitleChange: FocusEventHandler<HTMLInputElement> = async (event) => {
     if (event.target.value === funnelPageDetails.name) return;
     if (event.target.value) {
-      await upsertFunnelPage(
-        agencyId,
+      await upsertFunnelPageForProject(
         {
           id: funnelPageDetails.id,
           name: event.target.value,
           order: funnelPageDetails.order,
         },
-        funnelId
+        projectId
       );
 
       toast({
@@ -79,25 +78,20 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, agencyId }: Props
     setLoade(true);
     const content = JSON.stringify(state.editor.elements);
     try {
-      const response = await upsertFunnelPage(
-        agencyId,
+      const response = await upsertFunnelPageForProject(
         {
           ...funnelPageDetails,
           content,
         },
-        funnelId
+        projectId
       );
-      // await saveActivityLogsNotification({
-      //   description: `Updated a funnel page | ${response?.name}`,
-      //   agencyId: agencyId,
-      // });
       setLoade(false);
       toast({
         description: "✨Saved Editor",
       });
-    } catch (e){
+    } catch (e) {
       console.log(e);
-      
+
       toast({
         description: "😫Could not save editor",
       });
@@ -124,7 +118,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, agencyId }: Props
             <DropdownMenuContent className="ml-4">
               <DropdownMenuGroup>
                 <DropdownMenuItem className="flex gap-4 ">
-                  <Link href={`/agency/${agencyId}/funnels/${funnelId}`}>Azeorex</Link>
+                  <Link href={`/saas/projects/${projectId}`}>Azeorex</Link>
                   <div className="flex  w-full ">
                     <Input
                       defaultValue={funnelPageDetails.name}
@@ -266,18 +260,18 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, agencyId }: Props
               )}
             </button>
           ) : ( */}
-            <button
-              className="text-sm border-l-2 border-main-black pl-3"
-              onClick={handleOnSave}
-            >
-              {load ? (
-                <>
-                  <Loader loading={load} />
-                </>
-              ) : (
-                <DownloadIcon size={16} />
-              )}
-            </button>
+          <button
+            className="text-sm border-l-2 border-main-black pl-3"
+            onClick={handleOnSave}
+          >
+            {load ? (
+              <>
+                <Loader loading={load} />
+              </>
+            ) : (
+              <DownloadIcon size={16} />
+            )}
+          </button>
           {/* )} */}
         </aside>
       </nav>

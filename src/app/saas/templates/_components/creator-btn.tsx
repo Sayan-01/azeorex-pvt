@@ -35,7 +35,7 @@ const CreatorBtn = ({ className }: { className?: string }) => {
     loadProjects();
   }, [userId]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return null;
   if (!userId || projects.length === 0) return null;
 
   return (

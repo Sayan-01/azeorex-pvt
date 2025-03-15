@@ -19,7 +19,6 @@ const Container = ({ element }: Props) => {
     height: 100,
   });
 
-  console.log("width", styles);
 
   const [position, setPosition] = useState({
     x: 0,
@@ -330,7 +329,7 @@ const Container = ({ element }: Props) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type);
     const target = e.target as HTMLElement;
-    target.style.opacity = "0.3";
+    target.style.opacity = "1";
     target.style.cursor = "grabbing";
 
     if (target.id) {

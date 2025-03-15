@@ -7,9 +7,41 @@ import { ActivitySquare, EyeOff } from "lucide-react";
 import React, { createRef, useEffect, useState } from "react";
 import Recursive from "./funnel-editor-components/recursive";
 import { Loader } from "@/components/global/Loader";
+import { cn } from "@/lib/utils";
+import { useDrop } from "react-dnd";
 
 type Props = { funnelPageId: string; liveMode?: boolean };
+// interface DropZoneProps {
+//   index: number;
+//   onDrop: (
+//     item: {
+//       type: string;
+//       index?: number;
+//     },
+//     dropIndex: number
+//   )=> void;
+//   isEditable: boolean;
+// }
 
+// export const DropZone: React.FC<DropZoneProps> = ({ index, onDrop, isEditable }) => {
+//   const [{ isOver, canDrop }] = useDrop({
+//     accept: ["content"],
+//     drop: (item: { type: string; index?: number }) => {
+//       onDrop(item, index);
+//     },
+//     canDrop: () => isEditable,
+//     collect: (monitor) => ({
+//       isOver: !!monitor.isOver(),
+//       canDrop: !!monitor.canDrop(),
+//     }),
+//   });
+
+//   return <div className={(cn("h-4 my-2 rounded-md transition-all duration-200"), isOver && canDrop ? "border-green-500 bg-green-100" : "border-gray-500", canDrop ? "border-blue-300" : "")}>
+//     {isOver && canDrop && (
+//       <div className="h-full flex items-center justify-center text-green-500">Drop here</div>
+//     )}
+//   </div>;
+// };
 
 const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
   const { dispatch, state } = useEditor();
@@ -77,17 +109,8 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
           <EyeOff />
         </Button>
       )}
-      {/* <div className="border-6 border-red-500 bg-blue-500/20" style={{height: position.height, width: position.width, position: "absolute", top: position.top, left: position.left ,zIndex: 1002, overflow: "visible", pointerEvents: "none",}}>s</div> */}
-      {/* <div
-        style={{ height: dimensions.height, width: dimensions.width, transform: `translate(${dimensions.left}px, ${dimensions.top}px)`, zIndex: 1002, overflow: "visible", pointerEvents: "none" }}
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 !shadow-inner-border-blue-500 bg-main/10", {
-          // hidden: state.editor.liveMode,
-          // "!shadow-inner-border-blue-500": state.editor.selectedElement.id === activeCon,
-        })}
-      >
-      </div> */}
       {Array.isArray(state.editor.elements) &&
-        state.editor.elements.map((childElement) => (
+        state.editor.elements.map((childElement, idx) => (
           <Recursive
             key={childElement.id}
             element={childElement}

@@ -398,7 +398,7 @@ export const deleteProject = async (projectId: string) => {
       id: projectId,
     },
   });
-  
+
   return response;
 };
 
@@ -550,6 +550,10 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
           ]),
       projectId,
     },
+  });
+  await db.project.update({
+    where: { id: projectId },
+    data: { updatedAt: new Date() },
   });
 
   return response;

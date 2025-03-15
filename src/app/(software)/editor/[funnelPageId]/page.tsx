@@ -6,6 +6,8 @@ import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
 import { Inter } from "next/font/google";
 import EditorProvider from "../../../../../providers/editor/editor-provider";
 
+
+
 type Props = {
   params: {
     funnelPageId: string;
@@ -19,9 +21,9 @@ type Props = {
 const inte = Inter({ subsets: ["latin"] });
 
 const page = async ({ params, searchParams }: Props) => {
-  const agencyId = searchParams.userId;
-  const funnelId = searchParams.projectId;
-  if (!agencyId || !funnelId) {
+  const userId = searchParams.userId;
+  const projectId = searchParams.projectId;
+  if (!userId || !projectId) {
     return null;
   }
 
@@ -31,31 +33,31 @@ const page = async ({ params, searchParams }: Props) => {
     },
   });
   if (!funnelPageDetails) {
-    return redirect(`/agency/${agencyId}/funnels/${funnelId}`);
+    return redirect(`/saas/projects/${projectId}`);
   }
 
   return (
     <>
       <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#333333] overflow-hidden ${inte.className}`}>
         {/* starts from 16:39 */}
-        <EditorProvider
-          agencyId={agencyId}
-          funnelId={funnelId}
-          pageDetails={funnelPageDetails}
-        >
-          <FunnelEditorNavigation
-            funnelId={funnelId}
-            funnelPageDetails={funnelPageDetails}
-            agencyId={agencyId}
-          />
-          <div className="h-full flex justify-center ">
-            <FunnelEditor funnelPageId={params.funnelPageId} />
-          </div>
-          <FunnelEditorSidebar
-            agencyId={agencyId}
-            funnelId={funnelId}
-          />
-        </EditorProvider>
+          <EditorProvider
+            agencyId={userId}
+            funnelId={projectId}
+            pageDetails={funnelPageDetails}
+          >
+            <FunnelEditorNavigation
+              projectId={projectId}
+              funnelPageDetails={funnelPageDetails}
+              userId={userId}
+            />
+            <div className="h-full flex justify-center ">
+              <FunnelEditor funnelPageId={params.funnelPageId} />
+            </div>
+            <FunnelEditorSidebar
+              userId={userId}
+              projectId={projectId}
+            />
+          </EditorProvider>
       </div>
     </>
   );
