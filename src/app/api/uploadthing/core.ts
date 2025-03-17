@@ -7,7 +7,7 @@ const authenticateUser = async () => {
   const session = await auth();
   const user = session?.user;
   if (!user) throw new Error("Unauthorized");
-  return {user};
+  return { user };
 };
 
 // FileRouter for your app, can contain multiple FileRoutes
@@ -23,6 +23,9 @@ export const ourFileRouter = {
     .middleware(authenticateUser)
     .onUploadComplete(() => {}),
   media: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+    .middleware(authenticateUser)
+    .onUploadComplete(() => {}),
+  favicon: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
     .middleware(authenticateUser)
     .onUploadComplete(() => {}),
 } satisfies FileRouter;
