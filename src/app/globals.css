@@ -4,17 +4,12 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  height: 100dvh; /* Dynamic viewport height */
-  height: -webkit-fill-available
-
 }
 
-html {
+/* html {
   --scroll-behavior: smooth !important;
   scroll-behavior: smooth !important;
-  height: -webkit-fill-available
-
-}
+} */
 
 @layer utilities {
   .text-balance {
