@@ -63,7 +63,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
                 src="/logo.svg"
                 height={400}
                 width={400}
-                className="w-[132px]"
+                className="w-[132px] h-[30px]"
                 alt="logo"
               />
             </Link>

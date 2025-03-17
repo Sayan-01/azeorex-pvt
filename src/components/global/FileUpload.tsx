@@ -20,7 +20,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
     return (
       <div className="flex flex-col items-center justify-center">
         {type != "pdf" ? (
-          <div className={`relative w-60 h-60 rounded-md overflow-hidden g-[#202124] border border-[#2c2d30]`}>
+          <div className={`relative w-10 h-10 rounded-md overflow-hidden g-[#202124] border border-[#2c2d30]`}>
             <Image
               src={value}
               alt="upload image"
@@ -41,7 +41,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
           </div>
         )}
         <Button
-          className="border-2 border-red-400/20 text-red-400/80 mt-[12px] w-full"
+          className="border-2 border-red-400/20 text-red-400/80 mt-[1px] w-full"
           onClick={() => onChange("")}
           variant="ghost"
           type="button"

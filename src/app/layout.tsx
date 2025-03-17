@@ -12,6 +12,7 @@ import { ReactQueryProvider } from "../../react-query/provider";
 export const metadata: Metadata = {
   title: "Azeorex",
   description: "Convert your dream into design with precision",
+  viewport: "height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi",
 };
 
 const outfi = Inter({ subsets: ["latin"], weight: "400" });
