@@ -21,8 +21,8 @@ type Props = {
 const HomeComponent = ({ funnels, templates, userId }: Props) => {
   const [query, setQuery] = useState("");
   return (
-    <div className="pb-7 relative">
-      <nav className="flex w-full justify-between items-center bg-[#141414] fixed top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
+    <div className="pb-7">
+      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
         <div className=" md:flex hidden items-center gap-2 rounded-full w-max ">
           <h3 className="text-white/70">Home</h3>
           <ChevronRight size={16} />
@@ -70,7 +70,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
           </div>
         </div>
       </nav>
-      <section className="md:mb-4 md:px-7 px-5 sm:block hidden mb-10 mt-[76px]">
+      <section className="md:mb-4 md:px-7 px-5 sm:block hidden mb-10">
         <div className="bg-[#ffffff08] rounded-xl p-6 flex gap-3 items-center">
           <svg
             width="12"

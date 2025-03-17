@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={`bg-black scroll-smooth dark w-full overflow-auto min-h-screen antialiased box x ${outfi.className}`}>
+        <body className={`bg-black scroll-smooth dark w-full overflow-auto antialiased box x ${outfi.className}`}>
           <ReactQueryProvider>
             <ModalProvider>
               <NextTopLoader
