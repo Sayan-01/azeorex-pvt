@@ -123,14 +123,12 @@ model Review {
   @@index([userId])
 }
 
-// model Like {
-//   userId     String
-//   User       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   templateId String
-//   Template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
-
-//   @@unique([userId, templateId])
-// }
+model GlobalReview {
+  id           String   @id @default(uuid())
+  userId       String
+  globalReview String
+  createdAt    DateTime @default(now())
+}
 
 model Permissions {
   id       String  @id @default(uuid())

@@ -46,7 +46,7 @@ export const navMenu: NavMenu[] = [
   {
     id: 5,
     title: "Give review",
-    url: "/reviews",
+    url: "/global-review",
     icon: "/icons/contact.png",
   },
 ];
@@ -66,7 +66,7 @@ export const card: Card[] = [
     title: "Website Template",
     description: (
       <h1>
-        High-quality <span className="text-violet-500">modern templates</span> for Website's and App's.
+        High-quality <span className="text-violet-500">modern templates</span> for Websites and Apps.
       </h1>
     ),
     img_url: "/cards/template.svg",

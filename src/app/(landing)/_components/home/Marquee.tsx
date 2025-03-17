@@ -34,8 +34,8 @@ const Marquee = () => {
           <ImageMarqueeBlock directionClass={"logos-slider-rev"} />
         </div>
         <Link href="/templates/products" className='relative z-50'>
-          <Button className={"mx-auto gap-2 md:w-[182px] mt-12"}>
-            Get Start <MdOutlineArrowOutward />
+          <Button className={"mx-auto gap-2 md:w-[190px] mt-12"}>
+            Get Started <MdOutlineArrowOutward />
           </Button>
         </Link>
       </Wrapper>

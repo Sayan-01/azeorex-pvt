@@ -7,10 +7,10 @@ import { UploadDropzone } from "@/lib/uploadthings";
 import clsx from "clsx";
 
 type Prop = {
-  apiEndpoint: "agencyLogo" | "avatar" | "subaccountLogo" | "media";
+  apiEndpoint: "agencyLogo" | "avatar" | "subaccountLogo" | "media" | "favicon";
   onChange: (url?: string) => void;
   value?: string;
-  className?: string 
+  className?: string;
 };
 
 const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
@@ -55,7 +55,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
   return (
     <div className={clsx(" w-full g-[#202124] border border-[#2c2d30] rounded-xl", className)}>
       <UploadDropzone
-      className="outline-none"
+        className="outline-none"
         endpoint={apiEndpoint}
         onClientUploadComplete={(res) => {
           onChange(res?.[0].url);

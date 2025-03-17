@@ -76,7 +76,7 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
     router.refresh();
   };
   return (
-    <div className="flex-1 border-none">
+    <div className="w-full border-none">
       <div className="border-none">
         <Form {...form}>
           <form
@@ -92,7 +92,7 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
                   <FormControl className="w-full">
                     <FileUpload
                       className="bg-[#202124] border border-[#2c2d30] mx-auto"
-                      apiEndpoint="subaccountLogo"
+                      apiEndpoint="favicon"
                       value={field.value}
                       onChange={field.onChange}
                     />

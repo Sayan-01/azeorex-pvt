@@ -66,7 +66,7 @@ const Header = async () => {
                           className="rounded-full flex items-center justify-center gap-3 bg-gray-100 px-5 py-3 text-sm font-medium text-teal-600 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
                           href={`${process.env.NEXT_URL}agency`}
                         >
-                          <Compass size={18} /> Creact
+                          <Compass size={18} /> Create
                         </Link>
                       </div>
 

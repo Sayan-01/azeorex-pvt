@@ -9,7 +9,7 @@ const Approch = () => {
       <Wrapper>
         <Heading
           h3={"-: Journey :-"}
-          h1={"Our Approchs"}
+          h1={"Our Approaches"}
           p={"Discover our innovative approaches that ensure exceptional quality, efficiency, and success in every project we undertake."}
         />
         <div className="mt-20 ">

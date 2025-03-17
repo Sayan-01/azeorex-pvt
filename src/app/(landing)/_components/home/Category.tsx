@@ -12,7 +12,7 @@ const Category = () => {
       <Heading
         className={"mb-20"}
         h3={"-: OUR CATEGORY :-"}
-        h1={"Our All Categoris"}
+        h1={"Our All Categories"}
         p={"Explore the diverse range of offerings that elevate Replex's value and cater to your specific needs."}
       />
       {card.map((item:any,idx) => {
@@ -22,7 +22,7 @@ const Category = () => {
               key={item.id}
               className="relative "
             >
-              <Gradient className={"sm:-top-32 top-[300px] sm:scale-[1.1] scale-[2] sm:left-0 -left-24"} />
+              <Gradient className={"sm:-top-[129px] top-[300px] sm:scale-[1.1] scale-[2] sm:left-0 -left-24"} />
               <CategoryItem item={item} />
             </div>
           </Container_opacity_only>

@@ -19,7 +19,7 @@ const ReviewSection = () => {
       comment:
         "Their website builder is incredibly easy to use, with stunning templates and seamless customization. No coding needed, and customer support is fantastic. A perfect solution for quick, professional websites! Highly recommended!",
       avatar: "",
-      name: "sumonykoloy",
+      name: "sumonikoley",
     },
     {
       id: 2,
@@ -63,7 +63,7 @@ const ReviewSection = () => {
           })}
         </div>
         
-        <Link href={'/reviews'} className="flex items-center gap-3 hover:gap-4 duration-200 mt-4 opacity-40 hover:opacity-80 cursor-pointer">
+        <Link href={'/global-review'} className="flex items-center gap-3 hover:gap-4 duration-200 mt-4 opacity-40 hover:opacity-80 cursor-pointer">
           click to see All reviews <MoveRight size={15}/>
         </Link>
       </Wrapper>

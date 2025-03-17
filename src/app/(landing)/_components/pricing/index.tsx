@@ -31,21 +31,21 @@ export const PricingSection = () => {
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
           border="border-zinc-400/10  bg-[#0a0d24] xl:scale-90"
-          title="Free Plane"
+          title="Free Plan"
           tag="$0 /"
           color="text-[#b4b0a3]"
         />
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
           border="relative border-zinc-400/10 z-10  bg-[#402fb5]/50 pricing-shadow"
-          title="Pro Plane"
+          title="Pro Plan"
           tag="$15 /"
           color="text-[#b4b0a3]"
         />
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
           border="border-zinc-400/10 bg-[#0a0d24] xl:scale-90"
-          title="Premium Plane"
+          title="Premium Plan"
           tag="$45 /"
           color="text-[#b4b0a3]"
         />
