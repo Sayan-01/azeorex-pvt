@@ -32,7 +32,7 @@ const page = async ({ params, searchParams }: Props) => {
       id: params.funnelPageId,
     },
   });
-  if (!funnelPageDetails) {
+  if (!funnelPageDetails ) {
     return redirect(`/saas/projects/${projectId}`);
   }
 

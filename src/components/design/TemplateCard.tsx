@@ -23,7 +23,7 @@ const TemplateCard = ({ item }: { item: any }) => {
                 className="w-full object-cover duration-300  aspect-[3/1.9] group-hover:scale-110 transition-transform"
                 width={600}
                 height={600}
-                src={item.image[0] || "/funnel-placeholder.svg"}
+                src={item.image[0] || "/funnel-page-placeholder.svg"}
                 alt={`image`}
               />
             </div>

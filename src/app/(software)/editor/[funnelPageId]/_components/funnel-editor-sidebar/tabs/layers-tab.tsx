@@ -270,7 +270,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
           >
             <AccordionTrigger
               className={clsx("!no-underline p-2 pl-0 text-sm outline outline-1 outline-transparent outline-offset-[-1px] border-b rounded-lg", {
-                "bg-muted-foreground/20 rounded-lg": state.editor.selectedElement.id === props.element.id,
+                "bg-muted-foreground/20 rounded-lg cursor-move": state.editor.selectedElement.id === props.element.id,
               })}
               onClick={(e) => handleSelectElement(e, props.element)}
             >

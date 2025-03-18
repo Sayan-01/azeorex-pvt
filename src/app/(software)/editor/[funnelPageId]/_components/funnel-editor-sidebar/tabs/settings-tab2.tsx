@@ -151,7 +151,6 @@ const SettingsTab = () => {
             <div className="flex gap-2 mb-2">
               <div className="flex flex-col">
                 <Input
-                type="number"
                   placeholder="Auto"
                   id="width"
                   onChange={handleOnChanges}

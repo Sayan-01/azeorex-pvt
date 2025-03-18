@@ -26,12 +26,12 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
           <h3 className="text-white/70">Projects</h3> <ChevronRight size={16} />
         </div>
         <div className="md:mr-0 mr-[52px] flex gap-3 w-full md:w-auto sm:justify-between justify-between">
-          <div className="items-center h-8 ml-2 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-full md:flex hidden">
+          <div className="items-center h-8 ml-2 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-auto md:flex hidden">
             <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
               <IoSearchOutline size={18} />
             </div>
             <input
-              className="h-full bg-transparent rounded-r-md px-2 text-xs md:w-[210px] w-full outline-none border-none"
+              className="h-full bg-transparent rounded-r-md px-2 text-xs max-w-[210px]  w-full outline-none border-none"
               type="text"
               onChange={(e) => setQuery(e.target.value.toLowerCase())}
               placeholder="Search..."

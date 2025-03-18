@@ -4,7 +4,7 @@ import React from "react";
 
 const loading = () => {
   return (
-    <div>
+    <div className="bg-[#141414]">
       <Wrapper className="flex lg:flex-row flex-col-reverse items-start min-h-screen w-full sm:py-[150px] py-[135px]">
         <div className="w-full ">
           <Skeleton className="w-full aspect-[10/7] rounded-xl mb-5" />
