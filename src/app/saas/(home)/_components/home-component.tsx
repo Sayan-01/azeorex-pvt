@@ -11,6 +11,7 @@ import TemplateCard from "@/components/design/TemplateCard";
 import EmptyStatefunnel from "@/components/global/empty/empty-state-funnel";
 import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
 import { IoSearchOutline } from "react-icons/io5";
+import Header from "../../_components/info-header";
 
 type Props = {
   funnels: any[];
@@ -21,13 +22,13 @@ type Props = {
 const HomeComponent = ({ funnels, templates, userId }: Props) => {
   const [query, setQuery] = useState("");
   return (
-    <div className="pb-7">
-      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
+    <div className="pb-7 pt-[88px]">
+      <Header>
         <div className=" md:flex hidden items-center gap-2 rounded-full w-max ">
           <h3 className="text-white/70">Home</h3>
           <ChevronRight size={16} />
         </div>
-        <div className="md:mr-0 mr-[52px] flex gap-3 w-full md:w-auto sm:justify-between justify-between">
+        <div className="md:mr-0 mr-[52px] flex gap-3 w-full md:w-auto sm:justify-between justify-between ">
           <div className="items-center h-8 ml-2 bg-[#2d2f33] hover:bg-[#242529] rounded-md border border-[#545454]/30 w-full md:flex hidden">
             <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
               <IoIosSearch size={18} />
@@ -69,7 +70,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
             </Link>
           </div>
         </div>
-      </nav>
+      </Header>
       <section className="md:mb-4 md:px-7 px-5 sm:block hidden mb-10">
         <div className="bg-[#ffffff08] rounded-xl p-6 flex gap-3 items-center">
           <svg
