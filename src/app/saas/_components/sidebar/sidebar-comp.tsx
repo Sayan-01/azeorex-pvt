@@ -38,12 +38,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
         <div className="h-[1px] bg-white/40 w-4 mb-[5px]" />
         <div className="h-[1px] bg-white/40 w-4" />
       </SheetTrigger>
-      {/* <div
-        onClick={() => {
-          setIsOpen(false);
-        }}
-        className={`bg-[#0000009c] fixed w-full h-full z-[50] block duration-200 md:hidden ${isOpen ? "block" : "!hidden"}`}
-      ></div> */}
+      
       <SheetContent
         showX={!defaultOption}
         side="left"
@@ -127,7 +122,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
               {
                 id: 1,
                 name: "Reviews",
-                link: `#`,
+                link: `/global-review`,
                 icon: <Star size={18} />,
               },
               {
