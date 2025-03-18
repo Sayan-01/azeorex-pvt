@@ -12,6 +12,7 @@ import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
 import { IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import Image from "next/image";
+import Header from "../../_components/info-header";
 
 type Props = {
   templates: any[];
@@ -21,8 +22,8 @@ const TemplateComponent = ({ templates }: Props) => {
   const [filterQuery, setFilterQuery] = useState("");
 
   return (
-    <div className="pb-7 ">
-      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5 ">
+    <div className="pb-7 pt-[88px]">
+      <Header>
         <div className=" md:flex hidden items-center gap-2 rounded-full w-max ">
           <h3 className="text-white/70">Templates</h3>
           <ChevronRight size={16} />
@@ -60,7 +61,7 @@ const TemplateComponent = ({ templates }: Props) => {
             </Link>
           </div>
         </div>
-      </nav>
+      </Header>
       <section className="mb-4 md:mb-6 md:px-7 px-5 sm:block hidden">
         <div className="bg-[#ffffff08] rounded-xl md:p-6 p-4 flex gap-3 items-center">
           <svg

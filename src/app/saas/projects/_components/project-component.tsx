@@ -11,6 +11,7 @@ import Image from "next/image";
 import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
 import { IoSearchOutline } from "react-icons/io5";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Header from "../../_components/info-header";
 type Props = {
   funnels: any[];
   userId: string;
@@ -19,8 +20,8 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
   const [query, setQuery] = useState("");
 
   return (
-    <div className="pb-7">
-      <nav className="flex justify-between items-center bg-[#141414] sticky top-0 z-[40] md:py-7 md:px-7 py-5 px-5">
+    <div className="pb-7 min-h-screen pt-[88px]">
+      <Header>
         <div className=" md:flex items-center gap-2 rounded-full w-max hidden">
           <h3 className="text-white/70">Projects</h3> <ChevronRight size={16} />
         </div>
@@ -66,7 +67,7 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
             className="md:flex hidden"
           />
         </div>
-      </nav>
+      </Header>
       <section className="mb-4 md:mb-6 md:px-7 px-5">
         <div className="bg-[#ffffff08] rounded-xl md:p-6 p-4 flex gap-3 items-center">
           <svg
