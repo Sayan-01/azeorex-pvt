@@ -58,7 +58,7 @@ const Card = ({ name, description, updatedAt, id, subDomainName, favicon }: Prop
         </div>
         <MoreButton projectId={id} />
       </div> */}
-      <div className="overflow-clip  p-2 pb-2.5">
+      <div className="overflow-clip pb-2.5">
         <Link
           href={`/saas/projects/${id}`}
           className="relative group"
