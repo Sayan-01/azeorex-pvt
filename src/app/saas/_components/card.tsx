@@ -23,7 +23,7 @@ const Card = ({ name, description, updatedAt, id, subDomainName, favicon }: Prop
   const time = timeAgo(updatedAt);
 
   return (
-    <div className="overflow-hidde rounded-2xl ">
+    <div className="overflow-hidde rounded-2xl group">
       {/* <Link href={`/saas/projects/${id}`}>
         <Image
           className="bg-[#191919] hover:border-blue-500/80 w-full object-cover duration-200 rounded-2xl border-2 aspect-[3/1.9]"
@@ -58,23 +58,23 @@ const Card = ({ name, description, updatedAt, id, subDomainName, favicon }: Prop
         </div>
         <MoreButton projectId={id} />
       </div> */}
-      <div className="overflow-clip bg-[#202124] rounded-[16px] p-2 pb-2.5">
+      <div className="overflow-clip  p-2 pb-2.5">
         <Link
-          href={`/editor/`}
+          href={`/saas/projects/${id}`}
           className="relative group"
         >
-          <div className="cursor-pointer w-full">
+          <div className="cursor-pointer w-full bg-[#202124] rounded-[18px] p-2 border-2 border-[#202124] group-hover:border-blue-500">
             <Image
-              className="bg-[#191919]  hover: w-full object-cover duration-200 rounded-2xl border-2 border-[#202124] aspect-[3/1.9]"
+              className="bg-[#191919]  hover: w-full object-cover duration-200 rounded-xl  aspect-[3/1.9]"
               width={600}
               height={600}
               src={"/funnel-page-placeholder.svg"}
               alt="image-placeholder"
             />
           </div>
-          <div className=" absolute w-full h-full top-0 left-0 text-blue-400 opacity-0  group-hover:opacity-100 transition-all duration-100 rounded-[15px] text-sm px-3 pr-1 py-1 bg-white/10 border-2 flex items-center justify-center gap-1">
+          <div className=" absolute w-full h-full top-0 left-0 text-blue-400 opacity-0  group-hover:opacity-80 transition-all duration-100 rounded-[15px] text-sm px-3 pr-1 py-1 bg-white/10  flex items-center justify-center gap-1">
             <div className="px-4 py-2 bg-white/90 flex items-center justify-center gap-2 rounded-full font-medium">
-              Edit the page
+              Edit the website
               <MoveRight
                 strokeWidth={1.7}
                 size={18}
