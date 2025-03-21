@@ -156,34 +156,34 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
                 <div className="flex items-start space-x-4">
                   {/* Avatar Placeholder */}
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-500 flex items-center justify-center text-white font-bold">
-                    {/* <Image
+                    <Image
                       src={comment.User.avatarUrl || "/"}
                       alt={comment.User.name || "abc"}
                       height={40}
                       width={40}
                       className="rounded-full"
-                    /> */}
+                    />
                   </div>
 
                   {/* Comment content */}
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 -mb-0.5">
-                      {/* <span className=" text-gray-300">@{comment.User.name || "unknown"}</span> */}
+                      <span className=" text-gray-300">@{comment.User.name || "unknown"}</span>
                       <p className="text-yellow-400">Rating: {comment.rating}🌟</p>
                     </div>
                     <span className="text-gray-500 text-[11px]">{new Date(comment.createdAt).toLocaleDateString()}</span>
                     <p className="mt-1.5 text-gray-300 whitespace-pre-line">{comment.comment}</p>
                   </div>
                 </div>
-                {/* {comment.User.id === userId ? ( */}
+                {comment.User.id === userId ? (
                 <MoreButton
                   reviewId={comment.id}
                   setComments={setComments}
                   setError={setError}
                 />
-                {/* ) : (
+                ) : (
                   <></>
-                )} */}
+                )} 
               </div>
             ))
           ) : (

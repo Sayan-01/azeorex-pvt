@@ -95,7 +95,6 @@ const RegisterForm = () => {
       }
     }
   };
-  console.log(code);
 
   return (
     <div className="z-20 sm:w-[310px] w-[300px] ">

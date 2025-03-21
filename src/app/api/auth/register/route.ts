@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import connectDb from "@/lib/dbConnect";
-// import { User } from "../../../../../Models/user";
-import verificationEmailSend from "@/lib/verificationEmailSend";
 import { db } from "@/lib/db";
 
 export const POST = async (req: Request) => {
