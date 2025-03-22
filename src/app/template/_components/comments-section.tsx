@@ -157,7 +157,7 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
                   {/* Avatar Placeholder */}
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-500 flex items-center justify-center text-white font-bold">
                     <Image
-                      src={comment.User.avatarUrl || "/"}
+                      src={comment.User.avatarUrl || "/user.png"}
                       alt={comment.User.name || "abc"}
                       height={40}
                       width={40}

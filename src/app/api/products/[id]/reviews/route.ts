@@ -41,8 +41,12 @@ export const POST = async (req: Request, res: Response) => {
       include: { User: { select: { name: true, avatarUrl: true, id: true } } },
       
     });
+    console.log(newReview);
+    
     return NextResponse.json(newReview, { status: 201 });
   } catch (error) {
+    console.log("sayan error", error);
+    
     return NextResponse.json({ error: "Error creating review" }, { status: 500 });
   }
 };
