@@ -68,7 +68,7 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
       if (!response.ok) throw new Error("Failed to submit review");
 
       const newReview = await response.json();
-      setComments([newReview,...comments]);
+      setComments([newReview, ...comments]);
       setNewComment("");
       setRating(5);
       router.refresh();
@@ -176,14 +176,14 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
                   </div>
                 </div>
                 {comment.User.id === userId ? (
-                <MoreButton
-                  reviewId={comment.id}
-                  setComments={setComments}
-                  setError={setError}
-                />
+                  <MoreButton
+                    reviewId={comment.id}
+                    setComments={setComments}
+                    setError={setError}
+                  />
                 ) : (
                   <></>
-                )} 
+                )}
               </div>
             ))
           ) : (
