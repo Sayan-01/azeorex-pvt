@@ -121,7 +121,7 @@ const LovableLandingPage: React.FC = () => {
         <div className="mb-8">
           {/* <HeartIcon /> */}
         </div>
-        <h1 className={`text-4xl md:text-6xl font-bold mb-6 ${popp.className}`}>Give review to improve our app</h1>
+        <h1 className={`text-4xl md:text-4xl font-bold mb-6 ${popp.className}`}>Give review to improve our app</h1>
         <p className="text-xl mb-8 text-gray-300 flex items-center gap-2">
           Azeorex is full stack no-code saas solution.{" "}
           <Link

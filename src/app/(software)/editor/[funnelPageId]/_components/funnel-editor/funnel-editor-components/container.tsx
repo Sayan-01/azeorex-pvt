@@ -110,7 +110,7 @@ const Container = ({ element }: Props) => {
               id: v4(),
               name: "Text",
               styles: {
-                color: "#ffffff",
+                color: "#cfcfcf",
                 ...defaultStyles,
               },
               type: "text",
@@ -185,7 +185,6 @@ const Container = ({ element }: Props) => {
               styles: {
                 ...defaultStyles,
                 maxWidth: "100%",
-                backgroundColor: "#d9d9d9",
                 opacity: 1,
                 borderRadius: "0px",
                 display: "flex",
@@ -433,7 +432,7 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
           rotate: "0",
-          background: styles.background || "#f8f8f8",
+          backgroundColor: styles.backgroundColor || '#f8f8f8',
         }}
         className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group", {
           // "px-4": type !== "__body",

@@ -86,6 +86,7 @@ export const defaultStyles: React.CSSProperties = {
   backgroundRepeat: "no-repeat",
   textAlign: "left",
   opacity: "100%",
+  
 };
 
 export const flexStyle: React.CSSProperties = {

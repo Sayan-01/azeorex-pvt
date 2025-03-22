@@ -126,7 +126,6 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
             >
               {loading ? (
                 <Loader loading={false}>
-                  {" "}
                   <LoaderIcon size={14} />
                 </Loader>
               ) : (
