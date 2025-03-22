@@ -320,6 +320,7 @@ body {
   background: linear-gradient(to left, #00031913, #000319);
   z-index: 2;
 }
+
 .logos::after {
   content: "";
   position: absolute;
