@@ -2,28 +2,17 @@
 import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import { ImageIcon, Trash } from "lucide-react";
 import React, { useEffect } from "react";
-import { EditorContentType } from "@/types/types";
 import Image from "next/image";
+import ImageUploadeButton from "@/components/media/upload-button-through-image";
 
 type Props = {
   element: EditorElement;
 };
 
 const ImageComponent = (props: Props) => {
-  const { dispatch, state, setActiveContainer } = useEditor();
+  const { dispatch, state, setActiveContainer, funnelId } = useEditor();
   const styles = props.element.styles;
-
-  const handleOnClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    dispatch({
-      type: "CHANGE_CLICKED_ELEMENT",
-      payload: {
-        elementDetails: props.element,
-      },
-    });
-  };
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === null) return;
@@ -36,8 +25,23 @@ const ImageComponent = (props: Props) => {
     if (target.id) {
       const targetId = target.id;
       setActiveContainer(targetId);
-      console.log(targetId);
     }
+  };
+
+  const handleOnClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch({
+      type: "CHANGE_CLICKED_ELEMENT",
+      payload: {
+        elementDetails: props.element,
+      },
+    });
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    const target = e.target as HTMLElement;
+    target.style.opacity = "1"; // Reset the opacity
+    setActiveContainer(null);
   };
 
   const handleDeleteElement = () => {
@@ -72,7 +76,8 @@ const ImageComponent = (props: Props) => {
     <div
       id={props.element.id}
       draggable
-      onDragStart={(e) => handleDragStart(e, "image")}
+      onDragStart={(e) => handleDragStart(e, "element")}
+      onDragEnd={handleDragEnd}
       onClick={handleOnClick}
       className={clsx("w-full h-max relative text-[16px] transition-all flex items-center justify-center z-[1004] inset-0", {})}
       style={{
@@ -108,7 +113,10 @@ const ImageComponent = (props: Props) => {
         })}
       ></div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute bg-main -top-[16px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">Image</Badge>
+        <>
+          <Badge className="absolute bg-main -top-[16px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">Image</Badge>
+          <ImageUploadeButton projectId={funnelId} />
+        </>
       )}
     </div>
   );

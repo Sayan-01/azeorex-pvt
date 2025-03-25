@@ -13,6 +13,8 @@ import SectionPlaceholder from "./section-placeholder";
 import { EditorElement, useEditor } from "../../../../../../../../../providers/editor/editor-provider";
 import { Button } from "@/components/ui/button";
 import ImagePlaceholder from "./image-placeholder";
+import SvgPlaceholder from "./svg-placeholder";
+import HeadingPlaceholder from "./heading-placeholder";
 
 const ComponentsTab = () => {
   const { state } = useEditor();
@@ -54,6 +56,7 @@ const ComponentsTab = () => {
       id: "image",
       group: "elements",
     },
+
     // {
     //   Component: <VideoPlaceholder />,
     //   label: "Video",
@@ -78,6 +81,19 @@ const ComponentsTab = () => {
       id: "link",
       group: "elements",
     },
+    {
+      Component: <HeadingPlaceholder />,
+      label: "Heading",
+      id: "heading",
+      group: "elements",
+    },
+    {
+      Component: <SvgPlaceholder />,
+      label: "SVG",
+      id: "svg",
+      group: "elements",
+    },
+    
   ];
 
   return (

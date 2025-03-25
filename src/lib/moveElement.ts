@@ -79,6 +79,7 @@ export function updateId(data: EditorElement) {
   if (Array.isArray(newData.content)) {
     newData.content = newData.content.map(updateId);
   }
+            console.log("sayan");
 
   return newData;
 }

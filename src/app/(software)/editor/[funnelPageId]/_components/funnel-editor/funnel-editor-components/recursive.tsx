@@ -8,6 +8,8 @@ import Checkout from "./checkout";
 import Section from "./section";
 import ImageComponent from "./image";
 import { EditorElement } from "../../../../../../../../providers/editor/editor-provider";
+import SVGComponent from "./svg";
+import HeadingComponent from "./heading";
 
 type Props = {
   element: EditorElement;
@@ -27,14 +29,16 @@ const Recursive = ({ element }: Props) => {
       return <ImageComponent element={element} />;
     case "contactForm":
       return <ContactFormComponent element={element} />;
-    // case "paymentForm":
-    //   return <Checkout element={element} />;
     case "2Col":
       return <Container element={element} />;
     case "__body":
       return <Container element={element} />;
     case "link":
       return <LinkComponent element={element} />;
+    // case "svg":
+    //   return <SVGComponent element={element} />;
+    case "heading":
+      return <HeadingComponent element={element} />;
     default:
       return null;
   }

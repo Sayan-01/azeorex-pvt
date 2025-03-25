@@ -26,7 +26,7 @@ import { useToast } from '@/hooks/use-toast'
 import FileUpload from '../global/FileUpload'
 
 type Props = {
-  agencyId: string
+  projectId: string
 }
 
 const formSchema = z.object({
@@ -34,8 +34,7 @@ const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
 })
 
-const UploadMediaForm = ({ agencyId }: Props) => {
-  console.log(agencyId);
+const UploadMediaForm = ({ projectId }: Props) => {
   
   const { toast } = useToast()
   const router = useRouter()
@@ -50,7 +49,7 @@ const UploadMediaForm = ({ agencyId }: Props) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await createMedia(agencyId, values)
+      const response = await createMedia(projectId, values)
 
       toast({ title: 'Succes', description: 'Uploaded media' })
       router.refresh()

@@ -20,7 +20,7 @@ type Props = {
 };
 
 const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
-  const { state } = useEditor();
+  const { state, dispatch } = useEditor();
 
   return (
     <>
@@ -37,7 +37,7 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
             showX={false}
             side="left"
             className={clsx(
-              "mt-[48.8px] mb-3 h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  select-none absolute left-3 top-3 rounded-2xl overflow-hidden",
+              "mt-[48.8px] h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  select-none",
               {
                 hidden: state.editor.previewMode,
               }
@@ -98,7 +98,7 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
                 <LayersTab />
               </TabsContent>
               <TabsContent value="Media">
-                <MediaBucketTab agencyId={projectId} />
+                <MediaBucketTab projectId={projectId} />
               </TabsContent>
               <TabsContent value="Layout">
                 <LayoutTab />
@@ -125,7 +125,7 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
             showX={false}
             side="right"
             className={clsx(
-              "mt-[48.8px] mb-3 h-[calc(100%)-170px] w-[240px] z-[40] shadow-none p-0  bg-background  transition-all border-none  select-none absolute right-3 top-3 rounded-2xl overflow-hidden ",
+              "mt-[48.8px] h-[calc(100%)-170px] w-[240px] z-[40] shadow-none p-0  bg-background  transition-all border-none  select-none ",
               {
                 hidden: state.editor.previewMode,
               }

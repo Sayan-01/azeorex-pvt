@@ -71,28 +71,13 @@ export const FunnelPageSchema = z.object({
   pathName: z.string().optional(),
 });
 
-export type EditorContentType = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col" | "element";
+export type EditorContentType = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col" | "element" | "svg" | "heading";
 
 export type Warframe = {
   id: string;
   warframe_name: string;
   warframe_image: string;
   warframe: string;
-};
-
-export const defaultStyles: React.CSSProperties = {
-  backgroundPosition: "center",
-  objectFit: "cover",
-  backgroundRepeat: "no-repeat",
-  textAlign: "left",
-  opacity: "100%",
-  
-};
-
-export const flexStyle: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
 };
 
 export type CreateMediaType = Prisma.MediaCreateWithoutAgencyInput;

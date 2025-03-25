@@ -8,8 +8,8 @@ type Props = {
   element: EditorElement;
 };
 
-const TextComponent = (props: Props) => {
-  const { dispatch, state, setActiveContainer } = useEditor();
+const HeadingComponent = (props: Props) => {
+  const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === null) return;
@@ -128,4 +128,4 @@ const TextComponent = (props: Props) => {
   );
 };
 
-export default TextComponent;
+export default HeadingComponent;

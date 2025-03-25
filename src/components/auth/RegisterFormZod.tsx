@@ -14,7 +14,7 @@ import Socials from "./Socials";
 import { Paytone_One } from "next/font/google";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { generateVerificationToken } from "@/utils/token";
-import { IsUserEmailExist, sendCode } from "@/lib/queries";
+import { IsUserEmailExist, sendCode, sendCodeThroughNodemailer } from "@/lib/queries";
 
 const pay = Paytone_One({ subsets: ["latin"], weight: "400" });
 
@@ -55,7 +55,7 @@ const RegisterForm = () => {
     setError("");
     const { otp, expires } = await generateVerificationToken();
     //send verification email
-    const emailRes = await sendCode(email, username, otp);
+    const emailRes = await sendCodeThroughNodemailer(email, username, otp);
     if (emailRes.status != 200) {
       setCode(false);
       return setError("Something was wrong via send email");

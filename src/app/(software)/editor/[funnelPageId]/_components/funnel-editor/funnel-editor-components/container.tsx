@@ -6,7 +6,8 @@ import React, { ReactEventHandler, ReactNode, useCallback, useEffect, useState }
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { moveObject, updateId } from "@/lib/moveElement";
-import { defaultStyles, EditorContentType } from "@/types/types";
+import { defaultStyles, headingStyle } from "@/types/default-styles";
+import { EditorContentType } from "@/types/types";
 
 type Props = { element: EditorElement };
 
@@ -18,7 +19,6 @@ const Container = ({ element }: Props) => {
     width: 100,
     height: 100,
   });
-
 
   const [position, setPosition] = useState({
     x: 0,
@@ -112,8 +112,27 @@ const Container = ({ element }: Props) => {
               styles: {
                 color: "#cfcfcf",
                 ...defaultStyles,
+                fontWeight: "400",
               },
               type: "text",
+            },
+          },
+        });
+        break;
+      case "heading":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: { innerText: "Element" },
+              id: v4(),
+              name: "Heading",
+              styles: {
+                color: "#cfcfcf",
+                ...headingStyle,
+              },
+              type: "heading",
             },
           },
         });
@@ -184,8 +203,7 @@ const Container = ({ element }: Props) => {
               name: "Container",
               styles: {
                 ...defaultStyles,
-                maxWidth: "100%",
-                opacity: 1,
+                maxWidth: "100%",     
                 borderRadius: "0px",
                 display: "flex",
                 justifyContent: "center",
@@ -193,21 +211,6 @@ const Container = ({ element }: Props) => {
                 paddingRight: "16px",
               },
               type: "container",
-            },
-          },
-        });
-        break;
-      case "section":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: v4(),
-              name: "Section",
-              styles: { ...defaultStyles },
-              type: "section",
             },
           },
         });
@@ -266,17 +269,15 @@ const Container = ({ element }: Props) => {
               ],
               id: v4(),
               name: "Two Columns",
-              styles: { ...defaultStyles, display: "flex" },
+              styles: { ...defaultStyles, display: "flex", justifyContent: "center", paddingLeft: "16px", paddingRight: "16px" },
               type: "2Col",
             },
           },
         });
-
       case "element":
+        
         if (activeContainer) {
           if (id !== activeContainer) {
-            console.log(componentType, "ddd");
-
             moveObject(state.editor.elements, activeContainer, id, state);
             setActiveContainer(null);
           }
@@ -413,7 +414,7 @@ const Container = ({ element }: Props) => {
       className={clsx("relative z-[1004] box !inset-0", {
         "h-fit   w-full": type === "container" || type === "2Col",
         "!relative w-full ": type === "__body",
-        "lg:scale-95 md:scale-90 -mt-1.5": type === "__body" && !state.editor.liveMode,
+        "mt-[14px]": type === "__body" && !state.editor.liveMode,
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "cursor-grab": state.editor.selectedElement.id === id && !state.editor.liveMode,
@@ -432,12 +433,12 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
           rotate: "0",
-          backgroundColor: styles.backgroundColor || (type === '__body' ? '#f8f8f8' : ''),
+          backgroundColor: styles.backgroundColor || (type === "__body" ? "#f8f8f8" : ""),
         }}
         className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group", {
           // "px-4": type !== "__body",
-          "pt-4 min-h-screen ": type === "__body",
-          "rounded-2xl ": type === "__body" && !state.editor.liveMode,
+          "pt-[2px] min-h-screen ": type === "__body",
+          "rounded-2xl pt-4": type === "__body" && !state.editor.liveMode,
           "empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
           "!px-9": Array.isArray(element.content) && !element.content.length && !element.styles.width,
           "!py-9": Array.isArray(element.content) && !element.content.length && !element.styles.height,

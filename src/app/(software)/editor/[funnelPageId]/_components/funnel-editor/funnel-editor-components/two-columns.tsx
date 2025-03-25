@@ -6,7 +6,9 @@ import RecursiveElement from "./recursive";
 import { v4 } from "uuid";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
-import { defaultStyles, EditorContentType } from "@/types/types";
+import { EditorContentType } from "@/types/types";
+import { defaultStyles } from "@/types/default-styles";
+
 
 type Props = {
   element: EditorElement;

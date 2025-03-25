@@ -8,8 +8,8 @@ type Props = {
   element: EditorElement;
 };
 
-const TextComponent = (props: Props) => {
-  const { dispatch, state, setActiveContainer } = useEditor();
+const SVGComponent = (props: Props) => {
+  const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === null) return;
@@ -94,7 +94,7 @@ const TextComponent = (props: Props) => {
         marginRight: styles?.marginRight,
       }}
     >
-      <p
+      <div
         style={styles}
         className={clsx("text-white border-none outline-none !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] !m-0 group", { abc: !state.editor.liveMode })}
         contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
@@ -114,7 +114,7 @@ const TextComponent = (props: Props) => {
         }}
       >
         {!Array.isArray(props.element.content) && props.element.content.innerText}
-      </p>
+      </div>
       <div
         className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
           hidden: state.editor.liveMode,
@@ -128,4 +128,4 @@ const TextComponent = (props: Props) => {
   );
 };
 
-export default TextComponent;
+export default SVGComponent;

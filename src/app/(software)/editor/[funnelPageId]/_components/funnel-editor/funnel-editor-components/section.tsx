@@ -6,8 +6,10 @@ import RecursiveElement from "./recursive";
 import { v4 } from "uuid";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
-import { defaultStyles, EditorContentType, flexStyle } from "@/types/types";
+import { EditorContentType } from "@/types/types";
 import { moveObject, updateId } from "@/lib/moveElement";
+import { defaultStyles, flexStyle } from "@/types/default-styles";
+
 
 type Props = {
   element: EditorElement;
@@ -35,6 +37,7 @@ const Section = (props: Props) => {
               styles: {
                 color: "#ffffff",
                 ...defaultStyles,
+                fontWeight: "400"
               },
               type: "text",
             },
@@ -50,27 +53,13 @@ const Section = (props: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...defaultStyles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
+              styles: { ...defaultStyles, maxWidth: "940px", opacity: 1, borderRadius: "0px", marginLeft: "auto", marginRight: "auto" },
               type: "container",
             },
           },
         });
         break;
-      case "section":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: v4(),
-              name: "Section",
-              styles: { ...defaultStyles, ...flexStyle },
-              type: "section",
-            },
-          },
-        });
-        break;
+      
       case "2Col":
         dispatch({
           type: "ADD_ELEMENT",
@@ -135,7 +124,6 @@ const Section = (props: Props) => {
         else {
           const oldData = JSON.parse(componentType) as EditorElement;
           const newData = updateId(oldData);
-          console.log(newData);
 
           dispatch({
             type: "ADD_ELEMENT",

@@ -9,7 +9,8 @@ import { db } from "./db";
 import { v4 } from "uuid";
 import { Agency, FunnelPage, Media, Prisma, Template, User } from "@prisma/client";
 import { EditorElement } from "../../providers/editor/editor-provider";
-import verificationEmailSend from "./verificationEmailSend";
+import verificationEmailSend, { sendOtpViaResend } from "./sendOtpViaResend";
+import { sendOtpViaNodeMailer } from "./sendOtpViaNodeMailer";
 
 //============================================================
 
@@ -675,11 +676,19 @@ export const getMedia = async (agencyId: string) => {
 //=============================================================================
 
 export const sendCode = async (email: string, username: string, otp: string) => {
-  const emailRes = await verificationEmailSend({ email, username, varifiedToken: otp });
+  const emailRes = await sendOtpViaResend({ email, username, varifiedToken: otp });
   if (emailRes) {
     return { success: true, message: "Email error is", status: 200 };
   } else return { success: false, message: "Email error is", status: 500 };
 };
+
+export const sendCodeThroughNodemailer = async (email: string, username: string, otp: string) => {
+  const emailRes = await sendOtpViaNodeMailer( email, username, otp );
+  if (emailRes) {
+    return { success: true, message: "Email error is", status: 200 };
+  } else return { success: false, message: "Email error is", status: 500 };
+};
+
 
 //===========================================================================
 

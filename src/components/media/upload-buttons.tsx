@@ -6,10 +6,10 @@ import CustomModal from '../global/CustomModal'
 import UploadMediaForm from '../forms/upload-media'
 
 type Props = {
-  agencyId: string
+  projectId: string
 }
 
-const MediaUploadButton = ({ agencyId }: Props) => {
+const MediaUploadButton = ({ projectId }: Props) => {
   const {  setOpen } = useModal()
 
   return (
@@ -22,7 +22,7 @@ const MediaUploadButton = ({ agencyId }: Props) => {
             title="Upload Media"
             subheading="Upload a file to your media bucket"
           >
-            <UploadMediaForm agencyId={agencyId}></UploadMediaForm>
+            <UploadMediaForm projectId={projectId}></UploadMediaForm>
           </CustomModal>
         );
       }}

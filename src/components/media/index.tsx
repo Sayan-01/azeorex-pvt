@@ -14,15 +14,15 @@ import { GetMediaFiles } from '@/types/types'
 
 type Props = {
   data: GetMediaFiles
-  agencyId: string
+  projectId: string
 }
 
-const MediaComponent = ({ data, agencyId }: Props) => {
+const MediaComponent = ({ data, projectId }: Props) => {
   return (
     <div className="flex flex-col gap-4 h-full w-full">
       <div className="">
         <h3 className="text-lg font-semibold mb-4">Media Bucket</h3>
-        <MediaUploadButton agencyId={agencyId} />
+        <MediaUploadButton projectId={projectId} />
       </div>
       <Command className="bg-transparent">
         <CommandInput placeholder="Search for file name..." className='h-8'/>

@@ -7,7 +7,7 @@ type Props = {
   varifiedToken: string;
 };
 
-export const verificationEmailSend = async ({ email, username, varifiedToken }: Props) => {
+export const sendOtpViaResend = async ({ email, username, varifiedToken }: Props) => {
   try {
     await resend.emails.send({
       // from: "devsayan@azeorex.com",
@@ -23,4 +23,4 @@ export const verificationEmailSend = async ({ email, username, varifiedToken }: 
   }
 };
 
-export default verificationEmailSend;
+export default sendOtpViaResend;

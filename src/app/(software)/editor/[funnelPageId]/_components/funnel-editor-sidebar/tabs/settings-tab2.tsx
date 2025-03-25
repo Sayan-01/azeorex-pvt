@@ -47,8 +47,7 @@ import FlexBoxComponent from "./flex-box-component";
 
 const SettingsTab = () => {
   const { state, dispatch } = useEditor();
-  //@ts-expect-error xyz
-  const handleOnChanges = (e) => {
+  const handleOnChanges = (e: any) => {
     const styleSettings = e.target.id;
     let value = e.target.value;
     const styleObject = {
@@ -70,6 +69,8 @@ const SettingsTab = () => {
   };
 
   const handleChangeCustomValues = (e: any) => {
+    console.log("ankan",e.target.id, e.target.value);
+    
     const settingProperty = e.target.id;
     let value = e.target.value;
     const styleObject = {
@@ -92,8 +93,8 @@ const SettingsTab = () => {
 
   if (state.editor.selectedElement.type === null) {
     return (
-      <div className="h-full flex items-center justify-center p-4">
-        <p className="text-center opacity-80">For sidebar access plese select item at first</p>
+      <div className="h-full flex items-center justify-center bg-editor-bcgc p-4">
+        <p className="text-center opacity-80 text-sm">For sidebar access plese select item at first</p>
       </div>
     );
   } else {
@@ -114,11 +115,11 @@ const SettingsTab = () => {
                 <div className="flex items-center pb-4">
                   <p className="text-muted-foreground text-xs w-20">Link Path</p>
                   <Input
-                  id="href"
-                  placeholder="https:domain.example.com/pathname"
-                  onChange={handleChangeCustomValues}
-                  value={state.editor.selectedElement.content.href}
-                />
+                    id="href"
+                    placeholder="https:domain.example.com/pathname"
+                    onChange={handleChangeCustomValues}
+                    value={state.editor.selectedElement.content.href}
+                  />
                 </div>
               </div>
             )}
@@ -148,26 +149,26 @@ const SettingsTab = () => {
           <AccordionTrigger className="!no-underline font-semibold">Dimensions</AccordionTrigger>
           <AccordionContent>
             {/* width nad height */}
-            <div className="flex gap-2 mb-2">
-              <div className="flex flex-col">
-                <Input
-                  placeholder="Auto"
-                  id="width"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.width || ""}
-                  children="W"
-                />
+              <div className="flex gap-2 mb-2">
+                <div className="flex flex-col">
+                  <Input
+                    placeholder="Auto"
+                    id="width"
+                    onChange={handleOnChanges}
+                    value={state.editor.selectedElement.styles.width || ""}
+                    children="W"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <Input
+                    id="height"
+                    placeholder="Auto"
+                    onChange={handleOnChanges}
+                    value={state.editor.selectedElement.styles.height || ""}
+                    children="H"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col">
-                <Input
-                  id="height"
-                  placeholder="Auto"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.height || ""}
-                  children="H"
-                />
-              </div>
-            </div>
             {/* max W and H */}
             <div className="flex gap-2 mb-2">
               <div className="flex flex-col">
@@ -377,7 +378,7 @@ const SettingsTab = () => {
         </AccordionItem>
         <AccordionItem
           value="Typography"
-          className={`px-3 py-0 ${state.editor.selectedElement.type === "text" ? "block" : "hidden"}`}
+          className={`px-3 py-0 ${state.editor.selectedElement.type === "text" || "heading" ? "block" : "hidden"}`}
         >
           <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-3 ">
@@ -428,6 +429,7 @@ const SettingsTab = () => {
             <div className="flex items-center ">
               <p className="text-muted-foreground text-xs w-20">Font 🌟</p>
               <Input
+                className="w-[136px]"
                 placeholder="Default"
                 id="DM Sans"
                 onChange={handleOnChanges}
@@ -463,41 +465,33 @@ const SettingsTab = () => {
             </div>
             {/* 4th weight and size */}
             <div className="w-full flex items-center">
-              <p className=" text-muted-foreground text-xs w-20">Weight</p>
+              <p className="text-muted-foreground text-xs w-20">Weight</p>
               <Select
-                onValueChange={(e) =>
+                onValueChange={(e) => {
                   handleOnChanges({
                     target: {
-                      id: "font-weight",
+                      id: "fontWeight",
                       value: e,
                     },
-                  })
-                }
+                  });
+                }}
+                value={state.editor.selectedElement.styles.fontWeight?.toString() || ""}
               >
-                <SelectTrigger className=" flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
-                  <SelectValue placeholder="Normal" />
+                <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
+                  <SelectValue placeholder={state.editor.selectedElement.styles.fontWeight || "Select a weight"} />
                 </SelectTrigger>
                 <SelectContent className="text-xs">
                   <SelectGroup className="text-xs">
                     <SelectLabel className="text-xs">Font Weights</SelectLabel>
-                    <SelectItem
-                      className="text-xs"
-                      value="bold"
-                    >
-                      Bold
-                    </SelectItem>
-                    <SelectItem
-                      className="text-xs"
-                      value="normal"
-                    >
-                      Regular
-                    </SelectItem>
-                    <SelectItem
-                      className="text-xs"
-                      value="lighter"
-                    >
-                      Light
-                    </SelectItem>
+                    {[900, 800, 700, 600, 500, 400, 300, 200, 100].map((weight) => (
+                      <SelectItem
+                        key={weight}
+                        className="text-xs"
+                        value={weight.toString()}
+                      >
+                        {weight}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -505,16 +499,18 @@ const SettingsTab = () => {
             <div className="w-full flex items-center">
               <p className=" text-muted-foreground text-xs w-20">Size</p>
               <Input
+                className="w-[136px]"
                 placeholder="px"
                 id="fontSize"
                 onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.fontSize}
+                value={state.editor.selectedElement.styles.fontSize || ""}
               />
             </div>
             {/* line height and letter spaccing */}
             <div className="flex items-start">
               <p className="text-muted-foreground text-xs w-20">Height</p>
               <Input
+                className="w-[136px]"
                 id="lineHeight"
                 placeholder="auto"
                 onChange={handleOnChanges}
@@ -522,8 +518,9 @@ const SettingsTab = () => {
               />
             </div>
             <div className="flex items-start">
-              <p className="text-muted-foreground text-xs w-20">Specing</p>
+              <p className="text-muted-foreground text-xs w-20">Spaecing</p>
               <Input
+                className="w-[136px]"
                 placeholder="auto"
                 id="letterSpacing"
                 onChange={handleOnChanges}
@@ -811,7 +808,7 @@ const SettingsTab = () => {
             <div className="w-full flex items-center">
               <p className=" text-muted-foreground text-xs w-20">Blur</p>
               <Input
-              className="flex-1"
+                className="flex-1"
                 placeholder="px"
                 id="filter"
                 onChange={handleOnChanges}
@@ -830,7 +827,7 @@ const SettingsTab = () => {
                 />
                 <Input
                   placeholder="url()"
-                  className="mt-0 !rounded-l-[0px] hover:border-l-none group-hover:border-[#6a6a6a]"
+                  className="mt-0 flex-1 !rounded-l-[0px] hover:border-l-none group-hover:border-[#6a6a6a]"
                   id="backgroundImage"
                   onChange={handleOnChanges}
                   value={state.editor.selectedElement.styles.backgroundImage || ""}
@@ -878,7 +875,7 @@ const SettingsTab = () => {
         </AccordionItem>
         <AccordionItem
           value="Flexbox"
-          className="px-3 py-0 border-none"
+          className="px-3 py-0"
         >
           <AccordionTrigger className="!no-underline font-semibold">Auto Layout</AccordionTrigger>
           <AccordionContent>
@@ -1049,6 +1046,7 @@ const SettingsTab = () => {
               <div className="w-full flex items-center">
                 <p className=" text-muted-foreground text-xs w-20">Gap</p>
                 <Input
+                  className="w-[136px]"
                   placeholder="0"
                   id="gap"
                   onChange={handleOnChanges}
@@ -1171,9 +1169,114 @@ const SettingsTab = () => {
                 </Tabs>
               </div> */}
             </div>
-            <div className="h-20"></div>
           </AccordionContent>
         </AccordionItem>
+        {/* border & shadow */}
+        <AccordionItem
+          value="Border"
+          className="px-3 py-0 border-none"
+        >
+          <AccordionTrigger className="!no-underline font-semibold">Border</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-3">
+            {/* Border Width Controls for Each Side */}
+            <div className="w-full relative">
+              <div className="w-full opacity-60">
+                <Position /> {/* Reuse the same visual representation as padding/margin */}
+              </div>
+              {/* Top Border */}
+              <input
+                className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
+                id="borderTopWidth"
+                placeholder="0px"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.borderTopWidth || ""}
+              />
+              {/* Bottom Border */}
+              <input
+                className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
+                placeholder="0px"
+                id="borderBottomWidth"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.borderBottomWidth || ""}
+              />
+              {/* Left Border */}
+              <input
+                className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
+                placeholder="0px"
+                id="borderLeftWidth"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.borderLeftWidth || ""}
+              />
+              {/* Right Border */}
+              <input
+                className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
+                placeholder="0px"
+                id="borderRightWidth"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.borderRightWidth || ""}
+              />
+            </div>
+
+            {/* Border Style */}
+            <div className="flex items-center">
+              <p className="text-muted-foreground text-xs w-20">Border Style</p>
+              <Select
+                onValueChange={(e) =>
+                  handleOnChanges({
+                    target: {
+                      id: "borderStyle",
+                      value: e,
+                    },
+                  })
+                }
+                value={state.editor.selectedElement.styles.borderStyle || "solid"}
+              >
+                <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
+                  <SelectValue placeholder="Select border style" />
+                </SelectTrigger>
+                <SelectContent className="text-xs">
+                  <SelectGroup className="text-xs">
+                    <SelectLabel className="text-xs">Border Styles</SelectLabel>
+                    {["solid", "dashed", "dotted", "double", "none"].map((style) => (
+                      <SelectItem
+                        key={style}
+                        className="text-xs"
+                        value={style}
+                      >
+                        {style}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Border Color */}
+            <div className="flex items-center">
+              <p className="text-muted-foreground text-xs w-20">Border Color</p>
+              <div className="flex flex-1 h-[30px] rounded-md border-2 group hover:border-[#6A6A6A] pr-0.5 bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50">
+                <div className="overflow-hidden h-full rounded-l-[5px] w-[39px] mr-2">
+                  <input
+                    className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
+                    type="color"
+                    id="borderColor"
+                    placeholder="transparent"
+                    onChange={handleOnChanges}
+                    value={state.editor.selectedElement.styles.borderColor || ""}
+                  />
+                </div>
+                <input
+                  className="h-[30px] w-20 border-y-2 group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  id="borderColor"
+                  placeholder="transparent"
+                  onChange={handleOnChanges}
+                  value={state.editor.selectedElement.styles.borderColor || ""}
+                />
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+        <div className="h-10"></div>
       </Accordion>
     );
   }
