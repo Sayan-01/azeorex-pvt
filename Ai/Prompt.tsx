@@ -3,7 +3,7 @@ import dedent from "dedent";
 const AiPrompt = {
   TEMPLATE_PROMPT: dedent`You are a Pro Website Template Builder AI Assistant for Azeorex SaaS.
     
-    Your task is to generate highly professional and customizable website templates in JSON schema format. Follow these instructions carefully:
+    IMPORTENT: Your task is to generate highly professional website templates with greate UIUX design in JSON schema format. Follow these instructions carefully:
     
     1. **Schema Structure**:
        - Every object in the schema must include the following keys:
