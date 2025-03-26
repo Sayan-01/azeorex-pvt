@@ -149,26 +149,26 @@ const SettingsTab = () => {
           <AccordionTrigger className="!no-underline font-semibold">Dimensions</AccordionTrigger>
           <AccordionContent>
             {/* width nad height */}
-              <div className="flex gap-2 mb-2">
-                <div className="flex flex-col">
-                  <Input
-                    placeholder="Auto"
-                    id="width"
-                    onChange={handleOnChanges}
-                    value={state.editor.selectedElement.styles.width || ""}
-                    children="W"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <Input
-                    id="height"
-                    placeholder="Auto"
-                    onChange={handleOnChanges}
-                    value={state.editor.selectedElement.styles.height || ""}
-                    children="H"
-                  />
-                </div>
+            <div className="flex gap-2 mb-2">
+              <div className="flex flex-col">
+                <Input
+                  placeholder="Auto"
+                  id="width"
+                  onChange={handleOnChanges}
+                  value={state.editor.selectedElement.styles.width || ""}
+                  children="W"
+                />
               </div>
+              <div className="flex flex-col">
+                <Input
+                  id="height"
+                  placeholder="Auto"
+                  onChange={handleOnChanges}
+                  value={state.editor.selectedElement.styles.height || ""}
+                  children="H"
+                />
+              </div>
+            </div>
             {/* max W and H */}
             <div className="flex gap-2 mb-2">
               <div className="flex flex-col">
@@ -376,208 +376,213 @@ const SettingsTab = () => {
           </div> */}
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem
-          value="Typography"
-          className={`px-3 py-0 ${state.editor.selectedElement.type === "text" || "heading" ? "block" : "hidden"}`}
-        >
-          <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-3 ">
-            {/* 1st Txt align */}
-            <div className="flex items-center">
-              <p className="text-muted-foreground text-xs w-20">Align</p>
-              <Tabs
-                className="flex-1"
-                onValueChange={(e) =>
-                  handleOnChanges({
-                    target: {
-                      id: "textAlign",
-                      value: e,
-                    },
-                  })
-                }
-                value={state.editor.selectedElement.styles.textAlign || "left"}
-              >
-                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
-                  <TabsTrigger
-                    value="left"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                  >
-                    <AlignLeft size={15} />
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="right"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                  >
-                    <AlignRight size={15} />
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="center"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                  >
-                    <AlignCenter size={15} />
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="justify"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
-                  >
-                    <AlignJustify size={15} />
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </div>
-            {/* 2nd font family */}
-            <div className="flex items-center ">
-              <p className="text-muted-foreground text-xs w-20">Font 🌟</p>
-              <Input
-                className="w-[136px]"
-                placeholder="Default"
-                id="DM Sans"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.fontFamily}
-              />
-            </div>
-            {/* 3rd color */}
-            <div className="flex items-center">
-              <p className="text-muted-foreground text-xs w-20">Color</p>
-              <div
-                className={
-                  "flex flex-1 h-[30px] rounded-md border-2 group hover:border-[#6A6A6A] pr-0.5 bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none    disabled:cursor-not-allowed disabled:opacity-50 "
-                }
-              >
-                <div className=" overflow-hidden h-full rounded-l-[5px] w-[39px] mr-2">
+        {state.editor.selectedElement.type === "text" || state.editor.selectedElement.type === "heading" ? (
+          <AccordionItem
+            value="Typography"
+            className={`px-3 py-0 `}
+          >
+            <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-3 ">
+              {/* 1st Txt align */}
+              <div className="flex items-center">
+                <p className="text-muted-foreground text-xs w-20">Align</p>
+                <Tabs
+                  className="flex-1"
+                  onValueChange={(e) =>
+                    handleOnChanges({
+                      target: {
+                        id: "textAlign",
+                        value: e,
+                      },
+                    })
+                  }
+                  value={state.editor.selectedElement.styles.textAlign || "left"}
+                >
+                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
+                    <TabsTrigger
+                      value="left"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                    >
+                      <AlignLeft size={15} />
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="right"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                    >
+                      <AlignRight size={15} />
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="center"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                    >
+                      <AlignCenter size={15} />
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="justify"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
+                    >
+                      <AlignJustify size={15} />
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
+              {/* 2nd font family */}
+              <div className="flex items-center ">
+                <p className="text-muted-foreground text-xs w-20">Font 🌟</p>
+                <Input
+                  className="w-[136px]"
+                  placeholder="Default"
+                  id="DM Sans"
+                  onChange={handleOnChanges}
+                  value={state.editor.selectedElement.styles.fontFamily}
+                />
+              </div>
+              {/* 3rd color */}
+              <div className="flex items-center">
+                <p className="text-muted-foreground text-xs w-20">Color</p>
+                <div
+                  className={
+                    "flex flex-1 h-[30px] rounded-md border-2 group hover:border-[#6A6A6A] pr-0.5 bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none    disabled:cursor-not-allowed disabled:opacity-50 "
+                  }
+                >
+                  <div className=" overflow-hidden h-full rounded-l-[5px] w-[39px] mr-2">
+                    <input
+                      className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
+                      type="color"
+                      id="color"
+                      placeholder="transparent"
+                      onChange={handleOnChanges}
+                      value={state.editor.selectedElement.styles.color || ""}
+                    />
+                  </div>
                   <input
-                    className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
-                    type="color"
+                    className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
                     id="color"
                     placeholder="transparent"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.color || ""}
                   />
                 </div>
-                <input
-                  className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
-                  id="color"
-                  placeholder="transparent"
+              </div>
+              {/* 4th weight and size */}
+              <div className="w-full flex items-center">
+                <p className="text-muted-foreground text-xs w-20">Weight</p>
+                <Select
+                  onValueChange={(e) => {
+                    handleOnChanges({
+                      target: {
+                        id: "fontWeight",
+                        value: e,
+                      },
+                    });
+                  }}
+                  value={state.editor.selectedElement.styles.fontWeight?.toString() || ""}
+                >
+                  <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
+                    <SelectValue placeholder={state.editor.selectedElement.styles.fontWeight || "Select a weight"} />
+                  </SelectTrigger>
+                  <SelectContent className="text-xs">
+                    <SelectGroup className="text-xs">
+                      <SelectLabel className="text-xs">Font Weights</SelectLabel>
+                      {[900, 800, 700, 600, 500, 400, 300, 200, 100].map((weight) => (
+                        <SelectItem
+                          key={weight}
+                          className="text-xs"
+                          value={weight.toString()}
+                        >
+                          {weight}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="w-full flex items-center">
+                <p className=" text-muted-foreground text-xs w-20">Size</p>
+                <Input
+                  className="w-[136px]"
+                  placeholder="px"
+                  id="fontSize"
                   onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.color || ""}
+                  value={state.editor.selectedElement.styles.fontSize || ""}
                 />
               </div>
-            </div>
-            {/* 4th weight and size */}
-            <div className="w-full flex items-center">
-              <p className="text-muted-foreground text-xs w-20">Weight</p>
-              <Select
-                onValueChange={(e) => {
-                  handleOnChanges({
-                    target: {
-                      id: "fontWeight",
-                      value: e,
-                    },
-                  });
-                }}
-                value={state.editor.selectedElement.styles.fontWeight?.toString() || ""}
-              >
-                <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
-                  <SelectValue placeholder={state.editor.selectedElement.styles.fontWeight || "Select a weight"} />
-                </SelectTrigger>
-                <SelectContent className="text-xs">
-                  <SelectGroup className="text-xs">
-                    <SelectLabel className="text-xs">Font Weights</SelectLabel>
-                    {[900, 800, 700, 600, 500, 400, 300, 200, 100].map((weight) => (
-                      <SelectItem
-                        key={weight}
-                        className="text-xs"
-                        value={weight.toString()}
-                      >
-                        {weight}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="w-full flex items-center">
-              <p className=" text-muted-foreground text-xs w-20">Size</p>
-              <Input
-                className="w-[136px]"
-                placeholder="px"
-                id="fontSize"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.fontSize || ""}
-              />
-            </div>
-            {/* line height and letter spaccing */}
-            <div className="flex items-start">
-              <p className="text-muted-foreground text-xs w-20">Height</p>
-              <Input
-                className="w-[136px]"
-                id="lineHeight"
-                placeholder="auto"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.lineHeight || ""}
-              />
-            </div>
-            <div className="flex items-start">
-              <p className="text-muted-foreground text-xs w-20">Spaecing</p>
-              <Input
-                className="w-[136px]"
-                placeholder="auto"
-                id="letterSpacing"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.letterSpacing || ""}
-              />
-            </div>
-            <div className="flex items-center">
-              <p className="text-muted-foreground text-xs w-20">Decoration</p>
+              {/* line height and letter spaccing */}
+              <div className="flex items-start">
+                <p className="text-muted-foreground text-xs w-20">Height</p>
+                <Input
+                  className="w-[136px]"
+                  id="lineHeight"
+                  placeholder="auto"
+                  onChange={handleOnChanges}
+                  value={state.editor.selectedElement.styles.lineHeight || ""}
+                />
+              </div>
+              <div className="flex items-start">
+                <p className="text-muted-foreground text-xs w-20">Spaecing</p>
+                <Input
+                  className="w-[136px]"
+                  placeholder="auto"
+                  id="letterSpacing"
+                  onChange={handleOnChanges}
+                  value={state.editor.selectedElement.styles.letterSpacing || ""}
+                />
+              </div>
+              <div className="flex items-center">
+                <p className="text-muted-foreground text-xs w-20">Decoration</p>
 
-              <Tabs
-                className="flex-1"
-                onValueChange={(e) =>
-                  handleOnChanges({
-                    target: {
-                      id: "textDecoration",
-                      value: e,
-                    },
-                  })
-                }
-                value={String(state.editor.selectedElement.styles.textDecoration || "none")}
-              >
-                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
-                  <TabsTrigger
-                    value="none"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                  >
-                    <CircleOff size={13} />
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="underline"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                  >
-                    <Underline size={15} />
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="italic"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                  >
-                    🌟
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="overline"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                  >
-                    <AlignCenter size={15} />
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="line-through"
-                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
-                  >
-                    <AlignJustify size={15} />
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+                <Tabs
+                  className="flex-1"
+                  onValueChange={(e) =>
+                    handleOnChanges({
+                      target: {
+                        id: "textDecoration",
+                        value: e,
+                      },
+                    })
+                  }
+                  value={String(state.editor.selectedElement.styles.textDecoration || "none")}
+                >
+                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
+                    <TabsTrigger
+                      value="none"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                    >
+                      <CircleOff size={13} />
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="underline"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                    >
+                      <Underline size={15} />
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="italic"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                    >
+                      🌟
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="overline"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                    >
+                      <AlignCenter size={15} />
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="line-through"
+                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
+                    >
+                      <AlignJustify size={15} />
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ) : (
+          <></>
+        )}
+
         {/* ///////////////////////////////////////////////////////////////// */}
         <AccordionItem
           value="Spacing"

@@ -10,7 +10,6 @@ import { EditorContentType } from "@/types/types";
 import { moveObject, updateId } from "@/lib/moveElement";
 import { defaultStyles, flexStyle } from "@/types/default-styles";
 
-
 type Props = {
   element: EditorElement;
 };
@@ -37,7 +36,7 @@ const Section = (props: Props) => {
               styles: {
                 color: "#ffffff",
                 ...defaultStyles,
-                fontWeight: "400"
+                fontWeight: "400",
               },
               type: "text",
             },
@@ -53,13 +52,13 @@ const Section = (props: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...defaultStyles, maxWidth: "940px", opacity: 1, borderRadius: "0px", marginLeft: "auto", marginRight: "auto" },
+              styles: { ...defaultStyles, maxWidth: "1000px", width: "1000px", height: "80px", opacity: 1, borderRadius: "0px", marginLeft: "auto", marginRight: "auto" },
               type: "container",
             },
           },
         });
         break;
-      
+
       case "2Col":
         dispatch({
           type: "ADD_ELEMENT",
