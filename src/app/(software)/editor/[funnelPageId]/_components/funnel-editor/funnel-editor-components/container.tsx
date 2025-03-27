@@ -12,11 +12,19 @@ import { EditorContentType } from "@/types/types";
 // Define the types for dragging state
 interface DragState {
   active: boolean;
-  type: "right" | "left" | "top" | "bottom" | "corner" | null;
+  type: "right" | "left" | "top" | "bottom" | "corner" | "padding-top" | "padding-right" | "padding-bottom" | "padding-left" | "margin-top" | "margin-right" | "margin-bottom" | "margin-left" | null;
   startX: number;
   startY: number;
   startWidth: number;
   startHeight: number;
+  startPaddingTop: number;
+  startPaddingRight: number;
+  startPaddingBottom: number;
+  startPaddingLeft: number;
+  startMarginTop: number;
+  startMarginRight: number;
+  startMarginBottom: number;
+  startMarginLeft: number;
 }
 
 type Props = { element: EditorElement };
@@ -29,12 +37,21 @@ const Container = ({ element }: Props) => {
   const initialHeight = "80px";
   const minWidth = 50;
   const minHeight = 50;
+  const minPadding = 0;
 
   const selectedElement = state.editor.selectedElement;
 
   // Get current dimensions from state or use defaults
   const currentWidth = (element?.styles?.width as string) || initialWidth;
   const currentHeight = (element?.styles?.height as string) || initialHeight;
+  const currentPaddingTop = parseInt((element?.styles?.paddingTop as string)?.replace("px", "") || "0", 10);
+  const currentPaddingRight = parseInt((element?.styles?.paddingRight as string)?.replace("px", "") || "0", 10);
+  const currentPaddingBottom = parseInt((element?.styles?.paddingBottom as string)?.replace("px", "") || "0", 10);
+  const currentPaddingLeft = parseInt((element?.styles?.paddingLeft as string)?.replace("px", "") || "0", 10);
+  const currentMarginTop = parseInt((element?.styles?.marginTop as string)?.replace("px", "") || "0", 10);
+  const currentMarginRight = parseInt((element?.styles?.marginRight as string)?.replace("px", "") || "0", 10);
+  const currentMarginBottom = parseInt((element?.styles?.marginBottom as string)?.replace("px", "") || "0", 10);
+  const currentMarginLeft = parseInt((element?.styles?.marginLeft as string)?.replace("px", "") || "0", 10);
 
   // Create refs for the div and tracking drag state
   const divRef = useRef<HTMLDivElement>(null);
@@ -45,6 +62,14 @@ const Container = ({ element }: Props) => {
     startY: 0,
     startWidth: 0,
     startHeight: 0,
+    startPaddingTop: 0,
+    startPaddingRight: 0,
+    startPaddingBottom: 0,
+    startPaddingLeft: 0,
+    startMarginTop: currentMarginTop,
+    startMarginRight: currentMarginRight,
+    startMarginBottom: currentMarginBottom,
+    startMarginLeft: currentMarginLeft,
   });
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
@@ -185,6 +210,10 @@ const Container = ({ element }: Props) => {
                 alignItems: "start",
                 paddingLeft: "16px",
                 paddingRight: "16px",
+                marginTop: "0px",
+                marginBottom: "0px",
+                marginLeft: "0px",
+                marginRight: "0px",
               },
               type: "container",
             },
@@ -369,7 +398,10 @@ const Container = ({ element }: Props) => {
   }, [handleDeleteElement, id, state.editor.selectedElement.id, type]);
 
   // Handle mouse down on resize handles
-  const handleMouseDown = (e: React.MouseEvent, type: "right" |"left" | "top" | "bottom" | "corner" ) => {
+  const handleMouseDown = (
+    e: React.MouseEvent,
+    type: "right" | "left" | "top" | "bottom" | "corner" | "padding-top" | "padding-right" | "padding-bottom" | "padding-left" | "margin-top" | "margin-right" | "margin-bottom" | "margin-left" | null
+  ) => {
     if (element.type === "__body") return;
 
     e.preventDefault();
@@ -388,6 +420,14 @@ const Container = ({ element }: Props) => {
       startY: e.clientY,
       startWidth: currentWidthValue,
       startHeight: currentHeightValue,
+      startPaddingTop: currentPaddingTop,
+      startPaddingRight: currentPaddingRight,
+      startPaddingBottom: currentPaddingBottom,
+      startPaddingLeft: currentPaddingLeft,
+      startMarginTop: currentMarginTop,
+      startMarginRight: currentMarginRight,
+      startMarginBottom: currentMarginBottom,
+      startMarginLeft: currentMarginLeft,
     });
   };
 
@@ -396,29 +436,63 @@ const Container = ({ element }: Props) => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!dragState.active || !divRef.current) return;
 
-      let newWidth = dragState.startWidth;
-      let newHeight = dragState.startHeight;
+      let newStyles = { ...element.styles };
 
-      // Calculate new dimensions based on mouse movement
       if (dragState.type === "right" || dragState.type === "corner") {
-        newWidth = Math.max(minWidth, dragState.startWidth + (e.clientX - dragState.startX));
+        newStyles.width = `${Math.max(minWidth, dragState.startWidth + (e.clientX - dragState.startX))}px`;
       }
 
       if (dragState.type === "bottom" || dragState.type === "corner") {
-        newHeight = Math.max(minHeight, dragState.startHeight + (e.clientY - dragState.startY));
+        newStyles.height = `${Math.max(minHeight, dragState.startHeight + (e.clientY - dragState.startY))}px`;
       }
 
-      // Dispatch the updated values
+      if (dragState.type === "padding-top") {
+        const newPadding = Math.max(minPadding, dragState.startPaddingTop + (e.clientY - dragState.startY));
+        newStyles.paddingTop = `${newPadding}px`;
+      }
+
+      if (dragState.type === "padding-right") {
+        const newPadding = Math.max(minPadding, dragState.startPaddingRight - (e.clientX - dragState.startX));
+        newStyles.paddingRight = `${newPadding}px`;
+      }
+
+      if (dragState.type === "padding-bottom") {
+        const newPadding = Math.max(minPadding, dragState.startPaddingBottom - (e.clientY - dragState.startY));
+        newStyles.paddingBottom = `${newPadding}px`;
+      }
+
+      if (dragState.type === "padding-left") {
+        const newPadding = Math.max(minPadding, dragState.startPaddingLeft + (e.clientX - dragState.startX));
+        newStyles.paddingLeft = `${newPadding}px`;
+      }
+
+      // In handleMouseMove:
+      if (dragState.type === "margin-top") {
+        const newMargin = Math.max(minPadding, dragState.startMarginTop + (e.clientY - dragState.startY));
+        newStyles.marginTop = `${newMargin}px`;
+      }
+
+      if (dragState.type === "margin-right") {
+        const newMargin = Math.max(minPadding, dragState.startMarginRight - (e.clientX - dragState.startX));
+        newStyles.marginRight = `${newMargin}px`;
+      }
+
+      if (dragState.type === "margin-bottom") {
+        const newMargin = Math.max(minPadding, dragState.startMarginBottom - (e.clientY - dragState.startY));
+        newStyles.marginBottom = `${newMargin}px`;
+      }
+
+      if (dragState.type === "margin-left") {
+        const newMargin = Math.max(minPadding, dragState.startMarginLeft + (e.clientX - dragState.startX));
+        newStyles.marginLeft = `${newMargin}px`;
+      }
+
       dispatch({
         type: "UPDATE_ELEMENT",
         payload: {
           elementDetails: {
             ...element,
-            styles: {
-              ...element.styles,
-              width: `${newWidth}px`,
-              height: `${newHeight}px`,
-            },
+            styles: newStyles,
           },
         },
       });
@@ -428,18 +502,16 @@ const Container = ({ element }: Props) => {
       setDragState((prev) => ({ ...prev, active: false }));
     };
 
-    // Add event listeners if dragging is active
     if (dragState.active) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
     }
 
-    // Clean up event listeners
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [dragState, dispatch, minHeight, minWidth, selectedElement]);
+  }, [dragState, dispatch, element]);
 
   return (
     <div
@@ -454,20 +526,20 @@ const Container = ({ element }: Props) => {
         left: styles?.left || 0,
         right: styles?.right || 0,
         zIndex: styles?.zIndex || 0,
-        marginTop: styles?.marginTop,
-        marginBottom: styles?.marginBottom,
-        marginLeft: styles?.marginLeft,
-        marginRight: styles?.marginRight,
+        marginTop: styles?.marginTop || "0px",
+        marginBottom: styles?.marginBottom || "0px",
+        marginLeft: styles?.marginLeft || "0px",
+        marginRight: styles?.marginRight || "0px",
         maxWidth: styles?.maxWidth,
         maxHeight: styles?.maxHeight,
         rotate: styles.rotate,
       }}
-      className={clsx("relative z-[1004] box !inset-0", {
+      className={clsx(" relative z-[1004] box !inset-0", {
         "h-fit ": type === "container" || type === "2Col",
         "!relative !w-full !min-h-screen": type === "__body",
         "mt-[14px]": type === "__body" && !state.editor.liveMode,
         "flex flex-col md:!flex-row": type === "2Col",
-        "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+        "shadow-inner-border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "cursor-grab": state.editor.selectedElement.id === id && !state.editor.liveMode,
         // "hover:outline hover:outline-[1px] hover:outline-offset-[-1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
       })}
@@ -511,28 +583,97 @@ const Container = ({ element }: Props) => {
         })}
       ></div>
       {/* Resize Handles */}
-      {state.editor.selectedElement.id === element.id && (
+      {state.editor.selectedElement.id === element.id && element.type !== "__body" && (
         <>
+          {/* Existing dimension handles */}
           <div
             className="absolute z-[1006] right-0 top-0 bottom-0 w-2 cursor-ew-resize bg-transparent hover:bg-blue-500/20"
             onMouseDown={(e) => handleMouseDown(e, "right")}
           />
           <div
-            className="absolute z-[1006] bottom-0 left-0 right-0 h-2 cursor-ns-resize bg-transparent hover:bg-blue-500/20"
+            className="absolute z-[1007] bottom-0 left-0 right-0 h-2 cursor-ns-resize bg-transparent hover:bg-blue-500/20"
             onMouseDown={(e) => handleMouseDown(e, "bottom")}
           />
           <div
-            className="absolute z-[1006] bottom-0 top-0 left-0 w-2 cursor-ew-resize bg-transparent hover:bg-blue-500/20"
-            onMouseDown={(e) => handleMouseDown(e, "left")}
-          />
-          <div
-            className="absolute z-[1006] right-0 top-0 left-0 h-2 cursor-ns-resize bg-transparent hover:bg-blue-500/20"
-            onMouseDown={(e) => handleMouseDown(e, "top")}
-          />
-          <div
-            className="absolute z-[1006] bottom-0 right-0 w-4 h-4 cursor-nwse-resize bg-transparent hover:bg-blue-500/20"
+            className="absolute z-[1007] bottom-0 right-0 w-4 h-4 cursor-nwse-resize bg-transparent hover:bg-blue-500/20"
             onMouseDown={(e) => handleMouseDown(e, "corner")}
           />
+
+          {/* Padding handles */}
+          <div
+            style={{ height: element.styles.paddingTop }}
+            className={`absolute z-[1006] top-0 left-0 right-0 flex items-end justify-center bg-green-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "padding-top")}
+              className="w-6 hover:w-10 duration-200 h-2 bg-purple-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-purple-600 -mb-2"
+            />
+          </div>
+          <div
+            style={{ width: element.styles.paddingRight }}
+            className={`absolute z-[1006] top-0 right-0 bottom-0 flex items-center justify-start bg-green-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "padding-right")}
+              className="h-6 w-2 hover:h-10 duration-200 bg-purple-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-purple-600 -ml-2"
+            />
+          </div>
+          <div
+            style={{ height: element.styles.paddingBottom }}
+            className={`absolute z-[1006] bottom-0 left-0 right-0 flex items-start  justify-center bg-green-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "padding-bottom")}
+              className="w-6 hover:w-10 duration-200 h-2 bg-purple-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-purple-600 -mt-2"
+            />
+          </div>
+          <div
+            style={{ width: element.styles.paddingLeft }}
+            className={`absolute z-[1006] top-0 left-0 bottom-0 flex items-center justify-end bg-green-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "padding-left")}
+              className="h-6 w-2 hover:h-10 duration-200 bg-purple-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-purple-600 -mr-2"
+            />
+          </div>
+
+          {/* Margin handles */}
+          <div
+            style={{ height: element.styles.marginTop, top: `-${element.styles.marginTop}` }}
+            className={`absolute z-[1006]  left-0 right-0 flex items-end justify-center bg-orange-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "margin-top")}
+              className="w-6 hover:w-10 duration-200 h-2 bg-orange-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-orange-600 mb-0"
+            />
+          </div>
+          <div
+            style={{ width: element.styles.marginRight, right: `-${element.styles.marginRight}` }}
+            className={`absolute z-[1006] top-0 bottom-0 flex items-center justify-end bg-orange-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "margin-right")}
+              className="h-6 hover:h-10 duration-200 w-2 bg-orange-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-orange-600 -mr-2"
+            />
+          </div>
+          <div
+            style={{ height: element.styles.marginBottom, bottom: `-${element.styles.marginBottom}` }}
+            className={`absolute z-[1006]  left-0 right-0 flex items-start justify-center bg-orange-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "margin-bottom")}
+              className="w-6 hover:w-10 duration-200 h-2 bg-orange-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-orange-600 mt-0"
+            />
+          </div>
+          <div
+            style={{ width: element.styles.marginLeft, left: `-${element.styles.marginLeft}` }}
+            className={`absolute z-[1006] top-0  bottom-0 flex items-center justify-start bg-orange-500/20`}
+          >
+            <div
+              onMouseDown={(e) => handleMouseDown(e, "margin-left")}
+              className="h-6 hover:h-10 duration-200 w-2 bg-orange-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-orange-600 -ml-2"
+            />
+          </div>
 
           {/* Visual indicator when resizing */}
           {dragState.active && <div className="absolute z-[1006] inset-0 border-2 border-blue-500 rounded pointer-events-none" />}
