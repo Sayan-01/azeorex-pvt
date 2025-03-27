@@ -33,7 +33,7 @@ const Container = ({ element }: Props) => {
   const { id, content, styles, type } = element;
   const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
-  const initialWidth = "1000px";
+  const initialWidth = "100%";
   const initialHeight = "80px";
   const minWidth = 50;
   const minHeight = 50;
@@ -201,7 +201,7 @@ const Container = ({ element }: Props) => {
               name: "Container",
               styles: {
                 ...defaultStyles,
-                width: "1000px",
+                width: "100%",
                 height: "80px",
                 maxWidth: "100%",
                 borderRadius: "0px",
@@ -592,15 +592,15 @@ const Container = ({ element }: Props) => {
         <>
           {/* Existing dimension handles */}
           <div
-            className="absolute z-[1006] right-0 top-0 bottom-0 w-2 cursor-ew-resize bg-transparent hover:bg-blue-500/20"
+            className={`absolute z-[1006] right-0 top-0 bottom-0 w-2 cursor-ew-resize bg-transparent hover:bg-blue-500/20 ${element.styles.width?.toString().includes("px") ? "" : "hidden"}`}
             onMouseDown={(e) => handleMouseDown(e, "right")}
           />
           <div
-            className="absolute z-[1007] bottom-0 left-0 right-0 h-2 cursor-ns-resize bg-transparent hover:bg-blue-500/20"
+            className={`absolute z-[1006] bottom-0 left-0 right-0 h-2 cursor-ns-resize bg-transparent hover:bg-blue-500/20 ${element.styles.height?.toString().includes("px") ? "" : "hidden"}`}
             onMouseDown={(e) => handleMouseDown(e, "bottom")}
           />
           <div
-            className="absolute z-[1007] bottom-0 right-0 w-4 h-4 cursor-nwse-resize bg-transparent hover:bg-blue-500/20"
+            className={`absolute z-[1006] bottom-0 right-0 w-4 h-4 cursor-nwse-resize bg-transparent hover:bg-blue-500/20`}
             onMouseDown={(e) => handleMouseDown(e, "corner")}
           />
 
@@ -611,7 +611,7 @@ const Container = ({ element }: Props) => {
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "padding-top")}
-              className="w-6 hover:w-10 duration-200 h-2 bg-purple-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-purple-600 -mb-2"
+              className="w-6 hover:w-10 duration-200 h-2 bg-green-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-purple-600 -mb-[9px]"
             />
           </div>
           <div
@@ -620,7 +620,7 @@ const Container = ({ element }: Props) => {
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "padding-right")}
-              className="h-6 w-2 hover:h-10 duration-200 bg-purple-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-purple-600 -ml-2"
+              className="h-6 w-2 hover:h-10 duration-200 bg-green-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-purple-600 -ml-[9px]"
             />
           </div>
           <div
@@ -629,7 +629,7 @@ const Container = ({ element }: Props) => {
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "padding-bottom")}
-              className="w-6 hover:w-10 duration-200 h-2 bg-purple-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-purple-600 -mt-2"
+              className="w-6 hover:w-10 duration-200 h-2 bg-green-500 border-white border-2 rounded-full cursor-ns-resize hover:bg-purple-600 -mt-[9px]"
             />
           </div>
           <div
@@ -638,7 +638,7 @@ const Container = ({ element }: Props) => {
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "padding-left")}
-              className="h-6 w-2 hover:h-10 duration-200 bg-purple-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-purple-600 -mr-2"
+              className="h-6 w-2 hover:h-10 duration-200 bg-green-500 border-white border-2 rounded-full cursor-ew-resize hover:bg-purple-600 -mr-[9px]"
             />
           </div>
 
@@ -654,7 +654,7 @@ const Container = ({ element }: Props) => {
           </div>
           <div
             style={{ width: element.styles.marginRight, right: `-${element.styles.marginRight}` }}
-            className={`absolute z-[1006] top-0 bottom-0 flex items-center justify-end bg-orange-500/20 ${element.styles.marginRight?.toString().includes("px") ? "" : "hidden"}`}
+            className={`absolute z-[1006] top-0 bottom-0 flex items-center justify-start bg-orange-500/20 ${element.styles.marginRight?.toString().includes("px") ? "" : "hidden"}`}
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "margin-right")}
@@ -672,7 +672,7 @@ const Container = ({ element }: Props) => {
           </div>
           <div
             style={{ width: element.styles.marginLeft, left: `-${element.styles.marginLeft}` }}
-            className={`absolute z-[1006] top-0  bottom-0 flex items-center justify-start bg-orange-500/20 ${element.styles.marginLeft?.toString().includes("px") ? "" : "hidden"}`}
+            className={`absolute z-[1006] top-0  bottom-0 flex items-center justify-end bg-orange-500/20 ${element.styles.marginLeft?.toString().includes("px") ? "" : "hidden"}`}
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "margin-left")}
@@ -681,7 +681,7 @@ const Container = ({ element }: Props) => {
           </div>
 
           {/* Visual indicator when resizing */}
-          {dragState.active && <div className="absolute z-[1006] inset-0 border-2 border-blue-500 rounded pointer-events-none" />}
+          {dragState.active && <div className="absolute z-[1006] inset-0 border-1 border-blue-500 rounded pointer-events-none" />}
         </>
       )}
 
