@@ -409,6 +409,9 @@ const Container = ({ element }: Props) => {
 
     if (!divRef.current) return;
 
+    const isValueInPx = currentMarginLeft.toString().includes("px") || currentMarginRight.toString().includes("px") || currentMarginTop.toString().includes("px") || currentMarginBottom.toString().includes("px");
+
+    
     // Get current dimensions without 'px' for calculations
     const currentWidthValue = parseInt(currentWidth.replace("px", ""), 10);
     const currentHeightValue = parseInt(currentHeight.replace("px", ""), 10);
@@ -555,10 +558,12 @@ const Container = ({ element }: Props) => {
       <div
         style={{
           ...styles,
+          width: styles?.width || currentWidth,
+          height: styles?.height || currentHeight,
           rotate: "0",
           backgroundColor: styles.backgroundColor || (type === "__body" ? "#f8f8f8" : ""),
         }}
-        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group", {
+        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group ", {
           // "px-4": type !== "__body",
           "pt-4 !min-h-screen ": type === "__body",
           "rounded-2xl pt-4": type === "__body" && !state.editor.liveMode,
@@ -640,7 +645,7 @@ const Container = ({ element }: Props) => {
           {/* Margin handles */}
           <div
             style={{ height: element.styles.marginTop, top: `-${element.styles.marginTop}` }}
-            className={`absolute z-[1006]  left-0 right-0 flex items-end justify-center bg-orange-500/20`}
+            className={`absolute z-[1006]  left-0 right-0 flex items-end justify-center bg-orange-500/20 ${element.styles.marginTop?.toString().includes("px") ? "" : "hidden"}`}
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "margin-top")}
@@ -649,7 +654,7 @@ const Container = ({ element }: Props) => {
           </div>
           <div
             style={{ width: element.styles.marginRight, right: `-${element.styles.marginRight}` }}
-            className={`absolute z-[1006] top-0 bottom-0 flex items-center justify-end bg-orange-500/20`}
+            className={`absolute z-[1006] top-0 bottom-0 flex items-center justify-end bg-orange-500/20 ${element.styles.marginRight?.toString().includes("px") ? "" : "hidden"}`}
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "margin-right")}
@@ -658,7 +663,7 @@ const Container = ({ element }: Props) => {
           </div>
           <div
             style={{ height: element.styles.marginBottom, bottom: `-${element.styles.marginBottom}` }}
-            className={`absolute z-[1006]  left-0 right-0 flex items-start justify-center bg-orange-500/20`}
+            className={`absolute z-[1006]  left-0 right-0 flex items-start justify-center bg-orange-500/20 ${element.styles.marginBottom?.toString().includes("px") ? "" : "hidden"}`}
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "margin-bottom")}
@@ -667,7 +672,7 @@ const Container = ({ element }: Props) => {
           </div>
           <div
             style={{ width: element.styles.marginLeft, left: `-${element.styles.marginLeft}` }}
-            className={`absolute z-[1006] top-0  bottom-0 flex items-center justify-start bg-orange-500/20`}
+            className={`absolute z-[1006] top-0  bottom-0 flex items-center justify-start bg-orange-500/20 ${element.styles.marginLeft?.toString().includes("px") ? "" : "hidden"}`}
           >
             <div
               onMouseDown={(e) => handleMouseDown(e, "margin-left")}
