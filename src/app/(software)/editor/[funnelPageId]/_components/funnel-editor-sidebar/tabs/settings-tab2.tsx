@@ -44,6 +44,7 @@ import Position from "@/icons/position";
 import { Angle } from "@/icons/angle";
 import { Input } from "@/components/ui/custom-input";
 import FlexBoxComponent from "./flex-box-component";
+import ColorPicker from "./ColorPicker";
 
 const SettingsTab = () => {
   const { state, dispatch } = useEditor();
@@ -69,8 +70,6 @@ const SettingsTab = () => {
   };
 
   const handleChangeCustomValues = (e: any) => {
-    console.log("ankan",e.target.id, e.target.value);
-    
     const settingProperty = e.target.id;
     let value = e.target.value;
     const styleObject = {
@@ -780,35 +779,7 @@ const SettingsTab = () => {
                 />
               </div>
             </div>
-            {/* opacity */}
-            {/* <div className="w-full">
-            <p className="text-muted-foreground text-xs">Opacity</p>
-            <div className="flex items-center justify-end mb-[7px]">
-              <small className="pb-[14px] pt-[6px] -mt-[22px] text-xs">
-                {typeof state.editor.selectedElement.styles?.opacity === "number"
-                  ? state.editor.selectedElement.styles?.opacity
-                  : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 100}
-                %
-              </small>
-            </div>
-            <Slider
-              onValueChange={(e) => {
-                handleOnChanges({
-                  target: {
-                    id: "opacity",
-                    value: `${e[0]}%`,
-                  },
-                });
-              }}
-              value={[
-                typeof state.editor.selectedElement.styles?.opacity === "number"
-                  ? state.editor.selectedElement.styles?.opacity
-                  : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 100,
-              ]}
-              max={100}
-              step={1}
-            />
-          </div> */}
+
             {/* 2rd blur*/}
             <div className="w-full flex items-center">
               <p className=" text-muted-foreground text-xs w-20">Blur</p>

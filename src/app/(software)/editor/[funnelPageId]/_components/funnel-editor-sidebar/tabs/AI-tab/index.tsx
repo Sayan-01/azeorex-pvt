@@ -5,7 +5,7 @@ import { Ai } from "@/icons/ai";
 import { Warframe } from "@/types/types";
 import { Sparkles } from "lucide-react";
 import React, { useState } from "react";
-import AiPrompt from "../../../../../../../../../Ai/Prompt"; 
+import AiPrompt from "../../../../../../../../../Ai/Prompt";
 
 const AiTab = () => {
   const [userInput, setUserInput] = useState("Generate the Website template for ");
@@ -45,8 +45,8 @@ const AiTab = () => {
   return (
     <div className=" p-4">
       <div className="border-b border-main-black pb-3">
-        <h3 className="text-lg font-semibold mb-3">Template Generator</h3>
-        <p className="text-sm text-muted-foreground mb-1">You can write prompt for generate template threough AI</p>
+        <h3 className="text-lg font-semibold mb-3">Component Generator</h3>
+        <p className="text-sm text-muted-foreground mb-1">You can write prompt for generate template conponents threough AI</p>
       </div>
       <div className="my-4">
         <Textarea
@@ -72,19 +72,18 @@ const AiTab = () => {
       </div>
       <div>
         {result ? (
-          
-            <div
-              onDragStart={(e) => {
-                //json string pathabo
-                e.dataTransfer.setData("componentType", JSON.stringify(JSON.parse(result)[0]));
-                console.log(JSON.parse(result)[0]);
-              }}
-              draggable
-              className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
-            >
-              <p>Ai generated template</p>
-              <div className="absolute top-2 right-2 opacity-60 flex gap-1"></div>
-            </div>
+          <div
+            onDragStart={(e) => {
+              //json string pathabo
+              e.dataTransfer.setData("componentType", result);
+              console.log("ankan",result);
+            }}
+            draggable
+            className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
+          >
+            <p>Ai generated template</p>
+            <div className="absolute top-2 right-2 opacity-60 flex gap-1"></div>
+          </div>
         ) : (
           <></>
         )}
