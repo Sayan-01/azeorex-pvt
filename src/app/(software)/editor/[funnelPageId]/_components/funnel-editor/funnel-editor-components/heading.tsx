@@ -72,59 +72,40 @@ const HeadingComponent = (props: Props) => {
 
   //WE ARE NOT ADDING DRAG DROP
   return (
-    <div
+    <p
       id={props.element.id}
-      draggable
-      className={clsx("w-max h-max relative text-[14px] transition-all z-[1004] inset-0")}
-      onClick={handleOnClickBody}
-      onDragStart={(e) => handleDragStart(e, "element")}
-      onDragEnd={handleDragEnd}
       style={{
-        width: styles?.width,
-        height: styles?.height,
+        ...styles,
         position: styles?.position || "relative",
         top: styles?.top || 0,
         bottom: styles?.bottom || 0,
         left: styles?.left || 0,
         right: styles?.right || 0,
         zIndex: styles?.zIndex || 0,
-        marginTop: styles?.marginTop,
-        marginBottom: styles?.marginBottom,
-        marginLeft: styles?.marginLeft,
-        marginRight: styles?.marginRight,
       }}
-    >
-      <p
-        style={styles}
-        className={clsx("text-white border-none outline-none !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] !m-0 group", { abc: !state.editor.liveMode })}
-        contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
-        onBlur={(e) => {
-          const spanElement = e.target as HTMLSpanElement;
-          dispatch({
-            type: "UPDATE_ELEMENT",
-            payload: {
-              elementDetails: {
-                ...props.element,
-                content: {
-                  innerText: spanElement.innerText,
-                },
+      className={clsx("w-max h-max transition-all box-1 z-[1004] group", { abc: !state.editor.liveMode })}
+      contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
+      onBlur={(e) => {
+        const spanElement = e.target as HTMLSpanElement;
+        dispatch({
+          type: "UPDATE_ELEMENT",
+          payload: {
+            elementDetails: {
+              ...props.element,
+              content: {
+                innerText: spanElement.innerText,
               },
             },
-          });
-        }}
-      >
-        {!Array.isArray(props.element.content) && props.element.content.innerText}
-      </p>
-      <div
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
-          hidden: state.editor.liveMode,
-          "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id,
-        })}
-      ></div>
-      {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute bg-main -top-[16px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">T</Badge>
-      )}
-    </div>
+          },
+        });
+      }}
+      draggable
+      onClick={handleOnClickBody}
+      onDragStart={(e) => handleDragStart(e, "element")}
+      onDragEnd={handleDragEnd}
+    >
+      {!Array.isArray(props.element.content) && props.element.content.innerText}
+    </p>
   );
 };
 
