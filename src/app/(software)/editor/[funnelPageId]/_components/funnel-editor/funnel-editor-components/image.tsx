@@ -105,19 +105,6 @@ const ImageComponent = (props: Props) => {
           className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group", { abc: !state.editor.liveMode })}
         />
       )}
-
-      <div
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
-          hidden: state.editor.liveMode,
-          "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id,
-        })}
-      ></div>
-      {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <>
-          <Badge className="absolute bg-main -top-[16px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">Image</Badge>
-          <ImageUploadeButton projectId={funnelId} />
-        </>
-      )}
     </div>
   );
 };

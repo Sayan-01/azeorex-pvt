@@ -9,6 +9,7 @@ import Recursive from "./funnel-editor-components/recursive";
 import { Loader } from "@/components/global/Loader";
 import { cn } from "@/lib/utils";
 import { useDrop } from "react-dnd";
+import SelectionOverlay from "@/components/editor/SelectionOverlay";
 
 type Props = { funnelPageId: string; liveMode?: boolean };
 // interface DropZoneProps {
@@ -103,7 +104,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
         <Button
           variant={"ghost"}
           size={"icon"}
-          className="w-6 h-6 bg-slate-600 p-[2px] fixed top-0 left-0 z-[100]"
+          className="w-6 h-6 bg-slate-600 p-[2px] relative z-[1004] top-0 left-0"
           onClick={handleUnpreview}
         >
           <EyeOff />
@@ -116,6 +117,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
             element={childElement}
           />
         ))}
+      {state.editor.previewMode === true || state.editor.liveMode === true ? <></> : <SelectionOverlay element={state.editor.selectedElement} />}
     </div>
   );
 };

@@ -52,8 +52,17 @@ const Section = (props: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...defaultStyles, maxWidth: "980px", width: "100%", height: "80px", opacity: 1, borderRadius: "0px", marginLeft: "auto", marginRight: "auto", marginTop: "0px",
-                marginBottom: "0px", 
+              styles: {
+                ...defaultStyles,
+                maxWidth: "980px",
+                width: "100%",
+                height: "80px",
+                opacity: 1,
+                borderRadius: "0px",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "0px",
+                marginBottom: "0px",
               },
               type: "container",
             },
@@ -228,27 +237,20 @@ const Section = (props: Props) => {
 
   return (
     <section
+      id={id}
       style={{
-        width: styles?.width,
-        height: styles?.height,
+        ...props.element.styles,
         position: styles?.position || "relative",
         top: styles?.top || 0,
         bottom: styles?.bottom || 0,
         left: styles?.left || 0,
         right: styles?.right || 0,
         zIndex: styles?.zIndex || 0,
-        marginTop: styles?.marginTop,
-        marginBottom: styles?.marginBottom,
-        marginLeft: styles?.marginLeft,
-        marginRight: styles?.marginRight,
-        rotate: styles.rotate,
       }}
-      className={clsx("relative transition-all z-[1004] group box inset-0", {
-        "h-fit": type === "section",
-        "h-full": type === "__body",
-        "m-4": type === "container",
+      className={clsx("px-4 relative box-1 z-[1004] box group", {
+        "!p-9 empty-outline ": Array.isArray(content) && !content.length && !state.editor.liveMode && type !== "__body",
+        abc: !state.editor.liveMode && type !== "__body",
       })}
-      id={id}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDrop={(e) => handleOnDrop(e, id)}
@@ -258,31 +260,13 @@ const Section = (props: Props) => {
       onDragStart={(e) => handleDragStart(e, "element")}
       onDragEnd={handleDragEnd}
     >
-      <div
-        id={id}
-        style={{ ...props.element.styles, rotate: "0" }}
-        className={clsx("px-4 !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] !h-full !w-full !m-0", {
-          "!p-9 empty-outline ": Array.isArray(content) && !content.length && !state.editor.liveMode && type !== "__body",
-          abc: !state.editor.liveMode && type !== "__body",
-        })}
-      >
-        {Array.isArray(content) &&
-          content.map((childElement) => (
-            <RecursiveElement
-              key={childElement.id}
-              element={childElement}
-            />
-          ))}
-      </div>
-      <div
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0", {
-          hidden: state.editor.liveMode,
-          "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id,
-        })}
-      ></div>
-      {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute bg-main  z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md">{state.editor.selectedElement.name}</Badge>
-      )}
+      {Array.isArray(content) &&
+        content.map((childElement) => (
+          <RecursiveElement
+            key={childElement.id}
+            element={childElement}
+          />
+        ))}
     </section>
   );
 };

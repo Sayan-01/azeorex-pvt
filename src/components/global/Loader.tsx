@@ -28,7 +28,7 @@ export const Loader = ({ loading, children, className }: Prop) => {
             fill="currentFill"
           />
         </svg> */}
-        <LoaderIcon className="animate-spin" strokeWidth={1.1}/>
+        <LoaderIcon className="animate-spin" strokeWidth={1.1} size={18}/>
         <span className="animate-pulse">Loading...</span>
       </div>
     </div>
