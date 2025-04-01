@@ -11,7 +11,8 @@ import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
 import LayoutTab from "./tabs/Layout";
 import AiTab from "./tabs/AI-tab";
-import SettingsTab from "./tabs/settings-tab2";
+import SettingsTab from "./tabs/settings-tab";
+import CMS from "./tabs/CMS";
 
 
 type Props = {
@@ -43,7 +44,7 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
               }
             )}
           >
-            <div className="grid gap-4 h-full w-[240px]  overflow-auto overflow-x-hidden box bg-editor-bcgc border-main-black">
+            <div className="grid gap-4 h-full w-[240px]  overflow-autobox bg-editor-bcgc border-main-black">
               <TabsContent
                 value="Components"
                 className="p-4"
@@ -104,7 +105,7 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
                 <LayoutTab />
               </TabsContent>
               <TabsContent value="CMS">
-                <LayoutTab />
+                <CMS />
               </TabsContent>
               <TabsContent value="AiPoward">
                 <AiTab />
@@ -125,7 +126,7 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
             showX={false}
             side="right"
             className={clsx(
-              "mt-[48.8px] h-[calc(100%)-170px] w-[240px] z-[40] shadow-none p-0  bg-background  transition-all border-none  select-none ",
+              "mt-[48.8px] h-[calc(100%)-170px] w-[240px] z-[30] shadow-none p-0  bg-background  transition-all border-none  select-none ",
               {
                 hidden: state.editor.previewMode,
               }

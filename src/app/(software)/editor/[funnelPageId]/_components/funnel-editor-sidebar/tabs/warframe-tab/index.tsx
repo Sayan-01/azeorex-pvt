@@ -61,7 +61,7 @@ const WarframeTab = () => {
 
   return (
     <div className="">
-      <div className="px-2 pt-2">
+      <div className="pt-2">
         {components.map((item: Warframe) => {
           return (
             <div

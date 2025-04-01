@@ -62,7 +62,7 @@ module.exports = withUt({
           az: "#363636"
         },
         editor: {
-          bcgc: "#111111"
+          bcgc: "#111110"
         },
         bcgc: {
   				'100': '#04071d',
