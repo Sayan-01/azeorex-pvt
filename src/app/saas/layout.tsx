@@ -1,6 +1,5 @@
 import React from "react";
 import Sidebar from "./_components/sidebar";
-import Header from "./_components/info-header";
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="w-full flex  bg-[#141414] ">

@@ -1,15 +1,12 @@
-import BlurPage from "@/components/global/blur-page";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getFunnel, getProject } from "@/lib/queries";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import FunnelSteps from "../_components/funnel-stapes";
-import { auth } from "../../../../../auth";
-import { ChevronRight, CircleDot, Code2, ExternalLink, Globe, LeafIcon, Loader2, Mail, MoreHorizontal, MoveDown, MoveLeft, RefreshCw } from "lucide-react";
-import FunnelPageCreateBtn from "../_components/funnel-page-create-btn";
 import { Button } from "@/components/ui/button";
-import { FunnelPageTable } from "../_components/funnel-page-table";
+import { getProject } from "@/lib/queries";
 import { timeAgo } from "@/lib/utils";
+import { CircleDot, Globe, Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
+import { auth } from "../../../../../auth";
+import FunnelPageCreateBtn from "../_components/funnel-page-create-btn";
+import { FunnelPageTable } from "../_components/funnel-page-table";
+import Link from "next/link";
 
 type Props = { params: { projectId: string } };
 const FunnelPage = async ({ params }: Props) => {
@@ -67,8 +64,11 @@ const FunnelPage = async ({ params }: Props) => {
                 <h1 className="text-2xl font-bold sm:text-left text-center">{project.subDomainName}.azeorex.com</h1>
               </div>
               <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
-                <Button
-                  className="flex items-center gap-1 h-8 text-xs">Edit</Button>
+                <Link href={`/saas/projects/${funnelId}/cms/`} className="flex items-center gap-1 h-8 text-xs">
+                
+                <Button className="flex items-center gap-1 h-8 text-xs">CMS</Button>
+                </Link>
+                <Button className="flex items-center gap-1 h-8 text-xs">Edit</Button>
                 <FunnelPageCreateBtn
                   userId={agencyId}
                   projectId={funnelId}

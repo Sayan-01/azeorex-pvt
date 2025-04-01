@@ -155,6 +155,7 @@ type saasSideBarOptions = {
   name: String;
   link: String;
   icon: JSX.Element;
+  subMenus?: { id: number; link: string; name: string }[];
 };
 
 export const SAAS_SIDEBAR_OPTIONS: saasSideBarOptions[] = [

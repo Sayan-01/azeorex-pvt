@@ -4,14 +4,14 @@ import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { GROUPLE_CONSTANT } from "@/constants";
 // import { SAAS_SIDEBAR } from "@/constants/menus";
-import { Bolt, ChevronsUpDown, HeartHandshake, Menu, Package, Star } from "lucide-react";
+import clsx from "clsx";
+import { HeartHandshake, Package, Star } from "lucide-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { useModal } from "../../../../../providers/model-provider";
-import clsx from "clsx";
 
 type Props = {
   defaultOption?: boolean;
@@ -38,7 +38,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
         <div className="h-[1px] bg-white/40 w-4 mb-[5px]" />
         <div className="h-[1px] bg-white/40 w-4" />
       </SheetTrigger>
-      
+
       <SheetContent
         showX={!defaultOption}
         side="left"
@@ -81,20 +81,22 @@ const SidebarComp = ({ defaultOption }: Props) => {
           </Popover>
           {GROUPLE_CONSTANT?.saasSideBarOptions?.map((sidebarOptions, idx) => {
             return (
-              <div
-                key={idx}
-                className={`w-full mb-1 hover:bg-zinc-900 group px-3 h-9 rounded-lg ${pathname.toString() === sidebarOptions.link ? "bg-[#1E1F22] hover:bg-[#1E1F22]" : ""}`}
-              >
-                <Link
-                  href={sidebarOptions.link as Url}
-                  className="flex items-center gap-2  h-full rounded-md transition-all md:w-full "
+              <>
+                <div
+                  key={idx}
+                  className={`w-full mb-1 hover:bg-zinc-900 group px-3 h-9 rounded-lg ${pathname.toString() === sidebarOptions.link ? "bg-[#1E1F22] hover:bg-[#1E1F22]" : ""}`}
                 >
-                  <div className="flex items-center gap-2  duration-300 text-sm text-zinc-400/80">
-                    {sidebarOptions.icon}
-                    {sidebarOptions.name}
-                  </div>
-                </Link>
-              </div>
+                  <Link
+                    href={sidebarOptions.link as Url}
+                    className="flex items-center gap-2  h-full rounded-md transition-all md:w-full "
+                  >
+                    <div className="flex items-center gap-2  duration-300 text-sm text-zinc-400/80">
+                      {sidebarOptions.icon}
+                      {sidebarOptions.name}
+                    </div>
+                  </Link>
+                </div>
+              </>
             );
           })}
         </div>

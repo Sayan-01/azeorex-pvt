@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
-import { ChevronDown, DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
+import { ChevronDown, ChevronLeft, DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -102,34 +102,15 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
     <TooltipProvider>
       <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="px-1.5 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max">
-              {/* <Image
-                src={"/az.svg"}
-                alt="logo"
-                width={24}
-                height={24}
-              /> */}
-              <ChevronDown
-                size={20}
-                strokeWidth={1.1}
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="ml-4">
-              <DropdownMenuGroup>
-                <DropdownMenuItem className="flex gap-4 ">
-                  <Link href={`/saas/projects/${projectId}`}>Azeorex</Link>
-                  <div className="flex  w-full ">
-                    <Input
-                      defaultValue={funnelPageDetails.name}
-                      className="h-7 -ml-2 mt-0 text-base bg-transparent opacity-60"
-                      onBlur={handleOnBlurTitleChange}
-                    />
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Link
+            href={`/saas/projects/${projectId}`}
+            className="px-1.5 pl-1 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max"
+          >
+            <ChevronLeft
+              size={20}
+              strokeWidth={1.1}
+            />
+          </Link>
         </aside>
         <aside>
           <Tabs
@@ -240,26 +221,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
               />
               Publish
             </div>
-            {/* <span className="text-muted-foreground text-sm">Last updated {funnelPageDetails.updatedAt.toLocaleDateString()}</span> */}
           </div>
-          {/* {pathName === "/demo" ? (
-            <button
-              className="text-sm border-l-2 border-main-black pl-3"
-              onClick={() => {
-                toast({
-                  description: "😫 It is just a demo",
-                });
-              }}
-            >
-              {load ? (
-                <>
-                  <Loader loading={load} />
-                </>
-              ) : (
-                <DownloadIcon size={16} />
-              )}
-            </button>
-          ) : ( */}
           <button
             className="text-sm border-l-2 border-main-black pl-3"
             onClick={handleOnSave}
