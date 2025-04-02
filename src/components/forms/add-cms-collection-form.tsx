@@ -35,8 +35,10 @@ const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, 
   });
 
   const onSubmit = async (values: z.infer<typeof CMSCollectionSchema>) => {
+    console.log(values.name);
+    
     const name = values.name
-    if (name)
+    if (!name)
       return form.setError("name", {
         message: "Please enter CMS collection name.",
       });
