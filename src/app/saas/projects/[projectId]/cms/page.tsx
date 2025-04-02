@@ -13,7 +13,8 @@ interface CMSItem {
   icon: React.ReactNode;
 }
 
-const CMS = async ({ params }: { params: { projectId: string } }) => {
+const CMS = async ({ params, searchParams }: { params: { projectId: string }, searchParams:{ node? : string} }) => {
+  const cmsId = searchParams.node
 
   //TODO: Fetch CMS items from the server using query params
 
@@ -101,6 +102,7 @@ const CMS = async ({ params }: { params: { projectId: string } }) => {
                   </TableRow>
                 ))}
               </TableBody> */}
+              {cmsId }
             </Table>
           </div>
         </main>
