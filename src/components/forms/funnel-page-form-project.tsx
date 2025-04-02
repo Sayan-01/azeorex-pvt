@@ -189,26 +189,6 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                   {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save Page"}
                 </Button>
               )}
-
-              {/* {defaultData?.id && (
-                <Button
-                  variant={"outline"}
-                  className="w-22 rounded-full self-end border-destructive hover:bg-destructive border-2 bg-destructive/90 text-white/70"
-                  disabled={form.formState.isSubmitting}
-                  type="button"
-                  onClick={async () => {
-                    const response = await deleteFunnelePage(defaultData.id);
-                    // await saveActivityLogsNotification({
-                    //   agencyId: undefined,
-                    //   description: `Deleted a funnel page | ${response?.name}`,
-                    //   projectId: projectId,
-                    // });
-                    router.refresh();
-                  }}
-                >
-                  {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : <p>Delete Page</p>}
-                </Button>
-              )} */}
             </div>
           </form>
         </Form>

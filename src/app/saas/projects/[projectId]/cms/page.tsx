@@ -1,5 +1,6 @@
 // App.tsx
 "use client";
+import AddCMSBtn from "@/components/buttons/AddCMSBtn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -183,7 +184,7 @@ const CMS = ({ params }: { params: { projectId: string } }) => {
           <div className="p-5 flex flex-col">
             <h2 className="text-sm font-medium mb-4">Collections</h2>
 
-            <div className="flex items-center justify-between py-2 px-3 hover:bg-zinc-800 rounded-xl">
+            <div className="flex items-center justify-between py-2 px-3 hover:bg-zinc-800 cursor-pointer rounded-xl">
               <div className="flex items-center gap-2 text-sm text-zinc-400/80">
                 <Database className="h-4 w-4" />
                 <span>Articles</span>
@@ -191,7 +192,7 @@ const CMS = ({ params }: { params: { projectId: string } }) => {
               <span className="text-xs text-zinc-400/80">5</span>
             </div>
 
-            <div className="flex items-center justify-between py-2 px-3 hover:bg-zinc-800 rounded-xl">
+            <div className="flex items-center justify-between py-2 px-3 hover:bg-zinc-800 cursor-pointer rounded-xl">
               <div className="flex items-center gap-2 text-sm text-zinc-400/80">
                 <Database className="h-4 w-4" />
                 <span>Categories</span>
@@ -199,12 +200,7 @@ const CMS = ({ params }: { params: { projectId: string } }) => {
               <span className="text-xs text-zinc-400/80">4</span>
             </div>
 
-            <div className="flex items-center py-2 px-3 rounded-xl">
-              <div className="flex items-center gap-2 text-sm text-zinc-400/80">
-                <PlusIcon className="h-4 w-4" />
-                <span>Add...</span>
-              </div>
-            </div>
+            <AddCMSBtn projectId={params.projectId}/>
           </div>
 
           <div className="mt-auto p-4 border-t border-zinc-800">

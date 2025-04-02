@@ -421,16 +421,11 @@ model FunnelPage {
 model CMSCollection {
   id          String     @id @default(uuid())
   name        String
-  handle      String     @unique // URL-safe identifier
-  description String?
   project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId   String
   fields      CMSField[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  icon        String?
-  isSingleton Boolean    @default(false) // For single-entry collections
-  isHidden    Boolean    @default(false)
 
   @@index([projectId])
 }

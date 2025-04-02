@@ -71,6 +71,10 @@ export const FunnelPageSchema = z.object({
   pathName: z.string().optional(),
 });
 
+export const CMSCollectionSchema = z.object({
+  name: z.string().min(3)
+})
+
 export type EditorContentType = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col" | "element" | "svg" | "heading";
 
 export type Warframe = {
