@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { MoreHorizontal, Search } from "lucide-react";
 import React from "react";
-import { getAllCMSItems } from "../../../../../../server/cms";
+import { getAllCMSItems } from "../../../../../../server/cms-item";
+import { getFields } from "../../../../../../server/cms-field";
+import { CMSField } from "@prisma/client";
 
 interface CMSItem {
   id: number;
@@ -14,12 +16,14 @@ interface CMSItem {
   icon: React.ReactNode;
 }
 
-const CMS = async ({ params, searchParams }: { params: { projectId: string }, searchParams:{ node? : string} }) => {
-  const cmsId = searchParams.node
+const CMS = async ({ params, searchParams }: { params: { projectId: string }; searchParams: { node?: string } }) => {
+  const cmsId = searchParams.node || "";
+  const cmsAllFields = await getFields(cmsId);
   
 
   //TODO: Fetch CMS items from the server using query params
-  const allCMSItems = getAllCMSItems(cmsId)
+  // const allCMSItems = getAllCMSItems(cmsId)
+  const item = [];
 
   // const [items, setItems] = useState<CMSItem[]>([
   //   {
@@ -57,59 +61,56 @@ const CMS = async ({ params, searchParams }: { params: { projectId: string }, se
   // ]);
 
   return (
-    
-        <main className="flex-1 flex flex-col overflow-hidden">
-          <div className="px-4 h-10 border-b border-zinc-800 flex items-center">
-            <div className="relative flex-1 max-w-xs">
-              <Search
-                className="absolute left-0 top-[6px] h-4 w-4 text-zinc-400/80"
-                size={12}
-              />
-              <Input
-                placeholder="Search..."
-                className="pl-6 bg-transparent text-zinc-300 border-none outline-none focus:outline-none focus:border-none h-[36px]"
-              />
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="ml-auto text-white"
-            >
-              <MoreHorizontal className="h-5 w-5" />
-            </Button>
-          </div>
+    <main className="flex-1 flex flex-col overflow-hidden">
+      <div className="px-4 h-10 border-b border-zinc-800 flex items-center">
+        <div className="relative flex-1 max-w-xs">
+          <Search
+            className="absolute left-0 top-[9px] h-4 w-4 text-zinc-400/80"
+            size={12}
+          />
+          <Input
+            placeholder="Search..."
+            className="pl-6 bg-transparent text-zinc-300 border-none outline-none focus:outline-none focus:border-none h-[36px]"
+          />
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="ml-auto text-white"
+        >
+          <MoreHorizontal className="h-5 w-5" />
+        </Button>
+      </div>
 
-          <div className="flex-1 overflow-auto text-sm">
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-zinc-800/40 border-b border-zinc-800">
-                  <TableHead className="text-zinc-400/80">Title</TableHead>
-                  <TableHead className="text-zinc-400/80">Slug</TableHead>
-                  <TableHead className="text-zinc-400/80">Created</TableHead>
-                  <TableHead className="text-zinc-400/80">Edited</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+      <div className="flex-1 overflow-auto text-sm">
+        <Table>
+          <TableHeader>
+            <TableRow className="hover:bg-zinc-800/40 border-b border-zinc-800">
+              {(cmsAllFields.data || []).map((field:CMSField) => (
+                <TableHead className="text-zinc-400/80">{field.name}</TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          {/* <TableBody>
                 {items.map((item) => (
                   <TableRow
                     key={item.id}
                     className="hover:bg-zinc-800/40 border-b border-zinc-800 h-10"
                   >
-                    <TableCell className="flex items-center gap-2 text-zinc-400/80">
+                    <TableCel className="flex items-center gap-2 text-zinc-400/80">
                       {item.icon}
                       {item.title}
-                    </TableCell>
+                    </TableCel>
                     <TableCell className="text-zinc-400/40">{item.slug}</TableCell>
                     <TableCell className="text-zinc-400/40">{item.created}</TableCell>
                     <TableCell className="text-zinc-400/40">{item.edited}</TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-              {cmsId }
-            </Table>
-          </div>
-        </main>
-      
+              </TableBody> */}
+          {cmsId}
+        </Table>
+      </div>
+    </main>
   );
 };
 

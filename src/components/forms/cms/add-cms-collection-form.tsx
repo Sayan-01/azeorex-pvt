@@ -3,17 +3,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Input } from "../ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form";
+import { Input } from "../../ui/input";
 
 import { useToast } from "@/hooks/use-toast";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { CMSCollectionSchema, FunnelPageSchema } from "@/types/types";
 import { useRouter } from "next/navigation";
-import { useModal } from "../../../providers/model-provider";
-import { Loader } from "../global/Loader";
-import { Button } from "../ui/button";
-import { addCMSCOllection } from "../../../server/cms";
+import { useModal } from "../../../../providers/model-provider";
+import { Loader } from "../../global/Loader";
+import { Button } from "../../ui/button";
+import { addCMSCOllection } from "../../../../server/cms";
 
 interface AddCMSCollectionFormProps {
   projectId: string | null;
@@ -36,17 +36,14 @@ const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, 
 
   const onSubmit = async (values: z.infer<typeof CMSCollectionSchema>) => {
     console.log(values.name);
-    
-    const name = values.name
+
+    const name = values.name;
     if (!name)
       return form.setError("name", {
         message: "Please enter CMS collection name.",
       });
     try {
-      const response = await addCMSCOllection(
-        name,
-        projectId
-      );
+      const response = await addCMSCOllection(name, projectId);
       router.refresh();
 
       toast({
@@ -70,7 +67,7 @@ const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex gap-4 flex-col"
+          className="flex gap-4"
         >
           <FormField
             disabled={form.formState.isSubmitting}
@@ -91,11 +88,11 @@ const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, 
           />
           <div className="flex items-center justify-end gap-2">
             <Button
-              className="w-full rounded-lg self-end bg-green-500 text-white"
+              className="w-full rounded-lg self-end bg-green-500 hover:bg-gr-600 text-white"
               disabled={form.formState.isSubmitting}
               type="submit"
             >
-              {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save..."}
+              {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save"}
             </Button>
           </div>
         </form>

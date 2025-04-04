@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { clsx } from "clsx";
-import { useEditor } from "../../../providers/editor/editor-provider";
+import { EditorElement, useEditor } from "../../../providers/editor/editor-provider";
 
 // Simplified interface for drag state
 interface DragState {
@@ -26,7 +26,7 @@ interface DragState {
   };
 }
 
-const SelectionOverlay = ({ element }: { element: any }) => {
+const SelectionOverlay = ({ element }: { element: EditorElement}) => {
   const { state, dispatch } = useEditor();
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -116,7 +116,7 @@ const SelectionOverlay = ({ element }: { element: any }) => {
         parentElement.removeEventListener("scroll", updateOverlayPosition);
       }
     };
-  }, [state.editor.selectedElement.id, state.editor.selectedElement]);
+  }, [state.editor.selectedElement.id, state.editor.selectedElement, dragState, state, overlayRef.current]);
 
   // Handle mouse down on resize/padding/margin handles
   const handleMouseDown = (e: React.MouseEvent, type: string) => {

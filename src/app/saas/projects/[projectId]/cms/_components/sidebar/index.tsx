@@ -3,7 +3,7 @@ import AddCMSBtn from "@/components/buttons/AddCMSBtn";
 import { Button } from "@/components/ui/button";
 import { CMSCollection } from "@prisma/client";
 import { Database } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 type Props = {
@@ -34,7 +34,6 @@ const Sidebar = ({items, projectId}:Props) => {
             <span className="text-xs text-zinc-400/80">5</span>
           </div>
         ))}
-
         <AddCMSBtn projectId={projectId} />
       </div>
 

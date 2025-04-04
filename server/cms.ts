@@ -28,7 +28,7 @@ export const getAllCMSCollection = async (projectId: string) => {
       projectId,
     },
   });
-  return { success: true, data: allCMS };
+  return  allCMS || [];
 }
 
 export const getCollection = async (id: string) => {
