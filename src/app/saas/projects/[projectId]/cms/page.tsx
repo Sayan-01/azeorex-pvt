@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { MoreHorizontal, Search } from "lucide-react";
 import React from "react";
+import { getAllCMSItems } from "../../../../../../server/cms";
 
 interface CMSItem {
   id: number;
@@ -15,8 +16,10 @@ interface CMSItem {
 
 const CMS = async ({ params, searchParams }: { params: { projectId: string }, searchParams:{ node? : string} }) => {
   const cmsId = searchParams.node
+  
 
   //TODO: Fetch CMS items from the server using query params
+  const allCMSItems = getAllCMSItems(cmsId)
 
   // const [items, setItems] = useState<CMSItem[]>([
   //   {
@@ -86,7 +89,7 @@ const CMS = async ({ params, searchParams }: { params: { projectId: string }, se
                   <TableHead className="text-zinc-400/80">Edited</TableHead>
                 </TableRow>
               </TableHeader>
-              {/* <TableBody>
+              <TableBody>
                 {items.map((item) => (
                   <TableRow
                     key={item.id}
@@ -101,7 +104,7 @@ const CMS = async ({ params, searchParams }: { params: { projectId: string }, se
                     <TableCell className="text-zinc-400/40">{item.edited}</TableCell>
                   </TableRow>
                 ))}
-              </TableBody> */}
+              </TableBody>
               {cmsId }
             </Table>
           </div>

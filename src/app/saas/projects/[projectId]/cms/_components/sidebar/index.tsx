@@ -15,6 +15,11 @@ const Sidebar = ({items, projectId}:Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const selectedNode = searchParams.get("node")
+
+  if (items[0]) {
+    router.push(`/saas/projects/${projectId}/cms?node=${items[0].id}`);
+  }
+  
   return (
     <aside className="w-64 border-r border-zinc-800 flex flex-col">
       <div className="p-5 flex flex-col gap-y-1">

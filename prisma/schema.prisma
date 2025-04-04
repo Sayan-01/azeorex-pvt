@@ -57,19 +57,35 @@ enum Icon {
 }
 
 enum FieldType {
-  TITLE
-  SLUG
-  IMAGE
-  DESCRIPTION
-  RICH_TEXT
-  BOOLEAN
-  DATE
-  SELECT
-  NUMBER
-  COLOR
-  URL
-  EMAIL
-  RELATION
+  // Basic field types
+  TEXT        // Single line text (e.g., titles, names, short answers)
+  TEXTAREA    // Multi-line text (e.g., descriptions, biographies, content blocks)
+  NUMBER      // Numeric values (e.g., price, quantity, ratings)
+  BOOLEAN     // True/false values (e.g., published status, featured flag)
+  DATE        // Date values (e.g., publish date, event date)
+  TIME        // Time values (e.g., opening hours, schedule times)
+  DATETIME    // Combined date and time values (e.g., event schedule)
+  EMAIL       // Email addresses with validation
+  URL         // Web URLs with validation
+  COLOR       // Color picker (stored as hex value)
+  
+  // Selection field types
+  SELECT      // Single selection from predefined options (e.g., status, category)
+  MULTI_SELECT // Multiple selection from predefined options (e.g., tags, features)
+  
+  // Media field types
+  IMAGE       // Image upload reference (e.g., product photo, avatar)
+  FILE        // File upload reference (e.g., PDF, document)
+  MEDIA       // General media (images, videos, etc.)
+  
+  // Advanced field types
+  JSON        // Raw JSON data (for developer use)
+  MARKDOWN    // Formatted Markdown text with preview
+  RICH_TEXT   // Rich text editor with formatting
+  CODE        // Code block with syntax highlighting
+  RELATION    // Reference to items in another collection (e.g., author, category)
+  CALCULATED  // Dynamically calculated value based on formula
+  LOCATION    // Geographic coordinates with map picker
 }
 
 model User {
@@ -360,26 +376,6 @@ model Funnel {
   @@index([agencyId])
 }
 
-model Project {
-  id            String       @id @default(uuid())
-  name          String
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  description   String?
-  published     Boolean      @default(false)
-  subDomainName String?      @unique
-  favicon       String?      @db.Text
-  userId        String
-  User          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  FunnelPages   FunnelPage[]
-  CMSCollection           CMSCollection[]
-  liveProducts  String?      @default("[]")
-  ClassName     ClassName[]
-  Media         Media[]
-
-  @@index([userId])
-}
-
 model ClassName {
   id         String   @id @default(uuid())
   name       String
@@ -394,6 +390,26 @@ model ClassName {
 
   @@index([funnelId])
   @@index([projectId])
+}
+
+model Project {
+  id            String          @id @default(uuid())
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  description   String?
+  published     Boolean         @default(false)
+  subDomainName String?         @unique
+  favicon       String?         @db.Text
+  userId        String
+  User          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  FunnelPages   FunnelPage[]
+  CMSCollection CMSCollection[]
+  liveProducts  String?         @default("[]")
+  ClassName     ClassName[]
+  Media         Media[]
+
+  @@index([userId])
 }
 
 model FunnelPage {
@@ -419,30 +435,53 @@ model FunnelPage {
 }
 
 model CMSCollection {
-  id          String     @id @default(uuid())
-  name        String
-  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId   String
-  fields      CMSField[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id        String     @id @default(uuid())
+  name      String
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  fields    CMSField[] // Fields like title, image, etc.
+  items     CMSItem[] // Entries in this collection
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@index([projectId])
 }
 
 model CMSField {
-  id           String      @id @default(uuid())
-  type         FieldType
-  isRequired   Boolean     @default(false)
-  defaultValue String?
+  id           String        @id @default(uuid())
+  name         String // Display name of the field
+  type         FieldType // Type of the field (text, number, etc.)
+  isRequired   Boolean       @default(false)
+  order        Int // Display order of the field
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   collectionId String
-  position     Int
-  config       Json?       // Additional configuration (e.g., options for SELECT)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  CMSValue     FieldValue[]
 
-  @@index([collectionId])
+  @@unique([collectionId, name]) // Unique field names per collection
+}
+
+model CMSItem {
+  id           String        @id @default(uuid())
+  collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId String
+  values       FieldValue[] // Stores values for each field
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model FieldValue {
+  id        String   @id @default(cuid())
+  value     String   // The value as a string (will be converted based on field type)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  field     CMSField    @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  fieldId   String
+  item      CMSItem     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId    String
+
+  @@unique([fieldId, itemId]) // Each field can have only one value per item
 }
 
 model warframeObj {

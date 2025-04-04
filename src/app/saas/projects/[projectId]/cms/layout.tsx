@@ -4,10 +4,11 @@ import Link from "next/link";
 import { BarChart4, CheckSquare, ChevronLeft, Database, FileText, Globe, MoreHorizontal, PenSquare, PlayIcon, PlusCircle, PlusIcon, Puzzle, Search, Settings } from "lucide-react";
 import Sidebar from "./_components/sidebar";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
-const CMSLayout = async({params, children}:{params: { projectId: string } , children: React.ReactNode}) => {
-    const items = await getAllCMSCollection(params.projectId);
-
+const CMSLayout = async ({ params, children }: { params: { projectId: string }; children: React.ReactNode }) => {
+  const items = await getAllCMSCollection(params.projectId);
+  
   return (
     <div className="flex flex-col h-screen border-l ml-6 bg-bcgc-editor text-white">
       {/* Top Navbar */}
