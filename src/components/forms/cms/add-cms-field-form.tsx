@@ -77,7 +77,6 @@ export default function AddCMSFieldForm({ collectionId, initialData, isEditing =
         type: data.type,
         required: data.required,
       };
-      // isEditing && initialData ? await updateCMSField(initialData.id, payload) :
       const result = await createCMSField(collectionId, payload);
 
       if (!result.success) {

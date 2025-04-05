@@ -33,7 +33,7 @@ export const createCMSField = async (collectionId: string, data: any) => {
 };
 
 // Get all fields for a collection
-export async function getFields(collectionId: string) {
+export async function getAllCMSFields(collectionId: string) {
   try {
     const fields = await db.cMSField.findMany({
       where: { collectionId },
@@ -48,7 +48,7 @@ export async function getFields(collectionId: string) {
 }
 
 // Get a field by ID
-export async function getField(id: string) {
+export async function getCMSField(id: string) {
   try {
     const field = await db.cMSField.findUnique({
       where: { id },

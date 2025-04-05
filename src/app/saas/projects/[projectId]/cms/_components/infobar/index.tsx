@@ -5,8 +5,9 @@ import { BarChart4, CheckSquare, ChevronLeft, Database, FileText, Globe, MoreHor
 import { Button } from "@/components/ui/button";
 import AddCMSFieldBtn from "@/components/buttons/AddCMSFieldBtn";
 import { useSearchParams } from "next/navigation";
+import AddCMSItemBtn from "@/components/buttons/AddCMSItemBtn";
 
-const Infobar = ({projectId,}: {projectId:string}) => {
+const Infobar = ({projectId}: {projectId:string}) => {
   const searchParams = useSearchParams()
   const cmsId = searchParams.get("node") || '';
 
@@ -46,14 +47,7 @@ const Infobar = ({projectId,}: {projectId:string}) => {
       </div>
       <div className="flex-1 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-white flex items-center gap-1 bg-zinc-800 rounded-xl h-[36px] text-zinc-100/80"
-          >
-            <PlusCircle className="h-4 w-4" />
-            <span>New Item</span>
-          </Button>
+          <AddCMSItemBtn collectionId={cmsId}/>
           <Button
             variant="ghost"
             size="sm"
