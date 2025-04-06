@@ -326,6 +326,7 @@ type CMSItemInput = {
 };
 
 const AddCMSItemForm = ({ collectionId }: { collectionId: string }) => {
+  const router = useRouter()
   const [formData, setFormData] = useState<CMSItemInput>({});
   const [cmsAllFields, setCmsAllFields] = useState<CMSField[]>([]);
 
@@ -342,7 +343,7 @@ const AddCMSItemForm = ({ collectionId }: { collectionId: string }) => {
   const handleChange = (field: CMSField, value: any) => {
     setFormData((prev) => ({
       ...prev,
-      [field.id]: value,
+      [field.name]: value,
     }));
   };
 
@@ -354,7 +355,10 @@ const AddCMSItemForm = ({ collectionId }: { collectionId: string }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createCMSItem(collectionId, formData)
+    const response = await createCMSItem(collectionId, formData)
+    if (response.success === true) {
+      router.refresh();
+    }
     
   };
 

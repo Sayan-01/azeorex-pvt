@@ -208,9 +208,9 @@ export function FunnelPageTable({ pageDetails }: { pageDetails: FunnelPage[] }) 
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} >
                 {headerGroup.headers.map((header) => {
-                  return <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
+                  return <TableHead className="w-fit" key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
                 })}
               </TableRow>
             ))}
@@ -230,8 +230,8 @@ export function FunnelPageTable({ pageDetails }: { pageDetails: FunnelPage[] }) 
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
+                  colSpan={100}
+                  className="h-24 w-full text-center"
                 >
                   No results.
                 </TableCell>

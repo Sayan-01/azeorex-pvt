@@ -35,8 +35,6 @@ const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, 
   });
 
   const onSubmit = async (values: z.infer<typeof CMSCollectionSchema>) => {
-    console.log(values.name);
-
     const name = values.name;
     if (!name)
       return form.setError("name", {
@@ -44,7 +42,10 @@ const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, 
       });
     try {
       const response = await addCMSCOllection(name, projectId);
-      router.refresh();
+      if (response.data) {
+        router.replace(`/saas/projects/${projectId}/cms?node=${response.data.id}`);
+        router.refresh();
+      }
 
       toast({
         title: "Success",

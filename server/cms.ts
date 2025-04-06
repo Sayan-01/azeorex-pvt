@@ -27,6 +27,11 @@ export const getAllCMSCollection = async (projectId: string) => {
     where: {
       projectId,
     },
+    include: {
+      _count: {
+        select: { Item: true },
+      },
+    },
   });
   return  allCMS || [];
 }

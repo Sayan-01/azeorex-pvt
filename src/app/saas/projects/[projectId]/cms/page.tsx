@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { MoreHorizontal, Search } from "lucide-react";
 import React from "react";
-import { getAllCMSItems } from "../../../../../../server/cms-item";
+import { getAllCMSItems, getAllItems } from "../../../../../../server/cms-item";
 import { CMSField } from "@prisma/client";
 import CMSLayout from "./cms-layout";
 import { getAllCMSFields } from "../../../../../../server/cms-field";
@@ -20,48 +20,10 @@ interface CMSItem {
 const CMS = async ({ params, searchParams }: { params: { projectId: string }; searchParams: { node?: string } }) => {
   const cmsId = searchParams.node || "";
   const cmsAllFields = await getAllCMSFields(cmsId);
-  
 
-  //TODO: Fetch CMS items from the server using query params
-  const allCMSItems = await getAllCMSItems(cmsId)
-  console.log(allCMSItems.data?.items);
-  
-  
-
-  // const [items, setItems] = useState<CMSItem[]>([
-  //   {
-  //     id: 1,
-  //     title: "CMS",
-  //     slug: "cms",
-  //     created: "3/31/25, 12:37 PM",
-  //     edited: "3/31/25, 12:37 PM",
-  //     icon: <FileText className="h-4 w-4 text-zinc-400" />,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Basics",
-  //     slug: "basics",
-  //     created: "3/31/25, 12:37 PM",
-  //     edited: "3/31/25, 12:37 PM",
-  //     icon: <FileText className="h-4 w-4 text-zinc-400" />,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Pro Tips",
-  //     slug: "pro-tips",
-  //     created: "3/31/25, 12:37 PM",
-  //     edited: "3/31/25, 12:37 PM",
-  //     icon: <FileText className="h-4 w-4 text-zinc-400" />,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Updates",
-  //     slug: "updates",
-  //     created: "3/31/25, 12:37 PM",
-  //     edited: "3/31/25, 12:37 PM",
-  //     icon: <FileText className="h-4 w-4 text-zinc-400" />,
-  //   },
-  // ]);
+  const cmsAllItems = await getAllItems(cmsId);
+  const xyz = cmsAllItems.data || [];
+  const items = xyz.map((item) => item.values);
 
   return (
     <CMSLayout
@@ -94,25 +56,23 @@ const CMS = async ({ params, searchParams }: { params: { projectId: string }; se
             <TableHeader>
               <TableRow className="hover:bg-zinc-800/40 border-b border-zinc-800">
                 {(cmsAllFields.data || []).map((field: CMSField) => (
-                  <TableHead className="text-zinc-400/80">{field.name}</TableHead>
+                  <TableHead className="text-zinc-400/60">{field.name}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>
-            {/* <TableBody>
-                {allCMSItems.data?.items.map((item) => (
-                  <TableRow
-                    key={item.id}
-                    className="hover:bg-zinc-800/40 border-b border-zinc-800 h-10"
-                  >
-                    
-                    <TableCell className="text-zinc-400/40">{item.name}</TableCell>
-                    <TableCell className="text-zinc-400/40">{item.created}</TableCell>
-                    <TableCell className="text-zinc-400/40">{item.edited}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody> */}
+            <TableBody>
+              {items.map((item: any, index) => (
+                <TableRow
+                  key={index}
+                  className="text-zinc-400/60 hover:text-white"
+                >
+                  {(cmsAllFields.data || []).map((key) => (
+                    <TableCell key={key.name}>{item[key.name] || "-"}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
-          {cmsId}
         </div>
       </main>
     </CMSLayout>

@@ -443,6 +443,7 @@ model CMSCollection {
   items     CMSItem[] // Entries in this collection
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  Item      Item[]
 
   @@index([projectId])
 }
@@ -467,6 +468,15 @@ model CMSItem {
   collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   collectionId String
   values       FieldValue[] // Stores values for each field
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Item {
+  id           String        @id @default(uuid())
+  collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId String
+  values       Json
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }

@@ -6,51 +6,33 @@ type ItemInput = {
   [key: string]: string | number | boolean | string[] | null;
 };
 
-// Create a new item in a collection
 export async function createCMSItem(collectionId: string, data: ItemInput) {
   try {
-    // Step 1: Create CMSItem
-    const cmsItem = await db.cMSItem.create({
+    const cmsItem = await db.item.create({
       data: {
         id: v4(),
         collectionId,
+        values:data,
       },
-    });
-
-    // Step 2: Prepare FieldValue records
-    const fieldValueData = Object.entries(data).map(([fieldId, rawValue]) => {
-      let value: string;
-
-      if (typeof rawValue === "boolean") {
-        value = rawValue ? "true" : "false";
-      } else if (Array.isArray(rawValue)) {
-        value = rawValue.join(","); // For MULTI_SELECT
-      } else {
-        value = String(rawValue);
-      }
-
-      return {
-        id: v4(),
-        value,
-        fieldId,
-        itemId: cmsItem.id,
-      };
-    });
-
-    console.log(fieldValueData);
-    
-
-    // Step 3: Insert all FieldValues
-    const newer = await db.fieldValue.createMany({
-      data: fieldValueData,
-    });
-    console.log(newer);
-    
-
+    });    
     return { success: true, itemId: cmsItem.id };
   } catch (error) {
     console.error("Error saving CMS item:", error);
     return { success: false, error: "Failed to save CMS item" };
+  }
+}
+
+export async function getAllItems(collectionId: string) {
+  try {
+    // Get all items in the collection
+    const items = await db.item.findMany({
+      where: { collectionId },
+    });
+
+    return { success: true, data: items };
+  } catch (error) {
+    console.error("Error fetching CMS items:", error);
+    return { success: false, error: "Failed to fetch CMS items" };
   }
 }
 

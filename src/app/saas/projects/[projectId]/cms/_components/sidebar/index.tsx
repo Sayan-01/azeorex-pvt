@@ -6,8 +6,19 @@ import { Database } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 
+export type CMSCollectionWithCount = {
+  id: string;
+  name: string;
+  projectId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  _count: {
+    Item: number;
+  };
+};
+
 type Props = {
-  items: CMSCollection[];
+  items: CMSCollectionWithCount[]
   projectId: string;
 };
 
@@ -15,6 +26,9 @@ const Sidebar = ({ items, projectId }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedNode = searchParams.get("node");
+
+  console.log(items, "items");
+  
   useEffect(() => {
     if (items[0] ) {
       router.push(`/saas/projects/${projectId}/cms?node=${items[0].id}`);
@@ -36,7 +50,7 @@ const Sidebar = ({ items, projectId }: Props) => {
               <Database className="h-4 w-4" />
               <span>{item.name}</span>
             </div>
-            <span className="text-xs text-zinc-400/80">5</span>
+            <span className="text-xs text-zinc-400/80">{item._count.Item}</span>
           </div>
         ))}
         <AddCMSBtn projectId={projectId} />

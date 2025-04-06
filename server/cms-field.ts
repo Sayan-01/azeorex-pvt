@@ -23,7 +23,6 @@ export const createCMSField = async (collectionId: string, data: any) => {
         collectionId,
       },
     });
-    console.log(field);
 
     return { success: true, data: field };
   } catch (error) {

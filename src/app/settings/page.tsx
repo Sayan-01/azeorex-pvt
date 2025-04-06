@@ -1,8 +1,8 @@
-import React from "react";
-import Container from "./container";
+import LoadingAnimation from "@/components/global/loading-animation";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const page = () => {
-  // return <Container/>;
-};
-
-export default page;
+export default function CMSSkeleton() {
+  return (
+    <LoadingAnimation/>
+  );
+}
