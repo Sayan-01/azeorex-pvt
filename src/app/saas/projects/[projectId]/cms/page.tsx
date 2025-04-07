@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { MoreHorizontal, Search } from "lucide-react";
 import React from "react";
-import { getAllCMSItems, getAllItems } from "../../../../../../server/cms-item";
+import { getAllItems } from "../../../../../../server/cms-item";
 import { CMSField } from "@prisma/client";
 import CMSLayout from "./cms-layout";
 import { getAllCMSFields } from "../../../../../../server/cms-field";
