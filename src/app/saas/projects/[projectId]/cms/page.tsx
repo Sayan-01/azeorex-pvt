@@ -7,6 +7,7 @@ import { getAllCMSItems, getAllItems } from "../../../../../../server/cms-item";
 import { CMSField } from "@prisma/client";
 import CMSLayout from "./cms-layout";
 import { getAllCMSFields } from "../../../../../../server/cms-field";
+import List from "@/icons/list-blue";
 
 interface CMSItem {
   id: number;
@@ -22,6 +23,8 @@ const CMS = async ({ params, searchParams }: { params: { projectId: string }; se
   const cmsAllFields = await getAllCMSFields(cmsId);
 
   const cmsAllItems = await getAllItems(cmsId);
+  console.log(cmsAllItems.data);
+  
   const xyz = cmsAllItems.data || [];
   const items = xyz.map((item) => item.values);
 
@@ -52,27 +55,35 @@ const CMS = async ({ params, searchParams }: { params: { projectId: string }; se
         </div>
 
         <div className="flex-1 overflow-auto text-sm">
-          <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-zinc-800/40 border-b border-zinc-800">
-                {(cmsAllFields.data || []).map((field: CMSField) => (
-                  <TableHead className="text-zinc-400/60">{field.name}</TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {items.map((item: any, index) => (
-                <TableRow
-                  key={index}
-                  className="text-zinc-400/60 hover:text-white"
-                >
-                  {(cmsAllFields.data || []).map((key) => (
-                    <TableCell key={key.name}>{item[key.name] || "-"}</TableCell>
+          {items.length === 0 ? (
+            <div className="w-full h-full flex items-center justify-center flex-col gap-2">
+              <List />
+              <p className="text-xs w-40 text-center opacity-80">Your collection is empty. Add an item to get started.</p>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-zinc-800/40 border-b border-zinc-800">
+                  {(cmsAllFields.data || []).map((field: CMSField) => (
+                    <TableHead className="text-zinc-400/60">{field.name}</TableHead>
                   ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+
+              <TableBody>
+                {items.map((item: any, index) => (
+                  <TableRow
+                    key={index}
+                    className="text-zinc-400/60 hover:text-white"
+                  >
+                    {(cmsAllFields.data || []).map((key) => (
+                      <TableCell key={key.name}>{item[key.name] || "-"}</TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </div>
       </main>
     </CMSLayout>
