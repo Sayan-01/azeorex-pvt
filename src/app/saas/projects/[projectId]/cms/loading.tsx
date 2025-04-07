@@ -53,10 +53,6 @@ export default function CMSSkeleton() {
               <Skeleton className="h-5 w-16 rounded-lg bg-[#272727]" />
             </div>
           </div>
-
-          <div className="absolute bottom-4 left-4 right-4">
-            <Skeleton className="h-10 w-full rounded-xl bg-[#272727]" />
-          </div>
         </aside>
 
         {/* Main Content */}

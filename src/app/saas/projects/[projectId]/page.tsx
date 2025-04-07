@@ -7,6 +7,8 @@ import { auth } from "../../../../../auth";
 import FunnelPageCreateBtn from "../_components/funnel-page-create-btn";
 import { FunnelPageTable } from "../_components/funnel-page-table";
 import Link from "next/link";
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from "@/components/ui/menubar";
+import { getAllCMSCollection } from "../../../../../server/cms";
 
 type Props = { params: { projectId: string } };
 const FunnelPage = async ({ params }: Props) => {
@@ -16,6 +18,8 @@ const FunnelPage = async ({ params }: Props) => {
 
   const project = await getProject(funnelId);
   if (!project) return redirect(`saas/projects`);
+
+  const items = await getAllCMSCollection(params.projectId);
 
   return (
     <div className="h-full flex flex-col gap-3 md:pl-6">
@@ -64,16 +68,49 @@ const FunnelPage = async ({ params }: Props) => {
                 <h1 className="text-2xl font-bold sm:text-left text-center">{project.subDomainName}.azeorex.com</h1>
               </div>
               <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
-                <Link href={`/saas/projects/${funnelId}/cms/`} className="flex items-center gap-1 h-8 text-xs">
-                
-                <Button className="flex items-center gap-1 h-8 text-xs">CMS</Button>
+                <Link
+                  href={`/saas/projects/${funnelId}/cms/`}
+                  className="flex items-center gap-1 h-8 text-xs"
+                >
+                  <Button className="flex items-center gap-1 h-8 text-xs">CMS</Button>
                 </Link>
                 <Button className="flex items-center gap-1 h-8 text-xs">Edit</Button>
-                <FunnelPageCreateBtn
-                  userId={agencyId}
-                  projectId={funnelId}
-                  length={project.FunnelPages.length}
-                />
+                <Menubar>
+                  <MenubarMenu>
+                    <MenubarTrigger>
+                      <Button
+                        size="sm"
+                        className="bg-blue-500 hover:bg-blue-500/80 text-white hover:text-white"
+                      >
+                        + Create New Page
+                      </Button>
+                    </MenubarTrigger>
+
+                    <MenubarContent className="bg-[#272727]">
+                      <FunnelPageCreateBtn
+                        userId={agencyId}
+                        projectId={funnelId}
+                        length={project.FunnelPages.length}
+                      />
+
+                      <MenubarSub>
+                        <MenubarSubTrigger className="text-xs text-gray-300">New CMS Page</MenubarSubTrigger>
+
+                        <MenubarSubContent className="bg-[#272727]">
+                          {items.map((item) => (
+                            <MenubarSub key={item.name}>
+                              <MenubarSubTrigger className="text-xs text-gray-300">{item.name}</MenubarSubTrigger>
+                              <MenubarSubContent className="ml-3 bg-[#272727]">
+                                <MenubarItem className="text-xs text-gray-300">Index</MenubarItem>
+                                <MenubarItem className="text-xs text-gray-300">Details Page</MenubarItem>
+                              </MenubarSubContent>
+                            </MenubarSub>
+                          ))}
+                        </MenubarSubContent>
+                      </MenubarSub>
+                    </MenubarContent>
+                  </MenubarMenu>
+                </Menubar>
               </div>
             </div>
 

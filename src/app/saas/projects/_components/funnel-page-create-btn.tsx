@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import CustomModal from "@/components/global/CustomModal";
@@ -10,9 +10,8 @@ const FunnelPageCreateBtn = ({ userId, projectId, length, className }: { userId:
   const { setOpen } = useModal();
 
   return (
-    <Button
-      size="sm"
-      className={clsx(" bg-blue-500 hover:bg-blue-500/80 text-white hover:text-white ", className)}
+    <div
+      className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-xs outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
       onClick={() => {
         setOpen(
           <CustomModal
@@ -28,8 +27,8 @@ const FunnelPageCreateBtn = ({ userId, projectId, length, className }: { userId:
         );
       }}
     >
-      + Create New Page
-    </Button>
+      New Page
+    </div>
   );
 };
 
