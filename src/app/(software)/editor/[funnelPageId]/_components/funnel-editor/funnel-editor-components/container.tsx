@@ -144,7 +144,6 @@ const Container = ({ element }: Props) => {
               name: "Container",
               styles: {
                 ...defaultStyles,
-                width: "100%",
                 height: "80px",
                 maxWidth: "100%",
                 borderRadius: "0px",
@@ -182,6 +181,10 @@ const Container = ({ element }: Props) => {
                 alignItems: "center",
                 paddingLeft: "16px",
                 paddingRight: "16px",
+                marginTop: "0px",
+                marginBottom: "0px",
+                marginLeft: "0px",
+                marginRight: "0px",
               },
               type: "section",
             },
@@ -354,7 +357,7 @@ const Container = ({ element }: Props) => {
         backgroundColor: styles.backgroundColor || (type === "__body" ? "#f8f8f8" : ""),
       }}
       className={clsx("relative box-1 z-[1004] group", {
-        "!min-h-screen ": type === "__body",
+        "!min-h-screen scale-[90%]": type === "__body",
         "rounded-2xl pt-4": type === "__body" && !state.editor.liveMode,
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",

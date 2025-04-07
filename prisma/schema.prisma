@@ -440,7 +440,6 @@ model CMSCollection {
   project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
   fields    CMSField[] // Fields like title, image, etc.
-  items     CMSItem[] // Entries in this collection
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Item      Item[]
@@ -456,21 +455,12 @@ model CMSField {
   order        Int // Display order of the field
   collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   collectionId String
-  values       FieldValue[] // Values for this field across items
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
   @@unique([collectionId, name]) // Unique field names per collection
 }
 
-model CMSItem {
-  id           String        @id @default(uuid())
-  collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-  collectionId String
-  values       FieldValue[] // Stores values for each field
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-}
 
 model Item {
   id           String        @id @default(uuid())
@@ -481,18 +471,28 @@ model Item {
   updatedAt    DateTime      @updatedAt
 }
 
-model FieldValue {
-  id        String   @id @default(cuid())
-  value     String // The value as a string (will be converted based on field type)
-  field     CMSField @relation(fields: [fieldId], references: [id], onDelete: Cascade)
-  fieldId   String
-  item      CMSItem  @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  itemId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  @@unique([fieldId, itemId]) // Each field can have only one value per item
-}
+
+// model CMSItem {
+//   id           String        @id @default(uuid())
+//   collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+//   collectionId String
+//   values       FieldValue[] // Stores values for each field
+//   createdAt    DateTime      @default(now())
+//   updatedAt    DateTime      @updatedAt
+// }
+// model FieldValue {
+//   id        String   @id @default(cuid())
+//   value     String // The value as a string (will be converted based on field type)
+//   field     CMSField @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+//   fieldId   String
+//   item      CMSItem  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+//   itemId    String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   @@unique([fieldId, itemId]) // Each field can have only one value per item
+// }
 
 model warframeObj {
   id             String @id @default(uuid())
