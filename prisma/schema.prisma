@@ -1,0 +1,313 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  AGENCY_OWNER
+  AGENCY_ADMIN
+  AGENCY_USER
+  SUBACCOUNT_USER
+  SUBACCOUNT_GUEST
+  USER
+  ADMIN
+}
+
+enum Icon {
+  settings
+  chart
+  calendar
+  check
+  chip
+  compass
+  database
+  flag
+  home
+  info
+  link
+  lock
+  messages
+  notification
+  payment
+  power
+  receipt
+  shield
+  star
+  tune
+  videorecorder
+  wallet
+  warning
+  headphone
+  send
+  pipelines
+  person
+  category
+  contact
+  clipboardIcon
+}
+
+enum FieldType {
+  // Basic field types
+  TEXT // Single line text (e.g., titles, names, short answers)
+  TEXTAREA // Multi-line text (e.g., descriptions, biographies, content blocks)
+  NUMBER // Numeric values (e.g., price, quantity, ratings)
+  BOOLEAN // True/false values (e.g., published status, featured flag)
+  DATE // Date values (e.g., publish date, event date)
+  TIME // Time values (e.g., opening hours, schedule times)
+  DATETIME // Combined date and time values (e.g., event schedule)
+  EMAIL // Email addresses with validation
+  URL // Web URLs with validation
+  COLOR // Color picker (stored as hex value)
+
+  // Selection field types
+  SELECT // Single selection from predefined options (e.g., status, category)
+  MULTI_SELECT // Multiple selection from predefined options (e.g., tags, features)
+
+  // Media field types
+  IMAGE // Image upload reference (e.g., product photo, avatar)
+  FILE // File upload reference (e.g., PDF, document)
+  MEDIA // General media (images, videos, etc.)
+
+  // Advanced field types
+  JSON // Raw JSON data (for developer use)
+  MARKDOWN // Formatted Markdown text with preview
+  RICH_TEXT // Rich text editor with formatting
+  CODE // Code block with syntax highlighting
+  RELATION // Reference to items in another collection (e.g., author, category)
+  CALCULATED // Dynamically calculated value based on formula
+  LOCATION // Geographic coordinates with map picker
+}
+
+model User {
+  id                  String         @id @default(uuid())
+  name                String
+  password            String?
+  isVarified          Boolean        @default(false)
+  isAdmin             Boolean        @default(false)
+  varifiedToken       String?
+  varifiedTokenExpire DateTime?
+  avatarUrl           String?        @db.Text
+  email               String         @unique
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  role                Role           @default(USER)
+  Projects            Project[]
+  googleId            String?
+  Template            Template[]
+  purchess            Purchase[]
+  Reviews             Review[]
+  Subscription        Subscription[]
+}
+
+model Template {
+  id              String       @id @default(uuid())
+  title           String
+  description     String
+  longDescription String
+  theme           String
+  category        String[]
+  access          String
+  price           Float
+  platform        String[]
+  feature         String[]
+  image           String[]
+  file            String?
+  datePublished   DateTime     @default(now())
+  Reviews         Review[]
+  userId          String
+  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes           Int          @default(0)
+  likesArray      String[]     @default([])
+  dislikes        Int          @default(0)
+  FunnelPages     FunnelPage[]
+  purchases       Purchase[]
+
+  @@index([userId])
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  userId    String
+  projectId String
+  createdAt DateTime @default(now())
+
+  user       User      @relation(fields: [userId], references: [id])
+  project    Project   @relation(fields: [projectId], references: [id])
+  Template   Template? @relation(fields: [templateId], references: [id])
+  templateId String?
+
+  @@index([userId])
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  comment    String
+  rating     Int
+  createdAt  DateTime @default(now())
+  Template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  templateId String
+  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+
+  @@index([templateId])
+  @@index([userId])
+}
+
+model GlobalReview {
+  id           String   @id @default(uuid())
+  userId       String
+  globalReview String
+  createdAt    DateTime @default(now())
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  type      String?
+  name      String
+  link      String   @unique
+  agencyId  String?
+  projectId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([agencyId])
+  @@index([projectId])
+}
+
+model Project {
+  id            String          @id @default(uuid())
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  description   String?
+  published     Boolean         @default(false)
+  subDomainName String?         @unique
+  favicon       String?         @db.Text
+  userId        String
+  User          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  FunnelPages   FunnelPage[]
+  CMSCollection CMSCollection[]
+  liveProducts  String?         @default("[]")
+  Media         Media[]
+  Purchase      Purchase[]
+
+  @@index([userId])
+}
+
+model FunnelPage {
+  id           String    @id @default(uuid())
+  name         String
+  pathName     String    @default("")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  visits       Int       @default(0)
+  content      String?
+  order        Int
+  previewImage String?   @db.Text
+  projectId    String?
+  Project      Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  templateId   String?
+  Template     Template? @relation(fields: [templateId], references: [id])
+
+  @@index([projectId])
+  @@index([templateId])
+}
+
+model CMSCollection {
+  id        String     @id @default(uuid())
+  name      String
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  fields    CMSField[] // Fields like title, image, etc.
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Item      Item[]
+
+  @@index([projectId])
+}
+
+model CMSField {
+  id           String        @id @default(uuid())
+  name         String // Display name of the field
+  type         FieldType // Type of the field (text, number, etc.)
+  isRequired   Boolean       @default(false)
+  order        Int // Display order of the field
+  collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([collectionId, name]) // Unique field names per collection
+}
+
+model Item {
+  id           String        @id @default(uuid())
+  collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId String
+  values       Json
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// model CMSItem {
+//   id           String        @id @default(uuid())
+//   collection   CMSCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+//   collectionId String
+//   values       FieldValue[] // Stores values for each field
+//   createdAt    DateTime      @default(now())
+//   updatedAt    DateTime      @updatedAt
+// }
+// model FieldValue {
+//   id        String   @id @default(cuid())
+//   value     String // The value as a string (will be converted based on field type)
+//   field     CMSField @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+//   fieldId   String
+//   item      CMSItem  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+//   itemId    String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   @@unique([fieldId, itemId]) // Each field can have only one value per item
+// }
+
+model warframeObj {
+  id             String @id @default(uuid())
+  warframe_name  String
+  warframe_image String
+  warframe       String
+}
+
+enum Plan {
+  FREE
+  PRO
+  PREMIUM
+}
+
+model Subscription {
+  id                   String   @id @default(uuid())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  plan                 Plan     @default(FREE)
+  price                String?
+  active               Boolean  @default(false)
+  priceId              String
+  customerId           String
+  currentPeriodEndDate DateTime
+  subscriptionId       String   @unique
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+  @@index([userId])
+}
