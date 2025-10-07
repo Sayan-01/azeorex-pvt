@@ -1,10 +1,13 @@
 import { auth } from "../auth";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
 // See Auth.js documentation for more information about configuring your Middleware
 export default auth((req) => {
+
   const url = req.nextUrl;
   const searchParams = url.searchParams.toString();
   let hostname = req.headers;
@@ -43,11 +46,6 @@ export default auth((req) => {
       return NextResponse.redirect(new URL("/sign-in", req.url));
     }
   }
-
-  // Rewrite agency and subaccount routes
-  // if (url.pathname.startsWith("/agency") || url.pathname.startsWith("/subaccount")) {
-  //   return NextResponse.rewrite(new URL(`${pathWithSearchParams}`, req.url));
-  // }
 
   return NextResponse.next();
 });
