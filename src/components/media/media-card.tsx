@@ -23,15 +23,14 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Copy, MoreHorizontal, Trash } from 'lucide-react'
 import Image from 'next/image'
-import { deleteMedia, saveActivityLogsNotification } from '@/lib/queries'
-import { useToast } from '@/hooks/use-toast'
+import { deleteMedia } from '@/lib/queries'
+import { toast } from 'sonner'
 
 type Props = { file: Media }
 
 const MediaCard = ({ file }: Props) => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const {toast} = useToast()
 
   return (
     <AlertDialog>
@@ -65,7 +64,7 @@ const MediaCard = ({ file }: Props) => {
               className="flex gap-2"
               onClick={() => {
                 navigator.clipboard.writeText(file.link)
-                toast({ title: 'Copied To Clipboard' })
+                toast.success("Copied To Clipboard")
               }}
             >
               <Copy size={15} /> Copy Image Link
@@ -101,9 +100,8 @@ const MediaCard = ({ file }: Props) => {
               //   description: `Deleted a media file | ${response?.name}`,
               //   subAccountId: response.subAccountId,
               // })
-              toast({
-                title: 'Deleted File',
-                description: 'Successfully deleted the file',
+              toast.success("Deleted File", {
+                description: "Successfully deleted the file",
               })
               setLoading(false)
               router.refresh()

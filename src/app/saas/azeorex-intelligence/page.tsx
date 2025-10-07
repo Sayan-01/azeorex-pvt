@@ -61,7 +61,7 @@ const page = async () => {
           />
         </div>
       </nav>
-      <AiComponent/>
+      <AiComponent userId={userId}/>
     </div>
   );
 };

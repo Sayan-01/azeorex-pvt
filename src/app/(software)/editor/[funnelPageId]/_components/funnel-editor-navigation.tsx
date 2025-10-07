@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/custom-input";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/use-toast";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
@@ -16,6 +15,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect, useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useEditor, DeviceTypes } from "../../../../../../providers/editor/editor-provider";
+import { toast } from "sonner";
 
 type Props = {
   projectId: string;
@@ -27,7 +27,6 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
   const router = useRouter();
   const { state, dispatch } = useEditor();
   const [load, setLoade] = useState(false);
-  const { toast } = useToast();
   const pathName = usePathname();
 
   useEffect(() => {
@@ -49,14 +48,10 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
         projectId
       );
 
-      toast({
-        description: "✨Saved Funnel Page title",
-      });
+      toast.success("✨Saved Funnel Page title");
       router.refresh();
     } else {
-      toast({
-        description: "😫You need to have a title!",
-      });
+      toast.error("😫You need to have a title!");
       event.target.value = funnelPageDetails.name;
     }
   };
@@ -86,15 +81,11 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
         projectId
       );
       setLoade(false);
-      toast({
-        description: "✨Saved Editor",
-      });
+      toast.success("✨Saved Editor");
     } catch (e) {
       console.log(e);
 
-      toast({
-        description: "😫Could not save editor",
-      });
+      toast.error("😫Could not save editor");
     }
   };
 
@@ -129,7 +120,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
                 <TooltipTrigger asChild>
                   <TabsTrigger
                     value="Desktop"
-                    className="data-[state=active]:bg-muted w-8 h-8 p-0"
+                    className="data-[state=active]:border w-8 h-8 p-0"
                   >
                     <Monitor
                       size={18}
@@ -145,7 +136,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
                 <TooltipTrigger asChild>
                   <TabsTrigger
                     value="Tablet"
-                    className="w-8 h-8 p-0 data-[state=active]:bg-muted"
+                    className="w-8 h-8 p-0 data-[state=active]:border"
                   >
                     <Tablet
                       size={18}

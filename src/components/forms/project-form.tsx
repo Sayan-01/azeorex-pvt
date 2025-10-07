@@ -1,5 +1,4 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -7,21 +6,21 @@ import { z } from "zod";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
-import { useToast } from "@/hooks/use-toast";
+import { upsertProject } from "@/lib/queries";
 import { CreateFunnelFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Funnel } from "@prisma/client";
+import { Project } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { v4 } from "uuid";
 import { useModal } from "../../../providers/model-provider";
 import FileUpload from "../global/FileUpload";
 import { Loader } from "../global/Loader";
 import { Button } from "../ui/button";
-import { upsertProject } from "@/lib/queries";
 import { Separator } from "../ui/separator";
+import { toast } from "sonner";
 
 interface CreateProjectProps {
-  defaultData?: Funnel;
+  defaultData?: Project;
   userId: string;
 }
 
@@ -30,7 +29,6 @@ interface CreateProjectProps {
 const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
   const { setClose } = useModal();
   const router = useRouter();
-  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof CreateFunnelFormSchema>>({
     mode: "onChange",
@@ -64,14 +62,11 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
 
     const response = await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4());
     if (response)
-      toast({
-        title: "Success",
+      toast.success("Success", {
         description: "Saved project details",
       });
     else
-      toast({
-        variant: "destructive",
-        title: "Oppse!",
+      toast.error("Oppse!", {
         description: "Could not save project details",
       });
     setClose();

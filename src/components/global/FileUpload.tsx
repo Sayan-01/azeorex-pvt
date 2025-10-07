@@ -18,7 +18,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
 
   if (value) {
     return (
-      <div className="flex flex-col items-center justify-center w-full border border-[#2c2d30] rounded-xl h-60 bg-[#202124]">
+      <div className="flex flex-col items-center justify-center w-full  rounded-xl h-60 bg-[#202124]">
         {type != "pdf" ? (
           <div className={`relative w-28 h-28 rounded-md overflow-hidden g-[#202124] borde border-[#2c2d30]`}>
             <Image
@@ -29,7 +29,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
             />
           </div>
         ) : (
-          <div className="relative flex items-center p-2 mt-2 rounded-md bg-[#202124] border border-[#2c2d30]  ">
+          <div className="relative flex items-center p-2 mt-2 rounded-md bg-[#202124] ">
             <File />
             <Link
               href={value}

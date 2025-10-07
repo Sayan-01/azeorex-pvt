@@ -14,27 +14,28 @@ type Project = {
 };
 
 type UserData = {
+  id: string
   name: string;
   avatarUrl?: string;
   email: string;
-  createdAt: string;
+  createdAt: Date;
   role: string;
 };
 
 const page = () => {
   const [userDetails, setUserDetails] = useState<UserData>({
+    id: "",
     name: "",
     avatarUrl: "",
     email: "",
-    createdAt: "",
-    role: ""
+    createdAt: new Date(),
+    role: "",
   });
   const [plan, setPlan] = useState<string>("");
   const [saving, setSaving] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [projects, setProjects] = useState<Project[]>([]);
-
 
   useEffect(() => {
     let mounted = true;
@@ -44,13 +45,15 @@ const page = () => {
         const plan = await getUserCurrentPlan(data.id);
         if (!mounted) return;
         setPlan(plan.plan);
-        if(data) setUserDetails({
-          name: data.name,
-          avatarUrl: data.avatarUrl,
-          email: data.email,
-          createdAt: data.createdAt,
-          role: data.role
-        });
+        if (data)
+          setUserDetails({
+            id: data.id,
+            name: data.name,
+            avatarUrl: data.avatarUrl || "",
+            email: data.email,
+            createdAt: data.createdAt || "",
+            role: data.role,
+          });
       } catch (e) {
         console.error("Failed to load user data", e);
       }
@@ -77,14 +80,7 @@ const page = () => {
 
   const handleAvatarClick = () => fileInputRef.current?.click();
 
-  const handleAvatarChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setAvatarUrl(reader.result as string);
-    reader.readAsDataURL(file);
-    // TODO: upload to storage and save URL in user profile
-  };
+
 
   const handleBuy = (projectId: string) => {
     // TODO: integrate checkout/payment
@@ -131,7 +127,7 @@ const page = () => {
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
-                onChange={handleAvatarChange}
+                onChange={(e) => setUserDetails({ ...userDetails, avatarUrl: e.target.value })}
                 className="hidden"
               />
             </div>

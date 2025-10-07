@@ -1,10 +1,9 @@
 "use client";
-import { AffiliateDuoToneBlack, Compass, CreditCard, Dashboard, FileDuoToneBlack, Settings, ZapDouToneBlack } from "@/icons";
+import { AffiliateDuoToneBlack, CreditCard, Dashboard, FileDuoToneBlack, Settings, ZapDouToneBlack } from "@/icons";
 import { Chip } from "@/icons/chip";
 import { Funnel } from "@/icons/funnel";
 import { Media } from "@/icons/media";
 import { Pipeline } from "@/icons/pipeline";
-import { Agency } from "@prisma/client";
 import clsx from "clsx";
 import { Bolt, ChevronsUpDown, Menu, PlusCircleIcon } from "lucide-react";
 import Image from "next/image";
@@ -13,11 +12,9 @@ import { useEffect, useMemo, useState } from "react";
 import { Fa500Px } from "react-icons/fa";
 import { useModal } from "../../../providers/model-provider";
 import CustomModal from "../global/CustomModal";
-import { AspectRatio } from "../ui/aspect-ratio";
 import { Button } from "../ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Separator } from "../ui/separator";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 
 type Props = {

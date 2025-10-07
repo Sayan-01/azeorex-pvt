@@ -7,21 +7,19 @@ import { LuInfo } from "react-icons/lu";
 import { RiAtLine } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 
+import PreviewButton from "@/components/buttons/PreviewBtn";
+import Link from "next/link";
 import { FaRegFileAlt } from "react-icons/fa";
 import { MdAdsClick, MdAlternateEmail, MdOutlineEmail, MdOutlineFileDownload, MdOutlinePayment } from "react-icons/md";
-import Link from "next/link";
-import CopyButton from "@/components/buttons/CopyButton";
-import PreviewButton from "@/components/buttons/PreviewBtn";
 // import { Template } from "@prisma/client";
-import TemplateCard from "@/components/design/TemplateCard";
-import { searchSimilerProduct, temToProject } from "@/lib/queries";
-import { template } from "lodash";
 import BuyButtton from "@/components/buttons/BuyButtton";
-import { Eye, Heart, MessageSquareMore, MoveRight, Star } from "lucide-react";
-import CommentSection from "../_components/comments-section";
-import { User } from "@prisma/client";
 import LikeButton from "@/components/buttons/LikeButton";
+import TemplateCard from "@/components/design/TemplateCard";
+import { searchSimilerProduct } from "@/lib/queries";
+import { User } from "@prisma/client";
+import { Eye, MessageSquareMore, MoveRight } from "lucide-react";
 import { auth } from "../../../../auth";
+import CommentSection from "../_components/comments-section";
 
 interface Template {
   id: string;

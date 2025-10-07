@@ -12,7 +12,7 @@ const AddCMSFieldBtn = ({ collectionId, className }: { collectionId: string; cla
     <Button
       variant="ghost"
       size="sm"
-      className="text-white flex items-center gap-1 bg-zinc-800 rounded-xl h-[36px] text-zinc-100/80"
+      className="flex items-center gap-1 bg-zinc-800 rounded-xl h-[36px] text-zinc-100/80"
       onClick={() => {
         setOpen(
           <CustomModal width="w-[420px]">

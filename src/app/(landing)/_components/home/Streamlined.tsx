@@ -4,9 +4,8 @@ import Heading from "@/components/design/Heading";
 import Wrapper from "@/components/design/Wrapper";
 import { ArrowRight, Layout, Palette, Rocket } from "lucide-react";
 import React from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
+import { motion } from "framer-motion";
 
 const Streamlined = () => {
   const streamlined = [
@@ -64,12 +63,13 @@ const Streamlined = () => {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 15,
       },
     },
   };
+
 
   return (
     <section>

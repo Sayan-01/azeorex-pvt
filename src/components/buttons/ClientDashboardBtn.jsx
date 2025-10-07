@@ -1,11 +1,9 @@
 "use client";
 import React from "react";
-import { useToast } from "../ui/use-toast";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const ClientDashboardBtn = ({ children, btnClass, childrenClass, href }) => {
-  const { toast } = useToast();
   const {data: session} = useSession()
   const isLogin = !!session?.user
 

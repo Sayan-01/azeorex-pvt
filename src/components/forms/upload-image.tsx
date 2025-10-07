@@ -1,17 +1,15 @@
 "use client";
-import React from "react";
-import { z } from "zod";
+import { createMedia } from "@/lib/queries";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { createMedia, saveActivityLogsNotification } from "@/lib/queries";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useToast } from "@/hooks/use-toast";
-import FileUpload from "../global/FileUpload";
+import { z } from "zod";
 import { useEditor } from "../../../providers/editor/editor-provider";
+import FileUpload from "../global/FileUpload";
+import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
+import { toast } from "sonner";
 
 type Props = {
   projectId: string;
@@ -23,7 +21,6 @@ const formSchema = z.object({
 });
 
 const UploadImageForm = ({ projectId }: Props) => {
-  const { toast } = useToast();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,15 +32,14 @@ const UploadImageForm = ({ projectId }: Props) => {
   });
   const { state, dispatch } = useEditor();
 
-  const handleChangeCustomValues = ( link: string) => {
+  const handleChangeCustomValues = (link: string) => {
     console.log("inside", link);
-    
+
     const settingProperty = "src";
     const styleObject = {
       [settingProperty]: link,
     };
     console.log(state.editor.selectedElement);
-    
 
     dispatch({
       type: "UPDATE_ELEMENT",
@@ -65,13 +61,13 @@ const UploadImageForm = ({ projectId }: Props) => {
       console.log("sayan", response, values);
       handleChangeCustomValues(response.link);
 
-      toast({ title: "Succes", description: "Uploaded media" });
+      toast.success("Succes", {
+        description: "Uploaded media",
+      });
       router.refresh();
     } catch (error) {
       console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Failed",
+      toast.error("Failed", {
         description: "Could not uploaded media",
       });
     }

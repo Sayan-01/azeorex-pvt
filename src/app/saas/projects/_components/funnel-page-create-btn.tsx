@@ -15,8 +15,7 @@ const FunnelPageCreateBtn = ({ userId, projectId, length, className }: { userId:
       onClick={() => {
         setOpen(
           <CustomModal
-            title=" Create or Update a Funnel Page"
-            subheading="Funnel Pages allow you to create step by step processes for customers to follow"
+            className="p-0"
           >
             <CreateFunnelPage
               userId={userId}

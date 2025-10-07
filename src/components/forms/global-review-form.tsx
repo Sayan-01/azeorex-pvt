@@ -1,20 +1,16 @@
 "use client";
-import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { emailsend } from "../../../server/contact";
-import { Input } from "../ui/input";
+import { useState } from "react";
 import { saveGlobalReview } from "../../../server/global-review";
-import { IoAttach } from "react-icons/io5";
-import { Camera, ImagePlus, Import, Paperclip } from "lucide-react";
+import { Input } from "../ui/input";
+import { toast } from "sonner";
 
 const GlobalReviewForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [responseMessage, setResponseMessage] = useState<string | undefined>("");
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -29,15 +25,12 @@ const GlobalReviewForm = () => {
     if (result?.error) {
       setResponseMessage(result.error);
       setLoading(false);
-      toast({
-        variant: "destructive",
-        title: result.error,
+      toast.error(result.error, {
         description: "Try to filled all of filds",
       });
     } else if (result?.message) {
       setResponseMessage(result.error);
-      toast({
-        title: "Uh oh! Review Created",
+      toast("Uh oh! Review Created", {
         description: "Thanks for choosing us to enhance your dream",
       });
       router.push("/");

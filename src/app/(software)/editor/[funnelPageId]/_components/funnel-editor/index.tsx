@@ -7,8 +7,7 @@ import { ActivitySquare, EyeOff } from "lucide-react";
 import React, { createRef, useEffect, useState } from "react";
 import Recursive from "./funnel-editor-components/recursive";
 import { Loader } from "@/components/global/Loader";
-import { cn } from "@/lib/utils";
-import { useDrop } from "react-dnd";
+
 
 type Props = { funnelPageId: string; liveMode?: boolean };
 // interface DropZoneProps {

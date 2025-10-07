@@ -178,7 +178,10 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
     where: { id: funnelPage.id || "" },
     update: { ...funnelPage },
     create: {
-      ...funnelPage,
+      id: funnelPage.id,
+      name: funnelPage.name || "Untitled Page",
+      order: funnelPage.order ?? 0,
+      pathName: funnelPage.pathName || "",
       content: funnelPage.content
         ? funnelPage.content
         : JSON.stringify([
@@ -186,13 +189,14 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
               content: [],
               id: "__body",
               name: "Body",
-              styles: { backgrondColor: "#f8f8f8" },
+              styles: { backgroundColor: "#f8f8f8" },
               type: "__body",
             },
           ]),
       projectId,
     },
   });
+
   await db.project.update({
     where: { id: projectId },
     data: { updatedAt: new Date() },

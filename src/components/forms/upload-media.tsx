@@ -1,65 +1,46 @@
-'use client'
-import React from 'react'
-import { z } from 'zod'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '../ui/card'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form'
-import { createMedia, saveActivityLogsNotification } from '@/lib/queries'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { useToast } from '@/hooks/use-toast'
-import FileUpload from '../global/FileUpload'
+"use client";
+import { createMedia } from "@/lib/queries";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import FileUpload from "../global/FileUpload";
+import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
+import { toast } from "sonner";
 
 type Props = {
-  projectId: string
-}
+  projectId: string;
+};
 
 const formSchema = z.object({
-  link: z.string().min(1, { message: 'Media File is required' }),
-  name: z.string().min(1, { message: 'Name is required' }),
-})
+  link: z.string().min(1, { message: "Media File is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
+});
 
 const UploadMediaForm = ({ projectId }: Props) => {
-  
-  const { toast } = useToast()
-  const router = useRouter()
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    mode: 'onSubmit',
+    mode: "onSubmit",
     defaultValues: {
-      link: '',
-      name: '',
+      link: "",
+      name: "",
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await createMedia(projectId, values)
+      const response = await createMedia(projectId, values);
 
-      toast({ title: 'Succes', description: 'Uploaded media' })
-      router.refresh()
+      toast.success("Succes", { description: "Uploaded media" });
+      router.refresh();
     } catch (error) {
-      console.log(error)
-      toast({
-        variant: 'destructive',
-        title: 'Failed',
-        description: 'Could not uploaded media',
-      })
+      console.log(error);
+      toast.error("Failed", {
+        description: "Could not uploaded media",
+      });
     }
   }
 
@@ -118,6 +99,6 @@ const UploadMediaForm = ({ projectId }: Props) => {
       </div>
     </div>
   );
-}
+};
 
-export default UploadMediaForm
+export default UploadMediaForm;

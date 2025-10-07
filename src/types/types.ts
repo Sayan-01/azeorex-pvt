@@ -81,7 +81,7 @@ export type Warframe = {
   warframe: string;
 };
 
-export type CreateMediaType = Prisma.MediaCreateWithoutAgencyInput;
+export type CreateMediaType = Prisma.MediaCreateWithoutProjectInput;
 export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
 
 export interface LikeInfo {

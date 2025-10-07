@@ -27,7 +27,7 @@ export function timeAgo(timestamp: any): any {
   return `${years} years ago`;
 }
 
-export const ddmmyyyy = (date: string) => {
+export const ddmmyyyy = (date: Date) => {
   const d = new Date(date);
   return d.toDateString();
 }

@@ -1,15 +1,9 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import Header from "../(landing)/_components/home/Header";
-import Link from "next/link";
-import { Paytone_One, Poppins } from "next/font/google";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
-import { emailsend } from "../../../server/contact";
 import GlobalReviewForm from "@/components/forms/global-review-form";
+import { Card } from "@/components/ui/card";
+import { Poppins } from "next/font/google";
+import Link from "next/link";
+import React from "react";
+import Header from "../(landing)/_components/home/Header";
 
 const popp = Poppins({ subsets: ["latin"], weight: "600" });
 

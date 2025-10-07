@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
 import { createWarframe, deleteWarframe, findWarframe } from "@/lib/queries";
 import { Warframe } from "@/types/types";
 import { Copy, PanelBottom, PanelTop, Rows2, Settings2, TextSelect, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
-import { useEditor } from "../../../../../../../../../providers/editor/editor-provider"; 
+import { useEditor } from "../../../../../../../../../providers/editor/editor-provider";
+import { toast } from "sonner";
 
 const LayoutTab = () => {
   return (
@@ -121,7 +121,6 @@ const LayoutTab = () => {
 const Body = ({ value }: { value: string }) => {
   const { state } = useEditor();
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
 
   const [warframeName, setWarframeName] = useState("");
   const [warframeImage, setWarframeImage] = useState("");
@@ -133,7 +132,7 @@ const Body = ({ value }: { value: string }) => {
       warframe_image: warframeImage,
       warframe: JSON.stringify(state.editor.selectedElement),
     });
-    toast({ title: "Warframe created" });
+    toast.success("Warframe created");
     setWarframeName("");
     setWarframeImage("");
   };
@@ -188,7 +187,7 @@ const Body = ({ value }: { value: string }) => {
                     className="flex gap-2"
                     onClick={() => {
                       navigator.clipboard.writeText(element.warframe);
-                      toast({ title: "Copied Successfully" });
+                      toast.success("Copied Successfully");
                     }}
                   >
                     <Copy size={15} />
@@ -196,7 +195,7 @@ const Body = ({ value }: { value: string }) => {
                   <button
                     onClick={async () => {
                       await deleteWarframe(element.id);
-                      toast({ title: "Warframe deleted" });
+                      toast.success("Warframe deleted");
                     }}
                   >
                     <Trash2 size={15.5} />

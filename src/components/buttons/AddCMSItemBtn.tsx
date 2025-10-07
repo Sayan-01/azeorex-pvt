@@ -12,7 +12,7 @@ const AddCMSItemBtn = ({ collectionId, className }: { collectionId: string; clas
         <Button
           variant="ghost"
           size="sm"
-          className="text-white flex items-center gap-1 bg-zinc-800 rounded-xl h-[36px] text-zinc-100/80"
+          className=" flex items-center gap-1 bg-zinc-800 rounded-xl h-[36px] text-zinc-100/80"
         >
           <PlusCircle className="h-4 w-4" />
           <span>New Item</span>

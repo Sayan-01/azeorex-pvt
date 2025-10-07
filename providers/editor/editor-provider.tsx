@@ -5,8 +5,7 @@ import type React from "react";
 import type { FunnelPage } from "@prisma/client";
 import { type Dispatch, createContext, useContext, useReducer, useState } from "react";
 import type { EditorAction } from "./editor-actions";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
+
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
@@ -612,7 +611,7 @@ const EditorProvider = (props: EditorProps) => {
         pageDetails: props.pageDetails,
       }}
     >
-      <DndProvider backend={HTML5Backend}>{props.children}</DndProvider>
+      {props.children}
     </EditorContext.Provider>
   );
 };

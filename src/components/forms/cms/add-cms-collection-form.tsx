@@ -6,14 +6,13 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form";
 import { Input } from "../../ui/input";
 
-import { useToast } from "@/hooks/use-toast";
-import { upsertFunnelPageForProject } from "@/lib/queries";
-import { CMSCollectionSchema, FunnelPageSchema } from "@/types/types";
+import { CMSCollectionSchema} from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useModal } from "../../../../providers/model-provider";
 import { Loader } from "../../global/Loader";
 import { Button } from "../../ui/button";
 import { addCMSCOllection } from "../../../../server/cms";
+import { toast } from "sonner";
 
 interface AddCMSCollectionFormProps {
   projectId: string | null;
@@ -21,7 +20,6 @@ interface AddCMSCollectionFormProps {
 }
 
 const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, className }) => {
-  const { toast } = useToast();
   const router = useRouter();
   const { setClose } = useModal();
   if (!projectId) return null;
@@ -47,17 +45,14 @@ const AddCMSCollectionForm: React.FC<AddCMSCollectionFormProps> = ({ projectId, 
         router.refresh();
       }
 
-      toast({
-        title: "Success",
+      toast.success("Success", {
         description: "CMS collection created",
       });
       setClose();
       router.refresh();
     } catch (error) {
       console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Oppse!",
+      toast.error("Oppse!", {
         description: "Could not create CMS collection",
       });
     }

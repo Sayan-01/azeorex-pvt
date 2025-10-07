@@ -13,13 +13,10 @@ function Menubar({
   return (
     <MenubarPrimitive.Root
       data-slot="menubar"
-      className={cn(
-        "bg-background flex h-9 items-center gap-1 rounded-md border p-1 shadow-xs",
-        className
-      )}
+      className={cn("flex items-center space-x-1 rounded-md bg-background", className)}
       {...props}
     />
-  )
+  );
 }
 
 function MenubarMenu({

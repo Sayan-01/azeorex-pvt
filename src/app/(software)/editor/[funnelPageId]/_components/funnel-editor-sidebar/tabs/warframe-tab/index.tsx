@@ -7,7 +7,6 @@ import { createWarframe, deleteWarframe, findWarframe } from "@/lib/queries";
 import { v4 } from "uuid";
 import { Loader } from "@/components/global/Loader";
 import { Copy, Settings2, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,12 +19,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/custom-input";
+import { toast } from "sonner";
 
 const WarframeTab = () => {
   const { state } = useEditor();
   const [components, setComponents] = useState<Warframe[]>([]);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
 
   const [warframeName, setWarframeName] = useState("");
   const [warframeImage, setWarframeImage] = useState("");
@@ -40,7 +39,7 @@ const WarframeTab = () => {
       warframe_image: warframeImage,
       warframe: JSON.stringify(state.editor.selectedElement),
     });
-    toast({ title: "Warframe created" });
+    toast.success("Warframe created" );
     setWarframeName("");
     setWarframeImage("");
   };
@@ -79,7 +78,7 @@ const WarframeTab = () => {
                   className="flex gap-2"
                   onClick={() => {
                     navigator.clipboard.writeText(item.warframe);
-                    toast({ title: "Copied Successfully" });
+                    toast.success("Copied Successfully" );
                   }}
                 >
                   <Copy size={15} />
@@ -87,7 +86,7 @@ const WarframeTab = () => {
                 <button
                   onClick={async () => {
                     await deleteWarframe(item.id);
-                    toast({ title: "Warframe deleted" });
+                    toast.success("Warframe deleted");
                   }}
                 >
                   <Trash2 size={15.5} />

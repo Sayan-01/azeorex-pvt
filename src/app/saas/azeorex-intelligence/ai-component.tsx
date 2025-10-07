@@ -1,32 +1,51 @@
-'use client'
+"use client";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { ArrowUp, CircleUser, ImagePlus as Imagee, X } from "lucide-react";
 import Image from "next/image";
+import { v4 } from "uuid";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-const AiComponent = () => {
+const AiComponent = ({userId}: {userId: string | undefined}) => {
   const [userInput, setUserInput] = useState("");
   const [referanceImage, setReferanceImage] = useState<any>();
   const [referanceImagePreview, setReferanceImagePreview] = useState<string>();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const onSubmit = async () => {
+    if(!userInput || !referanceImage){
+      toast.error("Please fill all the fields");
+      return;
+    }
+    if(!userId){
+      toast.error("Please login to create a project");
+      return;
+    }
     setLoading(true);
-    console.log("Hi client!", userInput);
-
     try {
+      const projectId = v4();
+      const funnelPageId = v4();
       const formData = new FormData();
       formData.append("userInput", userInput);
       formData.append("referanceImage", referanceImage);
-      const response = await fetch("/api/youtube-content-api/generate-thumbnail", {
+      formData.append("projectId", projectId);
+      formData.append("funnelPageId", funnelPageId);
+
+      const response = await fetch("/api/ai-project", {
         method: "POST",
         body: formData,
       });
+
       const data = await response.json();
       console.log(data);
+
+      toast.success("Project created successfully");
+      router.push(`/editor/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
+      
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }

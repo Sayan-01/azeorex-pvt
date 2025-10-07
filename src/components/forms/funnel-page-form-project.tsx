@@ -7,16 +7,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 
-import { useToast } from "@/hooks/use-toast";
-import { deleteFunnelePage, getFunnels, getProjects, saveActivityLogsNotification, upsertFunnelPage, upsertFunnelPageForProject } from "@/lib/queries";
+import { getProjects, upsertFunnelPageForProject } from "@/lib/queries";
 import { FunnelPageSchema } from "@/types/types";
 import { FunnelPage } from "@prisma/client";
-import { CopyPlusIcon, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { v4 } from "uuid";
 import { Loader } from "../global/Loader";
 import { Button } from "../ui/button";
 import { useModal } from "../../../providers/model-provider";
+import { DeleteFunnelPage } from "@/app/saas/projects/_components/delete-funnel-page";
+import { toast } from "sonner";
 
 interface CreateFunnelPageProps {
   defaultData?: FunnelPage;
@@ -27,7 +27,6 @@ interface CreateFunnelPageProps {
 }
 
 const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projectId, order, userId, className }) => {
-  const { toast } = useToast();
   const router = useRouter();
   const { setClose } = useModal();
   if (!userId || !projectId) return null;
@@ -48,11 +47,8 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
   }, [defaultData]);
 
   const onSubmit = async (values: z.infer<typeof FunnelPageSchema>) => {
-    if (order !== 0 && !values.pathName)
-      return form.setError("pathName", {
-        message: "Pages other than the first page in the funnel require a path name example 'secondstep'.",
-      });
     try {
+      console.log(values);
       const response = await upsertFunnelPageForProject(
         {
           ...values,
@@ -64,26 +60,23 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
       );
       router.refresh();
 
-      toast({
-        title: "Success",
+      toast.success("Success", {
         description: "Saves Funnel Page Details",
       });
       setClose();
       router.refresh();
     } catch (error) {
       console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Oppse!",
+      toast.error("Oppse!", {
         description: "Could Save Funnel Page Details",
       });
     }
   };
 
   return (
-    <Card className={`bg-[#26262626] ${className} `}>
-      <CardHeader className="border-b p-4 flex flex-col gap-2">
-        <div className="flex items-center flex-row justify-between mt-2">
+    <Card className={` ${className} py-5`}>
+      <CardHeader className="border-b px-5 flex flex-col gap-2">
+        <div className="flex items-center flex-row justify-between w-full">
           <h5 className="opacity-70 ">Webpage Settings</h5>
           {defaultData?.id && (
             <Button
@@ -107,8 +100,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                   },
                   projectId
                 );
-                toast({
-                  title: "Success",
+                toast("Success", {
                   description: "Saves Funnel Page Details",
                 });
                 router.refresh();
@@ -122,19 +114,18 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
           <p className=" text-sm">Funnel pages are flow in the order they are created by default. You can move them around to change their order.</p>
         </CardDescription>
       </CardHeader>
-      <CardContent className="p-4">
+      <CardContent className="px-5">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-5"
           >
             <FormField
-              disabled={form.formState.isSubmitting}
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="flex-1 flex items-center gap-3 justify-between ">
-                  <FormLabel className="w-40 opacity-80">Name</FormLabel>
+                <FormItem className="flex flex-col gap-2">
+                  <FormLabel className="opacity-80">Name</FormLabel>
                   <FormControl>
                     <Input
                       className="!mt-0 outline-none rounded-lg text-zinc-400"
@@ -147,15 +138,14 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
               )}
             />
             <FormField
-              disabled={form.formState.isSubmitting || order === 0}
+              disabled={order === 0}
               control={form.control}
               name="pathName"
               render={({ field }) => (
-                <FormItem className="flex-1 flex items-center gap-3 justify-between ">
-                  <FormLabel className="w-40 opacity-80">Path Name</FormLabel>
+                <FormItem className="flex flex-col gap-2">
+                  <FormLabel className="opacity-80">Path Name</FormLabel>
                   <FormControl>
                     <Input
-                      className="!mt-0 outline-none rounded-lg text-zinc-400"
                       placeholder="Path for the page"
                       {...field}
                       value={field.value?.toLowerCase()}
@@ -165,24 +155,22 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                 </FormItem>
               )}
             />
+
             <div className="flex items-center justify-end gap-2">
               {defaultData?.id ? (
-                <div className="flex flex-col w-full gap-2">
+                <div className="flex flex-row w-full space-x-4">
                   <Button
-                    className="w-full rounded-lg self-end"
+                    className="flex-1 rounded-lg self-end"
                     disabled={form.formState.isSubmitting}
                     type="submit"
                   >
                     {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save Page"}
                   </Button>
-                  {/* <div className="bg-white/5 border border-white/10 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] relative cursor-default select-none text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                    <Trash size={15} />
-                    Delete the page
-                  </div> */}
+                  <DeleteFunnelPage funnelPageId={defaultData?.id} />
                 </div>
               ) : (
                 <Button
-                  className="w-22 rounded-full self-end"
+                  className=" rounded-full self-end"
                   disabled={form.formState.isSubmitting}
                   type="submit"
                 >

@@ -31,6 +31,8 @@ import CreateFunnelPage from "@/components/forms/funnel-page-form-project";
 import DeleteButton from "@/components/buttons/DeleteButton";
 import { deleteFunnelePage } from "@/lib/queries";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { DeleteFunnelPage } from "./delete-funnel-page";
 
 const outf = Roboto_Mono({ subsets: ["latin"], weight: "400" });
 
@@ -52,7 +54,8 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
     accessorKey: "pathName",
     header: () => <div className="text-left ">Path Name</div>,
     cell: ({ row }) => (
-      <Link target="_blank"
+      <Link
+        target="_blank"
         href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}/${row.getValue("pathName")}`}
         className="lowercase border-b border-dashed border-sky-500"
       >
@@ -91,7 +94,6 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
 
       return (
         <div className="w-full flex justify-end">
@@ -101,32 +103,22 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
                 variant="ghost"
                 className="h-8 w-8 p-0 outline-none border-none"
               >
-                <span className="sr-only">Open menu</span>
                 <MoreHorizontal
                   strokeWidth={1.5}
                   size={15}
                 />
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:w-[22rem] w-[18rem] p-2 border-white/5 rounded-xl gap-0.5 ">
+
+            <DialogContent x={false} className="sm:w-[22rem] p-0 w-[18rem] border-white/5  gap-0.5 ">
               <CreateFunnelPage
                 defaultData={row.original}
-                projectId={row?.original?.projectId}
+                projectId={row.original.projectId}
                 order={row.original.order}
                 userId={session?.user?.id}
                 className="mb-2 border-white/5"
               />
 
-              <div
-                onClick={() => {
-                  deleteFunnelePage(row.original.id);
-                  router.refresh();
-                }}
-                className="bg-white/5 border border-white/10 opacity-60 flex items-center gap-2 px-3 py-2 rounded-[10px] relative cursor-default select-none text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-              >
-                <Trash size={15} />
-                Delete the page
-              </div>
             </DialogContent>
           </Dialog>
         </div>
