@@ -12,7 +12,7 @@ import WarframeTab from "./tabs/warframe-tab";
 import AiTab from "./tabs/AI-tab";
 import SettingsTab from "./tabs/settings-tab";
 import Chats from "./tabs/chats";
-// import LayoutTab from "./tabs/layout";
+import LayoutTab from "./tabs/layout";
 
 
 type Props = {
@@ -47,7 +47,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
               hidden: state.editor.previewMode,
             })}
           >
-            <div className="grid gap-4 h-full w-[240px]  overflow-autobox bg-editor-bcgc border-main-black">
+            <div className="grid gap-4 h-full w-[240px]  overflow-auto box bg-editor-bcgc border-main-black">
               <TabsContent value="Chats">
                 <Chats
                   messages={messages}
@@ -99,7 +99,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
                 <MediaBucketTab projectId={projectId} />
               </TabsContent>
               <TabsContent value="Layout">
-                {/* <LayoutTab /> */}
+                <LayoutTab />
               </TabsContent>
 
               <TabsContent value="AiPoward">

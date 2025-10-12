@@ -15,10 +15,10 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
 
   return (
     <div className="flex flex-col h-full p-3">
-      <div className=" ">
+      <div className="">
         <h3 className="text-lg font-semibold mb-3">Your all collections</h3>
       </div>
-      <section className="flex-1 overflow-y-auto space-y-4 flex flex-col">
+      <section className="flex-1 overflow-y-auto space-y-4 flex flex-col mb-3">
         {messages?.length === 0 ? (
           <p className="text-center text-zinc-500">Chat with AI</p>
         ) : (
@@ -40,7 +40,7 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
         )}
       </section>
 
-      <div className="flex flex-col items-center gap-2 bg-zinc-900 border rounded-lg p-2">
+      <div className="flex flex-col items-center gap-2 bg-zinc-900 border rounded-lg p-2 sticky bottom-3">
         <Textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}

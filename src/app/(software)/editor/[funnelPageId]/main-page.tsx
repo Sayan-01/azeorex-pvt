@@ -39,14 +39,14 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [...messages, { role: "user", content: AiPrompt2({ userInput }) }],
+          messages: [{ role: "user", content: AiPrompt2({ userInput }) }],
         }),
       });
 
       const data = await result.json();
-      console.log(data);
       
       const aiResponse = data?.choices?.[0]?.message?.content?.trim() || ""; // json string
+      console.log(aiResponse);
 
       if (aiResponse.startsWith("[")) {
         try {
@@ -66,7 +66,7 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
           setMessages((prev) => [...prev, { role: "assistant", content: "AI returned invalid JSON." }]);
         }
       } else {
-        setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+        setMessages((prev) => [...prev, { role: "assistant", content: aiResponse || "Fail to generate response" }]);
       }
     } catch (error) {
       console.error("❌ Error while sending message:", error);
