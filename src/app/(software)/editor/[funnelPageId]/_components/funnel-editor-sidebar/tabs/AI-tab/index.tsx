@@ -12,7 +12,7 @@ const AiTab = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>();
   const OnGenerate = async () => {
-    const prompt = AiPrompt.TEMPLATE_PROMPT + "/n- " + userInput;
+    const prompt = AiPrompt({ userInput: userInput });
     setLoading(true);
     try {
       const res = await fetch("/api/ai-template-generate", {

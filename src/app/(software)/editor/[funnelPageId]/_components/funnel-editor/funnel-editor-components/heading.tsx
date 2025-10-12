@@ -100,6 +100,7 @@ const HeadingComponent = (props: Props) => {
         style={styles}
         className={clsx("text-white border-none outline-none !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] !m-0 group", { abc: !state.editor.liveMode })}
         contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
+        suppressContentEditableWarning={true}
         onBlur={(e) => {
           const spanElement = e.target as HTMLSpanElement;
           console.log(spanElement.innerText);

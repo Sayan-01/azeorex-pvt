@@ -17,7 +17,7 @@ const ButtonGard = ({ className }) => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  stroke-width="2"
+                  strokeWidth="2"
                   d="M12 4v16m8-8H4"
                 ></path>
               </svg>

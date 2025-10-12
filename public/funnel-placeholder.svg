@@ -1,19 +1,19 @@
 <svg width="304" height="190" viewBox="0 0 304 190" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clipPath="url(#clip0_1531_3652)">
 <rect width="304" height="190" fill="#191A1A"/>
-<path opacity="0.22" d="M25.5 8H278.5" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 21.7671L323 21.7671" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 36.983L323 36.983" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 50.75L323 50.75" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 65.9662L323 65.9662" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 79.733L323 79.733" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 94.9492L323 94.9492" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 108.716L323 108.716" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 122.483L323 122.483" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 137.699L323 137.699" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 151.466L323 151.466" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M-19 166.682L323 166.682" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
-<path opacity="0.22" d="M25.5 180L278.5 180" stroke="white" stroke-width="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M25.5 8H278.5" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 21.7671L323 21.7671" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 36.983L323 36.983" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 50.75L323 50.75" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 65.9662L323 65.9662" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 79.733L323 79.733" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 94.9492L323 94.9492" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 108.716L323 108.716" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 122.483L323 122.483" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 137.699L323 137.699" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 151.466L323 151.466" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M-19 166.682L323 166.682" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
+<path opacity="0.22" d="M25.5 180L278.5 180" stroke="white" strokeWidth="1.13464" strokeLinecap="round" strokeLinejoin="round" stroke-dasharray="0.36 14.49"/>
 <rect x="44" y="27" width="217" height="136" fill="url(#paint0_radial_1531_3652)"/>
 <g opacity="0.12">
 <path d="M169.082 86.459H155.229V82.7295V79H176.541L169.082 86.459Z" fill="white"/>

@@ -1,10 +1,10 @@
 import dedent from "dedent";
 import { EditorContentNames, EditorContentTypes } from "./AI_constant";
 
-const AiPrompt = {
-  TEMPLATE_PROMPT: dedent`You are a Pro Webpage Component generator AI Assistant for Azeorex SaaS.
+export const AiPrompt = ({userInput}: {userInput: string}) => {
+  return dedent`You are a Pro Webpage Component generator AI Assistant for Azeorex SaaS.
     
-    IMPORTENT: Your task is to generate highly professional webpage component generator with greate UIUX design in JSON schema format. Follow these instructions carefully:
+    IMPORTENT: Your task is to generate highly professional webpage component generator with greate UIUX design in JSON schema format , based on ${userInput}. Follow these instructions carefully:
     
     1. **Schema Structure**:
        - Generate only one component at a time which is a JSON object, in the schemaor the JSON object must include the following keys:
@@ -50,7 +50,7 @@ const AiPrompt = {
 
     **Important**:
     - Keep styles clean and concise.
-    - Innovate while maintaining schema integrity.`,
+    - Innovate while maintaining schema integrity.`;
 };
 
 export default AiPrompt;

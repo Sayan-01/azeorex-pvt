@@ -105,7 +105,7 @@ const RegisterForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 my-4"
+          className="space-y-4 mt-4"
           noValidate
         >
           <FormField
@@ -113,7 +113,7 @@ const RegisterForm = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer className={"mb-4"}>
+                <LabelInputContainer >
                   
                   <FormControl>
                     <Input
@@ -132,7 +132,7 @@ const RegisterForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer className={"mb-4"}>
+                <LabelInputContainer >
                   <FormControl>
                     <Input
                       className="rounded-xl h-[42px] border-zinc-800 border placeholder:opacity-40"
@@ -150,7 +150,7 @@ const RegisterForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer className={"mb-6"}>
+                <LabelInputContainer>
                   <FormControl>
                     <Input
                       className="rounded-xl h-[42px] border-zinc-800 border tracking-[6px] placeholder:opacity-40"
@@ -164,7 +164,7 @@ const RegisterForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex items-start gap-4 !-mt-1">
+          <div className="flex items-start gap-4">
             <FormField
               control={form.control}
               name="otp"

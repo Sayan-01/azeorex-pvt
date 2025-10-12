@@ -311,3 +311,20 @@ model Subscription {
   @@index([customerId])
   @@index([userId])
 }
+
+model Chat {
+  id           String   @id @default(uuid())
+  chatMessage  Json
+  userId       String
+  projectId    String
+  funnelPageId String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([funnelPageId])
+}
+
+// npm install ts-node typescript @types/node --save-dev
+// npx prisma migrate dev
+// npx prisma migrate reset 
+// npx prisma db seed         

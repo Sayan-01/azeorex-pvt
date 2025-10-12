@@ -7,44 +7,19 @@ import { ActivitySquare, EyeOff } from "lucide-react";
 import React, { createRef, useEffect, useState } from "react";
 import Recursive from "./funnel-editor-components/recursive";
 import { Loader } from "@/components/global/Loader";
+import AiPrompt from "../../../../../../../Ai/Prompt";
 
 
-type Props = { funnelPageId: string; liveMode?: boolean };
-// interface DropZoneProps {
-//   index: number;
-//   onDrop: (
-//     item: {
-//       type: string;
-//       index?: number;
-//     },
-//     dropIndex: number
-//   )=> void;
-//   isEditable: boolean;
-// }
+type Props = { funnelPageId: string; liveMode?: boolean; id?: string };
+type Message = {
+  role: string;
+  content: string;
+}
 
-// export const DropZone: React.FC<DropZoneProps> = ({ index, onDrop, isEditable }) => {
-//   const [{ isOver, canDrop }] = useDrop({
-//     accept: ["content"],
-//     drop: (item: { type: string; index?: number }) => {
-//       onDrop(item, index);
-//     },
-//     canDrop: () => isEditable,
-//     collect: (monitor) => ({
-//       isOver: !!monitor.isOver(),
-//       canDrop: !!monitor.canDrop(),
-//     }),
-//   });
-
-//   return <div className={(cn("h-4 my-2 rounded-md transition-all duration-200"), isOver && canDrop ? "border-green-500 bg-green-100" : "border-gray-500", canDrop ? "border-blue-300" : "")}>
-//     {isOver && canDrop && (
-//       <div className="h-full flex items-center justify-center text-green-500">Drop here</div>
-//     )}
-//   </div>;
-// };
-
-const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
+const FunnelEditor = ({ funnelPageId, liveMode, id }: Props) => {
   const { dispatch, state } = useEditor();
   const [load, setLoade] = useState(true);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     if (liveMode) {
@@ -69,7 +44,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
       });
     };
     fetchData();
-  }, [funnelPageId]);
+  }, [funnelPageId,id]);
 
   const handleClick = () => {
     dispatch({
@@ -82,6 +57,29 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
     dispatch({ type: "TOGGLE_LIVE_MODE" });
   };
+
+  const sendMessage = async (userInput: string) => {
+    setMessages((prev) => [...prev, { role: "user", content: userInput }]);
+    const response = await fetch("/api/ai-model", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({role: "user", content: AiPrompt({userInput}) }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    setLoade(false);
+    dispatch({
+      type: "LOAD_DATA",
+      payload: {
+        elements: data ? JSON.parse(data) : "",
+        withLive: !!liveMode,
+      },
+    });
+  }
+
   return load ? (
     <Loader
       loading

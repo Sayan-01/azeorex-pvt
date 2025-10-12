@@ -75,7 +75,7 @@ const LoginForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer className={"mb-4"}>
+                <LabelInputContainer>
                   <FormControl>
                     <Input
                       className="rounded-lg h-[42px] border-zinc-800 border placeholder:opacity-40"
@@ -93,7 +93,7 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer className={"mb-6"}>
+                <LabelInputContainer >
                   <FormControl>
                     <Input
                       className="rounded-lg h-[42px] border-zinc-800 border tracking-[6px] placeholder:opacity-40"
@@ -139,7 +139,7 @@ const BottomGradient = () => {
   );
 };
 
-const LabelInputContainer = ({ children, className }: { children: React.ReactNode; className: string }) => {
+const LabelInputContainer = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   return <div className={cn("flex flex-col space-y-2 w-full", className)}>{children}</div>;
 };
 

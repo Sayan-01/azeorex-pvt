@@ -9,18 +9,25 @@ import ComponentsTab from "./tabs/components-tab";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
-import LayoutTab from "./tabs/Layout";
+import LayoutTab from "./tabs/layout";
 import AiTab from "./tabs/AI-tab";
 import SettingsTab from "./tabs/settings-tab";
 import CMS from "./tabs/CMS";
+import Chats from "./tabs/chats";
 
 
 type Props = {
   userId: string;
   projectId: string;
+  messages:{
+    role: string;
+    content: string;
+  }[]
+  sendMessage: any
+  loading: boolean
 };
 
-const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
+const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading }: Props) => {
   const { state, dispatch } = useEditor();
 
   return (
@@ -31,20 +38,24 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
       >
         <Tabs
           className="w-full h-full"
-          defaultValue="Components"
+          defaultValue="Chats"
         >
           <TabList className={clsx({ "-top-[44.8px]": state.editor.previewMode })} />
           <SheetContent
             showX={false}
             side="left"
-            className={clsx(
-              "mt-[48.8px] h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  select-none",
-              {
-                hidden: state.editor.previewMode,
-              }
-            )}
+            className={clsx("mt-[48.8px] h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  select-none", {
+              hidden: state.editor.previewMode,
+            })}
           >
             <div className="grid gap-4 h-full w-[240px]  overflow-autobox bg-editor-bcgc border-main-black">
+              <TabsContent value="Chats">
+                <Chats
+                  messages={messages}
+                  onSend={sendMessage}
+                  loading={loading}
+                />
+              </TabsContent>
               <TabsContent
                 value="Components"
                 className="p-4"
@@ -64,24 +75,18 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
                       >
                         Warframes
                       </TabsTrigger>
-                      {/* <TabsTrigger
-                        value="Pages"
-                        className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
-                      >
-                        Page
-                      </TabsTrigger> */}
                     </TabsList>
                   </div>
                   <TabsContent value="Components">
-                    <SheetHeader className="text-left pt-3  border-none">
-                      <SheetTitle>Components</SheetTitle>
+                    <SheetHeader className="text-left pt-3  border-none p-0">
+                      <SheetTitle className="text-[18px]">Components</SheetTitle>
                       <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
                     </SheetHeader>
                     <ComponentsTab />
                   </TabsContent>
                   <TabsContent value="Warframe">
-                    <SheetHeader className="text-left py-3 ">
-                      <SheetTitle>Warframe</SheetTitle>
+                    <SheetHeader className="text-left py-3 p-0">
+                      <SheetTitle className="text-[18px]">Warframe</SheetTitle>
                       <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
                     </SheetHeader>
                     <WarframeTab />
@@ -97,9 +102,7 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
               <TabsContent value="Layout">
                 <LayoutTab />
               </TabsContent>
-              <TabsContent value="CMS">
-                <CMS />
-              </TabsContent>
+
               <TabsContent value="AiPoward">
                 <AiTab />
               </TabsContent>
@@ -118,12 +121,9 @@ const FunnelEditorSidebar = ({ userId, projectId }: Props) => {
           <SheetContent
             showX={false}
             side="right"
-            className={clsx(
-              "mt-[48.8px] h-[calc(100%)-170px] w-[240px] z-[30] shadow-none p-0  bg-background  transition-all border-none  select-none ",
-              {
-                hidden: state.editor.previewMode,
-              }
-            )}
+            className={clsx("mt-[48.8px] h-[calc(100%)-170px] w-[240px] z-[30] shadow-none p-0  bg-background  transition-all border-none  select-none ", {
+              hidden: state.editor.previewMode,
+            })}
           >
             <div className="grid gap-4 h-full w-[240px] overflow-auto overflow-x-hidden box">
               <TabsContent value="Settings">

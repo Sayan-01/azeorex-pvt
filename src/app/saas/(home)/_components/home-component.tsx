@@ -214,7 +214,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
         ) : (
           <div className="w-full mt-5 flex flex-col items-center gap-4 xxl relative bg-gradient-to-r from-transparent to-[#141414]">
             {[1, 2, 3, 4].map((item) => {
-              return <div className="aspect-[16/10] bg-gradient-to-br from-zinc-900/80 to-[#141414] w-full rounded-xl"></div>;
+              return <div key={item} className="aspect-[16/10] bg-gradient-to-br from-zinc-900/80 to-[#141414] w-full rounded-xl"></div>;
             })}
             <p className="text-zinc-500 opacity-90 text-sm absolute -translate-x-1/2 left-1/2 px-5 py-2 rounded-full bg-[#1e1f22]">No templates found</p>
           </div>

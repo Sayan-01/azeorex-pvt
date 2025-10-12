@@ -1,12 +1,8 @@
 import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
-import FunnelEditor from "./_components/funnel-editor";
-import FunnelEditorNavigation from "./_components/funnel-editor-navigation";
-import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
 import { Inter } from "next/font/google";
+import { redirect } from "next/navigation";
 import EditorProvider from "../../../../../providers/editor/editor-provider";
-
-
+import MainPage, { Messages } from "./main-page";
 
 type Props = {
   params: Promise<{
@@ -34,32 +30,35 @@ const page = async (props: Props) => {
       id: params.funnelPageId,
     },
   });
-  if (!funnelPageDetails ) {
+
+  const chatDetails = await db.chat.findMany({
+    where: {
+      funnelPageId: params.funnelPageId,
+    },
+  });
+
+  if (!funnelPageDetails) {
     return redirect(`/saas/projects/${projectId}`);
   }
+
+  const abc = chatDetails[0]?.chatMessage || [];
 
   return (
     <>
       <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#333333] overflow-hidden ${inte.className}`}>
         {/* starts from 16:39 */}
-          <EditorProvider
-            agencyId={userId}
-            funnelId={projectId}
-            pageDetails={funnelPageDetails}
-          >
-            <FunnelEditorNavigation
-              projectId={projectId}
-              funnelPageDetails={funnelPageDetails}
-              userId={userId}
-            />
-            <div className="h-full flex justify-center ">
-              <FunnelEditor funnelPageId={params.funnelPageId} />
-            </div>
-            <FunnelEditorSidebar
-              userId={userId}
-              projectId={projectId}
-            />
-          </EditorProvider>
+        <EditorProvider
+          agencyId={userId}
+          funnelId={projectId}
+          pageDetails={funnelPageDetails}
+        >
+          <MainPage
+            projectId={projectId}
+            funnelPageDetails={funnelPageDetails}
+            userId={userId}
+            chatMessages={abc as Messages[]}
+          />
+        </EditorProvider>
       </div>
     </>
   );

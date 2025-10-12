@@ -269,7 +269,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
             })}
           >
             <AccordionTrigger
-              className={clsx("!no-underline p-2 pl-0 text-sm outline outline-1 outline-transparent outline-offset-[-1px] border-b ", {
+              className={clsx("!no-underline p-2 pl-0 text-sm outline outline-transparent outline-offset-[-1px] border-b ", {
                 "bg-muted-foreground/20 rounded-lg cursor-move": state.editor.selectedElement.id === props.element.id,
               })}
               onClick={(e) => handleSelectElement(e, props.element)}
@@ -300,7 +300,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
   return (
     <>
       <div
-        className={clsx("relative flex items-center gap-2 pl-4 ml-4 py-2 cursor-move text-xs outline outline-1 outline-transparent outline-offset-[-1px] border-b", {
+        className={clsx("relative flex items-center gap-2 pl-4 ml-4 py-2 cursor-move text-xs outline  outline-transparent outline-offset-[-1px] border-b", {
           "!ml-0": props.element.type === "__body",
           "bg-muted-foreground/20 rounded-lg": state.editor.selectedElement.id === props.element.id,
           "opacity-50": isDragging,

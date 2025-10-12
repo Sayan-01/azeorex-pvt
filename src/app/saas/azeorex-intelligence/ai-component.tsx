@@ -1,5 +1,5 @@
 "use client";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { ArrowUp, CircleUser, ImagePlus as Imagee, X } from "lucide-react";
@@ -15,7 +15,7 @@ const AiComponent = ({userId}: {userId: string | undefined}) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const onSubmit = async () => {
-    if(!userInput || !referanceImage){
+    if(!userInput ){
       toast.error("Please fill all the fields");
       return;
     }
@@ -27,13 +27,19 @@ const AiComponent = ({userId}: {userId: string | undefined}) => {
     try {
       const projectId = v4();
       const funnelPageId = v4();
+      const message = [
+        {
+          role: "user",
+          content: userInput,
+        }
+      ]
       const formData = new FormData();
-      formData.append("userInput", userInput);
-      formData.append("referanceImage", referanceImage);
+      formData.append("messages", JSON.stringify(message));
       formData.append("projectId", projectId);
       formData.append("funnelPageId", funnelPageId);
+      formData.append("userId", userId);
 
-      const response = await fetch("/api/ai-project", {
+      const response = await fetch("/api/ai-project-create", {
         method: "POST",
         body: formData,
       });
@@ -127,8 +133,9 @@ const AiComponent = ({userId}: {userId: string | undefined}) => {
             className="h-8 w-8 flex items-center justify-center ml-auto bg-gradient-to-br from-zinc-50 to-zinc-200 rounded-full"
             type="submit"
             onClick={onSubmit}
+            disabled={!userInput || loading}
           >
-            <ArrowUp color="black" />
+            {loading ? <Loader2 className="animate-spin text-[#444444]" size={16}/> : <ArrowUp color="#444444" size={16}/>}
           </button>
         </div>
       </div>
