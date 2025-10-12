@@ -12,7 +12,7 @@ import WarframeTab from "./tabs/warframe-tab";
 import AiTab from "./tabs/AI-tab";
 import SettingsTab from "./tabs/settings-tab";
 import Chats from "./tabs/chats";
-import LayoutTab from "./tabs/layout";
+// import LayoutTab from "./tabs/layout";
 
 
 type Props = {
@@ -99,7 +99,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
                 <MediaBucketTab projectId={projectId} />
               </TabsContent>
               <TabsContent value="Layout">
-                <LayoutTab />
+                {/* <LayoutTab /> */}
               </TabsContent>
 
               <TabsContent value="AiPoward">
