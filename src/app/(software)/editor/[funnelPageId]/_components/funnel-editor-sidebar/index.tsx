@@ -9,11 +9,10 @@ import ComponentsTab from "./tabs/components-tab";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
-import LayoutTab from "./tabs/layout";
 import AiTab from "./tabs/AI-tab";
 import SettingsTab from "./tabs/settings-tab";
-import CMS from "./tabs/CMS";
 import Chats from "./tabs/chats";
+import LayoutTab from "./tabs/layout";
 
 
 type Props = {
