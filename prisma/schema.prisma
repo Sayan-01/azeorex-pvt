@@ -98,11 +98,12 @@ model User {
   varifiedTokenExpire DateTime?
   avatarUrl           String?        @db.Text
   email               String         @unique
+  credits             Int            @default(1000)
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
+  googleId            String?
   role                Role           @default(USER)
   Projects            Project[]
-  googleId            String?
   Template            Template[]
   purchess            Purchase[]
   Reviews             Review[]
@@ -288,24 +289,19 @@ model warframeObj {
   warframe       String
 }
 
-enum Plan {
-  FREE
-  PRO
-  PREMIUM
-}
+
 
 model Subscription {
   id                   String   @id @default(uuid())
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
-  plan                 Plan     @default(FREE)
+  plan                 String     @default("Free Plan")
   price                String?
   active               Boolean  @default(false)
-  priceId              String
-  customerId           String
-  currentPeriodEndDate DateTime
-  subscriptionId       String   @unique
   userId               String
+  customerId           String
+  subscriptionId       String   @unique
+  currentPeriodEndDate DateTime
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([customerId])
@@ -323,6 +319,8 @@ model Chat {
 
   @@index([funnelPageId])
 }
+
+
 
 // npm install ts-node typescript @types/node --save-dev
 // npx prisma migrate dev
