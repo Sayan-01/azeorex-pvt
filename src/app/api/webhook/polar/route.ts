@@ -24,11 +24,15 @@ export const POST = Webhooks({
           console.log("Subscription not active yet. Skipping credits.");
           return;
         }
+        let credits = 1000;
+        if (payload.data.product.name == "Free Plan") credits = 1000;
+        if (payload.data.product.name == "Pro Plan") credits = 10000;
+        if (payload.data.product.name == "Enterprise Plan") credits = 100000;
 
         await db.user.update({
           where: { email: customerEmail },
           data: {
-            credits: { increment: 1000 },
+            credits: { increment: credits },
           },
         });
 
@@ -44,7 +48,7 @@ export const POST = Webhooks({
           },
         });
 
-        console.log(`Added 1000 credits to ${customerEmail}`);
+        console.log(`credits updated to ${customerEmail}`);
       } else {
         console.log(`Event type ${type} ignored`);
       }
