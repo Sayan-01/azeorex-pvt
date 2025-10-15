@@ -8,8 +8,8 @@ import { Inter } from "next/font/google";
 import EditorProvider from "../../../../../providers/editor/editor-provider";
 import { Chat, FunnelPage } from "@prisma/client";
 import { useState, useEffect } from "react";
-import AiPrompt2 from "../../../../../Ai/Prompt2";
 import { v4 } from "uuid";
+import { AiForFindType, AiPromptForCode, AiPromptForText } from "../../../../../Ai/PromptForWebPage";
 
 type Props = {
   projectId: string;
@@ -29,7 +29,6 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
   const [pageDetails, setPageDetails] = useState(funnelPageDetails);
   const [changeId, setChangeId] = useState("");
 
-
   const sendMessage = async (userInput: string) => {
     setLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
@@ -39,15 +38,41 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [{ role: "user", content: AiPrompt2({ userInput }) }],
+          messages: [{ role: "user", content: AiForFindType({ userInput }) }],
         }),
       });
 
       const data = await result.json();
+      const aiResponseType = data?.choices?.[0]?.message?.content?.trim() || ""; // json string
       
-      const aiResponse = data?.choices?.[0]?.message?.content?.trim() || ""; // json string
-      console.log(aiResponse);
+      console.log("sayan",aiResponseType);
 
+      let aiResponse = "";
+
+      if (aiResponseType === "txt") {
+        const result = await fetch("/api/ai-model", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: [{ role: "user", content: AiPromptForText({ userInput }) }],
+          }),
+        });
+
+        const data = await result.json();
+        aiResponse = data?.choices?.[0]?.message?.content?.trim() || "";
+      } else if (aiResponseType === "code") {
+        const result = await fetch("/api/ai-model", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: [{ role: "user", content: AiPromptForCode({ userInput }) }],
+          }),
+        });
+
+        const data = await result.json();
+        aiResponse = data?.choices?.[0]?.message?.content?.trim() || "";
+      }
+      console.log("das",aiResponse);
       if (aiResponse.startsWith("[")) {
         try {
           await fetch("/api/funnel/update", {
@@ -88,8 +113,8 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
         }),
       });
     };
-    if(!loading) saveMessages();
-  }, [messages])
+    if (!loading) saveMessages();
+  }, [messages]);
 
   return (
     <>
@@ -99,7 +124,10 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
         userId={userId}
       />
       <div className="h-full flex justify-center ">
-        <FunnelEditor funnelPageId={pageDetails?.id} id={changeId} />
+        <FunnelEditor
+          funnelPageId={pageDetails?.id}
+          id={changeId}
+        />
       </div>
       <FunnelEditorSidebar
         messages={messages}

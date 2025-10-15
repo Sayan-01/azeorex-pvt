@@ -14,11 +14,11 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
   };
 
   return (
-    <div className="flex flex-col h-full p-3">
-      <div className="">
+    <div className="flex flex-col h-full">
+      <div className="p-3">
         <h3 className="text-lg font-semibold mb-3">Your all collections</h3>
       </div>
-      <section className="flex-1 overflow-y-auto space-y-4 flex flex-col mb-3">
+      <section className="flex-1 p-3 overflow-y-auto box space-y-4 flex flex-col mb-3 ">
         {messages?.length === 0 ? (
           <p className="text-center text-zinc-500">Chat with AI</p>
         ) : (
@@ -39,29 +39,31 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
           </div>
         )}
       </section>
-
-      <div className="flex flex-col items-center gap-2 bg-zinc-900 border rounded-lg p-2 sticky bottom-3">
-        <Textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="border-none dark:bg-transparent bg-transparent p-0 pb-2"
-        />
-        <button
-          className="h-8 w-8 flex items-center justify-center ml-auto bg-gradient-to-br from-zinc-50 to-zinc-200 rounded-full"
-          onClick={handleSend}
-        >
-          {loading ? (
-            <Loader2
-              className="animate-spin text-[#444444]"
-              size={16}
-            />
-          ) : (
-            <ArrowUp
-              color="#444444"
-              size={16}
-            />
-          )}
-        </button>
+      <div className="sticky bottom-0 p-3 py-0">
+        <div className="flex flex-col items-center gap-2 bg-zinc-900 border rounded-lg p-2 relative z-20">
+          <Textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="border-none dark:bg-transparent bg-transparent p-0 pb-2"
+          />
+          <button
+            className="h-8 w-8 flex items-center justify-center ml-auto bg-gradient-to-br from-zinc-50 to-zinc-200 rounded-full"
+            onClick={handleSend}
+          >
+            {loading ? (
+              <Loader2
+                className="animate-spin text-[#444444]"
+                size={16}
+              />
+            ) : (
+              <ArrowUp
+                color="#444444"
+                size={16}
+              />
+            )}
+          </button>
+        </div>
+        <div className="bg-editor-bcgc h-5 -mt-2"/>
       </div>
     </div>
   );

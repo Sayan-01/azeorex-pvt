@@ -7,14 +7,13 @@ import { ActivitySquare, EyeOff } from "lucide-react";
 import React, { createRef, useEffect, useState } from "react";
 import Recursive from "./funnel-editor-components/recursive";
 import { Loader } from "@/components/global/Loader";
-import AiPrompt from "../../../../../../../Ai/Prompt";
-
+import AiPromptForComponent from "../../../../../../../Ai/PromptForComponent";
 
 type Props = { funnelPageId: string; liveMode?: boolean; id?: string };
 type Message = {
   role: string;
   content: string;
-}
+};
 
 const FunnelEditor = ({ funnelPageId, liveMode, id }: Props) => {
   const { dispatch, state } = useEditor();
@@ -44,7 +43,7 @@ const FunnelEditor = ({ funnelPageId, liveMode, id }: Props) => {
       });
     };
     fetchData();
-  }, [funnelPageId,id]);
+  }, [funnelPageId, id]);
 
   const handleClick = () => {
     dispatch({
@@ -65,7 +64,7 @@ const FunnelEditor = ({ funnelPageId, liveMode, id }: Props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({role: "user", content: AiPrompt({userInput}) }),
+      body: JSON.stringify({ role: "user", content: AiPromptForComponent({ userInput }) }),
     });
 
     const data = await response.json();
@@ -78,7 +77,7 @@ const FunnelEditor = ({ funnelPageId, liveMode, id }: Props) => {
         withLive: !!liveMode,
       },
     });
-  }
+  };
 
   return load ? (
     <Loader

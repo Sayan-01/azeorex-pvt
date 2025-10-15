@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { GROUPLE_CONSTANT } from "@/constants";
@@ -12,6 +11,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
+
+import UpgrateButton from "./upgrate-button";
 
 type Props = {
   defaultOption?: boolean;
@@ -103,12 +104,8 @@ const SidebarComp = ({ defaultOption }: Props) => {
               <h5 className="text-sm text-zinc-300 mb-0.5">Upgrade your plan</h5>
               <p className="text-xs text-zinc-500 md:block hidden">For unlock all feature on azeorex.</p>
             </div>
-            <Button
-              className="bg-main hover:bg-main/80 text-white"
-              size="sm"
-            >
-              Upgrate
-            </Button>
+            <UpgrateButton/>
+
           </div>
           <div>
             {[

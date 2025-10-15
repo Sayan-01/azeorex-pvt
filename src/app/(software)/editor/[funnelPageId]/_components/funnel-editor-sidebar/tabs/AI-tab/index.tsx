@@ -1,18 +1,16 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Ai } from "@/icons/ai";
-import { Warframe } from "@/types/types";
 import { Sparkles } from "lucide-react";
 import React, { useState } from "react";
-import AiPrompt from "../../../../../../../../../Ai/Prompt";
+import { AiPromptForComponent } from "../../../../../../../../../Ai/PromptForComponent";
 
 const AiTab = () => {
   const [userInput, setUserInput] = useState("Generate the Website template for ");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>();
   const OnGenerate = async () => {
-    const prompt = AiPrompt({ userInput: userInput });
+    const prompt = AiPromptForComponent({ userInput: userInput });
     setLoading(true);
     try {
       const res = await fetch("/api/ai-template-generate", {

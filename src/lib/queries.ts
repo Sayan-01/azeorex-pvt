@@ -205,11 +205,6 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
   return response;
 };
 
-//==============================================================================
-
-// export const createComponents = async (component:EditorElement) => {
-//   const response = await db.component
-// }
 
 //==============================================================================
 
@@ -418,4 +413,23 @@ export async function getUserCurrentPlan(userId: string) {
     plan: subscription.plan,
     expiresOn: subscription.currentPeriodEndDate,
   };
+}
+
+export const updateDomainName = async (projectId: string, subDomainName: string|null) => {
+  if (!projectId || !subDomainName) return;
+
+  if (subDomainName) {
+    const existingProject = await db.project.findFirst({
+      where: { subDomainName },
+    });
+    if (existingProject) {
+      throw new Error("Subdomain already exists, please enter another subdomain name.");
+    }
+  }
+  const response = await db.project.update({
+    where: { id: projectId },
+    data: { subDomainName },
+  });
+
+  return response;
 }

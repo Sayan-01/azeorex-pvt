@@ -1,14 +1,12 @@
 import Heading from "@/components/design/Heading";
-import BackdropGradient from "@/components/global/backdrop-gradient";
-import GradientText from "@/components/global/gradient-text";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Check } from "@/icons";
 import clsx from "clsx";
+import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { auth } from "../../../../../auth";
-import { CheckCircle } from "lucide-react";
+import { polar } from "@/lib/polar";
 
 type Props = {
   border: string;
@@ -22,6 +20,7 @@ type Props = {
 
 export const PricingSection = async () => {
   const session = await auth();
+  const products = await polar.products.list({ isArchived: false });
   return (
     <div
       className="w-full md:mt-40 flex flex-col items-center gap-y-5"
@@ -39,25 +38,25 @@ export const PricingSection = async () => {
           title="Free Plan"
           tag="$0 /"
           color="text-[#b4b0a3]"
-          link="/"
+          link={`/checkout?products=${products.result.items[2].id}&customerEmail=${session?.user?.email}`}
           user={session?.user}
         />
         <PriceCard
-          features={["You can create only 5 projects.", "10000 creadits for AI tasks.", "Full access of SAAS website builder.", "Advanced dashboard features.", "Advanced SAAS editor."]}
+          features={["You can create only 5 projects.", "10,000 creadits for AI tasks.", "Full access of SAAS website builder.", "Advanced dashboard features.", "Advanced SAAS editor."]}
           border="relative border-zinc-400/10 z-10  bg-[#402fb5]/50 pricing-shadow"
           title="Pro Plan"
           tag="$15 /"
           color="text-[#b4b0a3]"
-          link="#"
+          link={`/checkout?products=${products.result.items[1].id}&customerEmail=${session?.user?.email}`}
           user={session?.user}
         />
         <PriceCard
-          features={["You can create unlimited projects.", "100000 creadits for AI tasks.", "Full access of SAAS website builder.", "Advanced dashboard features.", "Advanced SAAS editor."]}
+          features={["You can create unlimited projects.", "100,000 creadits for AI tasks.", "Full access of SAAS website builder.", "Advanced dashboard features.", "Advanced SAAS editor."]}
           border="border-zinc-400/10 bg-[#0a0d24] xl:scale-90"
           title="Premium Plan"
           tag="$49 /"
           color="text-[#b4b0a3]"
-          link="#"
+          link={`/checkout?products=${products.result.items[0].id}&customerEmail=${session?.user?.email}`}
           user={session?.user}
         />
       </div>

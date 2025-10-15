@@ -1,19 +1,3 @@
-// import { NextResponse } from "next/server";
-// import { geminiModel } from "../../../../Ai/AiModel";
-
-// export const POST = async (req: any) => {
-//   const { messages } = await req.json();
-  
-//   try {
-//     const result = await geminiModel.sendMessage(messages);
-//     const aiRes = result.response.text();
-//     return NextResponse.json(aiRes);
-//   } catch (error) {
-//     return NextResponse.json({ error: error });
-//   }
-// };
-
-
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -28,7 +12,8 @@ export async function POST(req: Request) {
         "X-Title": "Azeorex", // optional
       },
       body: JSON.stringify({
-        model: "openai/gpt-oss-20b:free",
+        // model: "google/gemini-2.0-flash-exp:free",
+        model: "openai/gpt-4o:free",
         messages,
       }),
     });

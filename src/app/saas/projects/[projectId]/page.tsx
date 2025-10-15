@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { getProject } from "@/lib/queries";
+import { getProject, updateDomainName } from "@/lib/queries";
 import { timeAgo } from "@/lib/utils";
-import { CircleDot, Globe, Loader2 } from "lucide-react";
+import { CircleDot, Globe, Loader2, Pen } from "lucide-react";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import FunnelPageCreateBtn from "../_components/funnel-page-create-btn";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from "@/components/ui/menubar";
 import { getAllCMSCollection } from "../../../../../server/cms";
 import { Roboto_Mono } from "next/font/google";
+import DomainEditButton from "../_components/domain-edit-button";
 
 const outf = Roboto_Mono({ subsets: ["latin"], weight: "400" });
 
@@ -17,10 +18,10 @@ type Props = { params: Promise<{ projectId: string }> };
 const FunnelPage = async (props: Props) => {
   const params = await props.params;
   const session = await auth();
-  const funnelId = params.projectId;
+  const projectId = params.projectId;
   const agencyId = session?.user?.id || "";
 
-  const project = await getProject(funnelId);
+  const project = await getProject(projectId);
   if (!project) return redirect(`saas/projects`);
 
   const items = await getAllCMSCollection(params.projectId);
@@ -78,6 +79,7 @@ const FunnelPage = async (props: Props) => {
                   </Link>
                 </h1>
               </div>
+              <DomainEditButton projectId={projectId}/>
               {/* <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
                 <Link
                   href={`/saas/projects/${funnelId}/cms/`}
@@ -157,7 +159,10 @@ const FunnelPage = async (props: Props) => {
             <Menubar>
               <MenubarMenu>
                 <div className="relative w-full">
-                  <MenubarTrigger asChild className="absolute right-28 top-[26px]">
+                  <MenubarTrigger
+                    asChild
+                    className="absolute right-28 top-[26px]"
+                  >
                     <Button
                       size="sm"
                       className="bg-blue-500 hover:bg-blue-500/80 h-8 text-white hover:text-white rounded-[16px]"
@@ -169,7 +174,7 @@ const FunnelPage = async (props: Props) => {
                   <MenubarContent className="bg-[#272727] absolute -right-[147px] w-max  ">
                     <FunnelPageCreateBtn
                       userId={agencyId}
-                      projectId={funnelId}
+                      projectId={projectId}
                       length={project.FunnelPages.length}
                     />
 

@@ -23,7 +23,7 @@ export const POST = async (req: Request) => {
       data: {
         id: funnelPageId,
         name: "Untitled",
-        pathName: "/",
+        pathName: "",
         order: 0,
         content:  JSON.stringify([
             {

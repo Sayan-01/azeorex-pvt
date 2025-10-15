@@ -2,7 +2,7 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import TabList from "./tabs";
 import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-tab";
@@ -28,6 +28,7 @@ type Props = {
 
 const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading }: Props) => {
   const { state, dispatch } = useEditor();
+ 
 
   return (
     <>
@@ -47,7 +48,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
               hidden: state.editor.previewMode,
             })}
           >
-            <div className="grid gap-4 h-full w-[240px]  overflow-auto box bg-editor-bcgc border-main-black">
+            <div className="gap-4 h-full w-[240px] overflow-auto box bg-editor-bcgc border-main-black flex ">
               <TabsContent value="Chats">
                 <Chats
                   messages={messages}
@@ -98,9 +99,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
               <TabsContent value="Media">
                 <MediaBucketTab projectId={projectId} />
               </TabsContent>
-              <TabsContent value="Layout">
-                {/* <LayoutTab /> */}
-              </TabsContent>
+              <TabsContent value="Layout">{/* <LayoutTab /> */}</TabsContent>
 
               <TabsContent value="AiPoward">
                 <AiTab />
