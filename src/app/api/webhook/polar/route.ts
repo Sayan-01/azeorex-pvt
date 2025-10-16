@@ -39,7 +39,7 @@ export const POST = Webhooks({
         let credits = 0;
         if (planName.includes("free")) credits = 0;
         else if (planName.includes("pro")) credits = 10000;
-        else if (planName.includes("enterprise")) credits = 100000;
+        else if (planName.includes("premium")) credits = 100000;
 
         await db.user.update({
           where: { email: customerEmail },
@@ -60,7 +60,7 @@ export const POST = Webhooks({
           },
         });
 
-        console.log(`credits updated to ${customerEmail}`);
+        console.log(`credits updated to ${customerEmail}-${credits}-${planName}`);
       } else {
         console.log(`Event type ${type} ignored`);
       }
