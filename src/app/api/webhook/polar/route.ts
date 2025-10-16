@@ -17,17 +17,29 @@ export const POST = Webhooks({
         return;
       }
 
-      if (type === "subscription.created" || type === "subscription.revoked" || type === "subscription.updated") {
+      const user = await db.user.findUnique({
+        where: { email: customerEmail },
+      });
+
+      if (!user) {
+        console.log("User not found for email:", customerEmail);
+        return;
+      }
+
+      if (type === "subscription.created") {
         const status = payload?.data?.status;
 
         if (status !== "active") {
           console.log("Subscription not active yet. Skipping credits.");
           return;
         }
-        let credits = 1000;
-        if (payload.data.product.name == "Free Plan") credits = 1000;
-        if (payload.data.product.name == "Pro Plan") credits = 10000;
-        if (payload.data.product.name == "Enterprise Plan") credits = 100000;
+        
+        const planName = payload?.data?.product?.name?.toLowerCase() || "";
+
+        let credits = 0;
+        if (planName.includes("free")) credits = 0;
+        else if (planName.includes("pro")) credits = 10000;
+        else if (planName.includes("enterprise")) credits = 100000;
 
         await db.user.update({
           where: { email: customerEmail },
@@ -41,7 +53,7 @@ export const POST = Webhooks({
             plan: payload?.data?.product.name,
             price: (payload?.data?.amount / 100).toString(),
             active: true,
-            userId: payload?.data?.customer?.id,
+            userId: user?.id,
             customerId: payload?.data?.customer?.id,
             subscriptionId,
             currentPeriodEndDate: payload?.data?.currentPeriodEnd || new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
