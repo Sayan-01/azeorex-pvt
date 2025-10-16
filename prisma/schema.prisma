@@ -99,6 +99,7 @@ model User {
   avatarUrl           String?        @db.Text
   email               String         @unique
   credits             Int            @default(1000)
+  activePlan          String         @default("Free Plan")
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
   googleId            String?

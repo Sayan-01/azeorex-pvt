@@ -1,12 +1,12 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
-import { upsertProject } from "@/lib/queries";
+import { getUserDetails, upsertProject } from "@/lib/queries";
 import { CreateFunnelFormSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Project } from "@prisma/client";
@@ -21,13 +21,14 @@ import { toast } from "sonner";
 
 interface CreateProjectProps {
   defaultData?: Project;
-  userId: string;
 }
 
 //CHALLENGE: Use favicons
 
-const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
+const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData}) => {
   const { setClose } = useModal();
+  const [userId, setUserId] = useState<string>("");
+  const [currPlan, setCurrPlan] = useState<string>("");
   const router = useRouter();
 
   const form = useForm<z.infer<typeof CreateFunnelFormSchema>>({
@@ -41,7 +42,15 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
     },
   });
 
-  
+  useEffect(() => {
+    const getCurrUserData = async () =>{
+      const user = await getUserDetails()
+      if (!user) return;
+      setUserId(user?.id);
+      setCurrPlan(user?.activePlan);
+    }
+    getCurrUserData()
+  }, [userId]);
 
   useEffect(() => {
     if (defaultData) {
@@ -60,17 +69,20 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData, userId }) => {
     if (!userId) return;
     
 
-    const response = await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4());
-    if (response)
+    try {
+      await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4(), currPlan);
+
       toast.success("Success", {
         description: "Saved project details",
       });
-    else
-      toast.error("Oppse!", {
-        description: "Could not save project details",
+
+      setClose();
+      router.refresh();
+    } catch (error: any) {
+      toast.error("Oops!", {
+        description: error.message || "Something went wrong while saving project.",
       });
-    setClose();
-    router.refresh();
+    }
   };
   return (
     <div className="w-full border-none">

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const SpotLight = ({className}: {className?: string}) => {
+const SpotLight = ({className, noGrid=false}: {className?: string, noGrid?: boolean}) => {
   return (
     <div className={`relative w-full top-0 ${className}`}>
       <div className=" absolute left-0 top-0">
@@ -28,7 +28,7 @@ const SpotLight = ({className}: {className?: string}) => {
           src={"/home/grid.svg"}
           width={500}
           height={500}
-          className="w-full h-[60rem] md:block hidden pointer-events-none"
+          className={noGrid ? "hidden" : "w-full h-[60rem] md:block hidden pointer-events-none"}
           alt='desktop_grid'
         />
       </div>
@@ -37,7 +37,7 @@ const SpotLight = ({className}: {className?: string}) => {
           src={"/home/grid2.svg"}
           width={500}
           height={500}
-          className="w-full h-[48rem] block md:hidden pointer-events-none"
+          className={noGrid ? "hidden" : "w-full h-[48rem] block md:hidden pointer-events-none"}
           alt='mobile_grid'
         />
       </div>

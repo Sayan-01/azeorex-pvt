@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Sparkles } from "lucide-react";
 import React, { useState } from "react";
 import { AiPromptForComponent } from "../../../../../../../../../Ai/PromptForComponent";
+import { toast } from "sonner";
 
 const AiTab = () => {
   const [userInput, setUserInput] = useState("Generate the Website template for ");
@@ -23,19 +24,22 @@ const AiTab = () => {
         }),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error("Failed to fetch AI template.");
+        toast.error(data.error || "Failed to process your request");
+        setLoading(false);
+        return;
       }
 
-      const data = await res.json();
       if (data) {
         setResult(data);
         console.log("sayan", data);
       }
 
       setLoading(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      toast.error(error?.message || "Network error occurred");
       setLoading(false);
     }
   };

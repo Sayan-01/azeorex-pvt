@@ -40,19 +40,19 @@ const GlobalReviewForm = () => {
     <form onSubmit={handleSubmit}>
       <Input
         name="globalReview"
-        className="bg-transparent border-0 text-white text-base placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
+        className="bg-transparent border-0 text-white text-base placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 p-0 px-2"
         placeholder="Ask Lovable to create a portfolio website for my..."
       />
       <div className="flex justify-between items-center mt-4 border-t border-gray-700 pt-3">
         <div className="flex space-x-4 text-gray-400">
-          <button className="flex items-center hover:text-gray-200">
+          <div className="flex items-center hover:text-gray-200">
             {/* <ImagePlus size={18} /> */}
             <span className="">🤝 Thanks for choosing us </span>
-          </button>
+          </div>
           
         </div>
-        <div className="flex items-center">
-          <span className="text-gray-400 mr-1">Public</span>
+        <div className="flex items-center gap-2">
+          <span className="text-gray-400 mr-1">Add Review</span>
           <button
             disabled={session?.user == undefined || loading === true ? true : false}
             type="submit"

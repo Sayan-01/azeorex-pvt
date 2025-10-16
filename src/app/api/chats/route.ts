@@ -16,8 +16,6 @@ export async function POST(req: Request) {
             chatMessage: messages,
           },
         });
-
-        console.log("sayan",chat);
         
         return new Response(JSON.stringify({ success: true }));
     } catch (error) {

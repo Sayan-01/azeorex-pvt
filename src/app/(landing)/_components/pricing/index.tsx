@@ -22,8 +22,8 @@ export const PricingSection = async () => {
   const session = await auth();
   const products = await polar.products.list({ isArchived: false });
   return (
-    <div
-      className="w-full md:mt-40 flex flex-col items-center gap-y-5"
+    <section
+      className="w-full md:pt-32 md:mt-8 flex flex-col items-center gap-y-5"
       id="pricing"
     >
       <Heading
@@ -60,14 +60,14 @@ export const PricingSection = async () => {
           user={session?.user}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
 const PriceCard = ({ border, title, tag, color, features, link, user }: Props) => {
   return (
-    <Card className={clsx("p-8 mt-10 xl:w-[22rem] sm:w-[30rem] w-[18rem] rounded-[40px] border-2", border)}>
-      <div className="flex flex-col gap-2 mb-8">
+    <Card className={clsx("p-8 mt-10 xl:w-[22rem] sm:w-[30rem] w-[18rem] rounded-[40px] border-2 gap-3", border)}>
+      <div className="flex flex-col gap-2 mb-4">
         <CardTitle className={clsx(color)}>{title}</CardTitle>
         <div className="my-5 text-sm text-muted-foreground">
           <div className="flex items-end gap-2 mb-3">
@@ -90,7 +90,7 @@ const PriceCard = ({ border, title, tag, color, features, link, user }: Props) =
         <p className="text-xs opacity-60 mx-auto">powered by azeorex company</p>
       </div>
       <Separator className={tag === "$15 /" ? "bg-gradient-to-r from-[#412fb576] via-[#d3cfcd76] to-[#402fb576]" : "bg-gradient-to-r from-[#412fb576] via-[#d3cfcd76] to-[#402fb576]"} />
-      <div className={clsx("flex flex-col gap-2 mt-5", tag === "$15 /" ? "text-white" : "text-[#d3cfcd]")}>
+      <div className={clsx("flex flex-col gap-2 mt-4", tag === "$15 /" ? "text-white" : "text-[#d3cfcd]")}>
         <p>Features</p>
         {features.map((i, idx) => (
           <span

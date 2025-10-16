@@ -51,28 +51,6 @@ export const IsUserEmailExist = async (email: string) => {
   else return false;
 };
 
-//=============================================================
-
-export const createTeamUser = async (agencyId: string, user: User) => {
-  if (user.role === "AGENCY_OWNER") return null;
-  const response = await db.user.create({ data: { ...user } });
-  return response;
-};
-
-//============================================================================
-
-export const updateUserRole = async (newUser: Partial<User>) => {
-  const session = await auth();
-  if (!session) return;
-
-  await db.user.update({
-    where: { email: session?.user?.email as string }, // Search for user by email
-    data: {
-      role: newUser.role || "SUBACCOUNT_USER",
-    },
-  });
-};
-
 //===============================================================================
 
 export const deleteProject = async (projectId: string) => {
@@ -117,7 +95,7 @@ export const getProjects = async (userId: string | undefined) => {
 
 //===============================================================================
 
-export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string) => {
+export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string, currPlan: string) => {
   try {
     if (project.subDomainName) {
       const existingProject = await db.project.findFirst({
@@ -125,6 +103,24 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
       });
       if (existingProject) {
         throw new Error("Subdomain already exists, please enter another subdomain name.");
+      }
+    }
+
+    if (currPlan === "Free Plan") {
+      const countOfProjects = await db.project.count({
+        where: { userId: userId },
+      });
+      if (countOfProjects >= 1) {
+        throw new Error("You are on free plan and you can create only 1 project");
+      }
+    }
+
+    if (currPlan === "Pro Plan") {
+      const countOfProjects = await db.project.count({
+        where: { userId: userId },
+      });
+      if (countOfProjects >= 5) {
+        throw new Error("You are on pro plan and you can create only 5 projects");
       }
     }
 
@@ -139,9 +135,9 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
     });
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error upserting project:", error);
-    throw new Error("Failed to upsert project. Please try again later.");
+    throw new Error(error.message || "Failed to upsert project. Please try again later.");
   }
 };
 
@@ -189,7 +185,7 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
               content: [],
               id: "__body",
               name: "Body",
-              styles: { backgroundColor: "#f8f8f8" },
+              styles: { backgroundColor: "#fdfdfd" },
               type: "__body",
             },
           ]),

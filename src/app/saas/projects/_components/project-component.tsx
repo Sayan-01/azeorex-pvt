@@ -12,6 +12,7 @@ import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
 import { IoSearchOutline } from "react-icons/io5";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "../../_components/info-header";
+
 type Props = { funnels: any[]; userId: string };
 const ProjectComponent = ({ funnels, userId }: Props) => {
   const [query, setQuery] = useState("");

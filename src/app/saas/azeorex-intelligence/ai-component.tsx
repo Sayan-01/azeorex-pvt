@@ -8,18 +8,18 @@ import { v4 } from "uuid";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-const AiComponent = ({userId}: {userId: string | undefined}) => {
+const AiComponent = ({ userId }: { userId: string | undefined }) => {
   const [userInput, setUserInput] = useState("");
   const [referanceImage, setReferanceImage] = useState<any>();
   const [referanceImagePreview, setReferanceImagePreview] = useState<string>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const onSubmit = async () => {
-    if(!userInput ){
+    if (!userInput) {
       toast.error("Please fill all the fields");
       return;
     }
-    if(!userId){
+    if (!userId) {
       toast.error("Please login to create a project");
       return;
     }
@@ -31,8 +31,8 @@ const AiComponent = ({userId}: {userId: string | undefined}) => {
         {
           role: "user",
           content: userInput,
-        }
-      ]
+        },
+      ];
       const formData = new FormData();
       formData.append("messages", JSON.stringify(message));
       formData.append("projectId", projectId);
@@ -45,13 +45,15 @@ const AiComponent = ({userId}: {userId: string | undefined}) => {
       });
 
       const data = await response.json();
-      console.log(data);
 
-      toast.success("Project created successfully");
-      router.push(`/editor/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
-      
-    } catch (error) {
-      console.error(error);
+      if (response.ok) {
+        toast.success(data.message || "Project created successfully");
+        router.push(`/editor/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
+      } else {
+        toast.error(data.error || "Failed to create project");
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -111,13 +113,20 @@ const AiComponent = ({userId}: {userId: string | undefined}) => {
         </div>
         <div className=" flex gap-3 ">
           <label
-            htmlFor="referanceImage"
-            className="rounded-full px-3 h-8 bg-zinc-800/70 border flex items-center justify-center gap-1.5 text-white/80 text-sm"
+            htmlFor="referenceImage"
+            className="group relative opacity-80 flex items-center justify-between gap-1.5 h-8 px-3 rounded-full bg-zinc-800/70 border border-zinc-700 text-white/80 text-sm cursor-pointer overflow-hidden transition-all duration-300 ease-in-out w-[160px] hover:w-[262px]"
           >
-            <Imagee size={16} />
-            Referace Image
+            <div className="flex gap-1.5 items-center justify-center">
+              <Imagee
+                size={16}
+                className="shrink-0"
+              />
+              <span className="whitespace-nowrap">Reference Image</span>
+            </div>
+            <span className="absolute right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-white/60">(coming soon)</span>
           </label>
           <input
+            disabled
             type="file"
             id="referanceImage"
             className="hidden"
@@ -135,7 +144,17 @@ const AiComponent = ({userId}: {userId: string | undefined}) => {
             onClick={onSubmit}
             disabled={!userInput || loading}
           >
-            {loading ? <Loader2 className="animate-spin text-[#444444]" size={16}/> : <ArrowUp color="#444444" size={16}/>}
+            {loading ? (
+              <Loader2
+                className="animate-spin text-[#444444]"
+                size={16}
+              />
+            ) : (
+              <ArrowUp
+                color="#444444"
+                size={16}
+              />
+            )}
           </button>
         </div>
       </div>

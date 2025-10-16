@@ -24,7 +24,7 @@ const CreateProjectButton = ({ className, userId, children }: Props) => {
       onClick={() => {
         setOpen(
           <CustomModal>
-            <ProjectForm userId={userId}></ProjectForm>
+            <ProjectForm/>
           </CustomModal>
         );
       }}

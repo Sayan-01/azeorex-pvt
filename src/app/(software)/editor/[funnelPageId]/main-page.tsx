@@ -10,6 +10,7 @@ import { Chat, FunnelPage } from "@prisma/client";
 import { useState, useEffect } from "react";
 import { v4 } from "uuid";
 import { AiForFindType, AiPromptForCode, AiPromptForText } from "../../../../../Ai/PromptForWebPage";
+import { toast } from "sonner";
 
 type Props = {
   projectId: string;
@@ -43,9 +44,13 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
       });
 
       const data = await result.json();
+      if (!result.ok) {
+        toast.error(data.error || "Failed to process your request");
+        setLoading(false);
+        return;
+      }
+
       const aiResponseType = data?.choices?.[0]?.message?.content?.trim() || ""; // json string
-      
-      console.log("sayan",aiResponseType);
 
       let aiResponse = "";
 
@@ -55,10 +60,18 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             messages: [{ role: "user", content: AiPromptForText({ userInput }) }],
+            userId,
           }),
         });
 
         const data = await result.json();
+
+        if (!result.ok) {
+          toast.error(data.error || "AI generation failed");
+          setLoading(false);
+          return;
+        }
+
         aiResponse = data?.choices?.[0]?.message?.content?.trim() || "";
       } else if (aiResponseType === "code") {
         const result = await fetch("/api/ai-model", {
@@ -70,9 +83,15 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
         });
 
         const data = await result.json();
+
+        if (!result.ok) {
+          toast.error(data.error || "AI generation failed");
+          setLoading(false);
+          return;
+        }
         aiResponse = data?.choices?.[0]?.message?.content?.trim() || "";
       }
-      console.log("das",aiResponse);
+      console.log("das", aiResponse);
       if (aiResponse.startsWith("[")) {
         try {
           await fetch("/api/funnel/update", {
@@ -87,17 +106,17 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
           setChangeId(v4());
           setMessages((prev) => [...prev, { role: "assistant", content: "AI response is ready" }]);
         } catch (err) {
-          console.error("❌ JSON parse failed:", err);
+          toast.error("AI returned invalid JSON.");
           setMessages((prev) => [...prev, { role: "assistant", content: "AI returned invalid JSON." }]);
         }
       } else {
         setMessages((prev) => [...prev, { role: "assistant", content: aiResponse || "Fail to generate response" }]);
       }
-    } catch (error) {
-      console.error("❌ Error while sending message:", error);
+    } catch (error:any) {
+      toast.error(error?.message || "Network error occurred");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {

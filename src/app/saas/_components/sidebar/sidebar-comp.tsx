@@ -10,9 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import UserBtn from "@/app/(landing)/_components/navbar/user-btn";
 
-import UpgrateButton from "./upgrate-button";
+import UpgrateCard from "./upgrate-card";
+import { useCredits } from "@/hooks/credit-provider";
 
 type Props = {
   defaultOption?: boolean;
@@ -21,6 +21,7 @@ type Props = {
 const SidebarComp = ({ defaultOption }: Props) => {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
+  const { credits } = useCredits();
 
   const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
 
@@ -99,14 +100,7 @@ const SidebarComp = ({ defaultOption }: Props) => {
           })}
         </div>
         <div>
-          <div className="bg-[#1e1f22] w-full rounded-xl flex flex-col gap-4 p-4 mb-4">
-            <div>
-              <h5 className="text-sm text-zinc-300 mb-0.5">Upgrade your plan</h5>
-              <p className="text-xs text-zinc-500 md:block hidden">For unlock all feature on azeorex.</p>
-            </div>
-            <UpgrateButton/>
-
-          </div>
+          <UpgrateCard credits={credits}/>
           <div>
             {[
               {
@@ -145,7 +139,6 @@ const SidebarComp = ({ defaultOption }: Props) => {
                 </div>
               );
             })}
-            
           </div>
         </div>
       </SheetContent>
