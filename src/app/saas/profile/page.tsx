@@ -105,7 +105,7 @@ const page = () => {
       {/* Left: Profile card */}
       <section className="lg:col-span-1">
         <div className="rounded-xl border border-white/5 bg-[#121215] p-5">
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col [@media(min-width:1250px)]:flex-row items-start gap-4">
             <div className="">
               <div className="flex items-center">
                 <div className="relative w-20 h-20">
@@ -231,13 +231,7 @@ const page = () => {
         <div className="rounded-xl border border-white/5 bg-[#121215] p-5">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-base font-semibold">Your Projects</h2>
-            <div className="flex items-center gap-2">
-              <input
-                placeholder="Search projects..."
-                className="h-8 w-56 rounded-md bg-[#1a1b1e] border border-white/10 px-3 text-sm outline-none focus:border-indigo-600"
-              />
-              <button className="h-8 px-3 rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm">New Project</button>
-            </div>
+            
           </div>
 
           <div className="overflow-x-auto rounded-lg border border-white/5">

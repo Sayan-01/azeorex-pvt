@@ -22,7 +22,7 @@ const Card = ({ name, description, updatedAt, id, subDomainName, favicon }: Prop
   const time = timeAgo(updatedAt);
 
   return (
-    <div className="overflow-hidde rounded-2xl group">
+    <div className="overflow-hidde rounded-2xl group cursor-pointer">
       <div className="overflow-clip border-2 border-[#2e2e30]/90 rounded-[16px] group-hover:border-blue-500">
         <Link
           href={`/saas/projects/${id}`}

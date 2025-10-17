@@ -348,7 +348,7 @@ const element = state.editor.selectedElement as EditorElement;
 
   return (
     <div
-      className={cn("absolute border-2 border-main z-[1007] w-full h-full !inset-0", "transition-all duration-100 ease-in-out ", {
+      className={cn("absolute border-2 border-main rounded-[5px] z-[1007] w-full h-full !inset-0", "transition-all duration-100 ease-in-out ", {
         "pointer-events-none": !dragState.active,
         "pointer-events-auto": dragState.active,
       })}

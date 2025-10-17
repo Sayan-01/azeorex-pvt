@@ -429,8 +429,9 @@
   top: 0;
   bottom: 0;
   border: 0;
-  outline: 1px solid #726fff;
-  outline-offset: -1px;
+  border-radius: 5px;
+  outline: 2px solid #726fff;
+  outline-offset: -2px;
   /* background: rgba(0, 0, 255, 0.051); */
   opacity: 0;
   overflow: visible;
