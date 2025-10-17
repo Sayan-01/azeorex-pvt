@@ -24,6 +24,7 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
       },
       { protocol: "https", hostname: "o3w1jifi2x.ufs.sh" },
+      { protocol: "https", hostname: "ik.imagekit.io"}
     ],
   },
   eslint: {

@@ -89,7 +89,7 @@ const PriceCard = ({ border, title, tag, color, features, link, user }: Props) =
         </Link>
         <p className="text-xs opacity-60 mx-auto">powered by azeorex company</p>
       </div>
-      <Separator className={tag === "$15 /" ? "bg-gradient-to-r from-[#412fb576] via-[#d3cfcd76] to-[#402fb576]" : "bg-gradient-to-r from-[#412fb576] via-[#d3cfcd76] to-[#402fb576]"} />
+      <Separator className={tag === "$15 /" ? "bg-gradient-to-r from-[#412fb576] via-[#d3cfcd76] to-[#402fb576] opacity-50" : "bg-gradient-to-r from-[#412fb576] via-[#d3cfcd76] to-[#402fb576]"} />
       <div className={clsx("flex flex-col gap-2 mt-4", tag === "$15 /" ? "text-white" : "text-[#d3cfcd]")}>
         <p>Features</p>
         {features.map((i, idx) => (

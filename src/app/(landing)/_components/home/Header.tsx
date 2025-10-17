@@ -73,26 +73,10 @@ const Header = async () => {
 
                       <UserBtn
                         size="md:h-10 h-9 md:w-10 w-9"
-                        margin=" z-[101] rounded-2xl"
+                        margin=" z-[101] rounded-2xl mt-2"
                         className=" overflow-hidden  rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold sm:flex items-center justify-center outline-none border-none"
                       ></UserBtn>
-                      {/* <button
-                        className="sm:hidden overflow-hidden md:h-10 h-9 md:w-10 w-9 rounded-full bg-gradient-to-br from-[#0b13ec] to-[#fe13de] text-violet-200 text-[20px] font-semibold flex items-center justify-center"
-                        aria-label={session?.user?.image ? "Profile picture" : "User profile"}
-                      >
-                        {session?.user?.image ? (
-                          <>
-                            <Image
-                              width={50}
-                              height={50}
-                              src={session?.user?.image}
-                              alt="profile_pic"
-                            />
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </button> */}
+                      
                     </>
                   ) : (
                     <>

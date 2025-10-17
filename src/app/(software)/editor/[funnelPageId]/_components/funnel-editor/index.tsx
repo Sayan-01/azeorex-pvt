@@ -80,10 +80,12 @@ const FunnelEditor = ({ funnelPageId, liveMode, id }: Props) => {
   };
 
   return load ? (
-    <Loader
-      loading
-      className="pb-12 "
-    />
+    <div className="h-screen flex items-center justify-center">
+      <Loader
+        loading
+        className="pb-12 "
+      />
+    </div>
   ) : (
     <div
       id="perent"

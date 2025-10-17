@@ -29,9 +29,9 @@ export const getUserDetails = async () => {
 
 //=============================================================
 
-export const updateUser = async (data: any) => {
+export const updateUser = async (data: any, id: string) => {
   const response = await db.user.update({
-    where: { id: data.id },
+    where: { id: id },
     data: { ...data },
   });
 

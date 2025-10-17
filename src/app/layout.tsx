@@ -37,7 +37,7 @@ export default async function RootLayout({
               height={2}
               showSpinner={false}
             />
-            <CreditProvider>{children}</CreditProvider>
+            {children}
             <Toaster />
           </ModalProvider>
           {/* </ReactQueryProvider> */}

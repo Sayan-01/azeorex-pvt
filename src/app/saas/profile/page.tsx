@@ -1,8 +1,13 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { getUserCurrentPlan, getUserDetails, updateUser } from "@/lib/queries";
 import { ddmmyyyy } from "@/lib/utils";
 import { User } from "@prisma/client";
-import { useState, useRef, useEffect } from "react";
+import { Loader2, X } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useState, useRef, useEffect, startTransition, useTransition } from "react";
+import { toast } from "sonner";
 
 type Project = {
   id: string;
@@ -14,10 +19,12 @@ type Project = {
 };
 
 type UserData = {
-  id: string
+  id: string;
   name: string;
+  isAdmin: boolean;
   avatarUrl?: string;
   email: string;
+  activePlan: string;
   createdAt: Date;
   role: string;
 };
@@ -26,36 +33,37 @@ const page = () => {
   const [userDetails, setUserDetails] = useState<UserData>({
     id: "",
     name: "",
+    isAdmin: false,
     avatarUrl: "",
     email: "",
+    activePlan: "",
     createdAt: new Date(),
     role: "",
   });
-  const [plan, setPlan] = useState<string>("");
-  const [saving, setSaving] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   const [projects, setProjects] = useState<Project[]>([]);
+  const [isPending, startTransition] = useTransition();
+
+  const { data: session, update } = useSession();
 
   useEffect(() => {
     let mounted = true;
     (async () => {
       try {
         const data = (await getUserDetails()) as User;
-        const plan = await getUserCurrentPlan(data.id);
         if (!mounted) return;
-        setPlan(plan.plan);
         if (data)
           setUserDetails({
             id: data.id,
             name: data.name,
+            isAdmin: data.isAdmin,
             avatarUrl: data.avatarUrl || "",
             email: data.email,
+            activePlan: data.activePlan,
             createdAt: data.createdAt || "",
             role: data.role,
           });
       } catch (e) {
-        console.error("Failed to load user data", e);
+        toast.error("Failed to load user data");
       }
     })();
     return () => {
@@ -64,37 +72,28 @@ const page = () => {
   }, []);
 
   const handleUpdateUserDetails = async () => {
-    try {
-      setSaving(true);
-      await updateUser({
-        id: userDetails.id,
+    startTransition(async () => {
+      try {
+        await updateUser({
+          name: userDetails.name,
+          avatarUrl: userDetails.avatarUrl,
+        }, userDetails.id);
+
+      await update({
         name: userDetails.name,
+        avatarUrl: userDetails.avatarUrl,
       });
-      console.log("Username updated ->", userDetails.name);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setSaving(false);
-    }
+
+      toast.success("User details updated successfully");
+      } catch (e) {
+        toast.error("Failed to update user details");
+      }
+    });
   };
-
-  const handleAvatarClick = () => fileInputRef.current?.click();
-
-
 
   const handleBuy = (projectId: string) => {
     // TODO: integrate checkout/payment
     console.log("Buy project ->", projectId);
-  };
-
-  const handleUpgrade = () => {
-    // TODO: navigate to billing/upgrade page
-    console.log("Upgrade plan clicked");
-  };
-
-  const handleLogout = () => {
-    // TODO: integrate with auth signOut()
-    console.log("Logout clicked");
   };
 
   const handleApplyAdmin = () => {
@@ -107,29 +106,56 @@ const page = () => {
       <section className="lg:col-span-1">
         <div className="rounded-xl border border-white/5 bg-[#121215] p-5">
           <div className="flex items-start gap-4">
-            <div>
-              <div
-                onClick={handleAvatarClick}
-                className="w-20 h-20 rounded-full overflow-hidden ring-1 ring-white/10 cursor-pointer bg-zinc-900 flex items-center justify-center"
-                title="Change profile picture"
-              >
-                {userDetails.avatarUrl ? (
-                  <img
-                    src={userDetails.avatarUrl}
-                    alt="avatar"
-                    className="w-full h-full object-cover"
+            <div className="">
+              <div className="flex items-center">
+                <div className="relative w-20 h-20">
+                  {userDetails.avatarUrl ? (
+                    <img
+                      src={userDetails.avatarUrl}
+                      alt="Avatar"
+                      className="w-20 h-20 rounded-full object-cover border border-gray-300"
+                    />
+                  ) : (
+                    <label htmlFor="avatar">
+                      <div className="w-20 h-20 rounded-full bg-gray-500 flex items-center justify-center text-white text-xl font-bold">{userDetails.name?.[0] || "U"}</div>
+                    </label>
+                  )}
+                  {userDetails.avatarUrl && (
+                    <button
+                      className="absolute top-0 right-0 rounded-full p-1 bg-white text-black"
+                      onClick={() => setUserDetails({ ...userDetails, avatarUrl: "" })}
+                    >
+                      <X size={12} />
+                    </button>
+                  )}
+                </div>
+
+                <div>
+                  <input
+                    type="file"
+                    id="avatar"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+
+                      const formData = new FormData();
+                      formData.append("file", file);
+
+                      const res = await fetch("/api/upload-avatar", {
+                        method: "POST",
+                        body: formData,
+                      });
+
+                      const data = await res.json();
+                      if (data.url) {
+                        setUserDetails({ ...userDetails, avatarUrl: data.url });
+                      }
+                    }}
                   />
-                ) : (
-                  <span className="text-zinc-500 text-sm">Upload</span>
-                )}
+                </div>
               </div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => setUserDetails({ ...userDetails, avatarUrl: e.target.value })}
-                className="hidden"
-              />
             </div>
             <div className="flex-1">
               <label className="text-xs text-zinc-400">Username</label>
@@ -140,13 +166,18 @@ const page = () => {
                   className="h-9 w-full rounded-md bg-[#1a1b1e] border border-white/10 px-3 text-sm outline-none focus:border-indigo-600"
                   placeholder="Enter username"
                 />
-                <button
+                <Button
                   onClick={handleUpdateUserDetails}
-                  disabled={saving}
-                  className="h-9 px-3 rounded-md bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white text-sm"
+                  disabled={isPending}
                 >
-                  {saving ? "Saving..." : "Save"}
-                </button>
+                  {isPending ? (
+                    <>
+                      <Loader2 className=" h-4 w-4 animate-spin duration-200" />
+                    </>
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
               </div>
               <p className="mt-2 text-xs text-zinc-500">
                 Current: <span className="text-zinc-300">{userDetails.name}</span>
@@ -154,7 +185,7 @@ const page = () => {
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+          <div className="mt-5 grid grid-cols-2 gap-3 text-sm cursor-pointer">
             <div className="bg-[#15161a] border border-white/5 rounded-lg p-3">
               <p className="text-zinc-400 text-xs">Email</p>
               <p className="truncate">{userDetails.email}</p>
@@ -175,14 +206,11 @@ const page = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-zinc-400 text-xs">Plan</p>
-                  <p>{plan}</p>
+                  <p>{userDetails.activePlan}</p>
                 </div>
-                <button
-                  onClick={handleUpgrade}
-                  className="h-8 px-3 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-xs"
-                >
-                  Upgrade
-                </button>
+                <Link href="/#pricing">
+                  <button className="h-8 px-3 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-xs">Upgrade</button>
+                </Link>
               </div>
             </div>
           </div>

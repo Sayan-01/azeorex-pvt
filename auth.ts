@@ -59,12 +59,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
       // If the user is signing in for the first time, or there's an existing user
-      if (trigger === "update") {
-        return {
-          ...token,
-          ...session.user,
-        };
+      if (trigger === "update" && session) {
+        if (session.name) token.name = session.name;
+        if (session.avatarUrl) token.avatarUrl = session.avatarUrl;
       }
+
       if (user) {
         const email = user.email;
         let alreadyUser;

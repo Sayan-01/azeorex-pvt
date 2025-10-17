@@ -152,7 +152,8 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
                 .slice(0, 4)
                 .map((item) => {
                   return (
-                    <Card key={item.id}
+                    <Card
+                      key={item.id}
                       id={item.id}
                       name={item.name}
                       updatedAt={item.updatedAt}
@@ -208,13 +209,23 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
               .filter((item) => item.platform.includes("figma"))
               .slice(0, 4)
               .map((item) => {
-                return <TemplateCard item={item} key={item.id}/>;
+                return (
+                  <TemplateCard
+                    item={item}
+                    key={item.id}
+                  />
+                );
               })}
           </div>
         ) : (
-          <div className="w-full mt-5 flex flex-col items-center gap-4 xxl relative bg-gradient-to-r from-transparent to-[#141414]">
+          <div className="w-full mt-5 flex flex-col items-center md:gap-x-7 gap-x-5 xxl relative bg-gradient-to-r from-transparent to-[#141414]">
             {[1, 2, 3, 4].map((item) => {
-              return <div key={item} className="aspect-[16/10] bg-gradient-to-br from-zinc-900/80 to-[#141414] w-full rounded-xl"></div>;
+              return (
+                <div
+                  key={item}
+                  className="aspect-[16/10] bg-gradient-to-br from-zinc-900/80 to-[#141414] w-full rounded-xl"
+                ></div>
+              );
             })}
             <p className="text-zinc-500 opacity-90 text-sm absolute -translate-x-1/2 left-1/2 px-5 py-2 rounded-full bg-[#1e1f22]">No templates found</p>
           </div>
@@ -251,13 +262,23 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
               .filter((item) => item.platform.includes("azeorex"))
               .slice(0, 4)
               .map((item) => {
-                return <TemplateCard item={item} key={item.id}/>
+                return (
+                  <TemplateCard
+                    item={item}
+                    key={item.id}
+                  />
+                );
               })}
           </div>
         ) : (
-          <div className="w-full mt-5 flex flex-col items-center gap-4 xxl relative bg-gradient-to-r from-transparent to-[#141414]">
+          <div className="w-full mt-5 flex flex-col items-center md:gap-x-7 gap-x-5 xxl relative bg-gradient-to-r from-transparent to-[#141414]">
             {[1, 2, 3, 4].map((item) => {
-              return <div key={item} className="aspect-[16/10] bg-gradient-to-br from-zinc-900/80 to-[#141414] w-full rounded-xl"></div>;
+              return (
+                <div
+                  key={item}
+                  className="aspect-[16/10] bg-gradient-to-br from-zinc-900/80 to-[#141414] w-full rounded-xl"
+                ></div>
+              );
             })}
             <p className="text-zinc-500 opacity-90 text-sm absolute -translate-x-1/2 left-1/2 px-5 py-2 rounded-full bg-[#1e1f22]">No templates found</p>
           </div>
