@@ -26,7 +26,7 @@ const LikeButton = ({ temId, userId, isLiked, className, totalLikes }: Props) =>
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ temId, userId, like: !newLikeState }), // Send correct toggled value
+        body: JSON.stringify({ temId, userId, like: newLikeState }), // Send correct toggled value
       });
 
       if (!res.ok) {
@@ -40,9 +40,9 @@ const LikeButton = ({ temId, userId, isLiked, className, totalLikes }: Props) =>
   }, [temId, userId, like]);
 
   return (
-    <div className={`${className}`}>
+    <div className={`${className} `}>
       <button
-        className="flex items-center space-x-2 bg-zinc-800 rounded-full px-4 py-2"
+        className="flex items-center space-x-2 bg-pink-500/10 rounded-full px-4 py-2"
         onClick={() => likeFeature()}
       >
         {like ? (
@@ -53,10 +53,10 @@ const LikeButton = ({ temId, userId, isLiked, className, totalLikes }: Props) =>
         ) : (
           <IoHeartOutline
             size={19}
-            className=""
+            className="text-pink-500"
           />
         )}
-        <span>{totalLike}</span>
+        <span className="text-pink-500">{totalLike}</span>
       </button>
     </div>
   );

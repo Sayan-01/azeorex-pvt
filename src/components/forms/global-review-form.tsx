@@ -30,7 +30,7 @@ const GlobalReviewForm = () => {
       });
     } else if (result?.message) {
       setResponseMessage(result.error);
-      toast("Uh oh! Review Created", {
+      toast("Yoo ho! Review Created", {
         description: "Thanks for choosing us to enhance your dream",
       });
       router.push("/");

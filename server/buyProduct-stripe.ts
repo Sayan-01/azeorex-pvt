@@ -3,11 +3,18 @@ import { db } from "@/lib/db";
 import { stripe } from "@/utils/stripe";
 import { redirect } from "next/navigation";
 import { title } from "process";
+import { auth } from "../auth";
 
 const buyProduct = async (fromdata: FormData) => {
   const id = (await fromdata.get("id")) as string;
   if (!id) {
     throw new Error("Product ID is required");
+  }
+
+  const authSession = await auth();
+
+  if (!authSession?.user) {
+    throw new Error("User not found");
   }
 
   const data = await db.template.findUnique({ where: { id }, select: { title: true, description: true, access: true, price: true, image: true } });
@@ -31,8 +38,8 @@ const buyProduct = async (fromdata: FormData) => {
         quantity: 1,
       },
     ],
-    success_url: `${process.env.NEXT_URL as string}/payment/success`,
-    cancel_url: `${process.env.NEXT_URL as string}/payment/cancel`,
+    success_url: `${process.env.NEXT_URL as string}/success`,
+    cancel_url: `${process.env.NEXT_URL as string}/cancel`,
   });
   return redirect(session.url || "");
 };

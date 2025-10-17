@@ -130,7 +130,7 @@ const page = async (props: { params: Promise<{ id: string }> }) => {
                   <Heading>Template Category</Heading>
                   <div className="mb-10">
                     {oneTemplate.category.map((i) => {
-                      return <Badge key={i} className={"border rounded-lg mr-4 mb-4 py-2 bg-[#ffffff08]"}>{i}</Badge>;
+                      return <Badge key={i} className={"border rounded-lg mr-4 mb-4 py-2 text-white/80 bg-[#ffffff08]"}>{i}</Badge>;
                     })}
                   </div>
                   <Heading>Features</Heading>

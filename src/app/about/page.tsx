@@ -256,7 +256,7 @@ const Page = () => {
                 <h3 className="text-xl md:text-2xl font-bold text-white">Start building with Azeorex</h3>
                 <p className="mt-2 text-slate-300">Create a project, design your pages, and ship a live site in minutes.</p>
               </div>
-              <div className="flex gap-3">
+              <div className="flex lg:flex-row flex-col gap-3">
                 <Link
                   href="/saas/projects"
                   className="inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-medium bg-blue-600 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

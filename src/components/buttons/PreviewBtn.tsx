@@ -10,12 +10,12 @@ import Image from "next/image";
 type Props = {className?: string; children: React.ReactNode; preview: string | false};
 const PreviewButton = ({ className, children, preview }:Props) => {
   return (
-    <div className="bg-[#ffffff08] h-[42px] text-white rounded-lg flex items-center justify-center font-lg w-full">
+    <div className="bg-[#ffffff08] h-[42px] text-white rounded-lg flex items-center justify-center font-lg w-full z-20">
       <Dialog>
         <DialogTrigger asChild>
           <button className={`${className}`}>{children}</button>
         </DialogTrigger>
-        <DialogContent className="  md:w-[600px] sm:w-[400px] w-full md:h-[90%] h-full">
+        <DialogContent className="  md:w-[600px] sm:w-[400px] w-full md:h-[calc(100%-200px)] h-[calc(100%-150px)] ">
           {preview ? (
             <>
               <h1 className="text-2xl font-semibold">Preview Image</h1>

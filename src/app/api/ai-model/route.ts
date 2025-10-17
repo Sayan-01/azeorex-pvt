@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         // model: "google/gemini-2.0-flash-exp:free",
-        model: "openai/gpt-4o:free",
+        model: "openai/gpt-oss-20b:free",
         messages,
       }),
     });

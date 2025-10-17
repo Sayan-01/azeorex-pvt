@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { registerSchema } from "../../../validators/auth-validator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
@@ -16,7 +16,6 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { generateVerificationToken } from "@/utils/token";
 import { IsUserEmailExist, sendCodeThroughNodemailer } from "@/lib/queries";
 
-
 const RegisterForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -25,6 +24,8 @@ const RegisterForm = () => {
   const [preOtp, setPreOtp] = useState("");
   const [expires, setExpires] = useState<Date | null>();
   const [code, setCode] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -82,15 +83,16 @@ const RegisterForm = () => {
         let data = await res.json();
         if (res.ok) {
           setSuccess(data.message);
-          setLoading(false); // Set loading to false
+          setLoading(false);
+          router.refresh();
           redirect("/auth/login");
         } else if (!res.ok) {
-          setLoading(false); // Set loading to false
+          setLoading(false);
           setError(data.message);
         }
       } catch (error) {
         console.log("Error in sign up", error);
-        setLoading(false); // Set loading to false
+        setLoading(false);
       }
     }
   };
@@ -101,7 +103,7 @@ const RegisterForm = () => {
         <h2 className={` text-[30px] text-neutral-800 dark:text-neutral-200 `}>Welcome!</h2>
         <p className="-mb-2 text-sm opacity-60">Login into Azeorex to continue</p>
       </div>
-      
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -113,8 +115,7 @@ const RegisterForm = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer >
-                  
+                <LabelInputContainer>
                   <FormControl>
                     <Input
                       className="rounded-xl h-[42px] border-zinc-800 border placeholder:opacity-40"
@@ -132,7 +133,7 @@ const RegisterForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer >
+                <LabelInputContainer>
                   <FormControl>
                     <Input
                       className="rounded-xl h-[42px] border-zinc-800 border placeholder:opacity-40"
@@ -153,9 +154,9 @@ const RegisterForm = () => {
                 <LabelInputContainer>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-800 border tracking-[6px] placeholder:opacity-40"
+                      className="rounded-xl h-[42px] border-zinc-800 border placeholder:opacity-40"
                       type="password"
-                      placeholder="@@@@@@"
+                      placeholder="Password"
                       {...field}
                     />
                   </FormControl>
@@ -175,7 +176,7 @@ const RegisterForm = () => {
                       className="rounded-xl h-[42px] border-zinc-800 border tracking-[6px] !overflow-hidden placeholder:opacity-40"
                       type="text "
                       maxLength={6}
-                      placeholder="######"
+                      placeholder="OTP"
                       {...field}
                     />
                   </FormControl>
