@@ -200,12 +200,12 @@ export const SAAS_SIDEBAR_OPTIONS: saasSideBarOptions[] = [
     link: `/saas/community`,
     icon: <AudioLines size={18} />,
   },
-  {
-    id: 6,
-    name: "Az Store",
-    link: `/saas/az-store`,
-    icon: <ShoppingBag size={18} />,
-  },
+  // {
+  //   id: 6,
+  //   name: "Az Store",
+  //   link: `/saas/az-store`,
+  //   icon: <ShoppingBag size={18} />,
+  // },
 ];
 
 export const access = [
