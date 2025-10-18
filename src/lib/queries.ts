@@ -134,7 +134,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
       },
     });
 
-    return response;
+    return { success: true, data: response };
   } catch (error: any) {
     console.error("Error upserting project:", error);
     return {success:false, message:error.message || "Failed to upsert project. Please try again later."};

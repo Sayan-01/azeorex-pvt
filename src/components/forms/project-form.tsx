@@ -71,7 +71,15 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData}) => {
 
     try {
       setIsLoading(true);
-      await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4(), currPlan);
+      const result = await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4(), currPlan);
+
+      if (!result.success) {
+        toast.error("Oops!", {
+          description: result.message || "Something went wrong while saving project.",
+        });
+        setIsLoading(false);
+        return;
+      }
 
       toast.success("Success", {
         description: "Saved project details",
