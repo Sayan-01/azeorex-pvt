@@ -35,12 +35,12 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
 
     try {
-      const result = await fetch("/api/ai-model-gem", {
+      const result = await fetch("/api/ai-model", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          // messages: [{ role: "user", content: AiForFindType({ userInput }) }],
-          messages: AiForFindType({ userInput }),
+          messages: [{ role: "user", content: AiForFindType({ userInput }) }],
+          // messages: AiForFindType({ userInput }),
           userId,
         }),
       });
@@ -57,17 +57,18 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
       let aiResponse = "";
 
       if (aiResponseType === "txt") {
-        const result = await fetch("/api/ai-model-gem", {
+        const result = await fetch("/api/ai-model", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            // messages: [{ role: "user", content: AiPromptForText({ userInput }) }],
-            messages: AiPromptForText({ userInput }),
+            messages: [{ role: "user", content: AiPromptForText({ userInput }) }],
+            // messages: AiPromptForText({ userInput }),
             userId,
           }),
         });
 
         const data = await result.json();
+        console.log("data", data);
 
         if (!result.ok) {
           toast.error(data.error || "AI generation failed");
@@ -77,12 +78,12 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
 
         aiResponse = data?.choices?.[0]?.message?.content?.trim() || "";
       } else if (aiResponseType === "code") {
-        const result = await fetch("/api/ai-model-gem", {
+        const result = await fetch("/api/ai-model", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            // messages: [{ role: "user", content: AiPromptForCode({ userInput }) }],
-            messages: AiPromptForCode({ userInput }),
+            messages: [{ role: "user", content: AiPromptForCode({ userInput }) }],
+            // messages: AiPromptForCode({ userInput }),
             userId,
           }),
         });

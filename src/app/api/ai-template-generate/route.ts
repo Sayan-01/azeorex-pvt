@@ -22,9 +22,9 @@ export const POST = async (req: any) => {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // if (user.credits < 100) {
-    //   return NextResponse.json({ error: "Not enough credits" }, { status: 400 });
-    // }
+    if (user.credits < 100) {
+      return NextResponse.json({ error: "Not enough credits" }, { status: 400 });
+    }
     
     const result = await geminiModel.sendMessage(prompt);
     const aiRes = result.response.text();
