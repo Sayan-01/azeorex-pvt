@@ -33,6 +33,7 @@ export async function POST(req: Request) {
     });
 
     const data = await response.json();
+    console.log("response", data?.choices?.[0]?.message);
 
     if (!response.ok) {
       console.error("OpenRouter Error:", data);
