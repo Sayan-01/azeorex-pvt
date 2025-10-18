@@ -108,29 +108,12 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
           </p>
         </div>
       </section>
-      <div className="my-8 md:px-7 px-5 hidden ml-2 md:flex items-center justify-between">
+      <div className="my-8 md:px-7 px-5 hidden ml-2 md:flex items-center ">
         <div>
           <h1 className=" text-2xl font-semibold">Your Projects</h1>
           <p className=" text-zinc-400 text-sm mt-1">All of your letest project in one palce, explore</p>
         </div>
-        <Tabs defaultValue="account">
-          <div className="flex items-center">
-            <TabsList className="w-full justify-between gap-2 p-[2px] h-[31px] rounded-lg bg-[#242424] ">
-              <TabsTrigger
-                className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
-                value="account"
-              >
-                Azeorex
-              </TabsTrigger>
-              <TabsTrigger
-                className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
-                value="password"
-              >
-                Figma
-              </TabsTrigger>
-            </TabsList>
-          </div>
-        </Tabs>
+        
       </div>
       <section className="text-3xl mb-4 md:px-7 px-5  sm:hidden flex flex-col items-center">
         <h1 className="text-center font-bold text-2xl mb-2 mt-7">All Projects</h1>

@@ -45,6 +45,7 @@ export const POST = Webhooks({
           where: { email: customerEmail },
           data: {
             credits: { increment: credits },
+            activePlan: planName,
           },
         });
 

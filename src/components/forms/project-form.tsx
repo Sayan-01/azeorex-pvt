@@ -29,6 +29,7 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData}) => {
   const { setClose } = useModal();
   const [userId, setUserId] = useState<string>("");
   const [currPlan, setCurrPlan] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof CreateFunnelFormSchema>>({
@@ -63,13 +64,13 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData}) => {
     }
   }, [defaultData]);
 
-  const isLoading = form.formState.isLoading;
 
   const onSubmit = async (values: z.infer<typeof CreateFunnelFormSchema>) => {
     if (!userId) return;
     
 
     try {
+      setIsLoading(true);
       await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4(), currPlan);
 
       toast.success("Success", {
@@ -82,6 +83,9 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData}) => {
       toast.error("Oops!", {
         description: error.message || "Something went wrong while saving project.",
       });
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -100,7 +104,7 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData}) => {
                 <FormItem className="flex gap-2">
                   <FormControl className="w-full">
                     <FileUpload
-                      className="bg-[#202124] border border-[#2c2d30] mx-auto"
+                      className="bg-[#202124] rounded-xl mx-auto border border-[#2c2d30]"
                       apiEndpoint="favicon"
                       value={field.value}
                       onChange={field.onChange}

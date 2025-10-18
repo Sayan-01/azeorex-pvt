@@ -20,7 +20,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
     return (
       <div className="flex flex-col items-center justify-center w-full  rounded-xl h-60 bg-[#202124]">
         {type != "pdf" ? (
-          <div className={`relative w-28 h-28 rounded-md overflow-hidden g-[#202124] borde border-[#2c2d30]`}>
+          <div className={`relative w-28 h-28 rounded-md overflow-hidden g-[#202124] `}>
             <Image
               src={value}
               alt="upload image"
@@ -52,9 +52,9 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
     );
   }
   return (
-    <div className={clsx(" w-full g-[#202124] border border-[#2c2d30] rounded-xl", className)}>
+    <div className={clsx(" w-full ", className)}>
       <UploadDropzone
-        className="outline-none"
+        className="outline-none mt-0 border-none"
         endpoint={apiEndpoint}
         onClientUploadComplete={(res) => {
           onChange(res?.[0].url);
