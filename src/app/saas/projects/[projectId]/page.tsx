@@ -169,7 +169,7 @@ const FunnelPage = async (props: Props) => {
                     className="absolute sm:right-[114px] right-0 top-[24px]"
                   >
                     <Button
-                      className="bg-blue-500 hover:bg-blue-500/80 h-9 text-white hover:text-white rounded-[16px]"
+                      className="bg-blue-500 hover:bg-blue-600 h-9 text-white hover:text-white rounded-[16px]"
                     >
                       + Create Page
                     </Button>
@@ -184,11 +184,11 @@ const FunnelPage = async (props: Props) => {
 
                     <MenubarSub>
                       <MenubarSubTrigger
-                        className="text-xs text-gray-300 opacity-40"
+                        className="text-sm text-gray-300 opacity-40"
                         disabled
                       >
                         New CMS Page
-                        <span className="border border-green-600 bg-green-500/30 rounded-full px-1.5 text-xs pb-[1px] ml-3">comming soon</span>
+                        <span className="border border-green-600 bg-green-500/30 rounded-full px-1.5 text-sm pb-[1px] ml-3">comming soon</span>
                       </MenubarSubTrigger>
 
                       <MenubarSubContent className="bg-[#272727]">
