@@ -8,12 +8,12 @@ import { Loader } from "../global/Loader";
 
 type Props = {
   oneTemplate: Template;
+  userId: string | undefined;
 };
 
-const BuyButtton = ({ oneTemplate }: Props) => {
+const BuyButtton = ({ oneTemplate, userId }: Props) => {
   const [loading, setLoading] = useState(false);
 
-  console.log(oneTemplate);
   const templateToProject = async () => {
     setLoading(true);
     try {
@@ -31,7 +31,16 @@ const BuyButtton = ({ oneTemplate }: Props) => {
     return (
       <form
         className="w-full"
-        action={buyProduct}
+        action={(formData: FormData) => {
+          if (!userId) toast.error("Please login to purchase template");
+          else {
+            try {
+              buyProduct(formData)
+            } catch (error) {
+              toast.error("Something went wrong, try again");
+            }
+          }
+        }}
       >
         <input
           type="hidden"

@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useState } from "react";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import { toast } from "sonner";
 
 type Props = {
   temId: string;
@@ -33,9 +34,9 @@ const LikeButton = ({ temId, userId, isLiked, className, totalLikes }: Props) =>
         throw new Error("Failed to update like");
       }
     } catch (error) {
-      console.error("Like update failed:", error);
       setLike((prev) => !prev); // Revert like state on error
       setTotalLike((count) => (newLikeState ? count - 1 : count + 1)); // Revert totalLikes correctly
+      toast("Login to like this template");
     }
   }, [temId, userId, like]);
 

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { registerSchema } from "../../../validators/auth-validator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
@@ -85,7 +85,7 @@ const RegisterForm = () => {
           setSuccess(data.message);
           setLoading(false);
           router.refresh();
-          redirect("/auth/login");
+          router.push("/auth/login");
         } else if (!res.ok) {
           setLoading(false);
           setError(data.message);

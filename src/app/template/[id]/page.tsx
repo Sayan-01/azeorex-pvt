@@ -20,6 +20,7 @@ import { User } from "@prisma/client";
 import { Eye, MessageSquareMore, MoveRight } from "lucide-react";
 import { auth } from "../../../../auth";
 import CommentSection from "../_components/comments-section";
+import { toast } from "sonner";
 
 interface Template {
   id: string;
@@ -44,7 +45,7 @@ interface Template {
 
 const getTemplateData = async (id: string): Promise<Template> => {
   let data = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, { cache: "no-store" });
-  if (!data.ok) throw new Error("Failed to fetch template");
+  if (!data.ok) toast("Failed to fetch template");
   const res = await data.json();
   return res;
 };
@@ -130,7 +131,14 @@ const page = async (props: { params: Promise<{ id: string }> }) => {
                   <Heading>Template Category</Heading>
                   <div className="mb-10">
                     {oneTemplate.category.map((i) => {
-                      return <Badge key={i} className={"border rounded-lg mr-4 mb-4 py-2 text-white/80 bg-[#ffffff08]"}>{i}</Badge>;
+                      return (
+                        <Badge
+                          key={i}
+                          className={"border rounded-lg mr-4 mb-4 py-2 text-white/80 bg-[#ffffff08]"}
+                        >
+                          {i}
+                        </Badge>
+                      );
                     })}
                   </div>
                   <Heading>Features</Heading>
@@ -203,7 +211,10 @@ const page = async (props: { params: Promise<{ id: string }> }) => {
               <div className="w-full">
                 <div className="flex flex-col sm:flex-row gap-y-5 sm:gap-y-0 gap-x-5  mt-2">
                   {/* btn 1 */}
-                  <BuyButtton oneTemplate={oneTemplate} />
+                  <BuyButtton
+                    oneTemplate={oneTemplate}
+                    userId={session?.user?.id}
+                  />
 
                   <PreviewButton
                     className="w-full"

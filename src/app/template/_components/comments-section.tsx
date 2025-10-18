@@ -11,7 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useRouter } from "next/navigation";
 import DeleteButton from "@/components/buttons/DeleteButton";
 import { Loader } from "@/components/global/Loader";
-import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface CommentProps {
   templateId: string;
@@ -31,7 +31,7 @@ const CommentSection: React.FC<CommentProps> = ({ templateId, userId }) => {
     const fetchComments = async () => {
       try {
         const response = await fetch(`/api/products/${templateId}/reviews`);
-        if (!response.ok) throw new Error("Failed to fetch reviews");
+        if (!response.ok) toast("Failed to fetch reviews");
 
         const data: Review[] = await response.json();
         setComments(data);

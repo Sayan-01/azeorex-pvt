@@ -3,7 +3,7 @@
 import { CreateFunnelFormSchema, CreateMediaType, Warframe } from "@/types/types";
 import { FunnelPage, User } from "@prisma/client";
 import { v4 } from "uuid";
-import { z } from "zod";
+import { success, z } from "zod";
 import { auth } from "../../auth";
 import { db } from "./db";
 import { sendOtpViaNodeMailer } from "./sendOtpViaNodeMailer";
@@ -102,7 +102,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
         where: { subDomainName: project.subDomainName },
       });
       if (existingProject) {
-        throw new Error("Subdomain already exists, please enter another subdomain name.");
+        return {success:false, message:"Subdomain already exists, please enter another subdomain name."};
       }
     }
 
@@ -111,7 +111,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
         where: { userId: userId },
       });
       if (countOfProjects >= 1) {
-        throw new Error("You are on free plan and you can create only 1 project");
+        return {success:false, message:"You are on free plan and you can create only 1 project"};
       }
     }
 
@@ -120,7 +120,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
         where: { userId: userId },
       });
       if (countOfProjects >= 5) {
-        throw new Error("You are on pro plan and you can create only 5 projects");
+        return {success:false, message:"You are on pro plan and you can create only 5 projects"};
       }
     }
 
@@ -137,7 +137,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
     return response;
   } catch (error: any) {
     console.error("Error upserting project:", error);
-    throw new Error(error.message || "Failed to upsert project. Please try again later.");
+    return {success:false, message:error.message || "Failed to upsert project. Please try again later."};
   }
 };
 
@@ -200,7 +200,6 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
 
   return response;
 };
-
 
 //==============================================================================
 
@@ -312,12 +311,11 @@ export const getMedia = async (agencyId: string) => {
 //=============================================================================
 
 export const sendCodeThroughNodemailer = async (email: string, username: string, otp: string) => {
-  const emailRes = await sendOtpViaNodeMailer( email, username, otp );
+  const emailRes = await sendOtpViaNodeMailer(email, username, otp);
   if (emailRes) {
     return { success: true, message: "Email error is", status: 200 };
   } else return { success: false, message: "Email error is", status: 500 };
 };
-
 
 //===========================================================================
 
@@ -411,7 +409,7 @@ export async function getUserCurrentPlan(userId: string) {
   };
 }
 
-export const updateDomainName = async (projectId: string, subDomainName: string|null) => {
+export const updateDomainName = async (projectId: string, subDomainName: string | null) => {
   if (!projectId || !subDomainName) return;
 
   if (subDomainName) {
@@ -428,4 +426,4 @@ export const updateDomainName = async (projectId: string, subDomainName: string|
   });
 
   return response;
-}
+};
