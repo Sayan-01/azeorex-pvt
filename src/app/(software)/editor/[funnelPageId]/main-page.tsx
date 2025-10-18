@@ -68,7 +68,7 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
         });
 
         const data = await result.json();
-        console.log("data", data);
+        
 
         if (!result.ok) {
           toast.error(data.error || "AI generation failed");
