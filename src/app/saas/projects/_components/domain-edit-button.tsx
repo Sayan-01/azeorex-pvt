@@ -35,7 +35,7 @@ const DomainEditButton = ({ projectId }: { projectId: string }) => {
   };
 
   return (
-    <div className="mt-5 ml-3 p-1">
+    <div className="sm:mt-5 mt-2.5 ml-3 p-1">
       <Dialog>
         <DialogTrigger asChild>
           <button

@@ -62,24 +62,28 @@ const FunnelPage = async (props: Props) => {
         <main className="flex-1 md:p-8 p-5">
           <div className="max-w-5xl mx-auto relative">
             {/* Domain header */}
-            <div className="flex sm:flex-row flex-col items-center mb-8">
-              <div className="w-20 h-20 p-[4px] rounded-[18px] border-2 border-white/40 sm:mr-4 sm:mb-0 mb-3">
+            <div className="flex sm:items-center items-start sm:flex-row flex-col mb-8">
+              <div className="w-20 h-20 p-[4px] rounded-[18px] border-2 border-white/40 sm:mr-4 sm:mb-0 mb-3 shrink-0">
                 <div className="rounded-[12px] bg-amber-950 w-full h-full flex items-center justify-center">
                   <Globe className="w-8 h-8 text-amber-400" />
                 </div>
               </div>
-              <div>
-                <div className="text-sm font-semibold text-zinc-500 sm:text-left text-center">Domain</div>
-                <h1 className="text-2xl font-bold sm:text-left text-center">
-                  <Link
-                    target="blank"
-                    href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${project.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}`}
-                  >
-                    {project.subDomainName}.{process.env.NEXT_PUBLIC_URL_DOMAIN}
-                  </Link>
-                </h1>
+
+              <div className="flex sm:items-center items-start sm:gap-2 gap-1 h-min w-full">
+                <div className="min-w-0 max-md:flex-1">
+                  <div className="text-sm font-semibold text-zinc-500 text-left">Domain</div>
+                  <h1 className="md:text-2xl text-lg break-words font-bold text-left truncate sm:max-w-none max-w-full">
+                    <Link
+                      target="_blank"
+                      href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${project.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}`}
+                    >
+                      {`${project.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}`.slice(0, 20)}...
+                    </Link>
+                  </h1>
+                </div>
+
+                <DomainEditButton projectId={projectId} />
               </div>
-              <DomainEditButton projectId={projectId}/>
               {/* <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
                 <Link
                   href={`/saas/projects/${funnelId}/cms/`}
@@ -126,6 +130,7 @@ const FunnelPage = async (props: Props) => {
                 </Menubar>
               </div> */}
             </div>
+
             {/* Domain info
             <div className="grid sm:grid-cols-3 grid-cols-2    mb-6 text-[13px] sm:w-[550px] overscroll-x-auto w-full">
               <div>
@@ -161,13 +166,12 @@ const FunnelPage = async (props: Props) => {
                 <div className="relative w-full">
                   <MenubarTrigger
                     asChild
-                    className="absolute right-28 top-[26px]"
+                    className="absolute sm:right-[114px] right-0 top-[24px]"
                   >
                     <Button
-                      size="sm"
-                      className="bg-blue-500 hover:bg-blue-500/80 h-8 text-white hover:text-white rounded-[16px]"
+                      className="bg-blue-500 hover:bg-blue-500/80 h-9 text-white hover:text-white rounded-[16px]"
                     >
-                      + Create New Page
+                      + Create Page
                     </Button>
                   </MenubarTrigger>
 

@@ -94,7 +94,6 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-
       return (
         <div className="w-full flex justify-end">
           <Dialog>
@@ -110,7 +109,10 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
               </Button>
             </DialogTrigger>
 
-            <DialogContent x={false} className="sm:w-[22rem] p-0 w-[18rem] border-white/5  gap-0.5 ">
+            <DialogContent
+              x={false}
+              className="sm:w-[22rem] p-0 w-[18rem] border-white/5  gap-0.5 "
+            >
               <CreateFunnelPage
                 defaultData={row.original}
                 projectId={row.original.projectId}
@@ -118,7 +120,6 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
                 userId={session?.user?.id}
                 className="mb-2 border-white/5"
               />
-
             </DialogContent>
           </Dialog>
         </div>
@@ -157,44 +158,46 @@ export function FunnelPageTable({ pageDetails, subDomainName }: { pageDetails: F
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-6">
+      <div className="flex md:items-center items-start py-6 w-full justify-between ">
         <Input
           placeholder="Filter page name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-          className="max-w-sm"
+          className="w-min m"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              size="sm"
-              className="ml-auto md:flex hidden gap-1"
-            >
-              Columns{" "}
-              <ChevronDown
-                strokeWidth={1.5}
-                size={16}
-              />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex">
+          <div className="w-[150px] pl-4 h-9 ml-auto">azeorex.pvt</div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className="sm:flex hidden gap-1 ml-3"
+              >
+                Columns{" "}
+                <ChevronDown
+                  strokeWidth={1.5}
+                  size={16}
+                />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className={`rounded-md border bg-[#18181B] ${outf.className}`}>
         <Table>

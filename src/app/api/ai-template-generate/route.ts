@@ -25,14 +25,15 @@ export const POST = async (req: any) => {
     if (user.credits < 100) {
       return NextResponse.json({ error: "Not enough credits" }, { status: 400 });
     }
+    
+    const result = await geminiModel.sendMessage(prompt);
+    const aiRes = result.response.text();
 
     await db.user.update({
       where: { id: userId },
       data: { credits: { decrement: 60 } },
     });
 
-    const result = await geminiModel.sendMessage(prompt);
-    const aiRes = result.response.text();
     return NextResponse.json(aiRes);
   } catch (error) {
     return NextResponse.json({ error: error });
