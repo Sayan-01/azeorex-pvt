@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 const DomainEditButton = ({ projectId }: { projectId: string }) => {
   const [subDomainName, setSubDomainName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -25,6 +26,7 @@ const DomainEditButton = ({ projectId }: { projectId: string }) => {
       await updateDomainName(projectId, subDomainName.trim());
       toast.success("Domain name updated successfully 🎉");
       setSubDomainName("");
+      setOpen(false);
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -36,7 +38,7 @@ const DomainEditButton = ({ projectId }: { projectId: string }) => {
 
   return (
     <div className="sm:mt-5 mt-2.5 ml-3 p-1">
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <button
             type="button"
@@ -65,7 +67,7 @@ const DomainEditButton = ({ projectId }: { projectId: string }) => {
             <DialogClose asChild> 
               <Button
               variant="outline"
-              onClick={() => setSubDomainName("")}
+              onClick={() => {setSubDomainName(""); setOpen(false)}}
               disabled={loading}
             >
               Cancel

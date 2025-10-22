@@ -43,7 +43,7 @@ const Page = async (props: { params: Promise<{ domain: string }> }) => {
     >
       <Editor
         isLive={true}
-        code={pageData.content}
+        code={code}
       />
     </EditorProvider>
   );
