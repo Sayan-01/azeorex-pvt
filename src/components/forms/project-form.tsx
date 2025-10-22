@@ -71,7 +71,7 @@ const ProjectForm: React.FC<CreateProjectProps> = ({ defaultData}) => {
 
     try {
       setIsLoading(true);
-      const result = await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4(), currPlan);
+      const result = await upsertProject(userId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4(), );
 
       if (!result.success) {
         toast.error("Oops!", {
