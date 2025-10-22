@@ -43,7 +43,7 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
     cell: ({ row }) => (
       <Link
         className="flex items-center gap-2  md:min-w-[130px]"
-        href={`/editor/${row.original.id}?userId=${session?.user?.id}&projectId=${row.original.projectId}`}
+        href={`/playground/${row.original.id}?userId=${session?.user?.id}&projectId=${row.original.projectId}`}
       >
         <FileDuoToneBlack />
         <div className="capitalize border-b border-dashed border-sky-500">{row.getValue("name")}</div>

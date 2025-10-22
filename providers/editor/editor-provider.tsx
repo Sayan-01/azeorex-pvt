@@ -589,7 +589,7 @@ type EditorProps = {
   children: React.ReactNode;
   agencyId: string;
   funnelId: string;
-  pageDetails: FunnelPage;
+  pageDetails: FunnelPage | null;
 };
 
 const EditorProvider = (props: EditorProps) => {

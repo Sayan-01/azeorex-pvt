@@ -35,7 +35,7 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
 
     try {
-      const result = await fetch("/api/ai-model", {
+      const result = await fetch("/api/ai-website-generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -57,7 +57,7 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
       let aiResponse = "";
 
       if (aiResponseType === "txt") {
-        const result = await fetch("/api/ai-model", {
+        const result = await fetch("/api/ai-website-generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -68,7 +68,6 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
         });
 
         const data = await result.json();
-        
 
         if (!result.ok) {
           toast.error(data.error || "AI generation failed");
@@ -78,7 +77,7 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
 
         aiResponse = data?.choices?.[0]?.message?.content?.trim() || "";
       } else if (aiResponseType === "code") {
-        const result = await fetch("/api/ai-model", {
+        const result = await fetch("/api/ai-website-generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -118,7 +117,7 @@ const MainPage = ({ projectId, funnelPageDetails, userId, chatMessages }: Props)
       } else {
         setMessages((prev) => [...prev, { role: "assistant", content: aiResponse || "Fail to generate response" }]);
       }
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error(error?.message || "Network error occurred");
     } finally {
       setLoading(false);

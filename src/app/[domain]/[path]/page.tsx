@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 import EditorProvider from "../../../../providers/editor/editor-provider";
 import FunnelEditor from "@/app/(software)/editor/[funnelPageId]/_components/funnel-editor";
+import Editor from "@/app/playground/_components/editor";
 
 const Page = async (props: { params: Promise<{ domain: string; path: string }> }) => {
   const params = await props.params;
@@ -12,17 +13,22 @@ const Page = async (props: { params: Promise<{ domain: string; path: string }> }
   const domainData = await getDomainContent(domainName);
   const pageData = domainData?.FunnelPages.find((page) => page.pathName === params.path);
 
-  if (!pageData || !domainData) return notFound();
+  if (!pageData?.content || !domainData) return notFound();
 
+  let code = pageData.content;
+  code = code
+    .replace(/```html/, "")
+    .replace(/```/, "")
+    .trim();
   return (
     <EditorProvider
       agencyId={domainData.userId}
       pageDetails={pageData}
       funnelId={domainData.id}
     >
-      <FunnelEditor
-        funnelPageId={pageData.id}
-        liveMode={true}
+      <Editor
+        isLive={true}
+        code={code}
       />
     </EditorProvider>
   );

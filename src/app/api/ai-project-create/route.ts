@@ -10,30 +10,36 @@ export const POST = async (req: Request) => {
     const funnelPageId = formData.get("funnelPageId") as string;
     const messages = formData.get("messages") as string;
 
-    let project;
-    try {
-      project = await upsertProject(userId, { name: "Untitled", description: "Untitled", subDomainName: projectId, liveProducts: "" }, projectId, "Free Plan");
-      
-    } catch (error: any) {
-      console.error(error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    const project = await upsertProject(
+      userId,
+      {
+        name: "Untitled",
+        description: "Untitled",
+        subDomainName: projectId,
+        liveProducts: "",
+      },
+      projectId,
+    );
+
+    if (!project.success) {
+      return NextResponse.json({ success: false, message: project.message }, { status: 400 });
     }
 
     await upsertFunnelPageForProject({ id: funnelPageId, name: "Untitled", pathName: "", order: 0 }, projectId);
-
-    const chat = await db.chat.create({
+    
+    await db.chat.create({
       data: {
-        chatMessage: messages,
+        chatMessage: JSON.parse(messages),
         userId,
         projectId,
         funnelPageId,
       },
     });
 
-    return NextResponse.json({ message: "Project created successfully" }, { status: 200 });
+    return NextResponse.json({ success: true, message: "Project created successfully" }, { status: 200 });
   } catch (error: any) {
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, message: error?.message }, { status: 500 });
   }
 };
 

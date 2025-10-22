@@ -2,7 +2,6 @@ import { db } from "@/lib/db";
 
 export async function POST(req: Request) {
   const { messages, funnelPageId, userId, projectId } = await req.json();
-  console.log(funnelPageId, messages);
   try {
     const chat = await db.chat.upsert({
       where: { funnelPageId }, // unique field

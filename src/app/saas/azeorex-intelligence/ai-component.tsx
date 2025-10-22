@@ -46,11 +46,11 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (data.success) {
         toast.success(data.message || "Project created successfully");
-        router.push(`/editor/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
+        router.push(`/playground/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
       } else {
-        toast.error(data.error || "Failed to create project");
+        toast.error(data.message || "Failed to create project");
       }
     } catch (error: any) {
       toast.error(error?.message || "Something went wrong");

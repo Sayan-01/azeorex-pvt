@@ -59,7 +59,7 @@ const FunnelEditor = ({ funnelPageId, liveMode, id }: Props) => {
 
   const sendMessage = async (userInput: string) => {
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
-    const response = await fetch("/api/ai-model", {
+    const response = await fetch("/api/ai-website-generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

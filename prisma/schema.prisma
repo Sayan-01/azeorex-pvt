@@ -132,6 +132,7 @@ model Template {
   likesArray      String[]     @default([])
   dislikes        Int          @default(0)
   FunnelPages     FunnelPage[]
+  HtmlFunnelPages HtmlFunnelPage[]
   purchases       Purchase[]
 
   @@index([userId])
@@ -199,15 +200,37 @@ model Project {
   userId        String
   User          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   FunnelPages   FunnelPage[]
+  HtmlFunnelPages HtmlFunnelPage[]
   CMSCollection CMSCollection[]
   liveProducts  String?         @default("[]")
   Media         Media[]
   Purchase      Purchase[]
 
+
   @@index([userId])
 }
 
 model FunnelPage {
+  id           String    @id @default(uuid())
+  name         String
+  pathName     String    @default("")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  visits       Int       @default(0)
+  content      String?
+  order        Int
+  previewImage String?   @db.Text
+  projectId    String?
+  Project      Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  templateId   String?
+  Template     Template? @relation(fields: [templateId], references: [id])
+  chats        Chat?
+
+  @@index([projectId])
+  @@index([templateId])
+}
+
+model HtmlFunnelPage {
   id           String    @id @default(uuid())
   name         String
   pathName     String    @default("")
@@ -314,7 +337,8 @@ model Chat {
   chatMessage  Json
   userId       String
   projectId    String
-  funnelPageId String   @unique
+  funnelPageId String   @unique 
+  funnelPage   FunnelPage @relation(fields: [funnelPageId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

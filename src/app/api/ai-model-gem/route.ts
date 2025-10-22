@@ -2,12 +2,11 @@ import { NextResponse } from "next/server";
 import { geminiModel } from "../../../../Ai/AiModel";
 import { db } from "@/lib/db";
 
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
 export const POST = async (req: any) => {
   const { messages, userId } = await req.json();
-
-  if (!userId) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
-  }
 
   try {
     const user = await db.user.findUnique({
@@ -25,6 +24,7 @@ export const POST = async (req: any) => {
 
     const result = await geminiModel.sendMessage(messages, userId);
     const aiRes = result.response.text();
+
 
     await db.user.update({
       where: { id: userId },

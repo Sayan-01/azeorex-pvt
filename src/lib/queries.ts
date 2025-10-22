@@ -95,7 +95,7 @@ export const getProjects = async (userId: string | undefined) => {
 
 //===============================================================================
 
-export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string, currPlan: string) => {
+export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string) => {
   try {
     if (project.subDomainName) {
       const existingProject = await db.project.findFirst({
@@ -106,7 +106,12 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
       }
     }
 
-    if (currPlan === "Free Plan") {
+    const currPlan = await db.user.findUnique({
+      where: { id: userId },
+      select: { activePlan: true },
+    });
+
+    if (currPlan?.activePlan === "Free Plan") {
       const countOfProjects = await db.project.count({
         where: { userId: userId },
       });
@@ -115,7 +120,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
       }
     }
 
-    if (currPlan === "Pro Plan") {
+    if (currPlan?.activePlan === "Pro Plan") {
       const countOfProjects = await db.project.count({
         where: { userId: userId },
       });
@@ -141,33 +146,6 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
   }
 };
 
-//==============================================================================
-
-export const upsertFunnelPage = async (agencyId: string, funnelPage: any, funnelId: string) => {
-  if (!agencyId || !funnelId) return;
-  const response = await db.funnelPage.upsert({
-    where: { id: funnelPage.id || "" },
-    update: { ...funnelPage },
-    create: {
-      ...funnelPage,
-      content: funnelPage.content
-        ? funnelPage.content
-        : JSON.stringify([
-            {
-              content: [],
-              id: "__body",
-              name: "Body",
-              styles: { backgrondColor: "#f8f8f8" },
-              type: "__body",
-            },
-          ]),
-      funnelId,
-    },
-  });
-
-  return response;
-};
-
 export const upsertFunnelPageForProject = async (funnelPage: any, projectId: string) => {
   if (!projectId) return;
   const response = await db.funnelPage.upsert({
@@ -180,15 +158,7 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
       pathName: funnelPage.pathName || "",
       content: funnelPage.content
         ? funnelPage.content
-        : JSON.stringify([
-            {
-              content: [],
-              id: "__body",
-              name: "Body",
-              styles: { backgroundColor: "#fdfdfd" },
-              type: "__body",
-            },
-          ]),
+        : " ",
       projectId,
     },
   });
