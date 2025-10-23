@@ -1,7 +1,7 @@
 import React from "react";
 import PlaygroundPage, { Messages } from "./playground-page";
 import { db } from "@/lib/db";
-import EditorProvider from "../../../../providers/editor/editor-provider";
+import { EditorProvider } from "../../../../providers/editor/editor-provider";
 
 type Props = {
   params: Promise<{
@@ -28,7 +28,9 @@ const page = async (props: Props) => {
     },
   });
 
-
+  if (!funnelPageDetails) {
+    return null;
+  }
 
   const chatDetails = await db.chat.findUnique({
     where: {
@@ -37,17 +39,17 @@ const page = async (props: Props) => {
   });
 
   return (
-    <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#333333] overflow-hidden `}>
+    <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#272727]  overflow-hidden `}>
       <EditorProvider
         agencyId={userId}
         funnelId={projectId}
         pageDetails={funnelPageDetails}
       >
         <PlaygroundPage
-          funnelPageDetails={funnelPageDetails}
+          funnelPageDetails={funnelPageDetails || {}}
           userId={userId}
           projectId={projectId}
-          chatMessages={chatDetails?.chatMessage as Messages[] || []}
+          chatMessages={(chatDetails?.chatMessage as Messages[]) || []}
         />
       </EditorProvider>
     </div>

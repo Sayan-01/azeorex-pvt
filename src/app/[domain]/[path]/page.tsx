@@ -2,7 +2,6 @@ import { getDomainContent } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import React from "react";
 import EditorProvider from "../../../../providers/editor/editor-provider";
-import FunnelEditor from "@/app/(software)/editor/[funnelPageId]/_components/funnel-editor";
 import Editor from "@/app/playground/_components/editor";
 
 const Page = async (props: { params: Promise<{ domain: string; path: string }> }) => {

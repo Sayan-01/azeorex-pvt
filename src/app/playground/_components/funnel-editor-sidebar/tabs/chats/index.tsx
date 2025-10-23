@@ -2,10 +2,18 @@
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowUp, Loader, Loader2 } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Chats = ({ messages, onSend, loading }: { messages: { role: string; content: string }[]; onSend: (message: string) => void; loading: boolean }) => {
   const [input, setInput] = useState("");
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when messages change or loading state changes
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
 
   const handleSend = () => {
     if (input.trim() !== "") {
@@ -19,7 +27,10 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
       <div className="p-3 border-b">
         <h3 className="text-lg font-semibold">Your all collections</h3>
       </div>
-      <section className="flex-1 p-3 overflow-y-auto box space-y-4 flex flex-col mb-3 ">
+      <section
+        ref={chatContainerRef}
+        className="flex-1 p-3 pb-0 overflow-y-auto box space-y-4 flex flex-col mb-3 "
+      >
         {messages?.length === 0 ? (
           <p className="text-center text-zinc-500">Chat with AI</p>
         ) : (
@@ -56,7 +67,15 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
                 className="rounded-full"
               />
             </span>
-            <p className="text-purple-500 p-2 rounded-lg max-w-[80%] text-xs bg-purple-500/10 animate-pulse flex items-center gap-2"><span><Loader className="animate-spin" size={16}/></span>AI is thinking...</p>
+            <p className="text-purple-500 p-2 rounded-lg max-w-[80%] text-xs bg-purple-500/10 animate-pulse flex items-center gap-2">
+              <span>
+                <Loader
+                  className="animate-spin"
+                  size={16}
+                />
+              </span>
+              AI is thinking...
+            </p>
           </div>
         )}
       </section>

@@ -40,12 +40,12 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
           className="w-full h-full"
           defaultValue="Chats"
         >
-          <TabList className={clsx({ "-top-[44.8px]": state.editor.previewMode })} />
+          <TabList className={clsx({ "-top-[44.8px]": state.previewMode })} />
           <SheetContent
             showX={false}
             side="left"
             className={clsx("mt-[48.8px] h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  select-none", {
-              hidden: state.editor.previewMode,
+              hidden: state.previewMode,
             })}
           >
             <div className="gap-4 h-full w-[240px] overflow-auto box bg-editor-bcgc border-main-black flex ">
@@ -120,12 +120,12 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
             showX={false}
             side="right"
             className={clsx("mt-[48.8px] h-[calc(100%)-170px] w-[240px] z-[30] shadow-none p-0  bg-background  transition-all border-none  select-none ", {
-              hidden: state.editor.previewMode,
+              hidden: state.previewMode,
             })}
           >
             <div className="grid gap-4 h-full w-[240px] overflow-auto overflow-x-hidden box">
               <TabsContent value="Settings">
-                <SettingsTab />
+                {/* <SettingsTab /> */}
               </TabsContent>
             </div>
           </SheetContent>

@@ -34,7 +34,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
 
   const handleOnSave = async () => {
     setLoade(true);
-    const content = JSON.stringify(state.editor.elements);
+    const content = JSON.stringify(state.html);
     try {
       const response = await upsertFunnelPageForProject(
         {
@@ -54,7 +54,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
 
   return (
     <TooltipProvider>
-      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
+      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc ", { "!h-0 !p-0 !overflow-hidden": state.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
           <Link
             href={`/saas/projects/${projectId}`}
@@ -70,7 +70,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
           <Tabs
             defaultValue="Desktop"
             className="w-fit"
-            value={state.editor.device}
+            value={state.device}
             onValueChange={(value) => {
               dispatch({
                 type: "CHANGE_DEVICE",
