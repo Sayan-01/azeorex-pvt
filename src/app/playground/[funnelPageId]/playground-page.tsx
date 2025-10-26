@@ -19,6 +19,15 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   const [code, setCode] = useState("");
   const { dispatch, state } = useEditor();
 
+  useEffect(() => {
+    if (funnelPageDetails.content) {
+      const index = funnelPageDetails.content.indexOf("```html") + 7;
+      const code = funnelPageDetails.content.slice(index);
+      const cleanCode = code.replace("```", "");
+      dispatch({ type: "SET_HTML", payload: { html: cleanCode } });
+    }
+  }, []);
+
   const sendMessage = async (userInput: string) => {
     setLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
@@ -32,7 +41,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
           userId,
         }),
       });
-      
+
       if (!result.ok) {
         toast.error("Network error occurred");
         setMessages((prev) => prev.slice(0, -1));
@@ -63,12 +72,13 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
           setCode((prev) => prev + chunk);
         }
       }
-      
+
       if (!isCode) {
         setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+        setLoading(false);
       } else {
-        console.log(code);
         setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
+        setLoading(false);
         await savePage(aiResponse);
       }
     } catch (error: any) {
@@ -88,7 +98,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       const code = designCode.slice(index);
       setCode(code);
     }
-  }, []);
+  }, [funnelPageDetails.content]);
 
   useEffect(() => {
     const saveMessages = async () => {
@@ -108,6 +118,10 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
   const savePage = async (content: string) => {
     try {
+      const index = content.indexOf("```html") + 7;
+      const code = content.slice(index);
+      const cleanCode = code.replace("```", "");
+      dispatch({ type: "SET_HTML", payload: { html: cleanCode } });
       await upsertFunnelPageForProject(
         {
           ...funnelPageDetails,
@@ -117,8 +131,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       );
       toast.success("✨Page saved successfully");
     } catch (e) {
-      console.log(e);
-
       toast.error("😫Could not save page");
     }
   };

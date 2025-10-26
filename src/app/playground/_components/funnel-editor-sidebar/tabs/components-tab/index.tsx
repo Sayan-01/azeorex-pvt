@@ -10,7 +10,7 @@ import LinkPlaceholder from "./link-placeholder";
 import ContactFormComponentPlaceholder from "./contact-form-placeholder";
 import CheckoutPlaceholder from "./checkout-placeholder";
 import SectionPlaceholder from "./section-placeholder";
-import { EditorElement, useEditor } from "../../../../../../../providers/editor/editor-provider";
+import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import { Button } from "@/components/ui/button";
 import ImagePlaceholder from "./image-placeholder";
 import SvgPlaceholder from "./svg-placeholder";
@@ -147,7 +147,7 @@ const ComponentsTab = () => {
       >
         <AccordionTrigger className="!no-underline">Your components</AccordionTrigger>
         <AccordionContent className="pb-0 ">
-          {components.map((item: EditorElement) => {
+          {components.map((item:any) => {
             return (
               <div
                 id={item.id}
@@ -161,7 +161,7 @@ const ComponentsTab = () => {
               </div>
             );
           })}
-          {state.editor.selectedElement.type !== null && state.editor.selectedElement.type !== "__body" ? (
+          {/* {state.editor.selectedElement.type !== null && state.editor.selectedElement.type !== "__body" ? (
             <Button
               size="sm"
               className="bg-[#22dd6626] hover:bg-[#22dd6626] mb-4 text-[#21DB66] w-full editor_text"
@@ -174,7 +174,7 @@ const ComponentsTab = () => {
             </Button>
           ) : (
             <></>
-          )}
+          )} */}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

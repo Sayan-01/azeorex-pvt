@@ -32,34 +32,12 @@ const UploadImageForm = ({ projectId }: Props) => {
   });
   const { state, dispatch } = useEditor();
 
-  const handleChangeCustomValues = (link: string) => {
-    console.log("inside", link);
-
-    const settingProperty = "src";
-    const styleObject = {
-      [settingProperty]: link,
-    };
-    console.log(state.editor.selectedElement);
-
-    dispatch({
-      type: "UPDATE_ELEMENT",
-      payload: {
-        elementDetails: {
-          ...state.editor.selectedElement,
-          content: {
-            ...state.editor.selectedElement.content,
-            ...styleObject,
-          },
-        },
-      },
-    });
-  };
+  
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const response = await createMedia(projectId, values);
       console.log("sayan", response, values);
-      handleChangeCustomValues(response.link);
 
       toast.success("Succes", {
         description: "Uploaded media",

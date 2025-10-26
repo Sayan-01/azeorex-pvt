@@ -10,7 +10,7 @@ export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
 export interface EditorState {
   html: string;
-  selectedElementId: string | null;
+  selectedElement: HTMLElement | null;
   previewMode: boolean;
   liveMode: boolean;
   device: DeviceTypes;
@@ -22,9 +22,9 @@ export interface EditorState {
 const initialEditorState: EditorState = {
   //=>
   html: `<div class="p-8 text-center bg-gray-100 rounded-lg">
-  <h1 class="text-2xl font-bold">Start Editing...</h1>
-</div>`,
-  selectedElementId: null,
+    <h1 class="text-2xl font-bold">Start Editing...</h1>
+  </div>`,
+  selectedElement: null,
   previewMode: false,
   liveMode: false,
   device: "Desktop",
@@ -42,7 +42,18 @@ const editorReducer = (state: EditorState = initialEditorState, action: EditorAc
       };
 
     case "SELECT_ELEMENT":
-      return { ...state, selectedElementId: action.payload.elementId };
+      return { ...state, selectedElement: action.payload.element };
+
+    case "UPDATE_SELECTED_ELEMENT_STYLE": {
+      const { selectedElement } = state;
+      const { property, value } = action.payload;
+      if (!selectedElement) return state;
+
+      // ✅ 1. Apply live DOM change
+      selectedElement.style[property as any] = value;
+      // ✅ 2. Return new state so React re-renders sidebar
+      return { ...state, selectedElement: selectedElement };
+    }
 
     case "TOGGLE_PREVIEW_MODE":
       return { ...state, previewMode: !state.previewMode };
@@ -108,7 +119,7 @@ export const EditorProvider = (props: EditorProps) => {
     doc.addEventListener("click", (e) => {
       const target = e.target as HTMLElement;
       if (!target) return;
-      dispatch({ type: "SELECT_ELEMENT", payload: { elementId: target.id || "" } });
+      dispatch({ type: "SELECT_ELEMENT", payload: { element: target } });
     });
 
     // ✅ Drag & Drop
@@ -120,10 +131,10 @@ export const EditorProvider = (props: EditorProps) => {
 
     // ✅ Delete with keyboard
     doc.addEventListener("keydown", (e) => {
-      if (e.key === "Delete" && state.selectedElementId) {
-        const selected = doc.getElementById(state.selectedElementId);
+      if (e.key === "Delete" && state.selectedElement) {
+        const selected = doc.getElementById(state.selectedElement.id);
         if (selected) selected.remove();
-        dispatch({ type: "SELECT_ELEMENT", payload: { elementId: null } });
+        dispatch({ type: "SELECT_ELEMENT", payload: { element: null } });
       }
     });
   };

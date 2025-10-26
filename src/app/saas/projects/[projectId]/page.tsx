@@ -84,83 +84,10 @@ const FunnelPage = async (props: Props) => {
 
                 <DomainEditButton projectId={projectId} />
               </div>
-              {/* <div className="ml-auto mr-auto sm:mr-0 sm:mt-0 mt-3 flex items-center gap-2">
-                <Link
-                  href={`/saas/projects/${funnelId}/cms/`}
-                  className="flex items-center gap-1 h-8 text-xs"
-                >
-                  <Button className="flex items-center gap-1 h-8 text-xs">CMS</Button>
-                </Link>
-                <Button className="flex items-center gap-1 h-8 text-xs">Edit</Button>
-                <Menubar>
-                  <MenubarMenu>
-                    <MenubarTrigger>
-                      <Button
-                        size="sm"
-                        className="bg-blue-500 hover:bg-blue-500/80 text-white hover:text-white"
-                      >
-                        + Create New Page
-                      </Button>
-                    </MenubarTrigger>
-
-                    <MenubarContent className="bg-[#272727]">
-                      <FunnelPageCreateBtn
-                        userId={agencyId}
-                        projectId={funnelId}
-                        length={project.FunnelPages.length}
-                      />
-
-                      <MenubarSub>
-                        <MenubarSubTrigger className="text-xs text-gray-300">New CMS Page</MenubarSubTrigger>
-
-                        <MenubarSubContent className="bg-[#272727]">
-                          {items.map((item) => (
-                            <MenubarSub key={item.name}>
-                              <MenubarSubTrigger className="text-xs text-gray-300">{item.name}</MenubarSubTrigger>
-                              <MenubarSubContent className="ml-3 bg-[#272727]">
-                                <MenubarItem className="text-xs text-gray-300">Index</MenubarItem>
-                                <MenubarItem className="text-xs text-gray-300">Details Page</MenubarItem>
-                              </MenubarSubContent>
-                            </MenubarSub>
-                          ))}
-                        </MenubarSubContent>
-                      </MenubarSub>
-                    </MenubarContent>
-                  </MenubarMenu>
-                </Menubar>
-              </div> */}
+              
             </div>
 
-            {/* Domain info
-            <div className="grid sm:grid-cols-3 grid-cols-2    mb-6 text-[13px] sm:w-[550px] overscroll-x-auto w-full">
-              <div>
-                <div className=" text-zinc-500 mb-1">CREATED</div>
-                <div className="py-1">{timeAgo(project.createdAt)}</div>
-              </div>
-              <div>
-                <div className=" text-zinc-500 mb-1">STATUS</div>
-                {project.published ? (
-                  <div className="inline-flex items-center px-2 py-1 rounded bg-green-950/50 text-green-500 ">Active</div>
-                ) : (
-                  <div className="inline-flex items-center px-2 py-1 rounded bg-amber-950/50 text-amber-500 ">Pending</div>
-                )}
-              </div>
-              <div className="sm:block hidden">
-                <div className=" text-zinc-500 mb-1">REGION</div>
-                <div className="flex items-center py-1">
-                  <span className="mr-2">🇺🇸</span>
-                  North Virginia <span className="text-zinc-500 ml-1">(us-east-1)</span>
-                </div>
-              </div>
-            </div>
-            Status message
-            <div className=" bg-gradient-to-r from-amber-950/60 via-transparent to-transparent border border-amber-900/50 rounded-xl text-sm p-4">
-              <div className="flex items-center">
-                <Loader2 className="w-5 h-5 text-amber-500 animate-spin mr-3" />
-                <div className="font-medium">Looking for DNS records in your domain provider...</div>
-              </div>
-              <div className="text-zinc-400 mt-1 ml-8">It may take a few minutes or hours, depending on the DNS provider propagation time.</div>
-            </div> */}
+            
             <Menubar>
               <MenubarMenu>
                 <div className="relative w-full">

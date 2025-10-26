@@ -33,22 +33,21 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
   };
 
   const handleOnSave = async () => {
-    setLoade(true);
-    const content = JSON.stringify(state.html);
     try {
-      const response = await upsertFunnelPageForProject(
-        {
-          ...funnelPageDetails,
-          content,
-        },
-        projectId
-      );
-      setLoade(false);
-      toast.success("✨Saved Editor");
-    } catch (e) {
-      console.log(e);
+      setLoade(true);
 
-      toast.error("😫Could not save editor");
+      console.log(state.html);
+
+      const code = "```html\n" + state.html + "\n```";
+
+      // await upsertFunnelPageForProject({ ...funnelPageDetails, content: code }, projectId);
+
+      toast.success("✨ Changes saved successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("😫 Could not save editor");
+    } finally {
+      setLoade(false);
     }
   };
 

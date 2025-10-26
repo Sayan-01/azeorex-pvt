@@ -1,8 +1,9 @@
 import { getDomainContent } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import React from "react";
-import EditorProvider from "../../../../providers/editor/editor-provider";
 import Editor from "@/app/playground/_components/editor";
+import { EditorProvider } from "../../../../providers/editor/editor-provider";
+import { NewEditorProvider } from "../../../../providers/newPeovider";
 
 const Page = async (props: { params: Promise<{ domain: string; path: string }> }) => {
   const params = await props.params;
@@ -25,10 +26,12 @@ const Page = async (props: { params: Promise<{ domain: string; path: string }> }
       pageDetails={pageData}
       funnelId={domainData.id}
     >
+      <NewEditorProvider>
       <Editor
         isLive={true}
         code={code}
       />
+      </NewEditorProvider>
     </EditorProvider>
   );
 };

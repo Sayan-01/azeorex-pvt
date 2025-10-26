@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   AlignCenter,
@@ -44,51 +44,68 @@ import Position from "@/icons/position";
 import { Angle } from "@/icons/angle";
 import { Input } from "@/components/ui/custom-input";
 
-const SettingsTab = () => {
+import { SwatchBook } from "lucide-react";
+import { useNewEditor } from "../../../../../../providers/newPeovider";
+import { Button } from "@/components/ui/button";
+
+function SettingsTab() {
+  const { selectedElement } = useNewEditor();
+  const [classes, setClasses] = useState<string[]>([]);
+  const [newClass, setNewClass] = useState("");
+  const [align, setAlign] = React.useState(selectedElement?.style?.textAlign);
   const { state, dispatch } = useEditor();
-  const handleOnChanges = (e: any) => {
-    const styleSettings = e.target.id;
-    let value = e.target.value;
-    const styleObject = {
-      [styleSettings]: value,
-    };
 
-    dispatch({
-      type: "UPDATE_ELEMENT",
-      payload: {
-        elementDetails: {
-          ...state.editor.selectedElement,
-          styles: {
-            ...state.editor.selectedElement.styles,
-            ...styleObject,
-          },
-        },
-      },
-    });
+  const handleOnChanges = (property: string, value: string) => {
+    if (selectedElement) {
+      selectedElement.style[property as any] = value;
+    }
   };
 
-  const handleChangeCustomValues = (e: any) => {
-    const settingProperty = e.target.id;
-    let value = e.target.value;
-    const styleObject = {
-      [settingProperty]: value,
-    };
+  // Update alignment style when toggled
+  React.useEffect(() => {
+    if (selectedElement && align) {
+      selectedElement.style.textAlign = align;
+    }
+  }, [align, selectedElement]);
 
-    dispatch({
-      type: "UPDATE_ELEMENT",
-      payload: {
-        elementDetails: {
-          ...state.editor.selectedElement,
-          content: {
-            ...state.editor.selectedElement.content,
-            ...styleObject,
-          },
-        },
-      },
+  // Keep in sync if element classes are modified elsewhere
+  useEffect(() => {
+    if (!selectedElement) return;
+
+    // set initial classes
+    const currentClasses = selectedElement.className.split(" ").filter((c) => c.trim() !== "");
+    setClasses(currentClasses);
+
+    // watch for future class changes
+    const observer = new MutationObserver(() => {
+      const updated = selectedElement.className.split(" ").filter((c) => c.trim() !== "");
+      setClasses(updated);
     });
+
+    observer.observe(selectedElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, [selectedElement]);
+
+  // Remove a class
+  const removeClass = (cls: string) => {
+    const updated = classes.filter((c) => c !== cls);
+    setClasses(updated);
+    // selectedElement?.className = updated.join(" ");
   };
 
-  if (state.editor.selectedElement.type === null) {
+  // Add new class
+  const addClass = () => {
+    const trimmed = newClass.trim();
+    if (!trimmed) return;
+    if (!classes.includes(trimmed)) {
+      const updated = [...classes, trimmed];
+      setClasses(updated);
+    //   selectedElement?.className = updated.join(" ");
+    }
+    setNewClass("");
+  };
+
+  if (!state.selectedElement) {
     return (
       <div className="h-full flex items-center justify-center bg-editor-bcgc p-4">
         <p className="text-center opacity-80 text-sm">For sidebar access plese select item at first</p>
@@ -99,15 +116,16 @@ const SettingsTab = () => {
       <Accordion
         type="multiple"
         className={`w-[240px] select-none bg-editor-bcgc pb-10 `}
-        defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox", "Special element"]}
+        defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox", "Special element", "Classes"]}
       >
-        <AccordionItem
+        <div>
+          {/* <AccordionItem
           value="Special element"
           className="px-3 py-0  "
         >
           <AccordionTrigger className="!no-underline font-semibold">Special element</AccordionTrigger>
           <AccordionContent className="pb-0">
-            {state.editor.selectedElement.type === "link" && !Array.isArray(state.editor.selectedElement.content) && (
+            {state.selectedElementOuterHTML.type === "link" && !Array.isArray(state.selectedElementOuterHTML.content) && (
               <div className="flex gap-2">
                 <div className="flex items-center pb-4">
                   <p className="text-muted-foreground text-xs w-20">Link Path</p>
@@ -115,14 +133,14 @@ const SettingsTab = () => {
                     id="href"
                     placeholder="https:domain.example.com/pathname"
                     onChange={handleChangeCustomValues}
-                    value={state.editor.selectedElement.content.href}
+                    value={state.selectedElementOuterHTML.content.href}
                   />
                 </div>
               </div>
             )}
           </AccordionContent>
           <AccordionContent className="pb-0">
-            {state.editor.selectedElement.type === "image" && !Array.isArray(state.editor.selectedElement.content) && (
+            {state.selectedElementOuterHTML.type === "image" && !Array.isArray(state.selectedElementOuterHTML.content) && (
               <div className="flex gap-2">
                 <div className="flex items-center pb-4">
                   <p className="text-muted-foreground text-xs w-20">Link Path</p>
@@ -130,7 +148,7 @@ const SettingsTab = () => {
                     id="src"
                     placeholder="https:domain.example.com/pathname"
                     onChange={handleChangeCustomValues}
-                    value={state.editor.selectedElement.content.src}
+                    value={state.selectedElementOuterHTML.content.src}
                   >
                     <Link size={13} />
                   </Input>
@@ -138,7 +156,8 @@ const SettingsTab = () => {
               </div>
             )}
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem> */}
+        </div>
         <AccordionItem
           value="Dimensions"
           className="px-3 py-0  "
@@ -151,8 +170,8 @@ const SettingsTab = () => {
                 <Input
                   placeholder="Auto"
                   id="width"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.width || ""}
+                  defaultValue={selectedElement?.style.width || "Auto"}
+                  onChange={(e) => handleOnChanges("width", e.target.value)}
                   children="W"
                 />
               </div>
@@ -160,8 +179,8 @@ const SettingsTab = () => {
                 <Input
                   id="height"
                   placeholder="Auto"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.height || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={selectedElement?.style.height || ""}
                   children="H"
                 />
               </div>
@@ -172,8 +191,8 @@ const SettingsTab = () => {
                 <Input
                   placeholder="Auto"
                   id="maxWidth"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.maxWidth || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={selectedElement?.style.maxWidth || ""}
                   // children="X"
                 >
                   <MoveHorizontal size={13} />
@@ -183,8 +202,8 @@ const SettingsTab = () => {
                 <Input
                   id="maxHeight"
                   placeholder="Auto"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.maxHeight || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={selectedElement?.style.maxHeight || ""}
                   // children="Y"
                 >
                   <MoveVertical size={13} />
@@ -197,8 +216,8 @@ const SettingsTab = () => {
                 <Input
                   id="rotate"
                   placeholder="0deg"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.rotate || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={state.selectedElement.style.rotate || ""}
                 >
                   <Angle />
                 </Input>
@@ -207,8 +226,8 @@ const SettingsTab = () => {
                 <Input
                   id="borderRadius"
                   placeholder="0px"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.borderRadius || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={state.selectedElement.style.borderRadius || ""}
                 >
                   <Spline size={13} />
                 </Input>
@@ -221,17 +240,18 @@ const SettingsTab = () => {
               <Input
                 id="borderRadius"
                 placeholder="0px"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.borderRadius || ""}
+                                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+
+                defaultValue={state.selectedElement.style.borderRadius || ""}
               />
             </div>
             <div className="w-full">
               <p className="text-muted-foreground text-xs w-full">B Radius</p>
               <div className="flex items-center justify-end">
                 <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
-                  {typeof state.editor.selectedElement.styles?.borderRadius === "number"
-                    ? state.editor.selectedElement.styles?.borderRadius
-                    : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("px", "")) || 0}
+                  {typeof state.selectedElement.style?.borderRadius === "number"
+                    ? state.selectedElement.style?.borderRadius
+                    : parseFloat((state.selectedElement.style?.borderRadius || "0").replace("px", "")) || 0}
                   px
                 </small>
               </div>
@@ -244,10 +264,10 @@ const SettingsTab = () => {
                     },
                   });
                 }}
-                value={[
-                  typeof state.editor.selectedElement.styles?.borderRadius === "number"
-                    ? state.editor.selectedElement.styles?.borderRadius
-                    : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("%", "")) || 0,
+                defaultValue={[
+                  typeof state.selectedElement.style?.borderRadius === "number"
+                    ? state.selectedElement.style?.borderRadius
+                    : parseFloat((state.selectedElement.style?.borderRadius || "0").replace("%", "")) || 0,
                 ]}
                 max={100}
                 step={1}
@@ -258,9 +278,9 @@ const SettingsTab = () => {
               <p className="text-muted-foreground text-xs">Opacity</p>
               <div className="flex items-center justify-end">
                 <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
-                  {typeof state.editor.selectedElement.styles?.opacity === "number"
-                    ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 0}
+                  {typeof state.selectedElement.style?.opacity === "number"
+                    ? state.selectedElement.style?.opacity
+                    : parseFloat((state.selectedElement.style?.opacity || "100").replace("%", "")) || 0}
                   %
                 </small>
               </div>
@@ -273,10 +293,10 @@ const SettingsTab = () => {
                     },
                   });
                 }}
-                value={[
-                  typeof state.editor.selectedElement.styles?.opacity === "number"
-                    ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 0,
+                defaultValue={[
+                  typeof state.selectedElement.style?.opacity === "number"
+                    ? state.selectedElement.style?.opacity
+                    : parseFloat((state.selectedElement.style?.opacity || "100").replace("%", "")) || 0,
                 ]}
                 max={100}
                 step={1}
@@ -288,23 +308,16 @@ const SettingsTab = () => {
                 <Input
                   id="opacity"
                   placeholder="100%"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.opacity || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={state.selectedElement.style.opacity || ""}
                 >
                   <BoxSelect size={13} />
                 </Input>
               </div>
               <div className="flex flex-col w-full">
                 <Tabs
-                  onValueChange={(e) =>
-                    handleOnChanges({
-                      target: {
-                        id: "overflow",
-                        value: e,
-                      },
-                    })
-                  }
-                  value={state.editor.selectedElement.styles.overflow || "visible"}
+                  onValueChange={(e) => handleOnChanges("overflow", e)}
+                  defaultValue={state.selectedElement.style.overflow || "visible"}
                 >
                   <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-0">
                     <TabsTrigger
@@ -341,7 +354,7 @@ const SettingsTab = () => {
                   },
                 })
               }
-              value={state.editor.selectedElement.styles.overflow || "visible"}
+              value={state.selectedElement.style.overflow || "visible"}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-0">
                 <TabsTrigger
@@ -373,214 +386,190 @@ const SettingsTab = () => {
           </div> */}
           </AccordionContent>
         </AccordionItem>
-        {state.editor.selectedElement.type === "text" || state.editor.selectedElement.type === "heading" ? (
-          <AccordionItem
-            value="Typography"
-            className={`px-3 py-0 `}
-          >
-            <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-3 ">
-              {/* 1st Txt align */}
-              <div className="flex items-center">
-                <p className="text-muted-foreground text-xs w-20">Align</p>
-                <Tabs
-                  className="flex-1"
-                  onValueChange={(e) =>
-                    handleOnChanges({
-                      target: {
-                        id: "textAlign",
-                        value: e,
-                      },
-                    })
-                  }
-                  value={state.editor.selectedElement.styles.textAlign || "left"}
-                >
-                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
-                    <TabsTrigger
-                      value="left"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                    >
-                      <AlignLeft size={15} />
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="right"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                    >
-                      <AlignRight size={15} />
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="center"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                    >
-                      <AlignCenter size={15} />
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="justify"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
-                    >
-                      <AlignJustify size={15} />
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
-              </div>
-              {/* 2nd font family */}
-              <div className="flex items-center ">
-                <p className="text-muted-foreground text-xs w-20">Font 🌟</p>
-                <Input
-                  className="w-[136px]"
-                  placeholder="Default"
-                  id="DM Sans"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.fontFamily}
-                />
-              </div>
-              {/* 3rd color */}
-              <div className="flex items-center">
-                <p className="text-muted-foreground text-xs w-20">Color</p>
-                <div
-                  className={
-                    "flex flex-1 h-[30px] rounded-md border-2 group hover:border-[#6A6A6A] pr-0.5 bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none    disabled:cursor-not-allowed disabled:opacity-50 "
-                  }
-                >
-                  <div className=" overflow-hidden h-full rounded-l-[5px] w-[39px] mr-2">
-                    <input
-                      className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
-                      type="color"
-                      id="color"
-                      placeholder="transparent"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.color || ""}
-                    />
-                  </div>
+        <AccordionItem
+          value="Typography"
+          className={`px-3 py-0 `}
+        >
+          <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-3 ">
+            {/* 1st Txt align */}
+            <div className="flex items-center">
+              <p className="text-muted-foreground text-xs w-20">Align</p>
+              <Tabs
+                className="flex-1"
+                onValueChange={(e) => handleOnChanges("textAlign", e)}
+                defaultValue={state.selectedElement.style.textAlign || "left"}
+              >
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
+                  <TabsTrigger
+                    value="left"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <AlignLeft size={15} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="right"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <AlignRight size={15} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="center"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <AlignCenter size={15} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="justify"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
+                  >
+                    <AlignJustify size={15} />
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+            {/* 2nd font family */}
+            <div className="flex items-center ">
+              <p className="text-muted-foreground text-xs w-20">Font 🌟</p>
+              <Input
+                className="w-[136px]"
+                placeholder="Default"
+                id="DM Sans"
+                onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                defaultValue={state.selectedElement.style.fontFamily}
+              />
+            </div>
+            {/* 3rd color */}
+            <div className="flex items-center">
+              <p className="text-muted-foreground text-xs w-20">Color</p>
+              <div
+                className={
+                  "flex flex-1 h-[30px] rounded-md border-2 group hover:border-[#6A6A6A] pr-0.5 bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none    disabled:cursor-not-allowed disabled:opacity-50 "
+                }
+              >
+                <div className=" overflow-hidden h-full rounded-l-[5px] w-[39px] mr-2">
                   <input
-                    className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
+                    className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
+                    type="color"
                     id="color"
                     placeholder="transparent"
-                    onChange={handleOnChanges}
-                    value={state.editor.selectedElement.styles.color || ""}
+                    onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                    defaultValue={state.selectedElement.style.color || ""}
                   />
                 </div>
-              </div>
-              {/* 4th weight and size */}
-              <div className="w-full flex items-center">
-                <p className="text-muted-foreground text-xs w-20">Weight</p>
-                <Select
-                  onValueChange={(e) => {
-                    handleOnChanges({
-                      target: {
-                        id: "fontWeight",
-                        value: e,
-                      },
-                    });
-                  }}
-                  value={state.editor.selectedElement.styles.fontWeight?.toString() || ""}
-                >
-                  <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
-                    <SelectValue placeholder={state.editor.selectedElement.styles.fontWeight || "Select a weight"} />
-                  </SelectTrigger>
-                  <SelectContent className="text-xs">
-                    <SelectGroup className="text-xs">
-                      <SelectLabel className="text-xs">Font Weights</SelectLabel>
-                      {[900, 800, 700, 600, 500, 400, 300, 200, 100].map((weight) => (
-                        <SelectItem
-                          key={weight}
-                          className="text-xs"
-                          value={weight.toString()}
-                        >
-                          {weight}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="w-full flex items-center">
-                <p className=" text-muted-foreground text-xs w-20">Size</p>
-                <Input
-                  className="w-[136px]"
-                  placeholder="px"
-                  id="fontSize"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.fontSize || ""}
+                <input
+                  className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
+                  id="color"
+                  placeholder="transparent"
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={state.selectedElement.style.color || ""}
                 />
               </div>
-              {/* line height and letter spaccing */}
-              <div className="flex items-start">
-                <p className="text-muted-foreground text-xs w-20">Height</p>
-                <Input
-                  className="w-[136px]"
-                  id="lineHeight"
-                  placeholder="auto"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.lineHeight || ""}
-                />
-              </div>
-              <div className="flex items-start">
-                <p className="text-muted-foreground text-xs w-20">Spaecing</p>
-                <Input
-                  className="w-[136px]"
-                  placeholder="auto"
-                  id="letterSpacing"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.letterSpacing || ""}
-                />
-              </div>
-              <div className="flex items-center">
-                <p className="text-muted-foreground text-xs w-20">Decoration</p>
+            </div>
+            {/* 4th weight and size */}
+            <div className="w-full flex items-center">
+              <p className="text-muted-foreground text-xs w-20">Weight</p>
+              <Select
+                onValueChange={(e) => {
+                  handleOnChanges("fontWeight", e);
+                }}
+                defaultValue={state.selectedElement.style.fontWeight?.toString() || ""}
+              >
+                <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
+                  <SelectValue placeholder={state.selectedElement.style.fontWeight || "Select a weight"} />
+                </SelectTrigger>
+                <SelectContent className="text-xs">
+                  <SelectGroup className="text-xs">
+                    <SelectLabel className="text-xs">Font Weights</SelectLabel>
+                    {[900, 800, 700, 600, 500, 400, 300, 200, 100].map((weight) => (
+                      <SelectItem
+                        key={weight}
+                        className="text-xs"
+                        value={weight.toString()}
+                      >
+                        {weight}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="w-full flex items-center">
+              <p className=" text-muted-foreground text-xs w-20">Size</p>
+              <Input
+                className="w-[136px]"
+                placeholder="px"
+                id="fontSize"
+                onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                defaultValue={state.selectedElement.style.fontSize || ""}
+              />
+            </div>
+            {/* line height and letter spaccing */}
+            <div className="flex items-start">
+              <p className="text-muted-foreground text-xs w-20">Height</p>
+              <Input
+                className="w-[136px]"
+                id="lineHeight"
+                placeholder="auto"
+                onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                defaultValue={state.selectedElement.style.lineHeight || ""}
+              />
+            </div>
+            <div className="flex items-start">
+              <p className="text-muted-foreground text-xs w-20">Spaecing</p>
+              <Input
+                className="w-[136px]"
+                placeholder="auto"
+                id="letterSpacing"
+                onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                defaultValue={state.selectedElement.style.letterSpacing || ""}
+              />
+            </div>
+            <div className="flex items-center">
+              <p className="text-muted-foreground text-xs w-20">Decoration</p>
 
-                <Tabs
-                  className="flex-1"
-                  onValueChange={(e) =>
-                    handleOnChanges({
-                      target: {
-                        id: "textDecoration",
-                        value: e,
-                      },
-                    })
-                  }
-                  value={String(state.editor.selectedElement.styles.textDecoration || "none")}
-                >
-                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
-                    <TabsTrigger
-                      value="none"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                    >
-                      <CircleOff size={13} />
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="underline"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                    >
-                      <Underline size={15} />
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="italic"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                    >
-                      🌟
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="overline"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                    >
-                      <AlignCenter size={15} />
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="line-through"
-                      className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
-                    >
-                      <AlignJustify size={15} />
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        ) : (
-          <></>
-        )}
+              <Tabs
+                className="flex-1"
+                onValueChange={(e) => handleOnChanges("textDecoration", e)}
+                defaultValue={String(state.selectedElement.style.textDecoration || "none")}
+              >
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
+                  <TabsTrigger
+                    value="none"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <CircleOff size={13} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="underline"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <Underline size={15} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="italic"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    🌟
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="overline"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <AlignCenter size={15} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="line-through"
+                    className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
+                  >
+                    <AlignJustify size={15} />
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        {/* ///////////////////////////////////////////////////////////////// */}
         <AccordionItem
           value="Spacing"
           className=" px-3 py-0"
@@ -595,57 +584,57 @@ const SettingsTab = () => {
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
                 id="marginTop"
                 placeholder="16px"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.marginTop || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                defaultValue={state.selectedElement.style.marginTop || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
                 placeholder="16px"
                 id="marginBottom"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.marginBottom || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.marginBottom || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
                 placeholder="16px"
                 id="marginLeft"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.marginLeft || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.marginLeft || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
                 placeholder="16px"
                 id="marginRight"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.marginRight || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.marginRight || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-8 left-1/2 -translate-x-1/2"
                 placeholder="16px"
                 id="paddingTop"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.paddingTop || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.paddingTop || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-8 left-1/2 -translate-x-1/2"
                 placeholder="16px"
                 id="paddingBottom"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.paddingBottom || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.paddingBottom || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 left-9 -translate-y-1/2"
                 placeholder="16px"
                 id="paddingLeft"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.paddingLeft || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.paddingLeft || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-9 -translate-y-1/2"
                 placeholder="16px"
                 id="paddingRight"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.paddingRight || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.paddingRight || ""}
               />
             </div>
           </AccordionContent>
@@ -658,15 +647,8 @@ const SettingsTab = () => {
           <AccordionTrigger className="!no-underline font-semibold">Position</AccordionTrigger>
           <AccordionContent>
             <Tabs
-              onValueChange={(e) =>
-                handleOnChanges({
-                  target: {
-                    id: "position",
-                    value: e,
-                  },
-                })
-              }
-              value={state.editor.selectedElement.styles.position || "relative"}
+              onValueChange={(e) => handleOnChanges("position", e)}
+              defaultValue={state.selectedElement.style.position || "relative"}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-2">
                 {/* <TabsTrigger
@@ -705,29 +687,29 @@ const SettingsTab = () => {
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
                 id="top"
                 placeholder="auto"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.top || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                defaultValue={state.selectedElement.style.top || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
                 placeholder="auto"
                 id="bottom"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.bottom || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.bottom || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
                 placeholder="auto"
                 id="left"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.left || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.left || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
                 placeholder="auto"
                 id="right"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.right || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.right || ""}
               />
               <div className=" absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex ">
                 <p className=" text-muted-foreground text-xs ">z-index: </p>
@@ -735,8 +717,8 @@ const SettingsTab = () => {
                   className="w-5 text-xs text-center text-sky-300 bg-transparent border-none outline-none"
                   placeholder="0"
                   id="zIndex"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.zIndex || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                  defaultValue={state.selectedElement.style.zIndex || ""}
                 />
               </div>
             </div>
@@ -764,16 +746,16 @@ const SettingsTab = () => {
                     type="color"
                     id="backgroundColor"
                     placeholder="transparent"
-                    onChange={handleOnChanges}
-                    value={state.editor.selectedElement.styles.backgroundColor || ""}
+                    onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                    defaultValue={state.selectedElement.style.backgroundColor || ""}
                   />
                 </div>
                 <input
                   className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
                   id="backgroundColor"
                   placeholder="transparent"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.backgroundColor || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                  defaultValue={state.selectedElement.style.backgroundColor || ""}
                 />
               </div>
             </div>
@@ -785,8 +767,8 @@ const SettingsTab = () => {
                 className="flex-1"
                 placeholder="px"
                 id="filter"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles?.filter || 0}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style?.filter || 0}
               />
             </div>
             {/* 3rd bcg image */}
@@ -796,15 +778,15 @@ const SettingsTab = () => {
                 <div
                   className="w-10 border-2 group-hover:border-[#6a6a6a]  transition-colors border-main-black !rounded-l-md border-r-0"
                   style={{
-                    backgroundImage: state.editor.selectedElement.styles.backgroundImage,
+                    backgroundImage: state.selectedElement.style.backgroundImage,
                   }}
                 />
                 <Input
                   placeholder="url()"
                   className="mt-0 flex-1 !rounded-l-[0px] hover:border-l-none group-hover:border-[#6a6a6a]"
                   id="backgroundImage"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.backgroundImage || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                  defaultValue={state.selectedElement.style.backgroundImage || ""}
                 />
               </div>
             </div>
@@ -813,15 +795,8 @@ const SettingsTab = () => {
               <p className=" text-muted-foreground text-xs w-20">Position</p>
               <Tabs
                 className="flex-1"
-                onValueChange={(e) =>
-                  handleOnChanges({
-                    target: {
-                      id: "backgroundSize",
-                      value: e,
-                    },
-                  })
-                }
-                value={state.editor.selectedElement.styles.backgroundSize?.toString() || "cover"}
+                onValueChange={(e) => handleOnChanges("backgroundSize", e)}
+                defaultValue={state.selectedElement.style.backgroundSize?.toString() || "cover"}
               >
                 <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
                   <TabsTrigger
@@ -858,15 +833,8 @@ const SettingsTab = () => {
 
               <Tabs
                 className="flex-1"
-                onValueChange={(e) =>
-                  handleOnChanges({
-                    target: {
-                      id: "display",
-                      value: e,
-                    },
-                  })
-                }
-                value={state.editor.selectedElement.styles.display || "block"}
+                onValueChange={(e) => handleOnChanges("display", e)}
+                defaultValue={state.selectedElement.style.display || "block"}
               >
                 <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit">
                   <TabsTrigger
@@ -894,15 +862,8 @@ const SettingsTab = () => {
               <p className=" text-muted-foreground text-xs w-20"> Direction</p>
               <Tabs
                 className="flex-1"
-                onValueChange={(e) =>
-                  handleOnChanges({
-                    target: {
-                      id: "flexFlow",
-                      value: e,
-                    },
-                  })
-                }
-                value={state.editor.selectedElement.styles.flexFlow || "row"}
+                onValueChange={(e) => handleOnChanges("flexFlow", e)}
+                defaultValue={state.selectedElement.style.flexFlow || "row"}
               >
                 <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit">
                   <TabsTrigger
@@ -926,20 +887,13 @@ const SettingsTab = () => {
                 </TabsList>
               </Tabs>
             </div>
-            <div className={`${state.editor.selectedElement.styles.display === "flex" ? "block" : "hidden"} mt-3`}>
+            <div className={`${state.selectedElement.style.display === "flex" ? "block" : "hidden"} mt-3`}>
               <div className="flex items-center mb-3">
-                <p className="text-muted-foreground text-xs w-20">{state.editor.selectedElement.styles.flexFlow === "column" ? "Align Y" : "Align X"}</p>
+                <p className="text-muted-foreground text-xs w-20">{state.selectedElement.style.flexFlow === "column" ? "Align Y" : "Align X"}</p>
                 <Tabs
                   className="flex-1"
-                  onValueChange={(e) =>
-                    handleOnChanges({
-                      target: {
-                        id: "justifyContent",
-                        value: e,
-                      },
-                    })
-                  }
-                  value={state.editor.selectedElement.styles.justifyContent || "center"}
+                  onValueChange={(e) => handleOnChanges("justifyContent", e)}
+                  defaultValue={state.selectedElement.style.justifyContent || "center"}
                 >
                   <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit">
                     <TabsTrigger
@@ -976,18 +930,11 @@ const SettingsTab = () => {
                 </Tabs>
               </div>
               <div className="flex items-center mb-3">
-                <p className="text-muted-foreground text-xs w-20">{state.editor.selectedElement.styles.flexFlow === "column" ? "Align X" : "Align Y"}</p>
+                <p className="text-muted-foreground text-xs w-20">{state.selectedElement.style.flexFlow === "column" ? "Align X" : "Align Y"}</p>
                 <Tabs
                   className="flex-1"
-                  onValueChange={(e) =>
-                    handleOnChanges({
-                      target: {
-                        id: "alignItems",
-                        value: e,
-                      },
-                    })
-                  }
-                  value={state.editor.selectedElement.styles.alignItems || "normal"}
+                  onValueChange={(e) => handleOnChanges("alignItems", e)}
+                  defaultValue={state.selectedElement.style.alignItems || "normal"}
                 >
                   <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit ">
                     <TabsTrigger
@@ -1023,8 +970,8 @@ const SettingsTab = () => {
                   className="w-[136px]"
                   placeholder="0"
                   id="gap"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.gap || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                  defaultValue={state.selectedElement.style.gap || ""}
                 />
               </div>
               {/* <FlexBoxComponent/> */}
@@ -1145,6 +1092,48 @@ const SettingsTab = () => {
             </div>
           </AccordionContent>
         </AccordionItem>
+        <AccordionItem
+          value="Classes"
+          className="px-3 py-0 border-none"
+        >
+          <AccordionTrigger className="!no-underline font-semibold">Classes</AccordionTrigger>
+          <AccordionContent className="flex flex-wrap gap-2 mt-2">
+            {classes.length > 0 ? (
+              classes.map((cls) => (
+                <span
+                  key={cls}
+                  className="flex text-xs items-center gap-1 px-2 py-1 rounded-full bg-zinc-800 border"
+                >
+                  {cls}
+                  <button
+                    onClick={() => removeClass(cls)}
+                    className="ml-1 text-red-500 hover:text-red-700"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))
+            ) : (
+              <span className="text-gray-400 text-sm">No classes applied</span>
+            )}
+          </AccordionContent>
+
+          <div className="flex gap-2 mt-3">
+            <Input
+              className="h-[30px]"
+              value={newClass}
+              onChange={(e) => setNewClass(e.target.value)}
+              placeholder="Add class..."
+            />
+            <Button
+              className="h-[30px]"
+              type="button"
+              onClick={addClass}
+            >
+              Add
+            </Button>
+          </div>
+        </AccordionItem>
         {/* border & shadow */}
         <AccordionItem
           value="Border"
@@ -1162,32 +1151,32 @@ const SettingsTab = () => {
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
                 id="borderTopWidth"
                 placeholder="0px"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.borderTopWidth || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                defaultValue={state.selectedElement.style.borderTopWidth || ""}
               />
               {/* Bottom Border */}
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
                 placeholder="0px"
                 id="borderBottomWidth"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.borderBottomWidth || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.borderBottomWidth || ""}
               />
               {/* Left Border */}
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
                 placeholder="0px"
                 id="borderLeftWidth"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.borderLeftWidth || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.borderLeftWidth || ""}
               />
               {/* Right Border */}
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
                 placeholder="0px"
                 id="borderRightWidth"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.borderRightWidth || ""}
+                onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                defaultValue={state.selectedElement.style.borderRightWidth || ""}
               />
             </div>
 
@@ -1195,15 +1184,8 @@ const SettingsTab = () => {
             <div className="flex items-center">
               <p className="text-muted-foreground text-xs w-20">Border Style</p>
               <Select
-                onValueChange={(e) =>
-                  handleOnChanges({
-                    target: {
-                      id: "borderStyle",
-                      value: e,
-                    },
-                  })
-                }
-                value={state.editor.selectedElement.styles.borderStyle || "solid"}
+                onValueChange={(e) => handleOnChanges("borderStyle", e)}
+                defaultValue={state.selectedElement.style.borderStyle || "solid"}
               >
                 <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
                   <SelectValue placeholder="Select border style" />
@@ -1235,16 +1217,16 @@ const SettingsTab = () => {
                     type="color"
                     id="borderColor"
                     placeholder="transparent"
-                    onChange={handleOnChanges}
-                    value={state.editor.selectedElement.styles.borderColor || ""}
+                    onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
+                    defaultValue={state.selectedElement.style.borderColor || ""}
                   />
                 </div>
                 <input
                   className="h-[30px] w-20 border-y-2 group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   id="borderColor"
                   placeholder="transparent"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.borderColor || ""}
+                  onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
+                  defaultValue={state.selectedElement.style.borderColor || ""}
                 />
               </div>
             </div>
@@ -1254,6 +1236,6 @@ const SettingsTab = () => {
       </Accordion>
     );
   }
-};
+}
 
 export default SettingsTab;

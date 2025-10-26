@@ -4,15 +4,71 @@ import clsx from "clsx";
 import { EyeOff } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import { useEditor } from "../../../../providers/editor/editor-provider";
+import { useNewEditor } from "../../../../providers/newPeovider";
 
 const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { dispatch, state, enableEditingFeatures } = useEditor();
+  const { setSelectedElement } = useNewEditor();
 
   const handleUnpreview = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
     dispatch({ type: "TOGGLE_LIVE_MODE" });
   };
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+    const doc = iframe.contentDocument;
+    if (!doc) return;
+    if (doc?.body?.innerHTML) return;
+    // Always initialize once
+    doc.open();
+    doc.write(`
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Preview</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.11.2/lottie.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+            <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+            <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+            <script src="https://unpkg.com/@popperjs/core@2"></script>
+            <script src="https://unpkg.com/tippy.js@6"></script>
+          </head>
+          <body id="root">
+            ${state.html}
+          </body>
+          </html>
+        `);
+    doc.close();
+    enableEditingFeatures(doc);
+  }, [state.html]);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+    const doc = iframe.contentDocument;
+    if (!doc) return;
+
+    const root = doc.getElementById("root");
+    if (!root) return;
+
+    const cleanCode = code?.replaceAll("```html", "")?.replaceAll("```", "")?.trim();
+
+    // Clear and reinsert the HTML code
+    root.innerHTML = cleanCode || "<div style='color:white; padding:10px;'>Waiting for content...</div>";
+  }, [code, state.html]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -23,7 +79,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
 
     if (state.previewMode || state.liveMode) {
       iframeDoc.querySelectorAll(".overlay-indicator").forEach((el) => el.remove());
-      return; 
+      return;
     }
 
     let selectedOverlay: HTMLDivElement | null = null;
@@ -41,9 +97,12 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       overlay.style.border = `2px solid ${color}`;
       overlay.style.backgroundColor = fill ?? "transparent";
       overlay.style.pointerEvents = "none";
+      overlay.style.borderRadius = "4px";
       overlay.style.zIndex = isSelected ? "1000001" : "1000000";
       overlay.classList.add("overlay-indicator");
-      iframeDoc.body.appendChild(overlay);
+      if (iframeDoc.body) {
+        iframeDoc.body.appendChild(overlay);
+      }
       return overlay;
     };
 
@@ -132,8 +191,10 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       // ✅ Save selected element
       dispatch({
         type: "SELECT_ELEMENT",
-        payload: { elementId: target.id || "" },
+        payload: { element: target },
       });
+
+      setSelectedElement(target);
 
       // ✅ Remove old overlays
       removeOverlays();
@@ -149,6 +210,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
         updateOverlayPosition();
       });
       resizeObserver.observe(target);
+
     };
 
     // Keep selected overlay synced with scroll
@@ -178,45 +240,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
         currentSelectedElement.contentEditable = "false";
       }
     };
-  }, [dispatch, state.selectedElementId, state.previewMode, state.liveMode]);
-
-  useEffect(() => {
-    if (iframeRef.current) {
-      const doc = iframeRef.current.contentDocument;
-      if (doc) {
-        doc.open();
-        doc.write(`
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Preview</title>
-            <script src="https://cdn.tailwindcss.com"></script>
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.11.2/lottie.min.js"></script>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-            <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-            <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
-            <script src="https://unpkg.com/@popperjs/core@2"></script>
-            <script src="https://unpkg.com/tippy.js@6"></script>
-          </head>
-          <body>
-            ${code}
-          </body>
-          </html>
-        `);
-        doc.close();
-        enableEditingFeatures(doc);
-      }
-    }
-  }, [code]);
+  }, [dispatch, state.previewMode, state.liveMode, state.html, code, ]);
 
   useEffect(() => {
     if (isLive) {
@@ -226,17 +250,6 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       });
     }
   }, [isLive]);
-
-  // Trigger resize event when device changes to update overlay
-  useEffect(() => {
-    const iframe = iframeRef.current;
-    if (iframe?.contentWindow) {
-      // Trigger resize event after a small delay to ensure layout has updated
-      setTimeout(() => {
-        iframe.contentWindow?.dispatchEvent(new Event("resize"));
-      }, 100);
-    }
-  }, [state.device]);
 
   return (
     <div
@@ -250,10 +263,11 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       <iframe
         ref={iframeRef}
         className={clsx("w-full h-screen", {
-          "w-full !h-[calc(100vh-73px)] rounded-2xl border border-zinc-700": state.previewMode === false && state.liveMode === false,
+          "w-full !h-[calc(100vh-73px)] border border-zinc-700": state.previewMode === false && state.liveMode === false,
         })}
         sandbox="allow-scripts allow-same-origin"
       />
+    <p>{state.html}</p>
       {state.previewMode && state.liveMode && (
         <Button
           variant={"ghost"}

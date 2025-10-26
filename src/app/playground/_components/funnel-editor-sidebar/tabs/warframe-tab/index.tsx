@@ -37,7 +37,7 @@ const WarframeTab = () => {
       id: v4(),
       warframe_name: warframeName,
       warframe_image: warframeImage,
-      warframe: JSON.stringify(state.editor.selectedElement),
+      warframe: JSON.stringify(state.selectedElement),
     });
     toast.success("Warframe created" );
     setWarframeName("");
