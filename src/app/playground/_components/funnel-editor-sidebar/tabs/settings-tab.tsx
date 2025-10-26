@@ -47,6 +47,7 @@ import { Input } from "@/components/ui/custom-input";
 import { SwatchBook } from "lucide-react";
 import { useNewEditor } from "../../../../../../providers/newPeovider";
 import { Button } from "@/components/ui/button";
+// import { overlayEvent } from "../../editor";
 
 function SettingsTab() {
   const { selectedElement } = useNewEditor();
@@ -58,6 +59,16 @@ function SettingsTab() {
   const handleOnChanges = (property: string, value: string) => {
     if (selectedElement) {
       selectedElement.style[property as any] = value;
+
+      // Force overlay update after style change
+      requestAnimationFrame(() => {
+        // Trigger a custom event that the editor can listen to
+        if (selectedElement) {
+          selectedElement.dispatchEvent(new CustomEvent('styleChanged', {
+            detail: { property, value }
+          }));
+        }
+      });
     }
   };
 
@@ -170,7 +181,7 @@ function SettingsTab() {
                 <Input
                   placeholder="Auto"
                   id="width"
-                  defaultValue={selectedElement?.style.width || "Auto"}
+                  defaultValue={selectedElement?.style.width || ""}
                   onChange={(e) => handleOnChanges("width", e.target.value)}
                   children="W"
                 />

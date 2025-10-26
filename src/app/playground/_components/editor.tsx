@@ -85,6 +85,8 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
     let selectedOverlay: HTMLDivElement | null = null;
     let hoverOverlay: HTMLDivElement | null = null;
     let resizeObserver: ResizeObserver | null = null;
+    let mutationObserver: MutationObserver | null = null;
+    let hoverResizeObserver: ResizeObserver | null = null;
     let currentSelectedElement: HTMLElement | null = null;
 
     const createOverlay = (rect: DOMRect, color: string, fill?: string, isSelected = false) => {
@@ -142,11 +144,11 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       };
 
       // Disconnect previous observer
-      if (resizeObserver) resizeObserver.disconnect();
+      if (hoverResizeObserver) hoverResizeObserver.disconnect();
 
       // Create a new one for hover overlay
-      resizeObserver = new ResizeObserver(updateHoverOverlayPosition);
-      resizeObserver.observe(target);
+      hoverResizeObserver = new ResizeObserver(updateHoverOverlayPosition);
+      hoverResizeObserver.observe(target);
 
       // Keep hover overlay in sync with scroll/resize
       iframeDoc.addEventListener("scroll", updateHoverOverlayPosition);
@@ -160,7 +162,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
             hoverOverlay.remove();
             hoverOverlay = null;
           }
-          if (resizeObserver) resizeObserver.disconnect();
+          if (hoverResizeObserver) hoverResizeObserver.disconnect();
           iframeDoc.removeEventListener("scroll", updateHoverOverlayPosition);
           iframe.contentWindow?.removeEventListener("resize", updateHoverOverlayPosition);
         },
@@ -207,20 +209,53 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
         resizeObserver.disconnect();
       }
       resizeObserver = new ResizeObserver(() => {
-        updateOverlayPosition();
+        // Use requestAnimationFrame to ensure layout is updated
+        requestAnimationFrame(() => {
+          updateOverlayPosition();
+        });
       });
       resizeObserver.observe(target);
 
+      // ✅ Setup MutationObserver to track style changes
+      if (mutationObserver) {
+        mutationObserver.disconnect();
+      }
+      mutationObserver = new MutationObserver(() => {
+        // Use requestAnimationFrame to ensure layout is updated
+        requestAnimationFrame(() => {
+          updateOverlayPosition();
+        });
+      });
+
+      // Watch for style changes more comprehensively
+      mutationObserver.observe(target, {
+        attributes: true,
+        attributeFilter: ['style', 'class'],
+        childList: false,
+        subtree: false
+      });
+
+      // ✅ Add custom event listener as fallback
+      target.addEventListener('styleChanged', handleStyleChanged);
     };
 
-    // Keep selected overlay synced with scroll
     const handleScroll = () => {
-      updateOverlayPosition();
+      requestAnimationFrame(() => {
+        updateOverlayPosition();
+      });
     };
 
-    // Update overlay on window resize (device change)
     const handleResize = () => {
-      updateOverlayPosition();
+      requestAnimationFrame(() => {
+        updateOverlayPosition();
+      });
+    };
+
+    // Listen for custom style change events as fallback
+    const handleStyleChanged = (e: Event) => {
+      requestAnimationFrame(() => {
+        updateOverlayPosition();
+      });
     };
 
     iframeDoc.addEventListener("mouseover", handleMouseOver);
@@ -236,11 +271,18 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       if (resizeObserver) {
         resizeObserver.disconnect();
       }
+      if (mutationObserver) {
+        mutationObserver.disconnect();
+      }
+      if (hoverResizeObserver) {
+        hoverResizeObserver.disconnect();
+      }
       if (currentSelectedElement) {
         currentSelectedElement.contentEditable = "false";
+        currentSelectedElement.removeEventListener('styleChanged', handleStyleChanged);
       }
     };
-  }, [dispatch, state.previewMode, state.liveMode, state.html, code, ]);
+  }, [state.html, state.previewMode, state.liveMode, code, setSelectedElement]);
 
   useEffect(() => {
     if (isLive) {

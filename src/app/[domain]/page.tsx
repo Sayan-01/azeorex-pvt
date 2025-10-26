@@ -36,6 +36,8 @@ const Page = async (props: { params: Promise<{ domain: string }> }) => {
     .replace(/```/, "")
     .trim();
 
+  console.log(code);
+
   return (
     <EditorProvider
       agencyId={domainData.id}
@@ -43,10 +45,10 @@ const Page = async (props: { params: Promise<{ domain: string }> }) => {
       funnelId={domainData.id}
     >
       <NewEditorProvider>
-      <Editor
-        isLive={true}
-        code={code}
-      />
+        <Editor
+          isLive={true}
+          code={code}
+        />
       </NewEditorProvider>
     </EditorProvider>
   );
