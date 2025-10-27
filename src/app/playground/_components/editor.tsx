@@ -47,7 +47,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
             <script src="https://unpkg.com/tippy.js@6"></script>
           </head>
           <body id="root">
-            ${state.html}
+            ${code}
           </body>
           </html>
         `);
@@ -179,18 +179,18 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
 
       const rect = target.getBoundingClientRect();
 
-      // ✅ Disable contentEditable on previous element
+      // Disable contentEditable on previous element
       if (currentSelectedElement && currentSelectedElement !== target) {
         currentSelectedElement.contentEditable = "false";
         currentSelectedElement.style.outline = "none";
       }
 
-      // ✅ Enable inline editing on clicked element
+      // Enable inline editing on clicked element
       target.contentEditable = "true";
       target.style.outline = "none";
       currentSelectedElement = target;
 
-      // ✅ Save selected element
+      // Save selected element
       dispatch({
         type: "SELECT_ELEMENT",
         payload: { element: target },
@@ -198,13 +198,13 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
 
       setSelectedElement(target);
 
-      // ✅ Remove old overlays
+      // Remove old overlays
       removeOverlays();
 
-      // ✅ Create persistent selected overlay
+      // Create persistent selected overlay
       selectedOverlay = createOverlay(rect, "#ff6b00", "rgba(255,107,0,0.15)", true);
 
-      // ✅ Setup ResizeObserver to track dimension changes
+      // Setup ResizeObserver to track dimension changes
       if (resizeObserver) {
         resizeObserver.disconnect();
       }
@@ -216,7 +216,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       });
       resizeObserver.observe(target);
 
-      // ✅ Setup MutationObserver to track style changes
+      // Setup MutationObserver to track style changes
       if (mutationObserver) {
         mutationObserver.disconnect();
       }
@@ -235,7 +235,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
         subtree: false
       });
 
-      // ✅ Add custom event listener as fallback
+      // Add custom event listener as fallback
       target.addEventListener('styleChanged', handleStyleChanged);
     };
 
@@ -309,7 +309,6 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
         })}
         sandbox="allow-scripts allow-same-origin"
       />
-    <p>{state.html}</p>
       {state.previewMode && state.liveMode && (
         <Button
           variant={"ghost"}

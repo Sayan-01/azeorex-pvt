@@ -60,7 +60,7 @@ function SettingsTab() {
     if (selectedElement) {
       selectedElement.style[property as any] = value;
 
-      // Force overlay update after style change
+      // Force overlay after style change
       requestAnimationFrame(() => {
         // Trigger a custom event that the editor can listen to
         if (selectedElement) {
@@ -228,7 +228,7 @@ function SettingsTab() {
                   id="rotate"
                   placeholder="0deg"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                  defaultValue={state.selectedElement.style.rotate || ""}
+                  defaultValue={selectedElement?.style?.rotate || ""}
                 >
                   <Angle />
                 </Input>
@@ -238,7 +238,7 @@ function SettingsTab() {
                   id="borderRadius"
                   placeholder="0px"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                  defaultValue={state.selectedElement.style.borderRadius || ""}
+                  defaultValue={selectedElement?.style?.borderRadius || ""}
                 >
                   <Spline size={13} />
                 </Input>
@@ -253,16 +253,16 @@ function SettingsTab() {
                 placeholder="0px"
                                   onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
 
-                defaultValue={state.selectedElement.style.borderRadius || ""}
+                defaultValue={selectedElement?.style?.borderRadius || ""}
               />
             </div>
             <div className="w-full">
               <p className="text-muted-foreground text-xs w-full">B Radius</p>
               <div className="flex items-center justify-end">
                 <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
-                  {typeof state.selectedElement.style?.borderRadius === "number"
-                    ? state.selectedElement.style?.borderRadius
-                    : parseFloat((state.selectedElement.style?.borderRadius || "0").replace("px", "")) || 0}
+                  {typeof selectedElement??style?..borderRadius === "number"
+                    ? selectedElement??style?..borderRadius
+                    : parseFloat((selectedElement??style?..borderRadius || "0").replace("px", "")) || 0}
                   px
                 </small>
               </div>
@@ -276,9 +276,9 @@ function SettingsTab() {
                   });
                 }}
                 defaultValue={[
-                  typeof state.selectedElement.style?.borderRadius === "number"
-                    ? state.selectedElement.style?.borderRadius
-                    : parseFloat((state.selectedElement.style?.borderRadius || "0").replace("%", "")) || 0,
+                  typeof selectedElement??style?..borderRadius === "number"
+                    ? selectedElement??style?..borderRadius
+                    : parseFloat((selectedElement??style?..borderRadius || "0").replace("%", "")) || 0,
                 ]}
                 max={100}
                 step={1}
@@ -289,9 +289,9 @@ function SettingsTab() {
               <p className="text-muted-foreground text-xs">Opacity</p>
               <div className="flex items-center justify-end">
                 <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
-                  {typeof state.selectedElement.style?.opacity === "number"
-                    ? state.selectedElement.style?.opacity
-                    : parseFloat((state.selectedElement.style?.opacity || "100").replace("%", "")) || 0}
+                  {typeof selectedElement??style?..opacity === "number"
+                    ? selectedElement??style?..opacity
+                    : parseFloat((selectedElement??style?..opacity || "100").replace("%", "")) || 0}
                   %
                 </small>
               </div>
@@ -305,9 +305,9 @@ function SettingsTab() {
                   });
                 }}
                 defaultValue={[
-                  typeof state.selectedElement.style?.opacity === "number"
-                    ? state.selectedElement.style?.opacity
-                    : parseFloat((state.selectedElement.style?.opacity || "100").replace("%", "")) || 0,
+                  typeof selectedElement??style?..opacity === "number"
+                    ? selectedElement??style?..opacity
+                    : parseFloat((selectedElement??style?..opacity || "100").replace("%", "")) || 0,
                 ]}
                 max={100}
                 step={1}
@@ -320,7 +320,7 @@ function SettingsTab() {
                   id="opacity"
                   placeholder="100%"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                  defaultValue={state.selectedElement.style.opacity || ""}
+                  defaultValue={selectedElement?.style?.opacity || ""}
                 >
                   <BoxSelect size={13} />
                 </Input>
@@ -328,7 +328,7 @@ function SettingsTab() {
               <div className="flex flex-col w-full">
                 <Tabs
                   onValueChange={(e) => handleOnChanges("overflow", e)}
-                  defaultValue={state.selectedElement.style.overflow || "visible"}
+                  defaultValue={selectedElement?.style?.overflow || "visible"}
                 >
                   <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-0">
                     <TabsTrigger
@@ -365,7 +365,7 @@ function SettingsTab() {
                   },
                 })
               }
-              value={state.selectedElement.style.overflow || "visible"}
+              value={selectedElement?.style?.overflow || "visible"}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-0">
                 <TabsTrigger
@@ -409,7 +409,7 @@ function SettingsTab() {
               <Tabs
                 className="flex-1"
                 onValueChange={(e) => handleOnChanges("textAlign", e)}
-                defaultValue={state.selectedElement.style.textAlign || "left"}
+                defaultValue={selectedElement?.style?.textAlign || "left"}
               >
                 <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
                   <TabsTrigger
@@ -447,7 +447,7 @@ function SettingsTab() {
                 placeholder="Default"
                 id="DM Sans"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement.style.fontFamily}
+                defaultValue={selectedElement?.style?.fontFamily}
               />
             </div>
             {/* 3rd color */}
@@ -458,22 +458,22 @@ function SettingsTab() {
                   "flex flex-1 h-[30px] rounded-md border-2 group hover:border-[#6A6A6A] pr-0.5 bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none    disabled:cursor-not-allowed disabled:opacity-50 "
                 }
               >
-                <div className=" overflow-hidden h-full rounded-l-[5px] w-[39px] mr-2">
+                <div className=" overflow-hidden h-full rounded-l-[7px] w-[39px] mr-2">
                   <input
                     className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
                     type="color"
                     id="color"
                     placeholder="transparent"
                     onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                    defaultValue={state.selectedElement.style.color || ""}
+                    defaultValue={selectedElement?.style?.color || ""}
                   />
                 </div>
                 <input
-                  className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
+                  className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
                   id="color"
                   placeholder="transparent"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                  defaultValue={state.selectedElement.style.color || ""}
+                  defaultValue={selectedElement?.style?.color || ""}
                 />
               </div>
             </div>
@@ -484,10 +484,10 @@ function SettingsTab() {
                 onValueChange={(e) => {
                   handleOnChanges("fontWeight", e);
                 }}
-                defaultValue={state.selectedElement.style.fontWeight?.toString() || ""}
+                defaultValue={selectedElement?.style?.fontWeight?.toString() || ""}
               >
-                <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
-                  <SelectValue placeholder={state.selectedElement.style.fontWeight || "Select a weight"} />
+                <SelectTrigger className="flex-1 px-2 !h-[30px] border-2 border-[#272727] text-xs">
+                  <SelectValue placeholder={selectedElement?.style?.fontWeight || "Select a weight"} />
                 </SelectTrigger>
                 <SelectContent className="text-xs">
                   <SelectGroup className="text-xs">
@@ -512,7 +512,7 @@ function SettingsTab() {
                 placeholder="px"
                 id="fontSize"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement.style.fontSize || ""}
+                defaultValue={selectedElement?.style?.fontSize || ""}
               />
             </div>
             {/* line height and letter spaccing */}
@@ -523,7 +523,7 @@ function SettingsTab() {
                 id="lineHeight"
                 placeholder="auto"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement.style.lineHeight || ""}
+                defaultValue={selectedElement?.style?.lineHeight || ""}
               />
             </div>
             <div className="flex items-start">
@@ -533,7 +533,7 @@ function SettingsTab() {
                 placeholder="auto"
                 id="letterSpacing"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement.style.letterSpacing || ""}
+                defaultValue={selectedElement?.style?.letterSpacing || ""}
               />
             </div>
             <div className="flex items-center">
@@ -542,9 +542,9 @@ function SettingsTab() {
               <Tabs
                 className="flex-1"
                 onValueChange={(e) => handleOnChanges("textDecoration", e)}
-                defaultValue={String(state.selectedElement.style.textDecoration || "none")}
+                defaultValue={String(selectedElement?.style?.textDecoration || "none")}
               >
-                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit flex-1">
                   <TabsTrigger
                     value="none"
                     className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
@@ -596,56 +596,56 @@ function SettingsTab() {
                 id="marginTop"
                 placeholder="16px"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement.style.marginTop || ""}
+                defaultValue={selectedElement?.style?.marginTop || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
                 placeholder="16px"
                 id="marginBottom"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.marginBottom || ""}
+                defaultValue={selectedElement?.style?.marginBottom || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
                 placeholder="16px"
                 id="marginLeft"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.marginLeft || ""}
+                defaultValue={selectedElement?.style?.marginLeft || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
                 placeholder="16px"
                 id="marginRight"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.marginRight || ""}
+                defaultValue={selectedElement?.style?.marginRight || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-8 left-1/2 -translate-x-1/2"
                 placeholder="16px"
                 id="paddingTop"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.paddingTop || ""}
+                defaultValue={selectedElement?.style?.paddingTop || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-8 left-1/2 -translate-x-1/2"
                 placeholder="16px"
                 id="paddingBottom"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.paddingBottom || ""}
+                defaultValue={selectedElement?.style?.paddingBottom || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 left-9 -translate-y-1/2"
                 placeholder="16px"
                 id="paddingLeft"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.paddingLeft || ""}
+                defaultValue={selectedElement?.style?.paddingLeft || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-9 -translate-y-1/2"
                 placeholder="16px"
                 id="paddingRight"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.paddingRight || ""}
+                defaultValue={selectedElement?.style?.paddingRight || ""}
               />
             </div>
           </AccordionContent>
@@ -659,9 +659,9 @@ function SettingsTab() {
           <AccordionContent>
             <Tabs
               onValueChange={(e) => handleOnChanges("position", e)}
-              defaultValue={state.selectedElement.style.position || "relative"}
+              defaultValue={selectedElement?.style?.position || "relative"}
             >
-              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-2">
+              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit gap-2">
                 {/* <TabsTrigger
                 value="static"
                 className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
@@ -699,28 +699,28 @@ function SettingsTab() {
                 id="top"
                 placeholder="auto"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement.style.top || ""}
+                defaultValue={selectedElement?.style?.top || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
                 placeholder="auto"
                 id="bottom"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.bottom || ""}
+                defaultValue={selectedElement?.style?.bottom || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
                 placeholder="auto"
                 id="left"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.left || ""}
+                defaultValue={selectedElement?.style?.left || ""}
               />
               <input
                 className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
                 placeholder="auto"
                 id="right"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.right || ""}
+                defaultValue={selectedElement?.style?.right || ""}
               />
               <div className=" absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex ">
                 <p className=" text-muted-foreground text-xs ">z-index: </p>
@@ -729,7 +729,7 @@ function SettingsTab() {
                   placeholder="0"
                   id="zIndex"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                  defaultValue={state.selectedElement.style.zIndex || ""}
+                  defaultValue={selectedElement?.style?.zIndex || ""}
                 />
               </div>
             </div>
@@ -751,22 +751,22 @@ function SettingsTab() {
                   "flex flex-1 h-[30px] rounded-md border-2 group hover:border-[#6A6A6A] pr-0.5 bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none    disabled:cursor-not-allowed disabled:opacity-50 "
                 }
               >
-                <div className=" overflow-hidden h-full rounded-l-[5px] w-[39px] mr-2">
+                <div className=" overflow-hidden h-full rounded-l-[7px] w-[39px] mr-2">
                   <input
                     className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
                     type="color"
                     id="backgroundColor"
                     placeholder="transparent"
                     onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                    defaultValue={state.selectedElement.style.backgroundColor || ""}
+                    defaultValue={selectedElement?.style?.backgroundColor || ""}
                   />
                 </div>
                 <input
-                  className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
+                  className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
                   id="backgroundColor"
                   placeholder="transparent"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                  defaultValue={state.selectedElement.style.backgroundColor || ""}
+                  defaultValue={selectedElement?.style?.backgroundColor || ""}
                 />
               </div>
             </div>
@@ -779,7 +779,7 @@ function SettingsTab() {
                 placeholder="px"
                 id="filter"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style?.filter || 0}
+                defaultValue={selectedElement?.style?.filter || 0}
               />
             </div>
             {/* 3rd bcg image */}
@@ -789,7 +789,7 @@ function SettingsTab() {
                 <div
                   className="w-10 border-2 group-hover:border-[#6a6a6a]  transition-colors border-main-black !rounded-l-md border-r-0"
                   style={{
-                    backgroundImage: state.selectedElement.style.backgroundImage,
+                    backgroundImage: selectedElement?.style?.backgroundImage,
                   }}
                 />
                 <Input
@@ -797,7 +797,7 @@ function SettingsTab() {
                   className="mt-0 flex-1 !rounded-l-[0px] hover:border-l-none group-hover:border-[#6a6a6a]"
                   id="backgroundImage"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                  defaultValue={state.selectedElement.style.backgroundImage || ""}
+                  defaultValue={selectedElement?.style?.backgroundImage || ""}
                 />
               </div>
             </div>
@@ -807,9 +807,9 @@ function SettingsTab() {
               <Tabs
                 className="flex-1"
                 onValueChange={(e) => handleOnChanges("backgroundSize", e)}
-                defaultValue={state.selectedElement.style.backgroundSize?.toString() || "cover"}
+                defaultValue={selectedElement?.style?.backgroundSize?.toString() || "cover"}
               >
-                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit flex-1">
                   <TabsTrigger
                     value="cover"
                     className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
@@ -845,14 +845,14 @@ function SettingsTab() {
               <Tabs
                 className="flex-1"
                 onValueChange={(e) => handleOnChanges("display", e)}
-                defaultValue={state.selectedElement.style.display || "block"}
+                defaultValue={selectedElement?.style?.display || "block"}
               >
-                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit">
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
                   <TabsTrigger
                     value="flex"
                     className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
                   >
-                    A
+                    F
                   </TabsTrigger>
                   <TabsTrigger
                     value="block"
@@ -874,9 +874,9 @@ function SettingsTab() {
               <Tabs
                 className="flex-1"
                 onValueChange={(e) => handleOnChanges("flexFlow", e)}
-                defaultValue={state.selectedElement.style.flexFlow || "row"}
+                defaultValue={selectedElement?.style?.flexFlow || "row"}
               >
-                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit">
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
                   <TabsTrigger
                     value="row"
                     className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
@@ -898,15 +898,15 @@ function SettingsTab() {
                 </TabsList>
               </Tabs>
             </div>
-            <div className={`${state.selectedElement.style.display === "flex" ? "block" : "hidden"} mt-3`}>
+            <div className={`${selectedElement?.style?.display === "flex" ? "block" : "hidden"} mt-3`}>
               <div className="flex items-center mb-3">
-                <p className="text-muted-foreground text-xs w-20">{state.selectedElement.style.flexFlow === "column" ? "Align Y" : "Align X"}</p>
+                <p className="text-muted-foreground text-xs w-20">{selectedElement?.style?.flexFlow === "column" ? "Align Y" : "Align X"}</p>
                 <Tabs
                   className="flex-1"
                   onValueChange={(e) => handleOnChanges("justifyContent", e)}
-                  defaultValue={state.selectedElement.style.justifyContent || "center"}
+                  defaultValue={selectedElement?.style?.justifyContent || "center"}
                 >
-                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit">
+                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
                     <TabsTrigger
                       value="space-between"
                       className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
@@ -941,13 +941,13 @@ function SettingsTab() {
                 </Tabs>
               </div>
               <div className="flex items-center mb-3">
-                <p className="text-muted-foreground text-xs w-20">{state.selectedElement.style.flexFlow === "column" ? "Align X" : "Align Y"}</p>
+                <p className="text-muted-foreground text-xs w-20">{selectedElement?.style?.flexFlow === "column" ? "Align X" : "Align Y"}</p>
                 <Tabs
                   className="flex-1"
                   onValueChange={(e) => handleOnChanges("alignItems", e)}
-                  defaultValue={state.selectedElement.style.alignItems || "normal"}
+                  defaultValue={selectedElement?.style?.alignItems || "normal"}
                 >
-                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit ">
+                  <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit ">
                     <TabsTrigger
                       value="center"
                       className="w-6 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
@@ -982,59 +982,58 @@ function SettingsTab() {
                   placeholder="0"
                   id="gap"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                  defaultValue={state.selectedElement.style.gap || ""}
+                  defaultValue={selectedElement?.style?.gap || ""}
                 />
               </div>
               {/* <FlexBoxComponent/> */}
-              {/* <div className="w-[136px] h-[68px] bg-[#272727] rounded-md grid grid-cols-3 p-1">
+              <div className="w-[136px] h-[68px] bg-[#272727] rounded-md grid grid-cols-3 p-1">
                 <Tabs
                   onValueChange={(e) => {
                     switch (e) {
                       case "justify-start-align-start":
-                        handleOnChanges({ target: { id: "justifyContent", value: "start" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "start" } });
-                        console.log("qqqq");
+                        handleOnChanges("justifyContent", "start");
+                        handleOnChanges("alignItems", "start");
 
                         break;
 
                       case "justify-center-align-start":
-                        handleOnChanges({ target: { id: "justifyContent", value: "center" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "start" } });
+                        handleOnChanges("justifyContent", "center");
+                        handleOnChanges("alignItems", "start");
                         break;
 
                       case "justify-end-align-start":
-                        handleOnChanges({ target: { id: "justifyContent", value: "end" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "start" } });
+                        handleOnChanges("justifyContent", "end");
+                        handleOnChanges("alignItems", "start");
                         break;
 
                       case "justify-start-align-center":
-                        handleOnChanges({ target: { id: "justifyContent", value: "start" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "center" } });
+                        handleOnChanges("justifyContent", "start");
+                        handleOnChanges("alignItems", "center");
                         break;
 
                       case "justify-center-align-center":
-                        handleOnChanges({ target: { id: "justifyContent", value: "center" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "center" } });
+                        handleOnChanges("justifyContent", "center");
+                        handleOnChanges("alignItems", "center");
                         break;
 
                       case "justify-end-align-center":
-                        handleOnChanges({ target: { id: "justifyContent", value: "end" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "center" } });
+                        handleOnChanges("justifyContent", "end");
+                        handleOnChanges("alignItems", "center");
                         break;
 
                       case "justify-start-align-end":
-                        handleOnChanges({ target: { id: "justifyContent", value: "start" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "end" } });
+                        handleOnChanges("justifyContent", "start");
+                        handleOnChanges("alignItems", "end");
                         break;
 
                       case "justify-center-align-end":
-                        handleOnChanges({ target: { id: "justifyContent", value: "center" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "end" } });
+                        handleOnChanges("justifyContent", "center");
+                        handleOnChanges("alignItems", "end");
                         break;
 
                       case "justify-end-align-end":
-                        handleOnChanges({ target: { id: "justifyContent", value: "end" } });
-                        handleOnChanges({ target: { id: "alignItems", value: "  end" } });
+                        handleOnChanges("justifyContent", "end");
+                        handleOnChanges("alignItems", "end");
                         break;
 
                       default:
@@ -1042,7 +1041,7 @@ function SettingsTab() {
                     }
                   }}
                 >
-                  <TabsList className="border-[1px] w-[136px] h-[68px] bg-[#272727] rounded-md grid grid-cols-3 p-1">
+                  <TabsList className="border-[2px] w-[136px] h-[68px] bg-[#272727] rounded-md grid grid-cols-3 p-1">
                     <TabsTrigger
                       value="justify-start-align-start"
                       className="w-10 h-[24.4px] p-0"
@@ -1099,7 +1098,7 @@ function SettingsTab() {
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
-              </div> */}
+              </div>
             </div>
           </AccordionContent>
         </AccordionItem>
@@ -1163,7 +1162,7 @@ function SettingsTab() {
                 id="borderTopWidth"
                 placeholder="0px"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement.style.borderTopWidth || ""}
+                defaultValue={selectedElement?.style?.borderTopWidth || ""}
               />
               {/* Bottom Border */}
               <input
@@ -1171,7 +1170,7 @@ function SettingsTab() {
                 placeholder="0px"
                 id="borderBottomWidth"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.borderBottomWidth || ""}
+                defaultValue={selectedElement?.style?.borderBottomWidth || ""}
               />
               {/* Left Border */}
               <input
@@ -1179,7 +1178,7 @@ function SettingsTab() {
                 placeholder="0px"
                 id="borderLeftWidth"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.borderLeftWidth || ""}
+                defaultValue={selectedElement?.style?.borderLeftWidth || ""}
               />
               {/* Right Border */}
               <input
@@ -1187,7 +1186,7 @@ function SettingsTab() {
                 placeholder="0px"
                 id="borderRightWidth"
                 onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                defaultValue={state.selectedElement.style.borderRightWidth || ""}
+                defaultValue={selectedElement?.style?.borderRightWidth || ""}
               />
             </div>
 
@@ -1196,7 +1195,7 @@ function SettingsTab() {
               <p className="text-muted-foreground text-xs w-20">Border Style</p>
               <Select
                 onValueChange={(e) => handleOnChanges("borderStyle", e)}
-                defaultValue={state.selectedElement.style.borderStyle || "solid"}
+                defaultValue={selectedElement?.style?.borderStyle || "solid"}
               >
                 <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
                   <SelectValue placeholder="Select border style" />
@@ -1229,7 +1228,7 @@ function SettingsTab() {
                     id="borderColor"
                     placeholder="transparent"
                     onChange={(e) => handleOnChanges(e.target.id, e.target.value)}
-                    defaultValue={state.selectedElement.style.borderColor || ""}
+                    defaultValue={selectedElement?.style?.borderColor || ""}
                   />
                 </div>
                 <input
@@ -1237,7 +1236,7 @@ function SettingsTab() {
                   id="borderColor"
                   placeholder="transparent"
                   onChange={(e) => handleOnChanges(e.target.id, e.target.defaultValue)}
-                  defaultValue={state.selectedElement.style.borderColor || ""}
+                  defaultValue={selectedElement?.style?.borderColor || ""}
                 />
               </div>
             </div>
