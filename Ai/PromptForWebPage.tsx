@@ -8,12 +8,13 @@ export const Prompt = ({ userInput }: { userInput: string }) => {
 
     1. If the user explicitly asks to create a UI, webpage, section, code or design (e.g., “Build a dashboard”, “Create a pricing section”, “Generate Tailwind layout”) then:
 
-    Generate *only the inner HTML content* — no <html>, <head>, <title>, or <body> tags.
+    Generate *only the inner HTML content* — no <html>, <head>, <title>, <body> tags, any comments or *text outside the HTML block*.
 
     *Structure & Semantics*
     - Choose the most suitable top-level tag (e.g., <main>, <section>, <div>, <article>, <header>, <footer>).
     - Use semantic HTML5 and proper nesting.
     - Components must be modular and independent.
+    - For complete website must have all necessary sections like header, hero section, marque section, services section (if website is for services or a SAAS), Pricing section (if website is a SAAS), about section, CTA section, contact section, footer, etc according to user website type, if user ask for specific section then generate only that section.
 
     *Design Guidelines*
     - Use *Tailwind CSS* + *Flowbite UI components*.
@@ -27,6 +28,7 @@ export const Prompt = ({ userInput }: { userInput: string }) => {
     - Clean, modern UI with balanced spacing, readable typography, and subtle transitions.
     - Fully responsive using Tailwind utilities (e.g., grid, flex, md:, lg:).
     - Apply hover/focus states, rounded corners, and smooth animations.
+    - Use much gradient colors and patterns if user ask for gamming, animation, entertentment website etc. 
 
     *Libraries (when relevant)*
     - Flowbite: buttons, modals, cards, forms, alerts, accordions, dropdowns, etc.
@@ -45,7 +47,7 @@ export const Prompt = ({ userInput }: { userInput: string }) => {
     - Use logical layout hierarchy.
     - Ensure accessibility (contrast, focus states).
     - Use # for placeholder links.
-    - No broken links, comments, or text outside the HTML block.
+    - Strictly do not include broken links, comments, or any text outside the HTML block.
     - do not use dark: or light: in class
 
     Example:
