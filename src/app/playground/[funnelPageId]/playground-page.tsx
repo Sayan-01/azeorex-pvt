@@ -143,7 +143,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         userId={userId}
       />
       <div className="h-full flex justify-center">
-        <Editor code={code.replace("```", "")} />
+        <Editor code={code.replace("```", "")} funnelPageDetails={funnelPageDetails} />
       </div>
       <FunnelEditorSidebar
         messages={messages}

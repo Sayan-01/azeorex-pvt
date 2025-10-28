@@ -67,7 +67,7 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
         </div>
       </Header>
       <section className="mb-4 md:mb-6 md:px-7 px-5">
-        <div className="bg-[#ffffff08] rounded-xl md:p-6 p-4 flex gap-3 items-center">
+        <div className="bg-[#ffffff08] rounded-xl p-4 flex gap-3 items-center">
           <svg
             width="12"
             height="18"

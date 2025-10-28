@@ -7,10 +7,11 @@ import { useEditor } from "../../../../providers/editor/editor-provider";
 import { useNewEditor } from "../../../../providers/newPeovider";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { toast } from "sonner";
+import { FunnelPage } from "@prisma/client";
 
-const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
+const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: boolean; funnelPageDetails?: FunnelPage }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const { dispatch, state, enableEditingFeatures, onSaveCode, userId, projectId, funnelPageDetails, setSaveLoading } = useEditor();
+  const { dispatch, state, enableEditingFeatures, onSaveCode, projectId, setSaveLoading } = useEditor();
   const { selectedElement, setSelectedElement } = useNewEditor();
 
   const handleUnpreview = () => {
@@ -66,9 +67,14 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       try {
         const iframeDoc = iframeRef.current.contentDocument || iframeRef.current.contentWindow?.document;
         if (!iframeDoc) return;
-        const clone = iframeDoc.getElementById("root") as HTMLElement;
-        if (!clone) return;
-        const finalCode = clone.innerHTML.trim();
+
+        const cloneRoot = iframeDoc.getElementById("root")?.cloneNode(true) as HTMLElement;
+        if (!cloneRoot) return;
+
+        cloneRoot.querySelectorAll(".overlay-indicator").forEach((el) => el.remove());
+
+        const finalCode = cloneRoot.innerHTML.trim();
+        console.log(finalCode);
         savePage(finalCode);
       } catch (error) {
         console.log(error);
@@ -317,7 +323,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
   const savePage = async (cleanCode: string) => {
     try {
       // dispatch({ type: "SET_HTML", payload: { html: cleanCode } });
-      setSaveLoading(true)
+      // setSaveLoading(true)
       await upsertFunnelPageForProject(
         {
           ...funnelPageDetails,
@@ -330,7 +336,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       toast.error("😫Could not save page");
     }
     finally {
-      setSaveLoading(false)
+      // setSaveLoading(false)
     }
   };
 
@@ -350,7 +356,6 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
         })}
         sandbox="allow-scripts allow-same-origin"
       />
-      <p>{state.selectedElement?.outerHTML}</p>
       {state.previewMode && state.liveMode && (
         <Button
           variant={"ghost"}
