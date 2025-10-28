@@ -1,9 +1,7 @@
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Chat } from "@/icons";
 import { Ai } from "@/icons/ai";
-import { CMS } from "@/icons/cms";
 import { Database } from "@/icons/database";
-import { Layout } from "@/icons/layout";
 import { Plus2 } from "@/icons/plus2";
 import { Stack } from "@/icons/stack";
 import clsx from "clsx";
@@ -40,12 +38,6 @@ const TabList = (props: Props) => {
       >
         <Database /> Storage
       </TabsTrigger>
-      {/* <TabsTrigger
-        value="Layout"
-        className="h-7 pl-[6px] pr-1.5 text-[12px] data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1.5 data-[state=active]:rounded-md"
-      >
-        <Layout /> Layout
-      </TabsTrigger> */}
 
       <TabsTrigger
         value="AiPoward"

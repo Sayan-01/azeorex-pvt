@@ -91,6 +91,7 @@ type EditorContextType = {
   state: EditorState;
   dispatch: React.Dispatch<EditorAction>;
   enableEditingFeatures: (doc: Document) => void;
+  updateStyle: (property: string, value: string) => void;
   agencyId: string;
   funnelId: string;
   pageDetails: FunnelPage;
@@ -139,12 +140,21 @@ export const EditorProvider = (props: EditorProps) => {
     });
   };
 
+  const updateStyle = (property: string, value: string) => {
+    if (!state.selectedElement) return;
+    dispatch({
+      type: "UPDATE_SELECTED_ELEMENT_STYLE",
+      payload: { property, value },
+    });
+  };
+
   return (
     <EditorContext.Provider
       value={{
         state,
         dispatch,
         enableEditingFeatures,
+        updateStyle,
         agencyId: props.agencyId,
         funnelId: props.funnelId,
         pageDetails: props.pageDetails,

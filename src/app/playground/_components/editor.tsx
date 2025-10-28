@@ -9,7 +9,7 @@ import { useNewEditor } from "../../../../providers/newPeovider";
 const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { dispatch, state, enableEditingFeatures } = useEditor();
-  const { setSelectedElement } = useNewEditor();
+  const { selectedElement, setSelectedElement } = useNewEditor();
 
   const handleUnpreview = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -309,6 +309,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
         })}
         sandbox="allow-scripts allow-same-origin"
       />
+      <p>{state.selectedElement?.outerHTML}</p>
       {state.previewMode && state.liveMode && (
         <Button
           variant={"ghost"}

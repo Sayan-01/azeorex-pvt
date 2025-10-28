@@ -8,12 +8,11 @@ import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-tab";
 // import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
-import AiTab from "./tabs/AI-tab";
-import SettingsTab from "./tabs/settings-tab";
+import AiTab from "./tabs/ai-tab";
+import SettingsTab from "./tabs/settings-tab/settings-tab";
 import Chats from "./tabs/chats";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
 // import LayoutTab from "./tabs/layout";
-
 
 type Props = {
   userId: string;
@@ -93,9 +92,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
                   </TabsContent>
                 </Tabs>
               </TabsContent>
-              <TabsContent value="Layers">
-                {/* <LayersTab /> */}
-              </TabsContent>
+              <TabsContent value="Layers">{/* <LayersTab /> */}</TabsContent>
               <TabsContent value="Media">
                 <MediaBucketTab projectId={projectId} />
               </TabsContent>

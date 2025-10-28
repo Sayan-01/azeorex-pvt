@@ -38,9 +38,9 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
 
       console.log(state.html);
 
-      const code = "```html\n" + state.html + "\n```";
+      const code = "```html" + state.html + "```";
 
-      // await upsertFunnelPageForProject({ ...funnelPageDetails, content: code }, projectId);
+      await upsertFunnelPageForProject({ ...funnelPageDetails, content: code }, projectId);
 
       toast.success("✨ Changes saved successfully!");
     } catch (err) {
