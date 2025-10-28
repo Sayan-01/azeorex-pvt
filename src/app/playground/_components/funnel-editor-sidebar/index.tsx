@@ -99,7 +99,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
               <TabsContent value="Layout">{/* <LayoutTab /> */}</TabsContent>
 
               <TabsContent value="AiPoward">
-                <AiTab />
+                {/* <AiTab /> */}
               </TabsContent>
             </div>
           </SheetContent>
