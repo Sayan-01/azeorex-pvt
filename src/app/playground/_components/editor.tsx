@@ -123,7 +123,7 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
       overlay.style.left = `${rect.left + (iframe.contentWindow?.scrollX || 0)}px`;
       overlay.style.width = `${rect.width}px`;
       overlay.style.height = `${rect.height}px`;
-      overlay.style.border = `2px solid ${color}`;
+      overlay.style.border = `2px ${color === "#00bfff" ? "#00bfff dashed" : "#ff6b00 solid"}`;
       overlay.style.backgroundColor = fill ?? "transparent";
       overlay.style.pointerEvents = "none";
       overlay.style.borderRadius = "4px";
@@ -229,7 +229,7 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
       removeOverlays();
 
       // Create persistent selected overlay
-      selectedOverlay = createOverlay(rect, "#ff6b00", "rgba(255,107,0,0.15)", true);
+      selectedOverlay = createOverlay(rect, "#ff6b00", "rgba(21, 93, 252 ,0.10)", true);
 
       // Setup ResizeObserver to track dimension changes
       if (resizeObserver) {
