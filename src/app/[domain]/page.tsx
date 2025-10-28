@@ -40,9 +40,9 @@ const Page = async (props: { params: Promise<{ domain: string }> }) => {
 
   return (
     <EditorProvider
-      agencyId={domainData.id}
-      pageDetails={pageData}
-      funnelId={domainData.id}
+      userId={domainData.userId}
+      projectId={domainData.id}
+      funnelPageDetails={pageData}
     >
       <NewEditorProvider>
         <Editor

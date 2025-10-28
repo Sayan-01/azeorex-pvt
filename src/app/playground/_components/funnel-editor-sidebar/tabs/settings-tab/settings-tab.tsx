@@ -57,7 +57,6 @@ import TailwindClassesSection from "./tailwind-classes-section";
 // import { overlayEvent } from "../../editor";
 
 function SettingsTab() {
-  const { selectedElement } = useNewEditor();
   const { state } = useEditor();
   
 

@@ -2,13 +2,15 @@
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { EyeOff } from "lucide-react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useEditor } from "../../../../providers/editor/editor-provider";
 import { useNewEditor } from "../../../../providers/newPeovider";
+import { upsertFunnelPageForProject } from "@/lib/queries";
+import { toast } from "sonner";
 
 const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const { dispatch, state, enableEditingFeatures } = useEditor();
+  const { dispatch, state, enableEditingFeatures, onSaveCode, userId, projectId, funnelPageDetails, setSaveLoading } = useEditor();
   const { selectedElement, setSelectedElement } = useNewEditor();
 
   const handleUnpreview = () => {
@@ -54,6 +56,25 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
     doc.close();
     enableEditingFeatures(doc);
   }, [state.html]);
+
+  useEffect(() => {
+    onSaveCode && onSave();
+  }, [onSaveCode]);
+
+  const onSave = () => {
+    if (iframeRef.current) {
+      try {
+        const iframeDoc = iframeRef.current.contentDocument || iframeRef.current.contentWindow?.document;
+        if (!iframeDoc) return;
+        const clone = iframeDoc.getElementById("root") as HTMLElement;
+        if (!clone) return;
+        const finalCode = clone.innerHTML.trim();
+        savePage(finalCode);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -230,13 +251,13 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       // Watch for style changes more comprehensively
       mutationObserver.observe(target, {
         attributes: true,
-        attributeFilter: ['style', 'class'],
+        attributeFilter: ["style", "class"],
         childList: false,
-        subtree: false
+        subtree: false,
       });
 
       // Add custom event listener as fallback
-      target.addEventListener('styleChanged', handleStyleChanged);
+      target.addEventListener("styleChanged", handleStyleChanged);
     };
 
     const handleScroll = () => {
@@ -279,7 +300,7 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       }
       if (currentSelectedElement) {
         currentSelectedElement.contentEditable = "false";
-        currentSelectedElement.removeEventListener('styleChanged', handleStyleChanged);
+        currentSelectedElement.removeEventListener("styleChanged", handleStyleChanged);
       }
     };
   }, [state.html, state.previewMode, state.liveMode, code, setSelectedElement]);
@@ -292,6 +313,26 @@ const Editor = ({ code, isLive }: { code: string; isLive?: boolean }) => {
       });
     }
   }, [isLive]);
+
+  const savePage = async (cleanCode: string) => {
+    try {
+      // dispatch({ type: "SET_HTML", payload: { html: cleanCode } });
+      setSaveLoading(true)
+      await upsertFunnelPageForProject(
+        {
+          ...funnelPageDetails,
+          content: "```html" + cleanCode + "```",
+        },
+        projectId
+      );
+      toast.success("✨Page saved successfully");
+    } catch (e) {
+      toast.error("😫Could not save page");
+    }
+    finally {
+      setSaveLoading(false)
+    }
+  };
 
   return (
     <div

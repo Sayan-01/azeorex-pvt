@@ -54,7 +54,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
           ...values,
           id: defaultData?.id || v4(),
           order: defaultData?.order || order,
-          pathName: values.pathName || "",
+          pathName: values.pathName?.toLowerCase() || "",
         },
         projectId
       );
@@ -95,7 +95,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                     order: lastFunnelPage ? lastFunnelPage : 0,
                     visits: 0,
                     name: `${defaultData.name} Copy`,
-                    pathName: `${defaultData.pathName}copy`,
+                    pathName: `${defaultData.pathName?.toLowerCase()}copy`,
                     content: defaultData.content,
                   },
                   projectId

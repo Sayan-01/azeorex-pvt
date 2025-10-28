@@ -92,22 +92,28 @@ type EditorContextType = {
   dispatch: React.Dispatch<EditorAction>;
   enableEditingFeatures: (doc: Document) => void;
   updateStyle: (property: string, value: string) => void;
-  agencyId: string;
-  funnelId: string;
-  pageDetails: FunnelPage;
+  onSaveCode: any;
+  setOnSaveCode: React.Dispatch<React.SetStateAction<any>>;
+  saveLoading: boolean
+  setSaveLoading: (value: boolean) => void;
+  userId: string;
+  projectId: string;
+  funnelPageDetails: FunnelPage;
 };
 
 const EditorContext = createContext<EditorContextType | null>(null);
 
 type EditorProps = {
   children: React.ReactNode;
-  agencyId: string;
-  funnelId: string;
-  pageDetails: FunnelPage;
+  userId: string;
+  projectId: string;
+  funnelPageDetails: FunnelPage;
 };
 
 export const EditorProvider = (props: EditorProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialEditorState);
+  const [onSaveCode, setOnSaveCode] = useState<any>();
+  const [saveLoading, setSaveLoading] = useState(false);
 
   // ✅ Enable inline editing, drag-drop, and delete
   const enableEditingFeatures = (doc: Document) => {
@@ -155,9 +161,13 @@ export const EditorProvider = (props: EditorProps) => {
         dispatch,
         enableEditingFeatures,
         updateStyle,
-        agencyId: props.agencyId,
-        funnelId: props.funnelId,
-        pageDetails: props.pageDetails,
+        onSaveCode,
+        setOnSaveCode,
+        saveLoading,
+        setSaveLoading,
+        userId: props.userId,
+        projectId: props.projectId,
+        funnelPageDetails: props.funnelPageDetails,
       }}
     >
       {props.children}

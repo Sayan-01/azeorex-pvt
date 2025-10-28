@@ -22,33 +22,16 @@ type Props = {
 
 const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props) => {
   const router = useRouter();
-  const [load, setLoade] = useState(false);
   const pathName = usePathname();
-  const { state, dispatch } = useEditor();
+  const { state, dispatch, setOnSaveCode, saveLoading } = useEditor();
 
-  
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
     dispatch({ type: "TOGGLE_LIVE_MODE" });
   };
 
   const handleOnSave = async () => {
-    try {
-      setLoade(true);
-
-      console.log(state.html);
-
-      const code = "```html" + state.html + "```";
-
-      await upsertFunnelPageForProject({ ...funnelPageDetails, content: code }, projectId);
-
-      toast.success("✨ Changes saved successfully!");
-    } catch (err) {
-      console.error(err);
-      toast.error("😫 Could not save editor");
-    } finally {
-      setLoade(false);
-    }
+    setOnSaveCode(Date.now());
   };
 
   return (
@@ -141,7 +124,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
               strokeWidth={1.3}
             />
           </Button>
-          
+
           <div className="flex flex-col item-center mr-4">
             <div className="flex flex-row text-sm items-center gap-4">
               Draft
@@ -156,9 +139,9 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
             className="text-sm border-l-2 border-main-black pl-3"
             onClick={handleOnSave}
           >
-            {load ? (
+            {saveLoading ? (
               <>
-                <Loader loading={load} />
+                <Loader loading={saveLoading} />
               </>
             ) : (
               <DownloadIcon size={16} />

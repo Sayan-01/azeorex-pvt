@@ -42,9 +42,9 @@ const page = async (props: Props) => {
   return (
     <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#272727]  overflow-hidden `}>
       <EditorProvider
-        agencyId={userId}
-        funnelId={projectId}
-        pageDetails={funnelPageDetails}
+        userId={userId}
+        projectId={projectId}
+        funnelPageDetails={funnelPageDetails}
       >
       <NewEditorProvider>
         <PlaygroundPage

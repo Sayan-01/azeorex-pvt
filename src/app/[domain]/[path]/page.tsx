@@ -22,9 +22,9 @@ const Page = async (props: { params: Promise<{ domain: string; path: string }> }
     .trim();
   return (
     <EditorProvider
-      agencyId={domainData.userId}
-      pageDetails={pageData}
-      funnelId={domainData.id}
+      userId={domainData.userId}
+      projectId={domainData.id}
+      funnelPageDetails={pageData}
     >
       <NewEditorProvider>
       <Editor
