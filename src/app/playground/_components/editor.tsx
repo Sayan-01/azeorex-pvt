@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { EyeOff } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useEditor } from "../../../../providers/editor/editor-provider";
-import { useNewEditor } from "../../../../providers/newPeovider";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { toast } from "sonner";
 import { FunnelPage } from "@prisma/client";
@@ -12,7 +11,6 @@ import { FunnelPage } from "@prisma/client";
 const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: boolean; funnelPageDetails?: FunnelPage }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { dispatch, state, enableEditingFeatures, onSaveCode, projectId, setSaveLoading } = useEditor();
-  const { selectedElement, setSelectedElement } = useNewEditor();
 
   const handleUnpreview = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -74,7 +72,6 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
         cloneRoot.querySelectorAll(".overlay-indicator").forEach((el) => el.remove());
 
         const finalCode = cloneRoot.innerHTML.trim();
-        console.log(finalCode);
         savePage(finalCode);
       } catch (error) {
         console.log(error);
@@ -95,7 +92,7 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
 
     // Clear and reinsert the HTML code
     root.innerHTML = cleanCode || "<div style='color:white; padding:10px;'>Waiting for content...</div>";
-  }, [code, state.html]);
+  }, [code]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -123,10 +120,10 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
       overlay.style.left = `${rect.left + (iframe.contentWindow?.scrollX || 0)}px`;
       overlay.style.width = `${rect.width}px`;
       overlay.style.height = `${rect.height}px`;
-      overlay.style.border = `2px ${color === "#00bfff" ? "#00bfff dashed" : "#ff6b00 solid"}`;
+      overlay.style.border = `1px ${color === "#00bfff" ? "#00bfff dashed" : "#ff6b00 solid"}`;
       overlay.style.backgroundColor = fill ?? "transparent";
       overlay.style.pointerEvents = "none";
-      overlay.style.borderRadius = "4px";
+      // overlay.style.borderRadius = "4px";
       overlay.style.zIndex = isSelected ? "1000001" : "1000000";
       overlay.classList.add("overlay-indicator");
       if (iframeDoc.body) {
@@ -223,7 +220,6 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
         payload: { element: target },
       });
 
-      setSelectedElement(target);
 
       // Remove old overlays
       removeOverlays();
@@ -309,7 +305,7 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
         currentSelectedElement.removeEventListener("styleChanged", handleStyleChanged);
       }
     };
-  }, [state.html, state.previewMode, state.liveMode, code, setSelectedElement]);
+  }, [state.html, state.previewMode, state.liveMode, code]);
 
   useEffect(() => {
     if (isLive) {
@@ -322,8 +318,6 @@ const Editor = ({ code, isLive, funnelPageDetails }: { code: string; isLive?: bo
 
   const savePage = async (cleanCode: string) => {
     try {
-      // dispatch({ type: "SET_HTML", payload: { html: cleanCode } });
-      // setSaveLoading(true)
       await upsertFunnelPageForProject(
         {
           ...funnelPageDetails,

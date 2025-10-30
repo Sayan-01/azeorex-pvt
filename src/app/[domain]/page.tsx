@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import React from "react";
 import Editor from "../playground/_components/editor";
 import { EditorProvider } from "../../../providers/editor/editor-provider";
-import { NewEditorProvider } from "../../../providers/newPeovider";
 
 const Page = async (props: { params: Promise<{ domain: string }> }) => {
   const params = await props.params;
@@ -44,12 +43,10 @@ const Page = async (props: { params: Promise<{ domain: string }> }) => {
       projectId={domainData.id}
       funnelPageDetails={pageData}
     >
-      <NewEditorProvider>
-        <Editor
+       <Editor
           isLive={true}
           code={code}
         />
-      </NewEditorProvider>
     </EditorProvider>
   );
 };

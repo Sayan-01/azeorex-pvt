@@ -19,7 +19,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, child
             "pl-2": !children,
           }
         )}
-        ref={ref}
         {...props}
       />
     </label>

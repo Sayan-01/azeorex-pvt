@@ -47,12 +47,23 @@ const editorReducer = (state: EditorState = initialEditorState, action: EditorAc
     case "UPDATE_SELECTED_ELEMENT_STYLE": {
       const { selectedElement } = state;
       const { property, value } = action.payload;
+
       if (!selectedElement) return state;
 
-      // ✅ 1. Apply live DOM change
-      selectedElement.style[property as any] = value;
-      // ✅ 2. Return new state so React re-renders sidebar
-      return { ...state, selectedElement: selectedElement };
+      try {
+        selectedElement.style[property as any] = value;
+
+        // নতুন object বানাও যেন React বুঝতে পারে পরিবর্তন হয়েছে
+        const updatedElement = selectedElement.cloneNode(true) as HTMLElement;
+
+        return {
+          ...state,
+          selectedElement: updatedElement,
+        };
+      } catch (error) {
+        console.error("Error updating style:", error);
+        return state;
+      }
     }
 
     case "TOGGLE_PREVIEW_MODE":
@@ -94,7 +105,7 @@ type EditorContextType = {
   updateStyle: (property: string, value: string) => void;
   onSaveCode: any;
   setOnSaveCode: React.Dispatch<React.SetStateAction<any>>;
-  saveLoading: boolean
+  saveLoading: boolean;
   setSaveLoading: (value: boolean) => void;
   userId: string;
   projectId: string;
@@ -146,13 +157,14 @@ export const EditorProvider = (props: EditorProps) => {
     });
   };
 
-  const updateStyle = (property: string, value: string) => {
-    if (!state.selectedElement) return;
-    dispatch({
-      type: "UPDATE_SELECTED_ELEMENT_STYLE",
-      payload: { property, value },
-    });
-  };
+ const updateStyle = (property: string, value: string) => {
+   console.log("Updating:", property, "=", value);
+   if (!state.selectedElement) return;
+   dispatch({
+     type: "UPDATE_SELECTED_ELEMENT_STYLE",
+     payload: { property, value },
+   });
+ };
 
   return (
     <EditorContext.Provider

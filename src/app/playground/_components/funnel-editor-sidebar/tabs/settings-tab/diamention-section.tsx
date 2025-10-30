@@ -1,23 +1,13 @@
 "use client";
 import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/custom-input";
-import {
-  BoxSelect,
-  Eye,
-  EyeClosed,
-  MoveHorizontal,
-  MoveVertical,
-  Spline
-} from "lucide-react";
-import { useNewEditor } from "../../../../../../../providers/newPeovider";
+import { BoxSelect, Eye, EyeClosed, MoveHorizontal, MoveVertical, Spline } from "lucide-react";
 import { Angle } from "@/icons/angle";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 
-
 const DiamentionSection = () => {
-  const {state, updateStyle} = useEditor()
-
+  const { state, updateStyle } = useEditor();
 
   return (
     <AccordionItem
@@ -34,7 +24,7 @@ const DiamentionSection = () => {
             <Input
               placeholder="Auto"
               id="width"
-              defaultValue={state.selectedElement?.style["width"] || ""}
+              value={state.selectedElement?.style["width"] || ""}
               onChange={(e) => updateStyle("width", e.target.value)}
               children="W"
             />
@@ -44,7 +34,7 @@ const DiamentionSection = () => {
               id="height"
               placeholder="Auto"
               onChange={(e) => updateStyle(e.target.id, e.target.value)}
-              defaultValue={state.selectedElement?.style.height || ""}
+              value={state.selectedElement?.style.height || ""}
               children="H"
             />
           </div>
