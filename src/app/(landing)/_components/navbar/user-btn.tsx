@@ -52,7 +52,7 @@ const UserBtn = ({ children, className, margin, size, includeInfo = false }: Pro
           </div>}
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={clsx(margin, "bg-zinc-900 rounded-xl")}>
+      <DropdownMenuContent className={clsx(margin, "bg-zinc-900 rounded-xl p-2")}>
         <DropdownMenuLabel className="flex justify-between items-center">
           <div className="flex gap-4 items-center">
             <div className="flex items-center justify-center rounded-full">

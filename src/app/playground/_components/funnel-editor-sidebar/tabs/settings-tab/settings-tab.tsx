@@ -1,59 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import {
-  AlignCenter,
-  AlignHorizontalJustifyCenterIcon,
-  AlignHorizontalJustifyEndIcon,
-  AlignHorizontalJustifyStart,
-  AlignHorizontalSpaceAround,
-  AlignHorizontalSpaceBetween,
-  AlignJustify,
-  AlignLeft,
-  AlignRight,
-  AlignVerticalJustifyCenter,
-  AlignVerticalJustifyEnd,
-  AlignVerticalJustifyStart,
-  AlignVerticalSpaceBetween,
-  ArrowRightLeft,
-  Blinds,
-  BoxSelect,
-  ChevronsLeftRightIcon,
-  CircleOff,
-  DraftingCompass,
-  Eye,
-  EyeClosed,
-  Link,
-  LucideImageDown,
-  Mouse,
-  MoveDown,
-  MoveHorizontal,
-  MoveRight,
-  MoveVertical,
-  Spline,
-  Underline,
-  X,
-} from "lucide-react";
-import { PiAngleBold, PiAngleDuotone } from "react-icons/pi";
-import { Tabs, TabsTrigger, TabsList } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
+import { Accordion } from "@/components/ui/accordion";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
-import PM from "@/icons/p-m";
-import Position from "@/icons/position";
-import { Angle } from "@/icons/angle";
-import { Input } from "@/components/ui/custom-input";
 
-import { SwatchBook } from "lucide-react";
-import { useNewEditor } from "../../../../../../../providers/newPeovider";
-import { Button } from "@/components/ui/button";
 import DiamentionSection from "./diamention-section";
-import TypographySection from "./typography-section";
-import SpacingSection from "./spacing-section";
-import PositionSection from "./position-section";
-import BackgroundSection from "./background-section";
-import FlexboxSection from "./flexbox-section";
-import TailwindClassesSection from "./tailwind-classes-section";
+// import BackgroundSection from "./background-section";
+// import FlexboxSection from "./flexbox-section";
+// import PositionSection from "./position-section";
+// import SpacingSection from "./spacing-section";
+// import TailwindClassesSection from "./tailwind-classes-section";
+// import TypographySection from "./typography-section";
 // import { overlayEvent } from "../../editor";
 
 function SettingsTab() {
@@ -74,12 +29,12 @@ function SettingsTab() {
         defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox", "Special element", "Classes"]}
       >
         <DiamentionSection />       
-        <TypographySection />
+        {/* <TypographySection />
         <SpacingSection />
         <PositionSection />
         <BackgroundSection/>
         <FlexboxSection/>
-        <TailwindClassesSection/>
+        <TailwindClassesSection/> */}
       
         <div className="h-10"></div>
       </Accordion>

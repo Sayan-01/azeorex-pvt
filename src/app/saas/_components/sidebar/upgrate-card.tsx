@@ -31,7 +31,7 @@ const UpgrateCard = ({ credits }: { credits: number }) => {
                 {/* TODO: Add Plan Name using webhook */}
                 {/* <p>Basic Plane</p>*/}
                 Your Credits
-                <span className="bg-[#D1D6F2] text-xs dark:bg-zinc-700  px-2 py-1 pl-1 text-[#4964f9] dark:text-blue-400 rounded-full">🪙 {credits}</span>
+                <span className="bg-[#D1D6F2] text-xs dark:bg-zinc-700  px-2 py-1 pl-1 text-[#4964f9] dark:text-blue-400 rounded-full">🏀<span className="ml-1">{credits}</span></span>
               </div>
               <div className="h-1.5 bg-zinc-700 rounded-full animate-pulse mt-2.5" />
               <div className="h-1.5 bg-zinc-600 rounded-full animate-pulse w-[80%] mt-2" />

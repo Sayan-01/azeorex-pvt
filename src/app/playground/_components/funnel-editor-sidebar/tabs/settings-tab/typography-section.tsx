@@ -106,7 +106,7 @@ const TypographySection = () => {
             }}
             defaultValue={selectedElement?.style?.fontWeight?.toString() || ""}
           >
-            <SelectTrigger className="flex-1 px-2 !h-[30px] border-2 border-[#272727] text-xs">
+            <SelectTrigger className="flex-1 px-2 !h-[32px] border-2 border-[#272727] text-xs">
               <SelectValue placeholder={selectedElement?.style?.fontWeight || "Select a weight"} />
             </SelectTrigger>
             <SelectContent className="text-xs">

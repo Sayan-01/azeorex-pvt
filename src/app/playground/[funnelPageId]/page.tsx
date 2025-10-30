@@ -2,7 +2,6 @@ import React from "react";
 import PlaygroundPage, { Messages } from "./playground-page";
 import { db } from "@/lib/db";
 import { EditorProvider } from "../../../../providers/editor/editor-provider";
-import { NewEditorProvider } from "../../../../providers/newPeovider";
 
 type Props = {
   params: Promise<{
@@ -46,14 +45,12 @@ const page = async (props: Props) => {
         projectId={projectId}
         funnelPageDetails={funnelPageDetails}
       >
-      <NewEditorProvider>
         <PlaygroundPage
           funnelPageDetails={funnelPageDetails || {}}
           userId={userId}
           projectId={projectId}
           chatMessages={(chatDetails?.chatMessage as Messages[]) || []}
         />
-      </NewEditorProvider>
       </EditorProvider>
     </div>
   );
