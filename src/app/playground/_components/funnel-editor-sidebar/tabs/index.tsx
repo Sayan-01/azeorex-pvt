@@ -12,7 +12,7 @@ type Props = {
 
 const TabList = (props: Props) => {
   return (
-    <TabsList className={clsx("flex rounded-none border-main-az items-center  bg-transparent px-2 py-2.5 h-fit gap-2 absolute top-[0px] left-[54px] transition-all select-none", props.className)}>
+    <TabsList className={clsx("flex rounded-none border-main-az items-center  bg-transparent px-2 py-2.5 h-fit gap-2 absolute top-[0px] left-[54px] transition-all select-none z-[1010]", props.className)}>
       <TabsTrigger
         value="Chats"
         className="h-7 pl-[6px] pr-1.5 text-[12px] data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1.5 data-[state=active]:rounded-md"

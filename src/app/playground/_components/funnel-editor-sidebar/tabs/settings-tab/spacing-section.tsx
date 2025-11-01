@@ -1,10 +1,11 @@
 import { AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import PM from "@/icons/p-m";
 import React from "react";
-import { useNewEditor } from "../../../../../../../providers/newPeovider";
+import { useEditor } from "../../../../../../../providers/editor/editor-provider";
+import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
 
-const SpacingSection = () => {
-  const { selectedElement, updateStyle } = useNewEditor();
+const SpacingSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
+  const { updateElementStyle } = useEditor();
 
   return (
     <AccordionItem
@@ -21,57 +22,57 @@ const SpacingSection = () => {
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
             id="marginTop"
             placeholder="16px"
-            onChange={(e) => updateStyle(e.target.id, e.target.value)}
-            defaultValue={selectedElement?.style?.marginTop || ""}
+            value={selectedElement?.styles?.marginTop || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "marginTop", e.target.value)}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
             placeholder="16px"
             id="marginBottom"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={selectedElement?.style?.marginBottom || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "marginBottom", e.target.value)}
+            value={selectedElement?.styles?.marginBottom || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
             placeholder="16px"
             id="marginLeft"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={selectedElement?.style?.marginLeft || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "marginLeft", e.target.value)}
+            value={selectedElement?.styles?.marginLeft || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
             placeholder="16px"
             id="marginRight"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={selectedElement?.style?.marginRight || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "marginRight", e.target.value)}
+            value={selectedElement?.styles?.marginRight || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-8 left-1/2 -translate-x-1/2"
             placeholder="16px"
             id="paddingTop"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={selectedElement?.style?.paddingTop || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "paddingTop", e.target.value)}
+            value={selectedElement?.styles?.paddingTop || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-8 left-1/2 -translate-x-1/2"
             placeholder="16px"
             id="paddingBottom"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={selectedElement?.style?.paddingBottom || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "paddingBottom", e.target.value)}
+            value={selectedElement?.styles?.paddingBottom || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 left-9 -translate-y-1/2"
             placeholder="16px"
             id="paddingLeft"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={selectedElement?.style?.paddingLeft || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "paddingLeft", e.target.value)}
+            value={selectedElement?.styles?.paddingLeft || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-9 -translate-y-1/2"
             placeholder="16px"
             id="paddingRight"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={selectedElement?.style?.paddingRight || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "paddingRight", e.target.value)}
+            value={selectedElement?.styles?.paddingRight || ""}
           />
         </div>
       </AccordionContent>

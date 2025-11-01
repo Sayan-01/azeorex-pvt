@@ -12,7 +12,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { DeviceTypes, useEditor } from "../../../../providers/editor/editor-provider";
+import { useEditor } from "../../../../providers/editor/editor-provider";
 
 type Props = {
   projectId: string;
@@ -21,22 +21,40 @@ type Props = {
 };
 
 const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props) => {
-  const router = useRouter();
-  const pathName = usePathname();
-  const { state, dispatch, setOnSaveCode, saveLoading } = useEditor();
+  const { state, dispatch } = useEditor();
+  const [loading, setLoading] = useState(false);
 
-  const handlePreviewClick = () => {
-    dispatch({ type: "TOGGLE_PREVIEW_MODE" });
-    dispatch({ type: "TOGGLE_LIVE_MODE" });
+  const undo = () => dispatch({ type: "UNDO" });
+  const redo = () => dispatch({ type: "REDO" });
+  const togglePreview = () => dispatch({ type: "TOGGLE_PREVIEW_MODE" });
+  const setDevice = (device: "Desktop" | "Tablet" | "Mobile") => {
+    dispatch({ type: "SET_DEVICE", payload: { device } });
   };
 
-  const handleOnSave = async () => {
-    setOnSaveCode(Date.now());
+  const handleSave = async () => {
+      setLoading(true);
+    const jsonOutput = JSON.stringify(state.elements, null, 2);
+    try {
+      const response = await upsertFunnelPageForProject(
+        {
+          ...funnelPageDetails,
+          content: jsonOutput,
+        },
+        projectId
+      );
+      setLoading(false);
+      toast.success("✨Saved Editor");
+    } catch (e) {
+      console.log(e);
+
+      toast.error("😫Could not save editor");
+    }
   };
+
 
   return (
     <TooltipProvider>
-      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc ", { "!h-0 !p-0 !overflow-hidden": state.previewMode })}>
+      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", { "!h-0 !p-0 !overflow-hidden": state.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
           <Link
             href={`/saas/projects/${projectId}`}
@@ -52,18 +70,12 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
           <Tabs
             defaultValue="Desktop"
             className="w-fit"
-            value={state.device}
-            onValueChange={(value) => {
-              dispatch({
-                type: "CHANGE_DEVICE",
-                payload: { device: value as DeviceTypes },
-              });
-            }}
           >
             <TabsList className="grid w-full grid-cols-3 bg-transparent gap-0 h-fit">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <TabsTrigger
+                    onClick={() => setDevice("Desktop")}
                     value="Desktop"
                     className="data-[state=active]:border w-8 h-8 p-0"
                   >
@@ -80,6 +92,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
               <Tooltip>
                 <TooltipTrigger asChild>
                   <TabsTrigger
+                    onClick={() => setDevice("Tablet")}
                     value="Tablet"
                     className="w-8 h-8 p-0 data-[state=active]:border"
                   >
@@ -96,6 +109,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
               <Tooltip>
                 <TooltipTrigger asChild>
                   <TabsTrigger
+                    onClick={() => setDevice("Mobile")}
                     value="Mobile"
                     className="w-8 h-8 p-0 data-[state=active]:bg-muted"
                   >
@@ -117,14 +131,37 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
             variant={"ghost"}
             size={"icon"}
             className="hover:bg-slate-800"
-            onClick={handlePreviewClick}
+            onClick={togglePreview}
           >
             <EyeIcon
               size={18}
               strokeWidth={1.3}
             />
           </Button>
-
+          <Button
+            disabled={state.historyIndex === 0}
+            onClick={undo}
+            variant={"ghost"}
+            size={"icon"}
+            className="hover:bg-slate-800"
+          >
+            <Undo2
+              size={18}
+              strokeWidth={1.3}
+            />
+          </Button>
+          <Button
+            onClick={redo}
+            disabled={state.historyIndex === state.history.length - 1}
+            variant={"ghost"}
+            size={"icon"}
+            className="hover:bg-slate-800 mr-4"
+          >
+            <Redo2
+              size={18}
+              strokeWidth={1.3}
+            />
+          </Button>
           <div className="flex flex-col item-center mr-4">
             <div className="flex flex-row text-sm items-center gap-4">
               Draft
@@ -137,17 +174,16 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
           </div>
           <button
             className="text-sm border-l-2 border-main-black pl-3"
-            onClick={handleOnSave}
+            onClick={handleSave}
           >
-            {saveLoading ? (
+            {loading ? (
               <>
-                <Loader loading={saveLoading} />
+                <Loader loading={loading} />
               </>
             ) : (
               <DownloadIcon size={16} />
             )}
           </button>
-          {/* )} */}
         </aside>
       </nav>
     </TooltipProvider>

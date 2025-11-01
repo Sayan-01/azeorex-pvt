@@ -4,9 +4,10 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Position from "@/icons/position";
 import { X } from "lucide-react";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
+import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
 
-const PositionSection = () => {
-  const { state, updateStyle } = useEditor();
+const PositionSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
+  const { updateElementStyle } = useEditor();
   return (
     <AccordionItem
       value="Position"
@@ -15,16 +16,10 @@ const PositionSection = () => {
       <AccordionTrigger className="!no-underline font-semibold">Position</AccordionTrigger>
       <AccordionContent>
         <Tabs
-          onValueChange={(e) => updateStyle("position", e)}
-          defaultValue={state.selectedElement?.style?.position || "relative"}
+          onValueChange={(e) => updateElementStyle(selectedElement.id, "position", e)}
+          value={selectedElement?.styles?.position || "relative"}
         >
           <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit gap-2">
-            <TabsTrigger
-              value="static"
-              className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-            >
-              <X size={15} />
-            </TabsTrigger>
             <TabsTrigger
               value="relative"
               className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
@@ -54,29 +49,29 @@ const PositionSection = () => {
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
             id="top"
             placeholder="auto"
-            onChange={(e) => updateStyle(e.target.id, e.target.value)}
-            defaultValue={state.selectedElement?.style?.top || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "top", e.target.value)}
+            value={selectedElement?.styles?.top || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
             placeholder="auto"
             id="bottom"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={state.selectedElement?.style?.bottom || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "bottom", e.target.value)}
+            value={selectedElement?.styles?.bottom || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
             placeholder="auto"
             id="left"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={state.selectedElement?.style?.left || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "left", e.target.value)}
+            value={selectedElement?.styles?.left || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
             placeholder="auto"
             id="right"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={state.selectedElement?.style?.right || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "right", e.target.value)}
+            value={selectedElement?.styles?.right || ""}
           />
           <div className=" absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex ">
             <p className=" text-muted-foreground text-xs ">z-index: </p>
@@ -84,8 +79,8 @@ const PositionSection = () => {
               className="w-5 text-xs text-center text-sky-300 bg-transparent border-none outline-none"
               placeholder="0"
               id="zIndex"
-              onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-              defaultValue={state.selectedElement?.style?.zIndex || ""}
+              onChange={(e) => updateElementStyle(selectedElement.id, "zIndex", e.target.value)}
+              value={selectedElement?.styles?.zIndex || ""}
             />
           </div>
         </div>

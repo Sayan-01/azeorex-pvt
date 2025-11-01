@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import FunnelEditorSidebar from "../_components/funnel-editor-sidebar";
+import FunnelEditorSidebar from "./funnel-editor-sidebar";
 import { Prompt } from "../../../../Ai/PromptForWebPage";
 import { toast } from "sonner";
-import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
-import Editor from "../_components/editor";
+import FunnelEditorNavigation from "./funnel-editor-navigation";
 import { useEditor } from "../../../../providers/editor/editor-provider";
 import { upsertFunnelPageForProject } from "@/lib/queries";
+import { WebsiteBuilder } from "./website-builder";
 
 export type Messages = {
   role: string;
@@ -19,14 +19,17 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   const [code, setCode] = useState("");
   const { dispatch, state } = useEditor();
 
+  //Load existing content
   useEffect(() => {
     if (funnelPageDetails.content) {
-      const index = funnelPageDetails.content.indexOf("```html") + 7;
-      const code = funnelPageDetails.content.slice(index);
-      const cleanCode = code.replace("```", "");
-      dispatch({ type: "SET_HTML", payload: { html: cleanCode } });
+      try {
+        const parsedContent = JSON.parse(funnelPageDetails.content);
+        dispatch({ type: "SET_ELEMENT", payload: { elements: parsedContent } });
+      } catch (error) {
+        console.error("Failed to parse existing content:", error);
+      }
     }
-  }, []);
+  }, [funnelPageDetails.content]);
 
   const sendMessage = async (userInput: string) => {
     setLoading(true);
@@ -62,24 +65,33 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         const chunk = decoder.decode(value, { stream: true });
         aiResponse += chunk;
 
-        if (!isCode && aiResponse.includes("```html")) {
-          isCode = true;
-
-          const index = aiResponse.indexOf("```html") + 7;
-          const code = aiResponse.slice(index);
-          setCode(code);
-        } else if (isCode) {
-          setCode((prev) => prev + chunk);
+        try {
+          const cleanJSON = aiResponse.trim();
+          // Check if JSON is complete (starts with { and ends with })
+          if (cleanJSON.startsWith("{") && cleanJSON.endsWith("}")) {
+            const parsedJSON = JSON.parse(cleanJSON);
+            // Update editor with parsed JSON in real-time
+            dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
+          }
+        } catch (e) {
+          // Ignore parsing errors
         }
       }
 
-      if (!isCode) {
-        setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
-        setLoading(false);
-      } else {
-        setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
-        setLoading(false);
-        await savePage(aiResponse);
+      try {
+        const cleanJSON = aiResponse.trim();
+        const parsedJSON = JSON.parse(cleanJSON);
+
+        // Save to database
+        await savePage(JSON.stringify(parsedJSON, null, 2));
+
+        setMessages((prev) => [...prev, { role: "assistant", content: "✨ Webpage generated successfully!" }]);
+        toast.success("Webpage generated successfully!");
+      } catch (error) {
+        console.error("Failed to parse JSON:", error);
+        console.log("Raw AI Response:", aiResponse);
+        toast.error("Failed to parse AI response. Please try again.");
+        setMessages((prev) => [...prev, { role: "assistant", content: "Failed to generate webpage. Invalid JSON format." }]);
       }
     } catch (error: any) {
       toast.error(error?.error || "Network error occurred");
@@ -88,17 +100,12 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     }
   };
 
+  // Auto-send first message if exists
   useEffect(() => {
-    if (chatMessages?.length === 1) {
+    if (chatMessages?.length === 1 && !loading) {
       sendMessage(chatMessages[0].content);
     }
-    if (funnelPageDetails.content) {
-      const designCode = funnelPageDetails.content;
-      const index = designCode.indexOf("```html") + 7;
-      const code = designCode.slice(index);
-      setCode(code);
-    }
-  }, [funnelPageDetails.content]);
+  }, []);
 
   useEffect(() => {
     const saveMessages = async () => {
@@ -114,14 +121,10 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       });
     };
     if (!loading && messages?.length > 1) saveMessages();
-  }, [messages]);
+  }, [messages, loading]);
 
   const savePage = async (content: string) => {
     try {
-      const index = content.indexOf("```html") + 7;
-      const code = content.slice(index);
-      const cleanCode = code.replace("```", "");
-      dispatch({ type: "SET_HTML", payload: { html: cleanCode } });
       await upsertFunnelPageForProject(
         {
           ...funnelPageDetails,
@@ -142,8 +145,8 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         funnelPageDetails={funnelPageDetails}
         userId={userId}
       />
-      <div className="h-full flex justify-center">
-        <Editor code={code.replace("```", "")} funnelPageDetails={funnelPageDetails} />
+      <div className="h-full flex justify-center overflow-x-hidden bg-[#191919]">
+        <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
       </div>
       <FunnelEditorSidebar
         messages={messages}

@@ -3,9 +3,10 @@ import { AccordionContent, AccordionItem, AccordionTrigger } from "@radix-ui/rea
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Position from "@/icons/position";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
+import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
 
-const BorderShadowSection = () => {
-  const { state, updateStyle } = useEditor();
+const BorderShadowSection = ({selectedElement}: {selectedElement: EditorElement}) => {
+  const { updateElementStyle } = useEditor();
   return (
     <AccordionItem
       value="Border"
@@ -23,32 +24,32 @@ const BorderShadowSection = () => {
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
             id="borderTopWidth"
             placeholder="0px"
-            onChange={(e) => updateStyle(e.target.id, e.target.value)}
-            defaultValue={state.selectedElement?.style?.borderTopWidth || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "borderTopWidth", e.target.value)}
+            defaultValue={selectedElement?.styles?.borderTopWidth || ""}
           />
           {/* Bottom Border */}
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
             placeholder="0px"
             id="borderBottomWidth"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={state.selectedElement?.style?.borderBottomWidth || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "borderBottomWidth", e.target.defaultValue)}
+            defaultValue={selectedElement?.styles?.borderBottomWidth || ""}
           />
           {/* Left Border */}
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
             placeholder="0px"
             id="borderLeftWidth"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={state.selectedElement?.style?.borderLeftWidth || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "borderLeftWidth", e.target.defaultValue)}
+            defaultValue={selectedElement?.styles?.borderLeftWidth || ""}
           />
           {/* Right Border */}
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
             placeholder="0px"
             id="borderRightWidth"
-            onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-            defaultValue={state.selectedElement?.style?.borderRightWidth || ""}
+            onChange={(e) => updateElementStyle(selectedElement.id, "borderRightWidth", e.target.defaultValue)}
+            defaultValue={selectedElement?.styles?.borderRightWidth || ""}
           />
         </div>
 
@@ -56,8 +57,8 @@ const BorderShadowSection = () => {
         <div className="flex items-center">
           <p className="text-muted-foreground text-xs w-20">Border Style</p>
           <Select
-            onValueChange={(e) => updateStyle("borderStyle", e)}
-            defaultValue={state.selectedElement?.style?.borderStyle || "solid"}
+            onValueChange={(e) => updateElementStyle(selectedElement.id, "borderStyle", e)}
+            defaultValue={selectedElement?.styles?.borderStyle || "solid"}
           >
             <SelectTrigger className="flex-1 px-2 h-[30px] border-2 border-[#272727] text-xs">
               <SelectValue placeholder="Select border style" />
@@ -89,16 +90,16 @@ const BorderShadowSection = () => {
                 type="color"
                 id="borderColor"
                 placeholder="transparent"
-                onChange={(e) => updateStyle(e.target.id, e.target.value)}
-                defaultValue={state.selectedElement?.style?.borderColor || ""}
+                onChange={(e) => updateElementStyle(selectedElement.id, "borderColor", e.target.value)}
+                defaultValue={selectedElement?.styles?.borderColor || ""}
               />
             </div>
             <input
               className="h-[30px] w-20 border-y-2 group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               id="borderColor"
               placeholder="transparent"
-              onChange={(e) => updateStyle(e.target.id, e.target.defaultValue)}
-              defaultValue={state.selectedElement?.style?.borderColor || ""}
+              onChange={(e) => updateElementStyle(selectedElement.id, "borderColor", e.target.defaultValue)}
+              defaultValue={selectedElement?.styles?.borderColor || ""}
             />
           </div>
         </div>

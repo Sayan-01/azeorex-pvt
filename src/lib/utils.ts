@@ -1,8 +1,9 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { EditorElement } from "../../providers/editor/editor-actions";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function timeAgo(timestamp: any): any {
@@ -30,5 +31,16 @@ export function timeAgo(timestamp: any): any {
 export const ddmmyyyy = (date: Date) => {
   const d = new Date(date);
   return d.toDateString();
-}
+};
 
+// Helper: Get element by ID
+export const getElementById = (id: string, root: EditorElement): EditorElement | null => {
+  if (root.id === id) return root;
+  if (Array.isArray(root.content)) {
+    for (const child of root.content) {
+      const found = getElementById(id, child);
+      if (found) return found;
+    }
+  }
+  return null;
+};
