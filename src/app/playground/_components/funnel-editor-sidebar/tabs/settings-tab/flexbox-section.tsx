@@ -3,10 +3,10 @@ import { Input } from "@/components/ui/custom-input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlignHorizontalJustifyCenterIcon, AlignHorizontalJustifyEndIcon, AlignHorizontalJustifyStart, AlignHorizontalSpaceAround, AlignHorizontalSpaceBetween, AlignVerticalJustifyCenter, AlignVerticalJustifyEnd, AlignVerticalJustifyStart, AlignVerticalSpaceBetween, ArrowRightLeft, MoveDown, MoveRight } from "lucide-react";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
+import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
 
-const FlexboxSection = () => {
-  const {state, updateStyle} = useEditor();
-  const {selectedElement} = state;
+const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
+  const {updateElementStyle} = useEditor();
   return (
     <AccordionItem
       value="Flexbox"
@@ -19,10 +19,8 @@ const FlexboxSection = () => {
 
           <Tabs
             className="flex-1"
-            onValueChange={(e) => {
-              updateStyle("display", e), console.log("sayan", selectedElement?.style?.display);
-            }}
-            defaultValue={selectedElement?.style?.display || "block"}
+            onValueChange={(e) => updateElementStyle(selectedElement.id, "display", e)}
+            value={selectedElement?.styles?.display || "block"}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
               <TabsTrigger
@@ -50,8 +48,8 @@ const FlexboxSection = () => {
           <p className=" text-muted-foreground text-xs w-20"> Direction</p>
           <Tabs
             className="flex-1"
-            onValueChange={(e) => updateStyle("flexFlow", e)}
-            defaultValue={selectedElement?.style?.flexFlow || "row"}
+            onValueChange={(e) => updateElementStyle(selectedElement.id, "flexFlow", e)}
+            value={selectedElement?.styles?.flexFlow || "row"}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
               <TabsTrigger
@@ -75,13 +73,13 @@ const FlexboxSection = () => {
             </TabsList>
           </Tabs>
         </div>
-        <div className={`${selectedElement?.style?.display === "flex" ? "block" : "hidden"} mt-3`}>
+        <div className={`${selectedElement?.styles?.display === "flex" ? "block" : "hidden"} mt-3`}>
           <div className="flex items-center mb-3">
-            <p className="text-muted-foreground text-xs w-20">{selectedElement?.style?.flexFlow === "column" ? "Align Y" : "Align X"}</p>
+            <p className="text-muted-foreground text-xs w-20">{selectedElement?.styles?.flexFlow === "column" ? "Align Y" : "Align X"}</p>
             <Tabs
               className="flex-1"
-              onValueChange={(e) => updateStyle("justifyContent", e)}
-              defaultValue={selectedElement?.style?.justifyContent || "center"}
+              onValueChange={(e) => updateElementStyle(selectedElement.id, "justifyContent", e)}
+              value={selectedElement?.styles?.justifyContent || "center"}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
                 <TabsTrigger
@@ -118,11 +116,11 @@ const FlexboxSection = () => {
             </Tabs>
           </div>
           <div className="flex items-center mb-3">
-            <p className="text-muted-foreground text-xs w-20">{selectedElement?.style?.flexFlow === "column" ? "Align X" : "Align Y"}</p>
+            <p className="text-muted-foreground text-xs w-20">{selectedElement?.styles?.flexFlow === "column" ? "Align X" : "Align Y"}</p>
             <Tabs
               className="flex-1"
-              onValueChange={(e) => updateStyle("alignItems", e)}
-              defaultValue={selectedElement?.style?.alignItems || "normal"}
+              onValueChange={(e) => updateElementStyle(selectedElement.id, "alignItems", e)}
+              value={selectedElement?.styles?.alignItems || "normal"}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit ">
                 <TabsTrigger
@@ -158,8 +156,8 @@ const FlexboxSection = () => {
               className="w-[136px]"
               placeholder="0"
               id="gap"
-              onChange={(e) => updateStyle(e.target.id, e.target.value)}
-              defaultValue={selectedElement?.style?.gap || ""}
+              onChange={(e) => updateElementStyle(selectedElement.id, "gap", e.target.value)}
+              value={selectedElement?.styles?.gap || ""}
             />
           </div>
         </div>

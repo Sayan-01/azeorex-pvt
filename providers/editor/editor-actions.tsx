@@ -1,14 +1,56 @@
-import { DeviceTypes } from "./editor-provider";
+export type EditorElement = {
+  id: string;
+  name: string;
+  type: "div" | "h1" | "h2" | "h3" | "p" | "button" | "img" | "section" | "__body";
+  content: string | EditorElement[];
+  styles: React.CSSProperties;
+  attributes?: Record<string, string>;
+};
 
-export type EditorAction =
-  | { type: "SET_HTML"; payload: { html: string } }
-  | { type: "SELECT_ELEMENT"; payload: { element: HTMLElement | null } }
-  | { type: "TOGGLE_PREVIEW_MODE" }
-  | { type: "TOGGLE_LIVE_MODE"; payload?: { value?: boolean } }
-  | { type: "CHANGE_DEVICE"; payload: { device: DeviceTypes } }
-  | { type: "SET_ZOOM"; payload: { zoom: number } }
-  | { type: "START_DRAG" }
-  | { type: "STOP_DRAG" }
-  | { type: "START_INLINE_EDIT" }
-  | { type: "STOP_INLINE_EDIT" }
-  | { type: "UPDATE_SELECTED_ELEMENT_STYLE"; payload: { property: string; value: string } };
+export type HistoryState = {
+  elements: EditorElement;
+  selectedId: string | null;
+};
+
+export type DeviceType = "Desktop" | "Tablet" | "Mobile";
+
+export type EditorState = {
+  elements: EditorElement;
+  selectedId: string | null;
+  hoverId: string | null;
+  draggedId: string | null;
+  draggedComponent: EditorElement | null;
+  dropTargetId: string | null;
+  dropPosition: "before" | "after" | "inside" | null;
+  history: HistoryState[];
+  historyIndex: number;
+  device: DeviceType;
+  previewMode: boolean;
+  liveMode: boolean;
+  saveLoading: boolean;
+};
+
+export const initialJSON: EditorElement = {
+  id: "__body",
+  type: "__body",
+  name: "Body",
+  styles: {
+    minHeight: "100vh",
+    backgroundColor: "#f3f4f6",
+    padding: "20px",
+  },
+  content: [
+    {
+      id: "title-1",
+      type: "h1",
+      name: "Heading 1",
+      content: "Welcome to AI Website Builder",
+      styles: {
+        fontSize: "36px",
+        fontWeight: "bold",
+        color: "#1f2937",
+        marginBottom: "16px",
+      },
+    },
+  ],
+};

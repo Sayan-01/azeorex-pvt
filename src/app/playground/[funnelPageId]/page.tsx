@@ -1,5 +1,5 @@
 import React from "react";
-import PlaygroundPage, { Messages } from "./playground-page";
+import PlaygroundPage, { Messages } from "../_components/playground-page";
 import { db } from "@/lib/db";
 import { EditorProvider } from "../../../../providers/editor/editor-provider";
 
@@ -39,10 +39,11 @@ const page = async (props: Props) => {
   });
 
   return (
-    <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#272727]  overflow-hidden `}>
+    <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#191919]  overflow-hidden `}>
       <EditorProvider
         userId={userId}
         projectId={projectId}
+        funnelPageId={params.funnelPageId}
         funnelPageDetails={funnelPageDetails}
       >
         <PlaygroundPage

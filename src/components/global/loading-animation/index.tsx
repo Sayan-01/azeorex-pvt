@@ -1,9 +1,11 @@
 import React from "react";
 import "./LoadingAnimation.css";
 
-const LoadingAnimation = () => {
+const LoadingAnimation = ({ className }: { className?: string }) => {
   return (
+    <div className="pb-[60px]">
       <svg
+        className={className}
         id="svg-global"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -393,8 +395,8 @@ const LoadingAnimation = () => {
           </linearGradient>
         </defs>
       </svg>
+    </div>
   );
 };
-
 
 export default LoadingAnimation;

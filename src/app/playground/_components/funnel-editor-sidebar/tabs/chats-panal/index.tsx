@@ -8,7 +8,6 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
   const [input, setInput] = useState("");
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when messages change or loading state changes
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
