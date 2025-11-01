@@ -7,11 +7,11 @@ import ResizeHandles from "./ResizeHandler";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
 
 export default function GlobalSelectedOverlay() {
-  const { state, getElementById } = useEditor();
+  const { state} = useEditor();
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [resizing, setResizing] = useState(false);
 
-  const selectedElement = state.selectedId ? getElementById(state.selectedId) : null;
+  const selectedElement = state.selectedElement;
 
   useEffect(() => {
     if (!state.selectedId) {

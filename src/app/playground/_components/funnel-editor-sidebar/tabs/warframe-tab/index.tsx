@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useEditor } from "../../../../../../../providers/editor/editor-provider"; 
+import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import { Warframe } from "@/types/types";
 import { Button } from "@/components/ui/button";
 import { createWarframe, deleteWarframe, findWarframe } from "@/lib/queries";
@@ -31,15 +31,14 @@ const WarframeTab = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleCreateWarframe = async () => {
-    console.log(warframeName, "ssssss");
-
+    if (!state.selectedId) return;
     await createWarframe({
       id: v4(),
       warframe_name: warframeName,
       warframe_image: warframeImage,
       warframe: JSON.stringify(state.selectedElement),
     });
-    toast.success("Warframe created" );
+    toast.success("Warframe created");
     setWarframeName("");
     setWarframeImage("");
   };
@@ -78,7 +77,7 @@ const WarframeTab = () => {
                   className="flex gap-2"
                   onClick={() => {
                     navigator.clipboard.writeText(item.warframe);
-                    toast.success("Copied Successfully" );
+                    toast.success("Copied Successfully");
                   }}
                 >
                   <Copy size={15} />

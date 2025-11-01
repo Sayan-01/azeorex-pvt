@@ -5,10 +5,12 @@ import React, { useRef } from "react";
 import type { FunnelPage } from "@prisma/client";
 import { type Dispatch, createContext, useContext, useReducer, useState } from "react";
 import { DeviceType, EditorElement, EditorState, initialJSON } from "./editor-actions";
+import { getElementById } from "@/lib/utils";
 
 type EditorAction =
   | { type: "SET_ELEMENTS"; payload: { elements: EditorElement } }
   | { type: "SET_SELECTED_ID"; payload: { selectedId: string | null } }
+  | { type: "SET_SELECTED_ELEMENT"; payload: { selectedElement: EditorElement | null } }
   | { type: "SET_HOVER_ID"; payload: { hoverId: string | null } }
   | { type: "SET_DRAGGED_ID"; payload: { draggedId: string | null } }
   | { type: "SET_DRAGGED_COMPONENT"; payload: { draggedComponent: EditorElement | null } }
@@ -23,6 +25,7 @@ type EditorAction =
 const initialState: EditorState = {
   elements: initialJSON,
   selectedId: null,
+  selectedElement: null,
   hoverId: null,
   draggedId: null,
   draggedComponent: null,
@@ -41,8 +44,15 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
     case "SET_ELEMENTS":
       return { ...state, elements: action.payload.elements };
 
-    case "SET_SELECTED_ID":
-      return { ...state, selectedId: action.payload.selectedId };
+    case "SET_SELECTED_ID": {
+      const selectedElement = action.payload.selectedId ? getElementById(action.payload.selectedId, state.elements) : null;
+
+      return {
+        ...state,
+        selectedId: action.payload.selectedId,
+        selectedElement: selectedElement,
+      };
+    }
 
     case "SET_HOVER_ID":
       return { ...state, hoverId: action.payload.hoverId };
@@ -81,10 +91,12 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
     case "UNDO": {
       if (state.historyIndex > 0) {
         const prevState = state.history[state.historyIndex - 1];
+        const selectedElement = prevState.selectedId ? getElementById(prevState.selectedId, prevState.elements) : null;
         return {
           ...state,
           elements: prevState.elements,
           selectedId: prevState.selectedId,
+          selectedElement: selectedElement,
           historyIndex: state.historyIndex - 1,
         };
       }
@@ -94,10 +106,12 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
     case "REDO": {
       if (state.historyIndex < state.history.length - 1) {
         const nextState = state.history[state.historyIndex + 1];
+        const selectedElement = nextState.selectedId ? getElementById(nextState.selectedId, nextState.elements) : null;
         return {
           ...state,
           elements: nextState.elements,
           selectedId: nextState.selectedId,
+          selectedElement: selectedElement,
           historyIndex: state.historyIndex + 1,
         };
       }
@@ -120,7 +134,6 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
 type EditorContextType = {
   state: EditorState;
   dispatch: React.Dispatch<EditorAction>;
-  getElementById: (id: string, root?: EditorElement) => EditorElement | null;
   updateElementStyle: (id: string, property: string, value: string) => void;
   updateElementContent: (id: string, newContent: string) => void;
   removeElement: (id: string, root: EditorElement) => EditorElement;
@@ -147,18 +160,6 @@ type EditorProviderProps = {
 export const EditorProvider = ({ children, userId, projectId, funnelPageId, funnelPageDetails }: EditorProviderProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);
   const [saveLoading, setSaveLoading] = useState(false);
-
-  // Helper: Get element by ID
-  const getElementById = (id: string, root: EditorElement = state.elements): EditorElement | null => {
-    if (root.id === id) return root;
-    if (Array.isArray(root.content)) {
-      for (const child of root.content) {
-        const found = getElementById(id, child);
-        if (found) return found;
-      }
-    }
-    return null;
-  };
 
   // Save to history
   const saveToHistory = (newElements: EditorElement, newSelectedId: string | null) => {
@@ -207,7 +208,7 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
 
   // Check if parent contains child (prevent circular drops)
   const isDescendant = (parentId: string, childId: string): boolean => {
-    const parent = getElementById(parentId);
+    const parent = getElementById(parentId, state.elements);
     if (!parent || !Array.isArray(parent.content)) return false;
 
     const checkChildren = (element: EditorElement): boolean => {
@@ -282,7 +283,7 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
       return;
     }
 
-    const draggedElement = getElementById(state.draggedId);
+    const draggedElement = getElementById(state.draggedId, state.elements);
     if (!draggedElement) {
       dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
       dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
@@ -305,7 +306,6 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
       value={{
         state,
         dispatch,
-        getElementById,
         updateElementStyle,
         updateElementContent,
         removeElement,

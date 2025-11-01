@@ -17,6 +17,7 @@ export type DeviceType = "Desktop" | "Tablet" | "Mobile";
 export type EditorState = {
   elements: EditorElement;
   selectedId: string | null;
+  selectedElement: EditorElement | null;
   hoverId: string | null;
   draggedId: string | null;
   draggedComponent: EditorElement | null;

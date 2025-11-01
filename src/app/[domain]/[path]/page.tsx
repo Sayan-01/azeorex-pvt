@@ -1,7 +1,6 @@
 import { getDomainContent } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import React from "react";
-import Editor from "@/app/playground/_components/editor";
 import { EditorProvider } from "../../../../providers/editor/editor-provider";
 import { WebsiteBuilder } from "@/app/playground/_components/website-builder";
 

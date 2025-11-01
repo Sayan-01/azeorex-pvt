@@ -7,12 +7,12 @@ import BackgroundSection from "./background-section";
 import FlexboxSection from "./flexbox-section";
 import PositionSection from "./position-section";
 import SpacingSection from "./spacing-section";
-import TailwindClassesSection from "./tailwind-classes-section";
 import TypographySection from "./typography-section";
+import BorderShadowSection from "./border-shadow-section";
 
 function SettingsTab() {
-  const { state, getElementById } = useEditor();
-  const selectedElement = state.selectedId ? getElementById(state.selectedId) : null;
+  const { state } = useEditor();
+  const selectedElement = state.selectedElement;
 
   if (!selectedElement) {
     return (
@@ -33,7 +33,7 @@ function SettingsTab() {
         <PositionSection selectedElement={selectedElement}/>
         <BackgroundSection selectedElement={selectedElement}/>
         <FlexboxSection selectedElement={selectedElement}/>
-        {/* <TailwindClassesSection selectedElement={selectedElement}/> */}
+        <BorderShadowSection selectedElement={selectedElement}/>
       
         <div className="h-6"></div>
       </Accordion>
