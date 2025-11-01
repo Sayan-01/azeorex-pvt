@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/custom-input";
 import { toast } from "sonner";
+import { getElementById } from "@/lib/utils";
 
 const WarframeTab = () => {
   const { state } = useEditor();
@@ -32,11 +33,12 @@ const WarframeTab = () => {
 
   const handleCreateWarframe = async () => {
     if (!state.selectedId) return;
+    const selectedElement = getElementById(state.selectedId, state.elements);
     await createWarframe({
       id: v4(),
       warframe_name: warframeName,
       warframe_image: warframeImage,
-      warframe: JSON.stringify(state.selectedElement),
+      warframe: JSON.stringify(selectedElement),
     });
     toast.success("Warframe created");
     setWarframeName("");

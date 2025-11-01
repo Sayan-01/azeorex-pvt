@@ -54,7 +54,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
 
   return (
     <TooltipProvider>
-      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc ", { "!h-0 !p-0 !overflow-hidden": state.previewMode })}>
+      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", { "!h-0 !p-0 !overflow-hidden": state.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
           <Link
             href={`/saas/projects/${projectId}`}

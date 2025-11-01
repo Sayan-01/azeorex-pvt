@@ -166,7 +166,7 @@ export function FunnelPageTable({ pageDetails, subDomainName }: { pageDetails: F
           className="w-min m"
         />
         <div className="flex">
-          <div className="w-[150px] pl-4 h-9 ml-auto">azeorex.pvt</div>
+          <div className="w-[125px] pl-4 h-9 ml-auto">azeorex.pvt</div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

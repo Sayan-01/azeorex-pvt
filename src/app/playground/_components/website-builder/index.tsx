@@ -13,7 +13,7 @@ import clsx from "clsx";
 import LoadingAnimation from "@/components/global/loading-animation";
 
 export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: string; liveMode?: boolean }) => {
-  const { state, dispatch, updateElementContent, handleDrop } = useEditor();
+  const { state, dispatch, updateElementContent, handleDrop, removeElement } = useEditor();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     const handleClick = (e: React.MouseEvent) => {
       e.stopPropagation();
       dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: el.id } });
+      dispatch({ type: "SET_SELECTED_ELEMENT", payload: { selectedElement: el } });
     };
 
     const handleMouseOver = (e: React.MouseEvent) => {
@@ -172,15 +173,11 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
 
   return loading ? (
     <div className="h-[calc(100vh-40.8px)] flex items-center justify-center ">
-      {liveMode ? (
-        <Loader2/>
-      ) : (
-        <LoadingAnimation className="pb-[60px]"/>
-      )}
+      <Loader2 />
     </div>
   ) : (
     <div
-      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#272727] transition-all box !relative ", {
+      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-5 px-3 pb-[61px]", {
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode === true || liveMode === true,
         "!w-[850px]": state.device === "Tablet",
         "!w-[420px]": state.device === "Mobile",
@@ -188,8 +185,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       })}
       style={{
         minHeight: "100vh",
-        backgroundColor: "white",
-        boxShadow: "0 0 40px rgba(0,0,0,0.3)",
         transition: "width 0.3s",
         position: "relative",
       }}
@@ -204,7 +199,9 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           <EyeOff />
         </Button>
       )}
-      {renderElement(state.elements)}
+      <div className="border  relative">
+        {renderElement(state.elements)}
+      </div>
       {!state.previewMode && (
         <>
           <GlobalHoverOverlay />

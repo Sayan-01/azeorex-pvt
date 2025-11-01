@@ -9,10 +9,11 @@ import PositionSection from "./position-section";
 import SpacingSection from "./spacing-section";
 import TypographySection from "./typography-section";
 import BorderShadowSection from "./border-shadow-section";
+import { getElementById } from "@/lib/utils";
 
 function SettingsTab() {
-  const { state } = useEditor();
-  const selectedElement = state.selectedElement;
+const { state } = useEditor();
+  const selectedElement = state.selectedId ? getElementById(state.selectedId, state.elements) : null;
 
   if (!selectedElement) {
     return (

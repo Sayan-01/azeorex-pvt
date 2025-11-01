@@ -24,7 +24,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     if (funnelPageDetails.content) {
       try {
         const parsedContent = JSON.parse(funnelPageDetails.content);
-        dispatch({ type: "SET_ELEMENTS", payload: { elements: parsedContent } });
+        dispatch({ type: "SET_ELEMENT", payload: { elements: parsedContent } });
       } catch (error) {
         console.error("Failed to parse existing content:", error);
       }
@@ -71,7 +71,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
           if (cleanJSON.startsWith("{") && cleanJSON.endsWith("}")) {
             const parsedJSON = JSON.parse(cleanJSON);
             // Update editor with parsed JSON in real-time
-            dispatch({ type: "SET_ELEMENTS", payload: { elements: parsedJSON } });
+            dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
           }
         } catch (e) {
           // Ignore parsing errors
@@ -125,7 +125,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
   const savePage = async (content: string) => {
     try {
-      
       await upsertFunnelPageForProject(
         {
           ...funnelPageDetails,
@@ -146,7 +145,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         funnelPageDetails={funnelPageDetails}
         userId={userId}
       />
-      <div className="h-full flex justify-center overflow-x-hidden bg-">
+      <div className="h-full flex justify-center overflow-x-hidden bg-[#191919]">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
       </div>
       <FunnelEditorSidebar

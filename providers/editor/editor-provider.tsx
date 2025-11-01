@@ -6,9 +6,10 @@ import type { FunnelPage } from "@prisma/client";
 import { type Dispatch, createContext, useContext, useReducer, useState } from "react";
 import { DeviceType, EditorElement, EditorState, initialJSON } from "./editor-actions";
 import { getElementById } from "@/lib/utils";
+import { toast } from "sonner";
 
 type EditorAction =
-  | { type: "SET_ELEMENTS"; payload: { elements: EditorElement } }
+  | { type: "SET_ELEMENT"; payload: { elements: EditorElement } }
   | { type: "SET_SELECTED_ID"; payload: { selectedId: string | null } }
   | { type: "SET_SELECTED_ELEMENT"; payload: { selectedElement: EditorElement | null } }
   | { type: "SET_HOVER_ID"; payload: { hoverId: string | null } }
@@ -17,6 +18,7 @@ type EditorAction =
   | { type: "SET_DROP_TARGET"; payload: { dropTargetId: string | null; dropPosition: "before" | "after" | "inside" | null } }
   | { type: "SET_DEVICE"; payload: { device: DeviceType } }
   | { type: "TOGGLE_PREVIEW_MODE" }
+  | { type: "DELETE_ELEMENT"; payload: { elementId: string } }
   | { type: "UNDO" }
   | { type: "REDO" }
   | { type: "SAVE_TO_HISTORY"; payload: { elements: EditorElement; selectedId: string | null } }
@@ -39,9 +41,20 @@ const initialState: EditorState = {
   saveLoading: false,
 };
 
+const removeElement = (id: string, root: EditorElement): EditorElement => {
+  if (Array.isArray(root.content)) {
+    const filtered = root.content.filter((child) => child.id !== id);
+    return {
+      ...root,
+      content: filtered.map((child) => removeElement(id, child)),
+    };
+  }
+  return root;
+};
+
 const editorReducer = (state: EditorState, action: EditorAction): EditorState => {
   switch (action.type) {
-    case "SET_ELEMENTS":
+    case "SET_ELEMENT":
       return { ...state, elements: action.payload.elements };
 
     case "SET_SELECTED_ID": {
@@ -76,6 +89,23 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
     case "TOGGLE_PREVIEW_MODE":
       return { ...state, previewMode: !state.previewMode };
 
+    case "DELETE_ELEMENT": {
+      const updatedElementsAfterDelete = removeElement(action.payload.elementId, state.elements);
+
+      if (action.payload.elementId === "__body") {
+        return state;
+      }
+
+      return {
+        ...state,
+        elements: updatedElementsAfterDelete,
+        selectedId: null,
+        selectedElement: null,
+        history: [...state.history.slice(0, state.historyIndex + 1), { elements: updatedElementsAfterDelete, selectedId: null }],
+        historyIndex: state.historyIndex + 1,
+      };
+    }
+
     case "SAVE_TO_HISTORY": {
       const newHistory = state.history.slice(0, state.historyIndex + 1);
       newHistory.push({ elements: action.payload.elements, selectedId: action.payload.selectedId });
@@ -91,12 +121,11 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
     case "UNDO": {
       if (state.historyIndex > 0) {
         const prevState = state.history[state.historyIndex - 1];
-        const selectedElement = prevState.selectedId ? getElementById(prevState.selectedId, prevState.elements) : null;
+
         return {
           ...state,
           elements: prevState.elements,
           selectedId: prevState.selectedId,
-          selectedElement: selectedElement,
           historyIndex: state.historyIndex - 1,
         };
       }
@@ -106,12 +135,11 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
     case "REDO": {
       if (state.historyIndex < state.history.length - 1) {
         const nextState = state.history[state.historyIndex + 1];
-        const selectedElement = nextState.selectedId ? getElementById(nextState.selectedId, nextState.elements) : null;
+
         return {
           ...state,
           elements: nextState.elements,
           selectedId: nextState.selectedId,
-          selectedElement: selectedElement,
           historyIndex: state.historyIndex + 1,
         };
       }
@@ -123,6 +151,8 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
         elements: action.payload.elements,
         liveMode: !!action.payload.liveMode,
         historyIndex: 0,
+        selectedElement: null,
+        selectedId: null,
       };
     }
 
@@ -140,7 +170,7 @@ type EditorContextType = {
   insertElement: (element: EditorElement, targetId: string, position: "before" | "after" | "inside", root: EditorElement) => EditorElement;
   handleDrop: () => void;
   saveToHistory: (newElements: EditorElement, newSelectedId: string | null) => void;
-  setSaveLoading: (loading: boolean) => void;
+  deleteElement: (elementId: string) => void;
   userId: string;
   projectId: string;
   funnelPageId: string;
@@ -195,16 +225,6 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
   };
 
   // Remove element
-  const removeElement = (id: string, root: EditorElement): EditorElement => {
-    if (Array.isArray(root.content)) {
-      const filtered = root.content.filter((child) => child.id !== id);
-      return {
-        ...root,
-        content: filtered.map((child) => removeElement(id, child)),
-      };
-    }
-    return root;
-  };
 
   // Check if parent contains child (prevent circular drops)
   const isDescendant = (parentId: string, childId: string): boolean => {
@@ -301,6 +321,16 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
     dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
   };
 
+  const deleteElement = (elementId: string) => {
+    if (elementId === "__body") {
+      toast.error("Cannot delete body element");
+      return;
+    }
+
+    dispatch({ type: "DELETE_ELEMENT", payload: { elementId } });
+    toast.success("Element deleted");
+  };
+
   return (
     <EditorContext.Provider
       value={{
@@ -312,7 +342,7 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
         insertElement,
         handleDrop,
         saveToHistory,
-        setSaveLoading,
+        deleteElement,
         userId,
         projectId,
         funnelPageId,
