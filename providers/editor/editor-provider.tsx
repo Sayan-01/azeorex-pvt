@@ -189,7 +189,6 @@ type EditorProviderProps = {
 
 export const EditorProvider = ({ children, userId, projectId, funnelPageId, funnelPageDetails }: EditorProviderProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);
-  const [saveLoading, setSaveLoading] = useState(false);
 
   // Save to history
   const saveToHistory = (newElements: EditorElement, newSelectedId: string | null) => {
@@ -255,16 +254,31 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
       const newContent: EditorElement[] = [];
       for (const child of root.content) {
         if (child.id === targetId) {
+          // Found target element
           if (position === "before") {
+            if (root.id === "__body") {
+              newContent.push(element);
+            }
             newContent.push(element);
             newContent.push(child);
           } else if (position === "after") {
             newContent.push(child);
             newContent.push(element);
-          } else {
-            newContent.push(child);
+          } else if (position === "inside") {
+            // Insert inside target
+            if (Array.isArray(child.content)) {
+              newContent.push({
+                ...child,
+                content: [...child.content, element],
+              });
+            } else {
+              // Target has string content, can't insert inside
+              console.warn(`Cannot insert inside element with string content: ${child.id}`);
+              newContent.push(child);
+            }
           }
         } else {
+          // Not target, recurse deeper
           newContent.push(insertElement(element, targetId, position, child));
         }
       }
@@ -319,6 +333,8 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
     saveToHistory(newElements, state.selectedId);
     dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
     dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
+    dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: state.draggedId } });
+    dispatch({ type: "SET_HOVER_ID", payload: { hoverId: null } });
   };
 
   const deleteElement = (elementId: string) => {

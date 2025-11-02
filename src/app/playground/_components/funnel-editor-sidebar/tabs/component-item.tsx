@@ -23,7 +23,7 @@ export default function ComponentItem({ icon, label, component, onDragStart, onD
         e.stopPropagation();
         onDragEnd();
       }}
-      className="flex items-center gap-3 p-3 bg-gray-700 hover:bg-gray-600 rounded-lg cursor-move transition-colors"
+      className="flex flex-col items-center gap-3 p-3 bg-gray-700 hover:bg-gray-600 rounded-lg cursor-move transition-colors"
     >
       <div className="text-gray-400">{icon}</div>
       <span className="text-sm text-white">{label}</span>
