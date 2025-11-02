@@ -27,11 +27,10 @@ export async function POST(req: Request) {
       headers: {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "X-Title": "Azeorex", // optional
+        "X-Title": "Azeorex",
       },
       body: JSON.stringify({
         model: "tngtech/deepseek-r1t2-chimera:free",
-        // model: "openai/gpt-oss-20b:free",
         messages,
         stream: true,
       }),
@@ -46,13 +45,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No response stream from model" }, { status: 500 });
     }
 
-    // Transform the OpenRouter stream to extract content
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
     const readable = new ReadableStream({
       async start(controller) {
         const reader = response.body!.getReader();
+        let accumulatedContent = "";
 
         try {
           while (true) {
@@ -74,7 +73,30 @@ export async function POST(req: Request) {
                   const parsed = JSON.parse(data);
                   const text = parsed.choices?.[0]?.delta?.content;
                   if (text) {
-                    controller.enqueue(encoder.encode(text));
+                    accumulatedContent += text;
+
+                    // Try to parse as JSON progressively
+                    const trimmed = accumulatedContent.trim();
+                    if (trimmed.startsWith("{")) {
+                      // Check if we might have complete JSON
+                      if (trimmed.endsWith("}")) {
+                        try {
+                          // Validate it's parseable JSON
+                          JSON.parse(trimmed);
+                          // If valid, send the chunk
+                          controller.enqueue(encoder.encode(text));
+                        } catch (e) {
+                          // Not valid yet, continue accumulating
+                          controller.enqueue(encoder.encode(text));
+                        }
+                      } else {
+                        // Still building JSON, send chunk
+                        controller.enqueue(encoder.encode(text));
+                      }
+                    } else {
+                      // Regular text response (not JSON)
+                      controller.enqueue(encoder.encode(text));
+                    }
                   }
                 } catch (err) {
                   // Skip invalid JSON
@@ -99,6 +121,8 @@ export async function POST(req: Request) {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
         "Transfer-Encoding": "chunked",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
       },
     });
   } catch (error) {

@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import FunnelEditorSidebar from "./funnel-editor-sidebar";
+import FunnelEditorSidebar from "../_components/funnel-editor-sidebar";
 import { Prompt } from "../../../../Ai/PromptForWebPage";
 import { toast } from "sonner";
-import FunnelEditorNavigation from "./funnel-editor-navigation";
+import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
 import { useEditor } from "../../../../providers/editor/editor-provider";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { WebsiteBuilder } from "./website-builder";
@@ -19,17 +19,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   const [code, setCode] = useState("");
   const { dispatch, state } = useEditor();
 
-  //Load existing content
-  useEffect(() => {
-    if (funnelPageDetails.content) {
-      try {
-        const parsedContent = JSON.parse(funnelPageDetails.content);
-        dispatch({ type: "SET_ELEMENT", payload: { elements: parsedContent } });
-      } catch (error) {
-        console.error("Failed to parse existing content:", error);
-      }
-    }
-  }, [funnelPageDetails.content]);
+ 
 
   const sendMessage = async (userInput: string) => {
     setLoading(true);
@@ -48,7 +38,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       if (!result.ok) {
         toast.error("Network error occurred");
         setMessages((prev) => prev.slice(0, -1));
-
         return;
       }
 
@@ -65,33 +54,43 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         const chunk = decoder.decode(value, { stream: true });
         aiResponse += chunk;
 
-        try {
-          const cleanJSON = aiResponse.trim();
-          // Check if JSON is complete (starts with { and ends with })
-          if (cleanJSON.startsWith("{") && cleanJSON.endsWith("}")) {
-            const parsedJSON = JSON.parse(cleanJSON);
-            // Update editor with parsed JSON in real-time
-            dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
+        // Try to detect and parse JSON continuously
+        if (!isCode && aiResponse.includes("{")) {
+          isCode = true;
+        }
+
+        if (isCode) {
+          // Attempt to parse JSON progressively
+          const trimmed = aiResponse.trim();
+
+          // Check if we have a complete JSON object
+          if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+            try {
+              const parsedJSON = JSON.parse(trimmed);
+              // Update editor with parsed JSON in real-time
+              dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
+            } catch (e) {
+              // JSON not complete yet, continue accumulating
+            }
           }
-        } catch (e) {
-          // Ignore parsing errors
         }
       }
 
-      try {
-        const cleanJSON = aiResponse.trim();
-        const parsedJSON = JSON.parse(cleanJSON);
-
-        // Save to database
-        await savePage(JSON.stringify(parsedJSON, null, 2));
-
-        setMessages((prev) => [...prev, { role: "assistant", content: "✨ Webpage generated successfully!" }]);
-        toast.success("Webpage generated successfully!");
-      } catch (error) {
-        console.error("Failed to parse JSON:", error);
-        console.log("Raw AI Response:", aiResponse);
-        toast.error("Failed to parse AI response. Please try again.");
-        setMessages((prev) => [...prev, { role: "assistant", content: "Failed to generate webpage. Invalid JSON format." }]);
+      // Final processing
+      if (!isCode) {
+        setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+      } else {
+        // Try one final parse
+        try {
+          const trimmed = aiResponse.trim();
+          const parsedJSON = JSON.parse(trimmed);
+          dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
+          setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
+          await savePage(aiResponse);
+        } catch (e) {
+          toast.error("Failed to parse AI response");
+          setMessages((prev) => prev.slice(0, -1));
+        }
       }
     } catch (error: any) {
       toast.error(error?.error || "Network error occurred");
@@ -100,7 +99,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     }
   };
 
-  // Auto-send first message if exists
   useEffect(() => {
     if (chatMessages?.length === 1 && !loading) {
       sendMessage(chatMessages[0].content);
@@ -121,7 +119,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       });
     };
     if (!loading && messages?.length > 1) saveMessages();
-  }, [messages, loading]);
+  }, [messages]);
 
   const savePage = async (content: string) => {
     try {
@@ -137,6 +135,11 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       toast.error("😫Could not save page");
     }
   };
+
+  useEffect(() =>{
+    console.log(code);
+    
+  }, [code])
 
   return (
     <>
