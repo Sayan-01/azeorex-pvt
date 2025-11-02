@@ -26,68 +26,49 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
 
     try {
-      const result = await fetch("/api/ai-website-generate", {
+      const res = await fetch("/api/ai-website-generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [{ role: "user", content: Prompt({ userInput }) }],
+          messages: [{ role: "user", content: Prompt({userInput}) }],
           userId,
         }),
       });
 
-      const reader = result.body?.getReader();
+      if (!res.ok || !res.body) throw new Error("No response stream");
+
+      const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let aiResponse = "";
-      let isCode = false;
 
+      // 🔹 Stream chunks progressively
       while (true) {
-        //@ts-ignore
-        const { done, value } = await reader?.read();
+        const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
         aiResponse += chunk;
-
-        // Try to detect and parse JSON continuously
-        if (!isCode && aiResponse.includes("{")) {
-          isCode = true;
-        }
-
-        if (isCode) {
-          // Attempt to parse JSON progressively
-          const trimmed = aiResponse.trim();
-
-          // Check if we have a complete JSON object
-          if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
-            try {
-              const parsedJSON = JSON.parse(trimmed);
-              // Update editor with parsed JSON in real-time
-              dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
-            } catch (e) {
-              // JSON not complete yet, continue accumulating
-            }
-          }
-        }
+        setCode((prev) => prev + chunk);
       }
 
-      // Final processing
-      if (!isCode) {
+      // 🔹 Log complete response
+      console.log("Complete AI response:", aiResponse);
+
+      // 🔹 Try to parse as JSON (for structured output)
+      try {
+        const parsedJSON = JSON.parse(aiResponse.trim());
+        dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
+        setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
+        await savePage(aiResponse);
+      } catch (e) {
+        // If not JSON, treat as regular message
         setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
-      } else {
-        // Try one final parse
-        try {
-          const trimmed = aiResponse.trim();
-          const parsedJSON = JSON.parse(trimmed);
-          dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
-          setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
-          await savePage(aiResponse);
-        } catch (e) {
-          toast.error("Failed to parse AI response");
-          setMessages((prev) => prev.slice(0, -1));
-        }
       }
     } catch (error: any) {
-      toast.error(error?.error || "Network error occurred");
+      console.error("Error:", error);
+      toast.error(error?.message || "Network error occurred");
+      // Remove the user message if request failed
+      setMessages((prev) => prev.slice(0, -1));
     } finally {
       setLoading(false);
     }

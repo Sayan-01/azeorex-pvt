@@ -1,131 +1,95 @@
 // api/ai-website-generate/route.ts
-import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 export const maxDuration = 60;
 
 export async function POST(req: Request) {
-  try {
-    const { messages, userId } = await req.json();
+  const { messages, userId } = await req.json();
 
-    const user = await db.user.findUnique({
-      where: { id: userId },
-      select: { credits: true },
-    });
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "tngtech/deepseek-r1t2-chimera:free",
+      messages,
+      stream: true,
+    }),
+  });
 
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
+  if (!response.ok) {
+    return NextResponse.json({ error: "OpenRouter API error" }, { status: response.status });
+  }
 
-    if (user.credits < 100) {
-      return NextResponse.json({ error: "Not enough credits" }, { status: 400 });
-    }
+  // ✅ Parse SSE stream and extract content deltas
+  const readableStream = new ReadableStream({
+    async start(controller) {
+      const decoder = new TextDecoder();
+      const reader = response.body?.getReader();
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "tngtech/deepseek-r1t2-chimera:free",
-        messages,
-        stream: true,
-      }),
-    });
+      if (!reader) {
+        controller.close();
+        return;
+      }
 
-    if (!response.ok) {
-      const error = await response.json();
-      return NextResponse.json({ error: error.message || "API request failed" }, { status: response.status });
-    }
+      try {
+        let buffer = "";
 
-    if (!response.body) {
-      return NextResponse.json({ error: "No response stream from model" }, { status: 500 });
-    }
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
 
-    const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
+          // Decode chunk and add to buffer
+          buffer += decoder.decode(value, { stream: true });
 
-    const readable = new ReadableStream({
-      async start(controller) {
-        const reader = response.body!.getReader();
-        let accumulatedContent = "";
+          // Split by double newlines (SSE format)
+          const lines = buffer.split("\n\n");
+          buffer = lines.pop() || ""; // Keep incomplete line in buffer
 
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const data = line.slice(6).trim();
 
-            const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split("\n");
+              // OpenRouter sends [DONE] when stream ends
+              if (data === "[DONE]") continue;
 
-            for (const line of lines) {
-              if (line.startsWith("data: ")) {
-                const data = line.slice(6);
-                if (data === "[DONE]") {
-                  reader.releaseLock();
-                  controller.close();
-                  return;
+              try {
+                const parsed = JSON.parse(data);
+                const content = parsed.choices?.[0]?.delta?.content;
+
+                // ✅ Send only the content text, not the full JSON
+                if (content) {
+                  controller.enqueue(new TextEncoder().encode(content));
+
                 }
-                try {
-                  const parsed = JSON.parse(data);
-                  const text = parsed.choices?.[0]?.delta?.content;
-                  if (text) {
-                    accumulatedContent += text;
-
-                    // Try to parse as JSON progressively
-                    const trimmed = accumulatedContent.trim();
-                    if (trimmed.startsWith("{")) {
-                      // Check if we might have complete JSON
-                      if (trimmed.endsWith("}")) {
-                        try {
-                          // Validate it's parseable JSON
-                          JSON.parse(trimmed);
-                          // If valid, send the chunk
-                          controller.enqueue(encoder.encode(text));
-                        } catch (e) {
-                          // Not valid yet, continue accumulating
-                          controller.enqueue(encoder.encode(text));
-                        }
-                      } else {
-                        // Still building JSON, send chunk
-                        controller.enqueue(encoder.encode(text));
-                      }
-                    } else {
-                      // Regular text response (not JSON)
-                      controller.enqueue(encoder.encode(text));
-                    }
-                  }
-                } catch (err) {
-                  // Skip invalid JSON
-                }
+              } catch (e) {
+                console.error("Failed to parse SSE data:", data);
               }
             }
           }
-          controller.close();
-        } catch (err) {
-          console.error("Stream error", err);
-          controller.error(err);
         }
-      },
-    });
 
-    await db.user.update({
-      where: { id: userId },
-      data: { credits: { decrement: 100 } },
-    });
+        controller.close();
+      } catch (error) {
+        console.error("Stream error:", error);
+        controller.error(error);
+      }
+    },
+  });
 
-    return new NextResponse(readable, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Transfer-Encoding": "chunked",
-        "Cache-Control": "no-cache",
-        Connection: "keep-alive",
-      },
-    });
-  } catch (error) {
-    console.error("API error:", error);
-    return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
-  }
+  // await db.user.update({
+  //   where: { id: userId },
+  //   data: { credits: { decrement: 100 } },
+  // });
+
+  return new Response(readableStream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
+    },
+  });
 }
