@@ -27,7 +27,6 @@ export async function POST(req: Request) {
       headers: {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "X-Title": "Azeorex",
       },
       body: JSON.stringify({
         model: "tngtech/deepseek-r1t2-chimera:free",

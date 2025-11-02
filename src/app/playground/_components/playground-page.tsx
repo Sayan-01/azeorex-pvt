@@ -35,12 +35,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         }),
       });
 
-      if (!result.ok) {
-        toast.error("Network error occurred");
-        setMessages((prev) => prev.slice(0, -1));
-        return;
-      }
-
       const reader = result.body?.getReader();
       const decoder = new TextDecoder();
       let aiResponse = "";

@@ -62,15 +62,15 @@ export default function ResizeHandles({ rect, selectedId, setResizing }: ResizeH
       zIndex: 1009,
     };
 
-    const positions: Record<string, React.CSSProperties> = {
-      nw: { top: "-4px", left: "-4px" },
-      n: { top: "-4px", left: "50%", transform: "translateX(-50%)" },
-      ne: { top: "-4px", right: "-4px" },
-      e: { top: "50%", right: "-4px", transform: "translateY(-50%)" },
-      se: { bottom: "-4px", right: "-4px" },
-      s: { bottom: "-4px", left: "50%", transform: "translateX(-50%)" },
-      sw: { bottom: "-4px", left: "-4px" },
-      w: { top: "50%", left: "-4px", transform: "translateY(-50%)" },
+    const positions: any = {
+      nw: { top: "-5px", left: "-5px" },
+      n: { top: "-5px", left: "50%", transform: "translateX(-50%)" },
+      ne: { top: "-5px", right: "-5px" },
+      e: { top: "50%", right: "-5px", transform: "translateY(-50%)" },
+      se: { bottom: "-5px", right: "-5px" },
+      s: { bottom: "-5px", left: "50%", transform: "translateX(-50%)" },
+      sw: { bottom: "-5px", left: "-5px" },
+      w: { top: "50%", left: "-5px", transform: "translateY(-50%)" },
     };
 
     return { ...base, ...positions[direction] };

@@ -81,12 +81,17 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       const height = rect.height;
 
       let position: "before" | "after" | "inside";
-      if (Array.isArray(el.content) && el.content.length > 0 && offsetY > height * 0.2 && offsetY < height * 0.8) {
+      if (el.id === "__body") {
         position = "inside";
-      } else if (offsetY < height / 2) {
-        position = "before";
       } else {
-        position = "after";
+        // Normal logic for other elements
+        if (Array.isArray(el.content)  && offsetY > height * 0.2 && offsetY < height * 0.8) {
+          position = "inside";
+        } else if (offsetY < height / 2) {
+          position = "before";
+        } else {
+          position = "after";
+        }
       }
 
       dispatch({
@@ -123,6 +128,8 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       position: "relative",
       opacity: isDragging ? 0.5 : 1,
       transition: "opacity 0.2s",
+      outline: el.content.length === 0 ? "4px solid #ccc" : "none",
+      outlineOffset: "-4px",
     };
 
     if (typeof el.content === "string") {
@@ -177,7 +184,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     </div>
   ) : (
     <div
-      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-5 px-3 pb-[61px]", {
+      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-3 px-3 pb-[61px]", {
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode === true || liveMode === true,
         "!w-[850px]": state.device === "Tablet",
         "!w-[420px]": state.device === "Mobile",
@@ -189,6 +196,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         position: "relative",
       }}
     >
+    
       {state.previewMode && (
         <Button
           variant={"ghost"}

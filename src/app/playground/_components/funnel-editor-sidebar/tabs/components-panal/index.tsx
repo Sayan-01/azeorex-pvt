@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import ImagePlaceholder from "./image-placeholder";
 import SvgPlaceholder from "./svg-placeholder";
 import HeadingPlaceholder from "./heading-placeholder";
-import { AlignLeft, Container, Heading1, Heading2, TextSelect } from "lucide-react";
+import { AlignLeft, Container, Heading1, Heading2, SquareDashed, TextSelect } from "lucide-react";
 import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
 import ComponentItem from "../component-item";
 
@@ -67,7 +67,7 @@ const ComponentsTab = () => {
       group: "elements",
     },
     {
-      icon: <Container className="w-5 h-5" />,
+      icon: <SquareDashed className="w-5 h-5" />,
       label: "Container",
       component: {
         id: "temp",
@@ -77,7 +77,6 @@ const ComponentsTab = () => {
         styles: {
           padding: "20px",
           backgroundColor: "#f3f4f6",
-          borderRadius: "8px",
           minHeight: "100px",
         },
       },
