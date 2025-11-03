@@ -1,10 +1,64 @@
 import dedent from "dedent";
 
-export const Prompt = ({ userInput }: { userInput: string }) => {
+export const promptForFindType = ({ userInput }: { userInput: string }) => {
   return dedent`
-    You are an expert web designer. Generate a JSON structure for a modern, responsive webpage.
+    User Input: ${userInput}
 
-OUTPUT FORMAT - Return ONLY valid JSON (no markdown, no \`\`\`json blocks, no explanations):
+    Classification Rules:
+    - Now only return "txt" if user input is a greeting, conversation, asking questions, or making casual remarks (e.g., "Hi", "Hello", "How are you?") ". 
+    - And only return "code" if user input is a webpage, UI section, or component (examples: "Create a hero section", "Build a landing page", "Design a footer"). 
+
+    Examples of "code":
+    - "Create a hero section"
+    - "Build a landing page"
+    - "I need a contact form"
+    - "Show me a navbar"
+    - "Make a pricing table"
+    
+    Examples of "txt":
+    - "Hi there"
+    - "How are you?"
+    - "What can you do?"
+    - "Explain recursion to me"
+    
+    Return only "txt" or "code" with no additional text.
+  `;
+};
+
+export const promptForTextResponse = ({ userInput }: { userInput: string }) => {
+  return dedent`
+    You are a helpful AI assistant engaged in a natural conversation with a user.
+    
+    User Message: ${userInput}
+    
+
+    Instructions:
+    - Provide a friendly, conversational response and use bullet points if it is necessary.
+    - Be concise but informative
+    - If the user is greeting you, respond warmly and ask how you can help
+    - If the user asks what you can do, explain that you can help with:
+      * Building web components and UI elements
+      * Creating landing pages and website sections
+      * Designing interactive elements
+      * General conversation and answering questions
+    - Match the tone and formality level of the user's message
+    - If the user's request is unclear, ask clarifying questions
+    - Keep responses natural and engaging, avoid being overly formal unless the context requires it
+    
+    Respond directly to the user's message now:
+  `;
+};
+
+export const PromptForWebPage = ({ userInput }: { userInput: string }) => {
+  return dedent`
+
+userInput: ${userInput}
+
+Instructions:
+1. If the user explicitly asks to create a UI, webpage, section, code or design (e.g., “Build a dashboard”, “Create a pricing section”, “Generate Tailwind layout”) then:
+You are an expert web designer. Generate a JSON structure for a modern, responsive webpage.
+
+- OUTPUT FORMAT - Return ONLY valid JSON (no markdown, no \`\`\`json blocks, no explanations):
 {
   "id": "__body",
   "type": "__body",
@@ -41,10 +95,11 @@ ELEMENT STRUCTURE:
 - content: string for text OR array for nested elements
 
 STYLING RULES:
-- Use Tailwind classes in attributes.className: "flex gap-4 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+- Use Tailwind classes in attributes.className only for responsive classes or effects: "md:grid-cols-2 lg:grid-cols-3", "md:text-lg, "hover:bg-blue-700"
 - Use CSS styles object for precise values: { "padding": "40px", "backgroundColor": "#ffffff" }
 - Responsive classes: "grid md:grid-cols-2 lg:grid-cols-3", "text-base md:text-lg"
-- Modern design: rounded-xl, shadow-lg, generous spacing
+- Use morder design: follow proper spaccing between 2 elements, use proper color palettes.
+- Give space between elements, text elements and cards 
 
 DESIGN REQUIREMENTS:
 - Clean, professional aesthetic with whitespace
@@ -77,7 +132,7 @@ Card Grid:
   "styles": { "padding": "40px" },
   "content": [
     { "id": "heading-1", "type": "h2", "styles": { "fontSize": "32px", "fontWeight": "bold", "textAlign": "center", "marginBottom": "32px" }, "content": "Features" },
-    { "id": "grid-1", "type": "div", "attributes": { "className": "grid md:grid-cols-3 gap-6" }, "content": [
+    { "id": "grid-1", "type": "div", "styles": { "display" : "flex", "flexWrap": "wrap", "justifyContent": "center", "gap": "20px" }, attributes: { "className": "max:flex-col" }, "content": [
       { "id": "card-1", "type": "div", "styles": { "padding": "24px", "backgroundColor": "#ffffff", "borderRadius": "8px", "boxShadow": "0 2px 4px rgba(0,0,0,0.1)" }, "content": [
         { "id": "card-title-1", "type": "h3", "styles": { "fontSize": "20px", "fontWeight": "600", "marginBottom": "8px" }, "content": "Feature Title" },
         { "id": "card-desc-1", "type": "p", "styles": { "fontSize": "14px", "color": "#6b7280" }, "content": "Description" }
@@ -99,74 +154,25 @@ CRITICAL RULES:
 10. Include both styles object AND attributes.className when appropriate
 
 Generate the JSON structure now for: ${userInput}
-    `;
+
+2. If user input is a greeting, conversation, asking questions, or making casual remarks (e.g., "Hi", "Hello", "How are you?") ". 
+
+Respond naturally with a short, friendly text message (no json).
+
+Instructions:
+    - Provide a friendly, conversational response and use bullet points if it is necessary.
+    - Be concise but informative
+    - If the user is greeting you, respond warmly and ask how you can help
+    - If the user asks what you can do, explain that you can help with:
+      * Building web components and UI elements
+      * Creating landing pages and website sections
+      * Designing interactive elements
+      * General conversation and answering questions
+    - Match the tone and formality level of the user's message
+    - If the user's request is unclear, ask clarifying questions
+    - Keep responses natural and engaging, avoid being overly formal unless the context requires it
+    
+    Respond directly to the user's message now:
+`;
+
 };
-
-// import dedent from "dedent";
-
-// export const Prompt = ({ userInput }: { userInput: string }) => {
-//   return dedent`
-//     userInput: ${userInput}
-
-//     Instructions:
-
-//     1. If the user explicitly asks to create a UI, webpage, section, code or design (e.g., “Build a dashboard”, “Create a pricing section”, “Generate Tailwind layout”) then:
-
-//     Generate *only the inner HTML content* — no <html>, <head>, <title>, or <body> tags.
-
-//     *Structure & Semantics*
-//     - Choose the most suitable top-level tag (e.g., <main>, <section>, <div>, <article>, <header>, <footer>).
-//     - Use semantic HTML5 and proper nesting.
-//     - Components must be modular and independent.
-
-//     *Design Guidelines*
-//     - Use *Inline CSS* + *Flowbite UI components*.
-//     - Primary color: *blue (#3b82f6)*.
-//     - Backgrounds:
-//       - Light mode: #f8fafc
-//       - Dark mode: #0f172a
-//     - Text colors:
-//       - Light mode: #1e293b
-//       - Dark mode: #e2e8f0
-//     - Clean, modern UI with balanced spacing, readable typography, and subtle transitions.
-//     - Fully responsive using CSS media queries (e.g., grid, flex, md:, lg:).
-//     - Apply hover/focus states, rounded corners, and smooth animations.
-
-//     *Libraries (when relevant)*
-//     - Flowbite: buttons, modals, cards, forms, alerts, accordions, dropdowns, etc.
-//     - FontAwesome: icons (use \fa-brands fa-\ for social icons or \fa-solid fa-\ for others).
-//     - Chart.js: for charts (match theme colors).
-//     - Swiper.js: for sliders/carousels.
-//     - Tippy.js: for tooltips/popovers.
-
-//     *Images*
-//     - Light: https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg
-//     - Dark: https://www.cibaky.com/wp-content/uploads/2015/12/placeholder-3.jpg
-//     - Always include descriptive alt text.
-
-//     *Rules*
-//     - Maintain consistent padding/margin.
-//     - Use logical layout hierarchy.
-//     - Ensure accessibility (contrast, focus states).
-//     - Use # for placeholder links.
-//     - No broken links, comments, or text outside the HTML block.
-//     - do not use dark: or light: in class
-
-//     Example:
-//     \`\`\`html
-//     <section style="min-height: 100vh; padding: 2rem; background-color: #0f172a; color: #f3f4f6">
-//       <div style="max-width: 80rem; margin-left: auto; margin-right: auto; text-align: center; display: flex; flex-direction: column; gap: 2rem">
-//         <h1 style="font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; color: #60a5fa">Modern UI Section</h1>
-//         <p style="color: #d1d5db">Responsive design built with Tailwind & Flowbite.</p>
-//       </div>
-//     </section>
-//     \`\`\`
-
-//     2. If the user input is conversational or general (e.g., “Hi”, “Hello”, “How are you?”):
-//     Respond naturally with a short, friendly text message (no code).
-
-//     Examples:
-//     - “Hi” → “Hello! How can I help you today?”
-//     - “Generate a portfolio section” → [Return responsive HTML as per above]
-//     `;
-// };

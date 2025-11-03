@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { geminiModel } from "../../../../Ai/AiModel";
+import { geminiModel } from "../../../../../Ai/AiModel";
 import { db } from "@/lib/db";
-import { auth } from "../../../../auth";
+import { auth } from "../../../../../auth";
 
 export const POST = async (req: any) => {
   const { prompt } = await req.json();

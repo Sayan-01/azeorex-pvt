@@ -4,6 +4,7 @@ export type EditorElement = {
   type: "div" | "h1" | "h2" | "h3" | "p" | "button" | "img" | "section" | "__body";
   content: string | EditorElement[];
   styles: React.CSSProperties;
+  classes?: string;
   attributes?: Record<string, string>;
 };
 

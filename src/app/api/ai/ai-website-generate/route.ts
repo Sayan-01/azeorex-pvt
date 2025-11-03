@@ -1,4 +1,4 @@
-// api/ai-website-generate/route.ts
+import { decrementCredits } from "@/lib/queries";
 import { NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -24,7 +24,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "OpenRouter API error" }, { status: response.status });
   }
 
-  // ✅ Parse SSE stream and extract content deltas
   const readableStream = new ReadableStream({
     async start(controller) {
       const decoder = new TextDecoder();
@@ -60,7 +59,6 @@ export async function POST(req: Request) {
                 const parsed = JSON.parse(data);
                 const content = parsed.choices?.[0]?.delta?.content;
 
-                // ✅ Send only the content text, not the full JSON
                 if (content) {
                   controller.enqueue(new TextEncoder().encode(content));
 
@@ -79,11 +77,6 @@ export async function POST(req: Request) {
       }
     },
   });
-
-  // await db.user.update({
-  //   where: { id: userId },
-  //   data: { credits: { decrement: 100 } },
-  // });
 
   return new Response(readableStream, {
     headers: {

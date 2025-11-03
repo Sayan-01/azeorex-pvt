@@ -10,9 +10,10 @@ import SpacingSection from "./spacing-section";
 import TypographySection from "./typography-section";
 import BorderShadowSection from "./border-shadow-section";
 import { getElementById } from "@/lib/utils";
+import TailwindClassesSection from "./tailwind-classes-section";
 
 function SettingsTab() {
-const { state } = useEditor();
+  const { state } = useEditor();
   const selectedElement = state.selectedId ? getElementById(state.selectedId, state.elements) : null;
 
   if (!selectedElement) {
@@ -28,14 +29,15 @@ const { state } = useEditor();
         className={`w-[240px] select-none bg-editor-bcgc pb-10 `}
         defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox", "Special element", "Classes"]}
       >
-        <DiamentionSection selectedElement={selectedElement} />       
-        <TypographySection selectedElement={selectedElement}/>
-        <SpacingSection selectedElement={selectedElement}/>
-        <PositionSection selectedElement={selectedElement}/>
-        <BackgroundSection selectedElement={selectedElement}/>
-        <FlexboxSection selectedElement={selectedElement}/>
-        <BorderShadowSection selectedElement={selectedElement}/>
-      
+        <DiamentionSection selectedElement={selectedElement} />
+        {selectedElement?.type === "p" && <TypographySection selectedElement={selectedElement} />}
+        <SpacingSection selectedElement={selectedElement} />
+        <PositionSection selectedElement={selectedElement} />
+        <BackgroundSection selectedElement={selectedElement} />
+        <FlexboxSection selectedElement={selectedElement} />
+        <BorderShadowSection selectedElement={selectedElement} />
+        <TailwindClassesSection selectedElement={selectedElement} />
+
         <div className="h-6"></div>
       </Accordion>
     );

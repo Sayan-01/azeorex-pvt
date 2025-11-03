@@ -379,6 +379,13 @@ export async function getUserCurrentPlan(userId: string) {
   };
 }
 
+export const decrementCredits = async (userId: string) => {
+  await db.user.update({
+    where: { id: userId },
+    data: { credits: { decrement: 100 } },
+  });
+};
+
 export const updateDomainName = async (projectId: string, subDomainName: string | null) => {
   if (!projectId || !subDomainName) return;
 

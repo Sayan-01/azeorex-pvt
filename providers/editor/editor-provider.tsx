@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 type EditorAction =
   | { type: "SET_ELEMENT"; payload: { elements: EditorElement } }
+  | { type: "UPDATE_ELEMENT"; payload: { elementDetails: EditorElement } }
   | { type: "SET_SELECTED_ID"; payload: { selectedId: string | null } }
   | { type: "SET_SELECTED_ELEMENT"; payload: { selectedElement: EditorElement | null } }
   | { type: "SET_HOVER_ID"; payload: { hoverId: string | null } }
@@ -52,10 +53,28 @@ const removeElement = (id: string, root: EditorElement): EditorElement => {
   return root;
 };
 
+const updateElementById = (root: EditorElement, elementDetails: EditorElement): EditorElement => {
+  if (root.id === elementDetails.id) {
+    return elementDetails;
+  }
+  if (Array.isArray(root.content)) {
+    return {
+      ...root,
+      content: root.content.map((child) => updateElementById(child, elementDetails)),
+    };
+  }
+  return root;
+};
+
 const editorReducer = (state: EditorState, action: EditorAction): EditorState => {
   switch (action.type) {
     case "SET_ELEMENT":
       return { ...state, elements: action.payload.elements };
+
+    case "UPDATE_ELEMENT":
+      const newElement = action.payload.elementDetails;
+      const updatedElements = updateElementById(state.elements, newElement);
+      return { ...state, elements: updatedElements };
 
     case "SET_SELECTED_ID": {
       const selectedElement = action.payload.selectedId ? getElementById(action.payload.selectedId, state.elements) : null;

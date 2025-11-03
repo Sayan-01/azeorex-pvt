@@ -1,12 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import FunnelEditorSidebar from "../_components/funnel-editor-sidebar";
-import { Prompt } from "../../../../Ai/PromptForWebPage";
+import { PromptForWebPage } from "../../../../Ai/PromptForWebPage";
 import { toast } from "sonner";
 import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
 import { useEditor } from "../../../../providers/editor/editor-provider";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { WebsiteBuilder } from "./website-builder";
+import { decrementCredits } from "@/lib/queries";
+import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadingAnimation";
 
 export type Messages = {
   role: string;
@@ -16,21 +18,20 @@ export type Messages = {
 const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: { funnelPageDetails: any; userId: string; projectId: string; chatMessages: Messages[] }) => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Messages[]>(chatMessages);
-  const [code, setCode] = useState("");
-  const { dispatch, state } = useEditor();
-
- 
+  const { dispatch } = useEditor();
 
   const sendMessage = async (userInput: string) => {
     setLoading(true);
+
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
+    await decrementCredits(userId);
 
     try {
-      const res = await fetch("/api/ai-website-generate", {
+      const res = await fetch("/api/ai/ai-website-generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [{ role: "user", content: Prompt({userInput}) }],
+          messages: [{ role: "user", content: PromptForWebPage({ userInput }) }],
           userId,
         }),
       });
@@ -40,34 +41,35 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let aiResponse = "";
+      let isCode = false;
 
-      // 🔹 Stream chunks progressively
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
         aiResponse += chunk;
-        setCode((prev) => prev + chunk);
+
+        if (!isCode && chunk.includes("{")) {
+          isCode = true;
+        }
       }
 
-      // 🔹 Log complete response
-      console.log("Complete AI response:", aiResponse);
-
-      // 🔹 Try to parse as JSON (for structured output)
       try {
-        const parsedJSON = JSON.parse(aiResponse.trim());
-        dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
-        setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
-        await savePage(aiResponse);
+        if (!isCode) {
+          setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+        } else {
+          const cleanResponse = aiResponse.trim();
+          const parsedJSON = JSON.parse(cleanResponse);
+          dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
+          setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
+          await savePage(aiResponse);
+        }
       } catch (e) {
-        // If not JSON, treat as regular message
-        setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+        setMessages((prev) => [...prev, { role: "assistant", content: "Something went wrong" }]);
       }
     } catch (error: any) {
-      console.error("Error:", error);
       toast.error(error?.message || "Network error occurred");
-      // Remove the user message if request failed
       setMessages((prev) => prev.slice(0, -1));
     } finally {
       setLoading(false);
@@ -111,11 +113,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     }
   };
 
-  useEffect(() =>{
-    console.log(code);
-    
-  }, [code])
-
   return (
     <>
       <FunnelEditorNavigation
@@ -123,8 +120,13 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         funnelPageDetails={funnelPageDetails}
         userId={userId}
       />
-      <div className="h-full flex justify-center overflow-x-hidden bg-[#191919]">
+      <div className="h-full flex justify-center overflow-x-hidden bg-[#191919] relative">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
+        {loading && (
+          <div className="absolute z-200 bg-zinc-900/80 w-full h-[100vh] flex items-center justify-center">
+            <AiLoadingAnimation />
+          </div>
+        )}
       </div>
       <FunnelEditorSidebar
         messages={messages}
