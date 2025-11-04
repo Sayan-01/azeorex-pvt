@@ -185,6 +185,7 @@ type EditorContextType = {
   dispatch: React.Dispatch<EditorAction>;
   updateElementStyle: (id: string, property: string, value: string) => void;
   updateElementContent: (id: string, newContent: string) => void;
+  updateElementAttribute: (id: string, attributeName: string, value: string) => void;
   removeElement: (id: string, root: EditorElement) => EditorElement;
   insertElement: (element: EditorElement, targetId: string, position: "before" | "after" | "inside", root: EditorElement) => EditorElement;
   handleDrop: () => void;
@@ -242,7 +243,29 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
     saveToHistory(updateElement(state.elements), state.selectedId);
   };
 
-  // Remove element
+  //update element attribute
+  const updateElementAttribute = (id: string, attributeName: string, value: string) => {
+    const updateElement = (el: EditorElement): EditorElement => {
+      if (el.id === id) {
+        return {
+          ...el,
+          attributes: {
+            ...el.attributes,
+            [attributeName]: value,
+          },
+        };
+      }
+      if (Array.isArray(el.content)) {
+        return { ...el, content: el.content.map(updateElement) };
+      }
+      return el;
+    };
+
+    const newElements = updateElement(state.elements);
+    saveToHistory(newElements, state.selectedId);
+    
+  };
+
 
   // Check if parent contains child (prevent circular drops)
   const isDescendant = (parentId: string, childId: string): boolean => {
@@ -373,6 +396,7 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
         dispatch,
         updateElementStyle,
         updateElementContent,
+        updateElementAttribute,
         removeElement,
         insertElement,
         handleDrop,

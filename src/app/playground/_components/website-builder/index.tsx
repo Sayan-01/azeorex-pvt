@@ -39,6 +39,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     const Tag = el.type === "__body" ? "div" : el.type;
 
     const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault();
       e.stopPropagation();
       dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: el.id } });
       dispatch({ type: "SET_SELECTED_ELEMENT", payload: { selectedElement: el } });
@@ -85,7 +86,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         position = "inside";
       } else {
         // Normal logic for other elements
-        if (Array.isArray(el.content)  && offsetY > height * 0.2 && offsetY < height * 0.8) {
+        if (Array.isArray(el.content) && offsetY > height * 0.2 && offsetY < height * 0.8) {
           position = "inside";
         } else if (offsetY < height / 2) {
           position = "before";
@@ -125,14 +126,37 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     const baseStyle: React.CSSProperties = {
       ...el.styles,
       cursor: state.previewMode ? "default" : "pointer",
-      position: "relative",
       opacity: isDragging ? 0.5 : 1,
       transition: "opacity 0.2s",
-      outline: el.content.length === 0 ? "4px solid #ccc" : "none",
+      outline: el?.content?.length === 0 && el.type !== "img" ? "4px solid #ccc" : "none",
       outlineOffset: "-4px",
     };
 
-    if (typeof el.content === "string") {
+    if (typeof el.content === "string" && el.type !== "img") {
+      return (
+        <Tag
+          disabled={!state.previewMode}
+          key={el.id}
+          data-element-id={el.id}
+          style={baseStyle}
+          onClick={handleClick}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+          draggable={!state.previewMode && el.id !== "__body"}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDragEnd={handleDragEnd}
+          onDrop={handleElementDrop}
+          contentEditable={!state.previewMode && isSelected && !state.liveMode}
+          suppressContentEditableWarning
+          onBlur={handleBlur}
+          {...el.attributes}
+        >
+          {el.content}
+        </Tag>
+      );
+    } else if (el.type === "img") {
       return (
         <Tag
           key={el.id}
@@ -147,13 +171,8 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           onDragLeave={handleDragLeave}
           onDragEnd={handleDragEnd}
           onDrop={handleElementDrop}
-          contentEditable={!state.previewMode && isSelected}
-          suppressContentEditableWarning
-          onBlur={handleBlur}
           {...el.attributes}
-        >
-          {el.content}
-        </Tag>
+        ></Tag>
       );
     }
 
@@ -184,7 +203,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     </div>
   ) : (
     <div
-      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-3 px-3 pb-[61px]", {
+      className={clsx(" use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-3 px-3 pb-[61px]", {
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode === true || liveMode === true,
         "!w-[850px]": state.device === "Tablet",
         "!w-[420px]": state.device === "Mobile",
@@ -196,21 +215,8 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         position: "relative",
       }}
     >
-    
-      {state.previewMode && (
-        <Button
-          variant={"ghost"}
-          size={"icon"}
-          className="w-6 h-6 bg-slate-600 p-[2px] fixed top-0 left-0 z-[100]"
-          onClick={() => dispatch({ type: "TOGGLE_PREVIEW_MODE" })}
-        >
-          <EyeOff />
-        </Button>
-      )}
-      <div className="border  relative">
-        {renderElement(state.elements)}
-      </div>
-      {!state.previewMode && (
+      <div className="border  relative">{renderElement(state.elements)}</div>
+      {!state.previewMode && !liveMode && (
         <>
           <GlobalHoverOverlay />
           <GlobalSelectedOverlay />

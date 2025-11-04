@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from "react";
 import TabList from "./tabs";
 import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-panal";
-// import LayersTab from "./tabs/layers-tab";
+import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
 // import AiTab from "./tabs/ai-tab";
 import SettingsTab from "./tabs/settings-tab/settings-tab";
@@ -92,7 +92,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
                   </TabsContent>
                 </Tabs>
               </TabsContent>
-              <TabsContent value="Layers">{/* <LayersTab /> */}</TabsContent>
+              <TabsContent value="Layers"><LayersTab /> </TabsContent>
               <TabsContent value="Media">
                 <MediaBucketTab projectId={projectId} />
               </TabsContent>

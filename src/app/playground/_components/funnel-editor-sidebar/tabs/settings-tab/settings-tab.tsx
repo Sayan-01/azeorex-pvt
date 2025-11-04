@@ -11,6 +11,7 @@ import TypographySection from "./typography-section";
 import BorderShadowSection from "./border-shadow-section";
 import { getElementById } from "@/lib/utils";
 import TailwindClassesSection from "./tailwind-classes-section";
+import SrcHrefSection from "./src-href-section";
 
 function SettingsTab() {
   const { state } = useEditor();
@@ -29,6 +30,7 @@ function SettingsTab() {
         className={`w-[240px] select-none bg-editor-bcgc pb-10 `}
         defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox", "Special element", "Classes"]}
       >
+        <SrcHrefSection selectedElement={selectedElement} />
         <DiamentionSection selectedElement={selectedElement} />
         {selectedElement?.type === "p" && <TypographySection selectedElement={selectedElement} />}
         <SpacingSection selectedElement={selectedElement} />

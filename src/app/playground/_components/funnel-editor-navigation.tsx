@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
-import { ChevronLeft, DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
+import { ChevronLeft, DownloadIcon, EyeIcon, EyeOff, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect, useState } from "react";
@@ -23,16 +23,18 @@ type Props = {
 const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props) => {
   const { state, dispatch } = useEditor();
   const [loading, setLoading] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  let flag = false;
 
   const undo = () => dispatch({ type: "UNDO" });
   const redo = () => dispatch({ type: "REDO" });
-  const togglePreview = () => dispatch({ type: "TOGGLE_PREVIEW_MODE" });
   const setDevice = (device: "Desktop" | "Tablet" | "Mobile") => {
     dispatch({ type: "SET_DEVICE", payload: { device } });
   };
 
   const handleSave = async () => {
-      setLoading(true);
+    setLoading(true);
     const jsonOutput = JSON.stringify(state.elements, null, 2);
     try {
       const response = await upsertFunnelPageForProject(
@@ -51,10 +53,13 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
     }
   };
 
-
   return (
     <TooltipProvider>
-      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", { "!h-0 !p-0 !overflow-hidden": state.previewMode })}>
+      <nav
+        className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", {
+          // "!h-0 !p-0 !overflow-hidden": state.previewMode,
+        })}
+      >
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
           <Link
             href={`/saas/projects/${projectId}`}
@@ -81,7 +86,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
                   >
                     <Monitor
                       size={18}
-                      strokeWidth={1.3}
+                      strokeWidth={1.5}
                     />
                   </TabsTrigger>
                 </TooltipTrigger>
@@ -98,7 +103,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
                   >
                     <Tablet
                       size={18}
-                      strokeWidth={1.3}
+                      strokeWidth={1.5}
                     />
                   </TabsTrigger>
                 </TooltipTrigger>
@@ -115,7 +120,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
                   >
                     <Smartphone
                       size={18}
-                      strokeWidth={1.3}
+                      strokeWidth={1.5}
                     />
                   </TabsTrigger>
                 </TooltipTrigger>
@@ -131,12 +136,19 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
             variant={"ghost"}
             size={"icon"}
             className="hover:bg-slate-800"
-            onClick={togglePreview}
+            onClick={() => dispatch({ type: "TOGGLE_PREVIEW_MODE" })}
           >
-            <EyeIcon
-              size={18}
-              strokeWidth={1.3}
-            />
+            {state.previewMode ? (
+              <EyeOff
+                size={18}
+                strokeWidth={1.5}
+              />
+            ) : (
+              <EyeIcon
+                size={18}
+                strokeWidth={1.5}
+              />
+            )}
           </Button>
           <Button
             disabled={state.historyIndex === 0}
@@ -147,7 +159,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
           >
             <Undo2
               size={18}
-              strokeWidth={1.3}
+              strokeWidth={1.5}
             />
           </Button>
           <Button
@@ -159,7 +171,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
           >
             <Redo2
               size={18}
-              strokeWidth={1.3}
+              strokeWidth={1.5}
             />
           </Button>
           <div className="flex flex-col item-center mr-4">

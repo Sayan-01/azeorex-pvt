@@ -95,13 +95,13 @@ export default function GlobalSelectedOverlay() {
       {/* Visual indicator when resizing */}
       {resizing && <div className="absolute inset-0 border border-blue-600 rounded pointer-events-none z-[1008]" />}
       {selectedElement?.type != "__body" && (
-        <div>
-          <div className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 -top-5 -left-0.5 rounded-t z-[1008] pointer-events-auto cursor-pointer">
-            {selectedElement?.id || "element"}
+        <div className="w-full relative border min-w-[112px]">
+          <div className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-5 -left-0.5 rounded z-[1008] pointer-events-auto cursor-pointer max-w-[100px]">
+            {selectedElement?.id.slice(0, 10) + "..." || "element"}
           </div>
           <button
             onClick={handleDelete}
-            className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 -top-5 -right-0.5 rounded-t z-[1008] pointer-events-auto cursor-pointer"
+            className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-5 -right-0.5 rounded z-[1008] pointer-events-auto cursor-pointer"
           >
             <Trash size={14} />
           </button>

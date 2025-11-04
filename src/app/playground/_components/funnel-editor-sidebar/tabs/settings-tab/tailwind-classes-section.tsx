@@ -6,11 +6,11 @@ import { useEditor } from "../../../../../../../providers/editor/editor-provider
 import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
 
 const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
-  const { dispatch } = useEditor();
+  const { updateElementAttribute } = useEditor();
   const [classes, setClasses] = useState<string[]>([]);
   const [newClass, setNewClass] = useState("");
 
-  // ✅ Load initial classes from attributes.className
+  //load initial classes
   useEffect(() => {
     if (!selectedElement) return;
 
@@ -18,32 +18,19 @@ const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorEl
     setClasses(currentClasses);
   }, [selectedElement, selectedElement?.attributes?.className]);
 
-  // ✅ Update className inside attributes in the editor state
   const updateElementClasses = (updatedClasses: string[]) => {
     const classString = updatedClasses.join(" ");
-
-    dispatch({
-      type: "UPDATE_ELEMENT",
-      payload: {
-        elementDetails: {
-          ...selectedElement,
-          attributes: {
-            ...selectedElement.attributes,
-            className: classString,
-          },
-        },
-      },
-    });
+    updateElementAttribute(selectedElement.id, "className", classString);
   };
 
-  // ✅ Remove a class
+  //Remove a class
   const removeClass = (cls: string) => {
     const updated = classes.filter((c) => c !== cls);
     setClasses(updated);
     updateElementClasses(updated);
   };
 
-  // ✅ Add new class
+  //Add new class
   const addClass = () => {
     const trimmed = newClass.trim();
     if (!trimmed) return;
@@ -55,7 +42,6 @@ const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorEl
     setNewClass("");
   };
 
-  // ✅ Handle Enter key press
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       addClass();

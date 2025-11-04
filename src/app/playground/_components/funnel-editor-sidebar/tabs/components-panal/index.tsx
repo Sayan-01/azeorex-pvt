@@ -15,14 +15,13 @@ import { Button } from "@/components/ui/button";
 import ImagePlaceholder from "./image-placeholder";
 import SvgPlaceholder from "./svg-placeholder";
 import HeadingPlaceholder from "./heading-placeholder";
-import { AlignLeft, Container, Heading1, Heading2, SquareDashed, TextSelect } from "lucide-react";
+import { AlignLeft, Container, Heading1, Heading2, ImageIcon, Link, SquareDashed, TextSelect } from "lucide-react";
 import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
 import ComponentItem from "../component-item";
 
 const ComponentsTab = () => {
   const { state, dispatch } = useEditor();
   const [components, setComponents] = useState<any>([]);
-  
 
   const elements: {
     icon: React.ReactNode;
@@ -31,7 +30,7 @@ const ComponentsTab = () => {
     group: "layout" | "elements";
   }[] = [
     {
-      icon: <Heading1 className="w-5 h-5" />,
+      icon: <Heading1 className="w-6 h-6" />,
       label: "Heading 1",
       component: {
         id: "temp",
@@ -43,7 +42,7 @@ const ComponentsTab = () => {
       group: "elements",
     },
     {
-      icon: <Heading2 className="w-5 h-5" />,
+      icon: <Heading2 className="w-6 h-6" />,
       label: "Heading 2",
       component: {
         id: "temp",
@@ -55,7 +54,7 @@ const ComponentsTab = () => {
       group: "elements",
     },
     {
-      icon: <AlignLeft className="w-5 h-5" />,
+      icon: <AlignLeft className="w-6 h-6" />,
       label: "Text",
       component: {
         id: "temp",
@@ -67,7 +66,7 @@ const ComponentsTab = () => {
       group: "elements",
     },
     {
-      icon: <SquareDashed className="w-5 h-5" />,
+      icon: <SquareDashed className="w-6 h-6" />,
       label: "Container",
       component: {
         id: "temp",
@@ -75,6 +74,7 @@ const ComponentsTab = () => {
         name: "Container",
         content: [],
         styles: {
+          position: "relative",
           padding: "20px",
           backgroundColor: "#f3f4f6",
           minHeight: "100px",
@@ -83,7 +83,7 @@ const ComponentsTab = () => {
       group: "layout",
     },
     {
-      icon: <TextSelect className="w-5 h-5" />,
+      icon: <TextSelect className="w-6 h-6" />,
       label: "Section",
       component: {
         id: "temp",
@@ -91,6 +91,7 @@ const ComponentsTab = () => {
         name: "Section",
         content: [],
         styles: {
+          position: "relative",
           padding: "40px",
           backgroundColor: "#ffffff",
           borderRadius: "12px",
@@ -100,34 +101,42 @@ const ComponentsTab = () => {
       },
       group: "layout",
     },
-    //     {
-    // icon:
-    //       label: "Image",
-    //       component: <ImagePlaceholder />,
-    //       id: "image",
-    //       group: "elements",
-    //     },
-    //     {
-    // icon:
-    //       label: "Link",
-    //       component: <LinkPlaceholder />,
-    //       id: "link",
-    //       group: "elements",
-    //     },
-    //     {
-    // icon:
-    //       label: "Heading",
-    //       component: <HeadingPlaceholder />,
-    //       id: "heading",
-    //       group: "elements",
-    //     },
-    //     {
-    // icon:
-    //       label: "SVG",
-    //       component: <SvgPlaceholder />,
-    //       id: "svg",
-    //       group: "elements",
-    //     },
+    {
+      icon: (
+        <ImageIcon
+          strokeWidth={1.6}
+          className="w-6 h-6"
+        />
+      ),
+      label: "Image",
+      component: {
+        id: "temp",
+        type: "img",
+        name: "Image",
+        content: "",
+        styles: { width: "100px", height: "100px", objectFit: "contain" },
+        attributes: { src: "/image-placeholder.png" },
+      },
+      group: "elements",
+    },
+    {
+      icon: (
+        <Link
+          strokeWidth={1.6}
+          className="w-6 h-6"
+        />
+      ),
+      label: "Link",
+      component: {
+        id: "temp",
+        type: "a",
+        name: "Link",
+        content: "New Link",
+        styles: { fontSize: "16px", color: "#4b5563", lineHeight: "1.6" },
+        attributes: { href: "#" },
+      },
+      group: "elements",
+    },
   ];
 
   const handleDragStart = (component: EditorElement) => {
@@ -149,7 +158,7 @@ const ComponentsTab = () => {
         className=" py-0 border-b-[1px] border-main-black"
       >
         <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
-        <AccordionContent className="grid grid-cols-3 ">
+        <AccordionContent className="grid grid-cols-3 gap-3">
           {elements
             .filter((element) => element.group === "layout")
             .map((element, index) => (
@@ -169,7 +178,7 @@ const ComponentsTab = () => {
         className=" py-0 border-main-black"
       >
         <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
-        <AccordionContent className="grid grid-cols-3">
+        <AccordionContent className="grid grid-cols-3 gap-4">
           {elements
             .filter((element) => element.group === "elements")
             .map((element, index) => (

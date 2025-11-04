@@ -7,6 +7,7 @@ import { success, z } from "zod";
 import { auth } from "../../auth";
 import { db } from "./db";
 import { sendOtpViaNodeMailer } from "./sendOtpViaNodeMailer";
+import { initialJSON } from "../../providers/editor/editor-actions";
 
 //============================================================
 
@@ -102,7 +103,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
         where: { subDomainName: project.subDomainName },
       });
       if (existingProject) {
-        return {success:false, message:"Subdomain already exists, please enter another subdomain name."};
+        return { success: false, message: "Subdomain already exists, please enter another subdomain name." };
       }
     }
 
@@ -116,7 +117,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
         where: { userId: userId },
       });
       if (countOfProjects >= 1) {
-        return {success:false, message:"You are on free plan and you can create only 1 project"};
+        return { success: false, message: "You are on free plan and you can create only 1 project" };
       }
     }
 
@@ -125,7 +126,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
         where: { userId: userId },
       });
       if (countOfProjects >= 5) {
-        return {success:false, message:"You are on pro plan and you can create only 5 projects"};
+        return { success: false, message: "You are on pro plan and you can create only 5 projects" };
       }
     }
 
@@ -142,7 +143,7 @@ export const upsertProject = async (userId: string, project: z.infer<typeof Crea
     return { success: true, data: response };
   } catch (error: any) {
     console.error("Error upserting project:", error);
-    return {success:false, message:error.message || "Failed to upsert project. Please try again later."};
+    return { success: false, message: error.message || "Failed to upsert project. Please try again later." };
   }
 };
 
@@ -158,7 +159,19 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
       pathName: funnelPage.pathName || "",
       content: funnelPage.content
         ? funnelPage.content
-        : " ",
+        : JSON.stringify(
+            {
+              id: "__body",
+              type: "__body",
+              name: "Body",
+              styles: {
+                minHeight: "100vh",
+                backgroundColor: "#f8f8f8",
+                padding: "20px",
+              },
+              content: [],
+            },
+          ),
       projectId,
     },
   });
