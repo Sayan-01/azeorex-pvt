@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Azeorex Platform Features
 
-## Getting Started
+## Overview ==>
+Azeorex is an all-in-one Web Design & Development Agency, a powerful No-Code SaaS platform for building and deploying websites, and a vibrant Template Marketplace.
 
-First, run the development server:
+## Core Pillars ==>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🚀 Agency Services
+- End-to-end web design and full-stack development
+- Professional design and development services
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🧩 No-Code Builder (SaaS)
+- Drag-and-drop editor to design and deploy websites
+- Intuitive interface for creating professional websites without coding
+- By a single click user can deploy website to live subdomains
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🏪 Azeorex Templates Marketplace
+- Marketplace for templates built in Azeorex
+- Ready-to-use templates for quick editing and deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🎨 Figma Templates Marketplace
+- Buy and sell professional Figma templates
+- Seamless integration with design workflows
 
-## Learn More
+## Key Features  ==>
 
-To learn more about Next.js, take a look at the following resources:
+### Website Creation & Deployment
+- Create and deploy websites instantly
+- Drag-and-drop component-based design
+- Real-time preview and editing
+- One-click deployment to live subdomains
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Template Marketplace
+- Browse and purchase Figma and Azeorex templates
+- Secure checkout process
+- Automatic template cloning to your projects
+- Sell your own templates and earn
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### AI-Powered Features
+- AI Template Generator - Create layouts from natural language prompts
+- AI Design Suggestions - Smart recommendations for design elements
+- AI Code Generation - Convert Figma designs into Azeorex templates
 
-## Deploy on Vercel
+### Analytics Dashboard
+- Track performance metrics
+- Monitor downloads and sales
+- Visitor statistics
+- Performance insights
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Getting Started ==>
+1. Sign up for an account
+2. Choose to create a new project or browse templates
+3. Customize your site or template
+4. Deploy and go live
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## How It Works ==>
+
+### Publish Your Website 
+1. Login and create a new project (name, description, subdomain) or just buy a template from marketplace
+2. Open the project and create pages or edit existing pages
+3. Use the editor to design with drag-and-drop
+4. Deploy instantly to your live subdomain
+
+### Uploading Templates
+  `Figma Templates`
+    1. Go to Profile → Become an Admin
+    2. Accept policies
+    3. Upload .fig files with details
+    4. Template goes live in the marketplace
+
+  `Azeorex Templates`
+    1. Visit Marketplace → Become a Creator
+    2. Select a project and accept privacy policy
+    3. Fill in template details
+    4. Submit for listing in the marketplace
+
+### Buying Templates
+  `Figma Templates`: Purchase and download directly
+  `Azeorex Templates`: Automatically cloned to your projects after purchase
+
+## Benefits
+- No coding skills required
+- Fast deployment
+- Professional-quality results
+- Monetization opportunities for creators
+- Seamless design-to-development workflow
+
+### How Subdomain Feature Works
+1. In production, my DNS should support wild card subdomains, Add  a DNS record like `*.azeorex.com` -> pointing to your Next.js server IP.
+2. Use middleware to detect subdomain.
+3. For a request to https://subdomain.azeorex.com/, the server internally rewrites the request to https://azeorex.com/subdomain, while the user sees https://subdomain.azeorex.com/.
+
+---
+
+*For more information, visit our Azeorex(https://azeorex.vercel.app) or contact our support team.*
+
+📬 Contact:
+
+For support or partnerships:
+📧 azeorex01@gmail.com or sayandas61668@gmail.com
+🌐 https://azeorex.com

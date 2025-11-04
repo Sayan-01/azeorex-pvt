@@ -66,6 +66,8 @@ RULES:
 - Tailwind only inside attributes.className
 - Use semantic tags: section, div, header, footer, nav, h1-h6, p, button, article
 - Modern, clean design with spacing
+- Use tailwind classes only for responsive design. Example: "md:flex hidden"
+- Use images (hero banner image) if it is necessary or improve design. Use "/image-placeholder.png" in attributes.src 
 
 ROOT FORMAT:
 {
