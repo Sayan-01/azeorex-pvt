@@ -3,6 +3,7 @@ import PM from "@/icons/p-m";
 import React from "react";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { Input } from "@/components/ui/custom-input";
 
 const SpacingSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
   const { updateElementStyle } = useEditor();
@@ -74,6 +75,28 @@ const SpacingSection = ({ selectedElement }: { selectedElement: EditorElement })
             onChange={(e) => updateElementStyle(selectedElement.id, "paddingRight", e.target.value)}
             value={selectedElement?.styles?.paddingRight || ""}
           />
+        </div>
+        <div className="flex flex-col gap-3 mt-2">
+          <div className="w-full flex items-center">
+            <p className=" text-muted-foreground text-xs w-20">Padding</p>
+            <Input
+              className="flex-1"
+              placeholder="px"
+              id="padding"
+              onChange={(e) => updateElementStyle(selectedElement.id, "padding", e.target.value)}
+              value={selectedElement?.styles?.padding || ""}
+            />
+          </div>
+          <div className="w-full flex items-center">
+            <p className=" text-muted-foreground text-xs w-20">Margin</p>
+            <Input
+              className="flex-1"
+              placeholder="px"
+              id="margin"
+              onChange={(e) => updateElementStyle(selectedElement.id, "margin", e.target.value)}
+              value={selectedElement?.styles?.margin || ""}
+            />
+          </div>
         </div>
       </AccordionContent>
     </AccordionItem>

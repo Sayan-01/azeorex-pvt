@@ -1,4 +1,4 @@
-"use client"; // streamming responce 5 e casual chat er option ache
+"use client"; // streamming responce 5 e casual chat + code chat er option ache
 import React, { useEffect, useState } from "react";
 import FunnelEditorSidebar from "../_components/funnel-editor-sidebar";
 import { PromptForWebPage } from "../../../../Ai/PromptForWebPage";
@@ -23,7 +23,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
 
     try {
-      const res = await fetch("/api/ai-website-generate", {
+      const res = await fetch("/api/ai/ai-website-generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -48,6 +48,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
       try {
         const parsedJSON = JSON.parse(aiResponse.trim());
+
         dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
         setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
         await savePage(aiResponse);
@@ -121,7 +122,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         funnelPageDetails={funnelPageDetails}
         userId={userId}
       />
-      <div className="h-full flex justify-center overflow-x-hidden bg-[#191919]">
+      <div className="h-full container-query flex justify-center overflow-x-hidden bg-[#191919]">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
       </div>
       <FunnelEditorSidebar

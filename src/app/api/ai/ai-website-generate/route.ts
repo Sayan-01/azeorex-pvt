@@ -1,8 +1,8 @@
 import { decrementCredits } from "@/lib/queries";
 import { NextResponse } from "next/server";
 
-export const runtime = "edge";
-export const maxDuration = 60;
+// export const runtime = "edge";
+// export const maxDuration = 60;
 
 export async function POST(req: Request) {
   const { messages, userId } = await req.json();
@@ -14,7 +14,8 @@ export async function POST(req: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "tngtech/deepseek-r1t2-chimera:free",
+      // model: "tngtech/deepseek-r1t2-chimera:free",
+      model: "minimax/minimax-m2:free",
       messages,
       stream: true,
     }),
@@ -58,10 +59,8 @@ export async function POST(req: Request) {
               try {
                 const parsed = JSON.parse(data);
                 const content = parsed.choices?.[0]?.delta?.content;
-
                 if (content) {
                   controller.enqueue(new TextEncoder().encode(content));
-
                 }
               } catch (e) {
                 console.error("Failed to parse SSE data:", data);

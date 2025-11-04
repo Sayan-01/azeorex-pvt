@@ -7,13 +7,10 @@ import { useEditor } from "../../../../../providers/editor/editor-provider";
 import { EditorElement } from "../../../../../providers/editor/editor-actions";
 import { getFunnelPageDetails } from "@/lib/queries";
 import Loader2 from "@/components/global/Loader2";
-import { Button } from "@/components/ui/button";
-import { EyeOff } from "lucide-react";
 import clsx from "clsx";
-import LoadingAnimation from "@/components/global/loading-animation";
 
 export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: string; liveMode?: boolean }) => {
-  const { state, dispatch, updateElementContent, handleDrop, removeElement } = useEditor();
+  const { state, dispatch, updateElementContent, handleDrop } = useEditor();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -64,7 +61,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       updateElementContent(el.id, newContent);
     };
 
-    // Drag handlers
     const handleDragStart = (e: React.DragEvent) => {
       e.stopPropagation();
       dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: el.id } });
@@ -85,7 +81,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       if (el.id === "__body") {
         position = "inside";
       } else {
-        // Normal logic for other elements
         if (Array.isArray(el.content) && offsetY > height * 0.2 && offsetY < height * 0.8) {
           position = "inside";
         } else if (offsetY < height / 2) {
@@ -103,7 +98,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
 
     const handleDragLeave = (e: React.DragEvent) => {
       e.stopPropagation();
-      // Only clear if we're leaving to a non-child element
       const relatedTarget = e.relatedTarget as HTMLElement;
       if (!relatedTarget || !(e.currentTarget as HTMLElement).contains(relatedTarget)) {
         if (state.dropTargetId === el.id) {
@@ -198,12 +192,12 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
   };
 
   return loading ? (
-    <div className="h-[calc(100vh-40.8px)] flex items-center justify-center ">
+    <div className="h-[calc(100vh-40.8px)] flex items-center justify-center">
       <Loader2 />
     </div>
   ) : (
     <div
-      className={clsx(" use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-3 px-3 pb-[61px]", {
+      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-3 px-3 pb-[61px]", {
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode === true || liveMode === true,
         "!w-[850px]": state.device === "Tablet",
         "!w-[420px]": state.device === "Mobile",
