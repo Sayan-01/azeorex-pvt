@@ -1,8 +1,8 @@
 import { decrementCredits } from "@/lib/queries";
 import { NextResponse } from "next/server";
 
-// export const runtime = "edge";
-// export const maxDuration = 60;
+export const runtime = "edge";
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
   const { messages, userId } = await req.json();
