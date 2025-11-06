@@ -29,12 +29,12 @@ const AiLoadingAnimation = ({loading}: {loading: boolean}) => {
     return () => clearInterval(interval);
   }, [loading]);
   return (
-    <div className={`absolute ${roboto.className} inset-0 z-[9999] flex items-start justify-center pt-20 bg-black/50 backdrop-blur-sm`}>
-      <div className="bg-gradient-to-br from-purple-800 to-blue-800 rounded-3xl shadow-2xl p-5 max-w-lg w-full mx-4 animate-in fade-in slide-in-from-top-4 duration-500">
+    <div className={`absolute ${roboto.className} inset-0 z-[9999] flex items-center pb-24 justify-center pt-20 bg-black/50 backdrop-blur-sm `}>
+      <div className="bg-gradient-to-br from-purple-800 to-blue-800 rounded-3xl shadow-2xl p-5 max-w-lg w-full mx-4 animate-in fade-in slide-in-from-top-4 duration-500 border-5 border-purple-400">
         <div className="flex flex-col items-center space-y-6">
           {/* Animated Spinner */}
-      
-          <div className="loader-wrapper mb-2">
+
+          <div className="loader-wrapper mb-2 ">
             <span className="loader-letter">G</span>
             <span className="loader-letter">e</span>
             <span className="loader-letter">n</span>
