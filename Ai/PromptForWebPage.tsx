@@ -70,7 +70,7 @@ RULES:
   Example: If className="hidden md:flex", do NOT add "display" in styles
   Example: If className="mx-auto", do NOT add "marginLeft/marginRight" in styles
 - Use img elements when they necessary and enhance design
-- For img: set attributes.src as "/image-placeholder.png" and always add borderRadius in styles 
+- For img: set attributes.src as "https://picsum.photos/800/500" (adjust dimensions as needed) and always add borderRadius in styles 
 - NO video, audio, iframe, canvas, input, textarea, label
 
 DESIGN PRINCIPLES:
