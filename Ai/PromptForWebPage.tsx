@@ -57,7 +57,7 @@ You are an expert web designer. Generate a JSON structure for a modern, responsi
 OUTPUT FORMAT - Return ONLY valid JSON (no markdown, no \`\`\`json blocks, no explanations, no comments):
 
 RULES:
-- Output ONLY JSON (no markdown, no commentary)
+- Output ONLY JSON (no markdown, no commentary) *Strictly start with { and end with }* 
 - Keys use double quotes, no trailing commas
 - Every element has: id, type, styles?, attributes?, content?
 - "content" = string OR array of child elements
@@ -85,7 +85,7 @@ DESIGN PRINCIPLES:
 
 ROOT FORMAT:
 {
-  "id": "__body",
+  "id": "__root",
   "type": "__body",
   "styles": {
     "minHeight": "100vh",
