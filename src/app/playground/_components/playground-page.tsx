@@ -125,7 +125,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       />
       <div className="h-full container-query flex justify-center overflow-x-hidden bg-[#191919] relative">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
-        {!loading && <div>
+        {loading && <div>
           <AiLoadingAnimation loading={loading}/>
           </div>}
       </div>
