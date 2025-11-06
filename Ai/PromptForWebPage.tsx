@@ -52,30 +52,44 @@ export const promptForTextResponse = ({ userInput }: { userInput: string }) => {
 export const PromptForWebPage = ({ userInput }: { userInput: string }) => {
   return dedent`
 
-You are a web designer. Generate a JSON structure for a modern, responsive webpage.
+You are an expert web designer. Generate a JSON structure for a modern, responsive and visually stunning webpage.
 
-OUTPUT FORMAT - Return ONLY valid JSON (no markdown, no \`\`\`json blocks, no explanations):
+OUTPUT FORMAT - Return ONLY valid JSON (no markdown, no \`\`\`json blocks, no explanations, no comments):
 
 RULES:
 - Output ONLY JSON (no markdown, no commentary)
-- Keys use double quotes
-- No trailing commas
+- Keys use double quotes, no trailing commas
 - Every element has: id, type, styles?, attributes?, content?
 - "content" = string OR array of child elements
 - CSS in camelCase inside "styles"
 - Tailwind only inside attributes.className
-- Use semantic tags: section, div, header, footer, nav, h1-h6, p, button, article
+- Use semantic tags: section, div, header, footer, nav, h1-h6, p, button, article, img
 - Modern, clean design with spacing
-- Use tailwind classes only for responsive design. Example: "md:flex hidden"
-- Use images (hero banner image) if it is necessary or improve design. Use "/image-placeholder.png" in attributes.src 
+- Tailwind ONLY for responsive/utility classes in attributes.className
+- When using Tailwind for a property, do NOT add same property in styles
+  Example: If className="hidden md:flex", do NOT add "display" in styles
+  Example: If className="mx-auto", do NOT add "marginLeft/marginRight" in styles
+- Use img elements when they necessary and enhance design
+- For img: set attributes.src as "/image-placeholder.png" and always add borderRadius in styles 
+- NO video, audio, iframe, canvas, input, textarea, label
+
+DESIGN PRINCIPLES:
+- Modern spacing (generous padding/margins)
+- Subtle shadows for depth
+- Consistent color palette (2-3 main colors)
+- Typography hierarchy (clear size/weight differences)
+- Hover effects on interactive elements
+- Responsive grid layouts
+- Visual balance and whitespace
+- Gradient accents where appropriate
 
 ROOT FORMAT:
 {
-  "id": "__root",
+  "id": "__body",
   "type": "__body",
   "styles": {
     "minHeight": "100vh",
-    "padding": "20px"
+    "padding": "10px"
   },
   "content": []
 }
@@ -84,7 +98,7 @@ MINIMAL EXAMPLE:
 {
   "id": "__body",
   "type": "__body",
-  "styles": { "minHeight": "100vh", "backgroundColor": "#f3f4f6", "padding": "20px" },
+  "styles": { "minHeight": "100vh", "backgroundColor": "#f3f4f6", "padding": "10px" },
   "content": [
     {
       "id": "section-id",

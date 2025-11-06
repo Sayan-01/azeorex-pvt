@@ -1,0 +1,1293 @@
+{
+  "id": "__body",
+  "type": "__body",
+  "styles": { "minHeight": "100vh", "padding": "20px", "backgroundColor": "#0b0f17" },
+  "attributes": { "className": "min-h-screen bg-slate-950 text-slate-100 antialiased" },
+  "content": [
+    {
+      "id": "header",
+      "type": "header",
+      "styles": { "position": "sticky", "top": "0", "zIndex": "50", "backdropFilter": "blur(12px)", "backgroundColor": "rgba(2,6,23,0.6)", "borderBottom": "1px solid rgba(148,163,184,0.1)" },
+      "attributes": { "className": "sticky top-0 z-50 bg-slate-950/70 backdrop-blur border-b border-slate-800/70" },
+      "content": [
+        {
+          "id": "nav",
+          "type": "nav",
+          "styles": { "display": "flex", "alignItems": "center", "justifyContent": "space-between", "padding": "16px", "maxWidth": "1200px", "margin": "0 auto" },
+          "attributes": { "className": "max-w-6xl mx-auto px-4" },
+          "content": [
+            {
+              "id": "brand",
+              "type": "div",
+              "styles": { "display": "flex", "alignItems": "center", "gap": "12px" },
+              "attributes": { "className": "flex items-center gap-3" },
+              "content": [
+                {
+                  "id": "logo",
+                  "type": "div",
+                  "styles": {
+                    "width": "36px",
+                    "height": "36px",
+                    "borderRadius": "50%",
+                    "backgroundImage": "linear-gradient(135deg, #22d3ee, #a78bfa)",
+                    "boxShadow": "0 0 0 3px rgba(167,139,250,0.2)"
+                  },
+                  "attributes": { "className": "w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 ring-1 ring-white/10" },
+                  "content": ""
+                },
+                {
+                  "id": "brand-name",
+                  "type": "span",
+                  "styles": {
+                    "fontWeight": "800",
+                    "fontSize": "20px",
+                    "letterSpacing": "0.5px",
+                    "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa, #f472b6)",
+                    "WebkitBackgroundClip": "text",
+                    "backgroundClip": "text",
+                    "color": "transparent"
+                  },
+                  "attributes": { "className": "text-xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent" },
+                  "content": "ANKAN"
+                }
+              ]
+            },
+            {
+              "id": "nav-links",
+              "type": "ul",
+              "styles": { "display": "flex", "gap": "24px" },
+              "attributes": { "className": "hidden md:flex items-center space-x-6" },
+              "content": [
+                {
+                  "id": "nav-home",
+                  "type": "li",
+                  "styles": { "fontSize": "15px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-slate-300 hover:text-white transition-colors" },
+                  "content": [
+                    {
+                      "id": "home-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "inherit" },
+                      "attributes": { "href": "#home", "className": "hover:text-white transition-colors" },
+                      "content": "Home"
+                    }
+                  ]
+                },
+                {
+                  "id": "nav-about",
+                  "type": "li",
+                  "styles": { "fontSize": "15px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-slate-300 hover:text-white transition-colors" },
+                  "content": [
+                    {
+                      "id": "about-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "inherit" },
+                      "attributes": { "href": "#about", "className": "hover:text-white transition-colors" },
+                      "content": "About"
+                    }
+                  ]
+                },
+                {
+                  "id": "nav-games",
+                  "type": "li",
+                  "styles": { "fontSize": "15px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-slate-300 hover:text-white transition-colors" },
+                  "content": [
+                    {
+                      "id": "games-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "inherit" },
+                      "attributes": { "href": "#games", "className": "hover:text-white transition-colors" },
+                      "content": "Games"
+                    }
+                  ]
+                },
+                {
+                  "id": "nav-achievements",
+                  "type": "li",
+                  "styles": { "fontSize": "15px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-slate-300 hover:text-white transition-colors" },
+                  "content": [
+                    {
+                      "id": "achievements-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "inherit" },
+                      "attributes": { "href": "#achievements", "className": "hover:text-white transition-colors" },
+                      "content": "Achievements"
+                    }
+                  ]
+                },
+                {
+                  "id": "nav-contact",
+                  "type": "li",
+                  "styles": { "fontSize": "15px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-slate-300 hover:text-white transition-colors" },
+                  "content": [
+                    {
+                      "id": "contact-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "inherit" },
+                      "attributes": { "href": "#contact", "className": "hover:text-white transition-colors" },
+                      "content": "Contact"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "cta",
+              "type": "button",
+              "styles": {
+                "padding": "10px 16px",
+                "borderRadius": "10px",
+                "color": "#0b0f17",
+                "fontWeight": "700",
+                "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+                "border": "none",
+                "cursor": "pointer"
+              },
+              "attributes": {
+                "className": "hidden md:inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-4 py-2 font-semibold text-slate-900 shadow-lg shadow-cyan-500/20 transition hover:shadow-cyan-400/30"
+              },
+              "content": "Hire Me"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "section",
+      "styles": { "maxWidth": "1200px", "margin": "0 auto", "padding": "32px 20px 64px" },
+      "attributes": { "className": "max-w-6xl mx-auto px-4" },
+      "content": [
+        {
+          "id": "hero-grid",
+          "type": "div",
+          "styles": { "display": "grid", "gridTemplateColumns": "1fr", "gap": "32px", "alignItems": "center", "minHeight": "70vh" },
+          "attributes": { "className": "grid grid-cols-1 md:grid-cols-2 gap-8 items-center" },
+          "content": [
+            {
+              "id": "hero-left",
+              "type": "div",
+              "styles": { "display": "flex", "flexDirection": "column", "gap": "16px" },
+              "attributes": { "className": "space-y-4" },
+              "content": [
+                {
+                  "id": "eyebrow",
+                  "type": "span",
+                  "styles": { "fontSize": "14px", "textTransform": "uppercase", "letterSpacing": "1.2px", "color": "#22d3ee" },
+                  "attributes": { "className": "inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-cyan-400" },
+                  "content": "Gaming Portfolio"
+                },
+                {
+                  "id": "hero-title",
+                  "type": "h1",
+                  "styles": {
+                    "fontSize": "44px",
+                    "lineHeight": "1.1",
+                    "fontWeight": "900",
+                    "margin": "0",
+                    "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa 50%, #f472b6)",
+                    "WebkitBackgroundClip": "text",
+                    "backgroundClip": "text",
+                    "color": "transparent"
+                  },
+                  "attributes": { "className": "text-4xl md:text-6xl font-black leading-tight" },
+                  "content": "Hi, I'm ANKAN"
+                },
+                {
+                  "id": "hero-subtitle",
+                  "type": "p",
+                  "styles": { "fontSize": "18px", "color": "#cbd5e1" },
+                  "attributes": { "className": "text-slate-300" },
+                  "content": "9th grade student and passionate mobile gamer. I play Free Fire, COD Mobile, Minecraft, FC Mobile, and more."
+                },
+                {
+                  "id": "hero-cta",
+                  "type": "div",
+                  "styles": { "display": "flex", "flexWrap": "wrap", "gap": "12px", "marginTop": "8px" },
+                  "attributes": { "className": "mt-2 flex flex-wrap gap-3" },
+                  "content": [
+                    {
+                      "id": "primary-cta",
+                      "type": "button",
+                      "styles": {
+                        "padding": "12px 18px",
+                        "borderRadius": "12px",
+                        "fontWeight": "800",
+                        "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+                        "color": "#0b0f17",
+                        "border": "none",
+                        "cursor": "pointer"
+                      },
+                      "attributes": {
+                        "className": "rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-3 font-extrabold text-slate-900 shadow-xl shadow-cyan-500/20 transition hover:shadow-cyan-400/30"
+                      },
+                      "content": "Watch Highlights"
+                    },
+                    {
+                      "id": "secondary-cta",
+                      "type": "a",
+                      "styles": {
+                        "textDecoration": "none",
+                        "display": "inline-flex",
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "padding": "12px 18px",
+                        "borderRadius": "12px",
+                        "color": "#e2e8f0",
+                        "border": "1px solid rgba(148,163,184,0.2)"
+                      },
+                      "attributes": {
+                        "href": "#contact",
+                        "className": "inline-flex items-center rounded-xl border border-slate-700 px-5 py-3 font-bold text-slate-200 hover:border-slate-600 hover:bg-slate-800/50 transition"
+                      },
+                      "content": "Contact Me"
+                    }
+                  ]
+                },
+                {
+                  "id": "hero-stats",
+                  "type": "div",
+                  "styles": { "display": "flex", "gap": "16px", "marginTop": "12px", "flexWrap": "wrap" },
+                  "attributes": { "className": "mt-3 flex flex-wrap gap-4" },
+                  "content": [
+                    {
+                      "id": "stat-1",
+                      "type": "div",
+                      "styles": { "padding": "12px 16px", "borderRadius": "12px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+                      "attributes": { "className": "rounded-xl bg-slate-800/50 border border-slate-700" },
+                      "content": [
+                        {
+                          "id": "stat-1-title",
+                          "type": "h3",
+                          "styles": { "margin": "0", "fontSize": "20px", "fontWeight": "800", "color": "#22d3ee" },
+                          "attributes": { "className": "text-cyan-400" },
+                          "content": "Aim"
+                        },
+                        {
+                          "id": "stat-1-desc",
+                          "type": "p",
+                          "styles": { "margin": "4px 0 0 0", "color": "#94a3b8" },
+                          "attributes": { "className": "text-sm text-slate-400" },
+                          "content": "Sharp crosshair control"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "stat-2",
+                      "type": "div",
+                      "styles": { "padding": "12px 16px", "borderRadius": "12px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+                      "attributes": { "className": "rounded-xl bg-slate-800/50 border border-slate-700" },
+                      "content": [
+                        {
+                          "id": "stat-2-title",
+                          "type": "h3",
+                          "styles": { "margin": "0", "fontSize": "20px", "fontWeight": "800", "color": "#a78bfa" },
+                          "attributes": { "className": "text-violet-400" },
+                          "content": "Strategy"
+                        },
+                        {
+                          "id": "stat-2-desc",
+                          "type": "p",
+                          "styles": { "margin": "4px 0 0 0", "color": "#94a3b8" },
+                          "attributes": { "className": "text-sm text-slate-400" },
+                          "content": "Positioning & rotations"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "stat-3",
+                      "type": "div",
+                      "styles": { "padding": "12px 16px", "borderRadius": "12px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+                      "attributes": { "className": "rounded-xl bg-slate-800/50 border border-slate-700" },
+                      "content": [
+                        {
+                          "id": "stat-3-title",
+                          "type": "h3",
+                          "styles": { "margin": "0", "fontSize": "20px", "fontWeight": "800", "color": "#f472b6" },
+                          "attributes": { "className": "text-pink-400" },
+                          "content": "Consistency"
+                        },
+                        {
+                          "id": "stat-3-desc",
+                          "type": "p",
+                          "styles": { "margin": "4px 0 0 0", "color": "#94a3b8" },
+                          "attributes": { "className": "text-sm text-slate-400" },
+                          "content": "Daily practice & reviews"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "hero-right",
+              "type": "div",
+              "styles": { "position": "relative", "display": "flex", "alignItems": "center", "justifyContent": "center" },
+              "attributes": { "className": "relative" },
+              "content": [
+                {
+                  "id": "hero-image-wrapper",
+                  "type": "div",
+                  "styles": {
+                    "position": "relative",
+                    "borderRadius": "24px",
+                    "overflow": "hidden",
+                    "boxShadow": "0 30px 60px rgba(2,6,23,0.8)",
+                    "backgroundImage": "linear-gradient(135deg, rgba(34,211,238,0.3), rgba(167,139,250,0.25))"
+                  },
+                  "attributes": { "className": "relative overflow-hidden rounded-3xl ring-1 ring-white/10" },
+                  "content": [
+                    {
+                      "id": "hero-image",
+                      "type": "img",
+                      "styles": { "width": "100%", "height": "auto", "display": "block" },
+                      "attributes": { "src": "/image-placeholder.png", "alt": "ANKAN gaming highlights banner", "className": "w-full h-auto object-cover" },
+                      "content": ""
+                    },
+                    {
+                      "id": "hero-overlay",
+                      "type": "div",
+                      "styles": { "position": "absolute", "inset": "0", "backgroundImage": "linear-gradient(180deg, rgba(2,6,23,0) 30%, rgba(2,6,23,0.7) 100%)" },
+                      "attributes": { "className": "absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" },
+                      "content": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "type": "section",
+      "styles": { "padding": "64px 20px", "maxWidth": "1200px", "margin": "0 auto" },
+      "attributes": { "className": "max-w-6xl mx-auto px-4" },
+      "content": [
+        {
+          "id": "section-title",
+          "type": "h2",
+          "styles": {
+            "fontSize": "32px",
+            "fontWeight": "900",
+            "margin": "0 0 12px 0",
+            "color": "transparent",
+            "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+            "WebkitBackgroundClip": "text",
+            "backgroundClip": "text"
+          },
+          "attributes": { "className": "text-3xl md:text-4xl font-black mb-3" },
+          "content": "About Me"
+        },
+        {
+          "id": "about-desc",
+          "type": "p",
+          "styles": { "fontSize": "18px", "color": "#94a3b8", "marginTop": "0" },
+          "attributes": { "className": "text-slate-400" },
+          "content": "I’m ANKAN, a 9th-grade student who loves competitive mobile gaming. I focus on mechanics, game sense, and team coordination."
+        },
+        {
+          "id": "about-grid",
+          "type": "div",
+          "styles": { "display": "grid", "gridTemplateColumns": "1fr", "gap": "24px", "marginTop": "24px" },
+          "attributes": { "className": "grid grid-cols-1 md:grid-cols-2 gap-6" },
+          "content": [
+            {
+              "id": "about-card",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "about-card-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 8px 0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                  "attributes": { "className": "text-xl font-bold" },
+                  "content": "What I Do"
+                },
+                {
+                  "id": "about-card-list",
+                  "type": "ul",
+                  "styles": { "margin": "0", "paddingLeft": "18px", "color": "#94a3b8", "lineHeight": "1.7" },
+                  "attributes": { "className": "pl-5 text-slate-400 leading-7" },
+                  "content": [
+                    { "id": "do-1", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "Competitive matches in Free Fire, COD Mobile, FC Mobile" },
+                    { "id": "do-2", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "Creative building and survival in Minecraft" },
+                    { "id": "do-3", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "VOD reviews and micro-adjustments to improve accuracy" },
+                    { "id": "do-4", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "Team coordination and callouts" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "about-skills",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "skills-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 8px 0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                  "attributes": { "className": "text-xl font-bold" },
+                  "content": "Strengths"
+                },
+                {
+                  "id": "skills-list",
+                  "type": "ul",
+                  "styles": { "margin": "0", "paddingLeft": "18px", "color": "#94a3b8", "lineHeight": "1.7" },
+                  "attributes": { "className": "pl-5 text-slate-400 leading-7" },
+                  "content": [
+                    { "id": "skill-1", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "Clean recoil control & quick peeking" },
+                    { "id": "skill-2", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "Rotations & smart positioning" },
+                    { "id": "skill-3", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "Adaptability across different metas" },
+                    { "id": "skill-4", "type": "li", "styles": { "marginBottom": "6px" }, "attributes": { "className": "mb-1.5" }, "content": "Consistent practice routine" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "games",
+      "type": "section",
+      "styles": { "padding": "64px 20px", "maxWidth": "1200px", "margin": "0 auto" },
+      "attributes": { "className": "max-w-6xl mx-auto px-4" },
+      "content": [
+        {
+          "id": "games-title",
+          "type": "h2",
+          "styles": {
+            "fontSize": "32px",
+            "fontWeight": "900",
+            "margin": "0 0 12px 0",
+            "color": "transparent",
+            "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+            "WebkitBackgroundClip": "text",
+            "backgroundClip": "text"
+          },
+          "attributes": { "className": "text-3xl md:text-4xl font-black mb-3" },
+          "content": "Games I Play"
+        },
+        {
+          "id": "games-grid",
+          "type": "div",
+          "styles": { "display": "grid", "gridTemplateColumns": "1fr", "gap": "20px", "marginTop": "24px" },
+          "attributes": { "className": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" },
+          "content": [
+            {
+              "id": "game-card-freefire",
+              "type": "article",
+              "styles": {
+                "padding": "18px",
+                "borderRadius": "16px",
+                "backgroundColor": "rgba(30,41,59,0.6)",
+                "border": "1px solid rgba(148,163,184,0.15)",
+                "transition": "transform 0.2s ease, box-shadow 0.2s ease"
+              },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700 hover:shadow-xl hover:shadow-cyan-500/10 transition hover:-translate-y-1" },
+              "content": [
+                {
+                  "id": "game-card-header",
+                  "type": "div",
+                  "styles": { "display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "12px" },
+                  "attributes": { "className": "flex items-center justify-between" },
+                  "content": [
+                    {
+                      "id": "game-title",
+                      "type": "h3",
+                      "styles": { "margin": "0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                      "attributes": { "className": "text-xl font-bold" },
+                      "content": "Free Fire"
+                    },
+                    {
+                      "id": "game-badge",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "12px",
+                        "fontWeight": "700",
+                        "padding": "6px 10px",
+                        "borderRadius": "9999px",
+                        "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+                        "color": "#0b0f17"
+                      },
+                      "attributes": { "className": "rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-3 py-1 text-xs font-extrabold" },
+                      "content": "BR"
+                    }
+                  ]
+                },
+                {
+                  "id": "game-image",
+                  "type": "img",
+                  "styles": { "width": "100%", "height": "180px", "objectFit": "cover", "borderRadius": "12px" },
+                  "attributes": { "src": "/image-placeholder.png", "alt": "Free Fire gameplay", "className": "w-full h-44 object-cover rounded-xl" },
+                  "content": ""
+                },
+                {
+                  "id": "game-desc",
+                  "type": "p",
+                  "styles": { "margin": "12px 0 0 0", "color": "#94a3b8" },
+                  "attributes": { "className": "mt-3 text-slate-400" },
+                  "content": "Battle Royale drops, rotations, and clutch fights."
+                },
+                {
+                  "id": "game-cta",
+                  "type": "a",
+                  "styles": { "display": "inline-block", "marginTop": "12px", "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                  "attributes": { "href": "#", "className": "text-cyan-400 font-bold hover:underline" },
+                  "content": "View Profile →"
+                }
+              ]
+            },
+            {
+              "id": "game-card-cod",
+              "type": "article",
+              "styles": {
+                "padding": "18px",
+                "borderRadius": "16px",
+                "backgroundColor": "rgba(30,41,59,0.6)",
+                "border": "1px solid rgba(148,163,184,0.15)",
+                "transition": "transform 0.2s ease, box-shadow 0.2s ease"
+              },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700 hover:shadow-xl hover:shadow-cyan-500/10 transition hover:-translate-y-1" },
+              "content": [
+                {
+                  "id": "cod-header",
+                  "type": "div",
+                  "styles": { "display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "12px" },
+                  "attributes": { "className": "flex items-center justify-between" },
+                  "content": [
+                    {
+                      "id": "cod-title",
+                      "type": "h3",
+                      "styles": { "margin": "0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                      "attributes": { "className": "text-xl font-bold" },
+                      "content": "COD Mobile"
+                    },
+                    {
+                      "id": "cod-badge",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "12px",
+                        "fontWeight": "700",
+                        "padding": "6px 10px",
+                        "borderRadius": "9999px",
+                        "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+                        "color": "#0b0f17"
+                      },
+                      "attributes": { "className": "rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-3 py-1 text-xs font-extrabold" },
+                      "content": "MP/BR"
+                    }
+                  ]
+                },
+                {
+                  "id": "cod-image",
+                  "type": "img",
+                  "styles": { "width": "100%", "height": "180px", "objectFit": "cover", "borderRadius": "12px" },
+                  "attributes": { "src": "/image-placeholder.png", "alt": "COD Mobile gameplay", "className": "w-full h-44 object-cover rounded-xl" },
+                  "content": ""
+                },
+                {
+                  "id": "cod-desc",
+                  "type": "p",
+                  "styles": { "margin": "12px 0 0 0", "color": "#94a3b8" },
+                  "attributes": { "className": "mt-3 text-slate-400" },
+                  "content": "Multiplayer & Battle Royale with strong gunplay."
+                },
+                {
+                  "id": "cod-cta",
+                  "type": "a",
+                  "styles": { "display": "inline-block", "marginTop": "12px", "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                  "attributes": { "href": "#", "className": "text-cyan-400 font-bold hover:underline" },
+                  "content": "View Profile →"
+                }
+              ]
+            },
+            {
+              "id": "game-card-minecraft",
+              "type": "article",
+              "styles": {
+                "padding": "18px",
+                "borderRadius": "16px",
+                "backgroundColor": "rgba(30,41,59,0.6)",
+                "border": "1px solid rgba(148,163,184,0.15)",
+                "transition": "transform 0.2s ease, box-shadow 0.2s ease"
+              },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700 hover:shadow-xl hover:shadow-cyan-500/10 transition hover:-translate-y-1" },
+              "content": [
+                {
+                  "id": "mc-header",
+                  "type": "div",
+                  "styles": { "display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "12px" },
+                  "attributes": { "className": "flex items-center justify-between" },
+                  "content": [
+                    {
+                      "id": "mc-title",
+                      "type": "h3",
+                      "styles": { "margin": "0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                      "attributes": { "className": "text-xl font-bold" },
+                      "content": "Minecraft"
+                    },
+                    {
+                      "id": "mc-badge",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "12px",
+                        "fontWeight": "700",
+                        "padding": "6px 10px",
+                        "borderRadius": "9999px",
+                        "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+                        "color": "#0b0f17"
+                      },
+                      "attributes": { "className": "rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-3 py-1 text-xs font-extrabold" },
+                      "content": "Creative"
+                    }
+                  ]
+                },
+                {
+                  "id": "mc-image",
+                  "type": "img",
+                  "styles": { "width": "100%", "height": "180px", "objectFit": "cover", "borderRadius": "12px" },
+                  "attributes": { "src": "/image-placeholder.png", "alt": "Minecraft builds", "className": "w-full h-44 object-cover rounded-xl" },
+                  "content": ""
+                },
+                {
+                  "id": "mc-desc",
+                  "type": "p",
+                  "styles": { "margin": "12px 0 0 0", "color": "#94a3b8" },
+                  "attributes": { "className": "mt-3 text-slate-400" },
+                  "content": "Creative builds, redstone contraptions, and survival."
+                },
+                {
+                  "id": "mc-cta",
+                  "type": "a",
+                  "styles": { "display": "inline-block", "marginTop": "12px", "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                  "attributes": { "href": "#", "className": "text-cyan-400 font-bold hover:underline" },
+                  "content": "View World →"
+                }
+              ]
+            },
+            {
+              "id": "game-card-fc",
+              "type": "article",
+              "styles": {
+                "padding": "18px",
+                "borderRadius": "16px",
+                "backgroundColor": "rgba(30,41,59,0.6)",
+                "border": "1px solid rgba(148,163,184,0.15)",
+                "transition": "transform 0.2s ease, box-shadow 0.2s ease"
+              },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700 hover:shadow-xl hover:shadow-cyan-500/10 transition hover:-translate-y-1" },
+              "content": [
+                {
+                  "id": "fc-header",
+                  "type": "div",
+                  "styles": { "display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "12px" },
+                  "attributes": { "className": "flex items-center justify-between" },
+                  "content": [
+                    {
+                      "id": "fc-title",
+                      "type": "h3",
+                      "styles": { "margin": "0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                      "attributes": { "className": "text-xl font-bold" },
+                      "content": "FC Mobile"
+                    },
+                    {
+                      "id": "fc-badge",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "12px",
+                        "fontWeight": "700",
+                        "padding": "6px 10px",
+                        "borderRadius": "9999px",
+                        "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+                        "color": "#0b0f17"
+                      },
+                      "attributes": { "className": "rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-3 py-1 text-xs font-extrabold" },
+                      "content": "Sports"
+                    }
+                  ]
+                },
+                {
+                  "id": "fc-image",
+                  "type": "img",
+                  "styles": { "width": "100%", "height": "180px", "objectFit": "cover", "borderRadius": "12px" },
+                  "attributes": { "src": "/image-placeholder.png", "alt": "FC Mobile gameplay", "className": "w-full h-44 object-cover rounded-xl" },
+                  "content": ""
+                },
+                {
+                  "id": "fc-desc",
+                  "type": "p",
+                  "styles": { "margin": "12px 0 0 0", "color": "#94a3b8" },
+                  "attributes": { "className": "mt-3 text-slate-400" },
+                  "content": "Skill moves, formation tweaks, and competitive matches."
+                },
+                {
+                  "id": "fc-cta",
+                  "type": "a",
+                  "styles": { "display": "inline-block", "marginTop": "12px", "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                  "attributes": { "href": "#", "className": "text-cyan-400 font-bold hover:underline" },
+                  "content": "View Highlights →"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "achievements",
+      "type": "section",
+      "styles": { "padding": "64px 20px", "maxWidth": "1200px", "margin": "0 auto" },
+      "attributes": { "className": "max-w-6xl mx-auto px-4" },
+      "content": [
+        {
+          "id": "achievements-title",
+          "type": "h2",
+          "styles": {
+            "fontSize": "32px",
+            "fontWeight": "900",
+            "margin": "0 0 12px 0",
+            "color": "transparent",
+            "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+            "WebkitBackgroundClip": "text",
+            "backgroundClip": "text"
+          },
+          "attributes": { "className": "text-3xl md:text-4xl font-black mb-3" },
+          "content": "Achievements & Stats"
+        },
+        {
+          "id": "stats-grid",
+          "type": "div",
+          "styles": { "display": "grid", "gridTemplateColumns": "1fr", "gap": "20px", "marginTop": "24px" },
+          "attributes": { "className": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" },
+          "content": [
+            {
+              "id": "stat-kd",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "stat-kd-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 6px 0", "fontSize": "14px", "textTransform": "uppercase", "letterSpacing": "1px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-xs uppercase tracking-widest text-slate-400" },
+                  "content": "Best K/D"
+                },
+                {
+                  "id": "stat-kd-value",
+                  "type": "p",
+                  "styles": { "margin": "0", "fontSize": "28px", "fontWeight": "900", "color": "#22d3ee" },
+                  "attributes": { "className": "text-3xl font-black text-cyan-400" },
+                  "content": "3.4"
+                }
+              ]
+            },
+            {
+              "id": "stat-wins",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "stat-wins-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 6px 0", "fontSize": "14px", "textTransform": "uppercase", "letterSpacing": "1px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-xs uppercase tracking-widest text-slate-400" },
+                  "content": "Wins"
+                },
+                {
+                  "id": "stat-wins-value",
+                  "type": "p",
+                  "styles": { "margin": "0", "fontSize": "28px", "fontWeight": "900", "color": "#a78bfa" },
+                  "attributes": { "className": "text-3xl font-black text-violet-400" },
+                  "content": "128"
+                }
+              ]
+            },
+            {
+              "id": "stat-headshots",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "stat-headshots-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 6px 0", "fontSize": "14px", "textTransform": "uppercase", "letterSpacing": "1px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-xs uppercase tracking-widest text-slate-400" },
+                  "content": "Headshots"
+                },
+                {
+                  "id": "stat-headshots-value",
+                  "type": "p",
+                  "styles": { "margin": "0", "fontSize": "28px", "fontWeight": "900", "color": "#f472b6" },
+                  "attributes": { "className": "text-3xl font-black text-pink-400" },
+                  "content": "2.1k"
+                }
+              ]
+            },
+            {
+              "id": "stat-matches",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "stat-matches-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 6px 0", "fontSize": "14px", "textTransform": "uppercase", "letterSpacing": "1px", "color": "#94a3b8" },
+                  "attributes": { "className": "text-xs uppercase tracking-widest text-slate-400" },
+                  "content": "Matches Played"
+                },
+                {
+                  "id": "stat-matches-value",
+                  "type": "p",
+                  "styles": { "margin": "0", "fontSize": "28px", "fontWeight": "900", "color": "#22d3ee" },
+                  "attributes": { "className": "text-3xl font-black text-cyan-400" },
+                  "content": "980+"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "highlights",
+      "type": "section",
+      "styles": { "padding": "64px 20px", "maxWidth": "1200px", "margin": "0 auto" },
+      "attributes": { "className": "max-w-6xl mx-auto px-4" },
+      "content": [
+        {
+          "id": "highlights-title",
+          "type": "h2",
+          "styles": {
+            "fontSize": "32px",
+            "fontWeight": "900",
+            "margin": "0 0 12px 0",
+            "color": "transparent",
+            "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+            "WebkitBackgroundClip": "text",
+            "backgroundClip": "text"
+          },
+          "attributes": { "className": "text-3xl md:text-4xl font-black mb-3" },
+          "content": "Highlights"
+        },
+        {
+          "id": "video-grid",
+          "type": "div",
+          "styles": { "display": "grid", "gridTemplateColumns": "1fr", "gap": "20px", "marginTop": "24px" },
+          "attributes": { "className": "grid grid-cols-1 md:grid-cols-3 gap-5" },
+          "content": [
+            {
+              "id": "video-card-1",
+              "type": "article",
+              "styles": { "borderRadius": "16px", "overflow": "hidden", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700 overflow-hidden" },
+              "content": [
+                {
+                  "id": "video-1",
+                  "type": "img",
+                  "styles": { "width": "100%", "height": "200px", "backgroundColor": "#0b0f17", "objectFit": "cover" },
+                  "attributes": {
+                    "src": "/image-placeholder.png",
+                    "className": "w-full h-48 object-cover"
+                  },
+                  "content": ""
+                },
+                {
+                  "id": "video-1-desc",
+                  "type": "div",
+                  "styles": { "padding": "14px" },
+                  "attributes": { "className": "p-4" },
+                  "content": [
+                    {
+                      "id": "video-1-title",
+                      "type": "h3",
+                      "styles": { "margin": "0 0 6px 0", "fontSize": "18px", "fontWeight": "800", "color": "#e2e8f0" },
+                      "attributes": { "className": "text-lg font-bold" },
+                      "content": "Clutch 1v4"
+                    },
+                    {
+                      "id": "video-1-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                      "attributes": { "href": "#", "className": "text-cyan-400 font-bold hover:underline" },
+                      "content": "Watch on YouTube →"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "video-card-2",
+              "type": "article",
+              "styles": { "borderRadius": "16px", "overflow": "hidden", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700 overflow-hidden" },
+              "content": [
+                {
+                  "id": "video-2",
+                  "type": "img",
+                  "styles": { "width": "100%", "height": "200px", "backgroundColor": "#0b0f17", "objectFit": "cover" },
+                  "attributes": {
+                    "src": "/image-placeholder.png",
+                    "className": "w-full h-48 object-cover"
+                  },
+                  "content": ""
+                },
+                {
+                  "id": "video-2-desc",
+                  "type": "div",
+                  "styles": { "padding": "14px" },
+                  "attributes": { "className": "p-4" },
+                  "content": [
+                    {
+                      "id": "video-2-title",
+                      "type": "h3",
+                      "styles": { "margin": "0 0 6px 0", "fontSize": "18px", "fontWeight": "800", "color": "#e2e8f0" },
+                      "attributes": { "className": "text-lg font-bold" },
+                      "content": "Long-range Aces"
+                    },
+                    {
+                      "id": "video-2-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                      "attributes": { "href": "#", "className": "text-cyan-400 font-bold hover:underline" },
+                      "content": "Watch on YouTube →"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "video-card-3",
+              "type": "article",
+              "styles": { "borderRadius": "16px", "overflow": "hidden", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700 overflow-hidden" },
+              "content": [
+                {
+                  "id": "video-3",
+                  "type": "img",
+                  "styles": { "width": "100%", "height": "200px", "backgroundColor": "#0b0f17", "objectFit": "cover" },
+                  "attributes": {
+                    "src": "/image-placeholder.png",
+                    "className": "w-full h-48 object-cover"
+                  },
+                  "content": ""
+                },
+                {
+                  "id": "video-3-desc",
+                  "type": "div",
+                  "styles": { "padding": "14px" },
+                  "attributes": { "className": "p-4" },
+                  "content": [
+                    {
+                      "id": "video-3-title",
+                      "type": "h3",
+                      "styles": { "margin": "0 0 6px 0", "fontSize": "18px", "fontWeight": "800", "color": "#e2e8f0" },
+                      "attributes": { "className": "text-lg font-bold" },
+                      "content": "Minecraft Parkour"
+                    },
+                    {
+                      "id": "video-3-link",
+                      "type": "a",
+                      "styles": { "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                      "attributes": { "href": "#", "className": "text-cyan-400 font-bold hover:underline" },
+                      "content": "Watch on YouTube →"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "type": "section",
+      "styles": { "padding": "64px 20px", "maxWidth": "1200px", "margin": "0 auto" },
+      "attributes": { "className": "max-w-6xl mx-auto px-4" },
+      "content": [
+        {
+          "id": "contact-title",
+          "type": "h2",
+          "styles": {
+            "fontSize": "32px",
+            "fontWeight": "900",
+            "margin": "0 0 12px 0",
+            "color": "transparent",
+            "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+            "WebkitBackgroundClip": "text",
+            "backgroundClip": "text"
+          },
+          "attributes": { "className": "text-3xl md:text-4xl font-black mb-3" },
+          "content": "Contact"
+        },
+        {
+          "id": "contact-grid",
+          "type": "div",
+          "styles": { "display": "grid", "gridTemplateColumns": "1fr", "gap": "20px", "marginTop": "24px" },
+          "attributes": { "className": "grid grid-cols-1 md:grid-cols-2 gap-6" },
+          "content": [
+            {
+              "id": "contact-card",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "contact-card-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 10px 0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                  "attributes": { "className": "text-xl font-bold" },
+                  "content": "Let’s Team Up"
+                },
+                {
+                  "id": "contact-card-desc",
+                  "type": "p",
+                  "styles": { "margin": "0 0 14px 0", "color": "#94a3b8" },
+                  "attributes": { "className": "text-slate-400" },
+                  "content": "Open to friendly matches, collaboration, or coaching tips."
+                },
+                {
+                  "id": "contact-links",
+                  "type": "ul",
+                  "styles": { "margin": "0", "paddingLeft": "18px", "color": "#94a3b8" },
+                  "attributes": { "className": "pl-5 text-slate-400" },
+                  "content": [
+                    {
+                      "id": "contact-email",
+                      "type": "li",
+                      "styles": { "marginBottom": "8px" },
+                      "attributes": { "className": "mb-2" },
+                      "content": [
+                        {
+                          "id": "email-link",
+                          "type": "a",
+                          "styles": { "textDecoration": "none", "color": "#22d3ee", "fontWeight": "700" },
+                          "attributes": { "href": "mailto:ankan@example.com", "className": "text-cyan-400 font-bold hover:underline" },
+                          "content": "ankan@example.com"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "contact-discord",
+                      "type": "li",
+                      "styles": { "marginBottom": "8px" },
+                      "attributes": { "className": "mb-2" },
+                      "content": [
+                        {
+                          "id": "discord-link",
+                          "type": "a",
+                          "styles": { "textDecoration": "none", "color": "#a78bfa", "fontWeight": "700" },
+                          "attributes": { "href": "#", "className": "text-violet-400 font-bold hover:underline" },
+                          "content": "Discord: ANKAN#0001"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "contact-youtube",
+                      "type": "li",
+                      "styles": { "marginBottom": "8px" },
+                      "attributes": { "className": "mb-2" },
+                      "content": [
+                        {
+                          "id": "youtube-link",
+                          "type": "a",
+                          "styles": { "textDecoration": "none", "color": "#f472b6", "fontWeight": "700" },
+                          "attributes": { "href": "#", "className": "text-pink-400 font-bold hover:underline" },
+                          "content": "YouTube: @ANKAN_Gaming"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "contact-form-card",
+              "type": "div",
+              "styles": { "padding": "20px", "borderRadius": "16px", "backgroundColor": "rgba(30,41,59,0.6)", "border": "1px solid rgba(148,163,184,0.15)" },
+              "attributes": { "className": "rounded-2xl bg-slate-800/50 border border-slate-700" },
+              "content": [
+                {
+                  "id": "contact-form-title",
+                  "type": "h3",
+                  "styles": { "margin": "0 0 10px 0", "fontSize": "20px", "fontWeight": "800", "color": "#e2e8f0" },
+                  "attributes": { "className": "text-xl font-bold" },
+                  "content": "Send a Message"
+                },
+                {
+                  "id": "form",
+                  "type": "form",
+                  "styles": { "display": "flex", "flexDirection": "column", "gap": "12px" },
+                  "attributes": { "action": "#", "method": "post", "className": "space-y-3" },
+                  "content": [
+                    {
+                      "id": "form-name",
+                      "type": "div",
+                      "styles": { "display": "flex", "flexDirection": "column", "gap": "6px" },
+                      "attributes": { "className": "space-y-1" },
+                      "content": [
+                        {
+                          "id": "name-label",
+                          "type": "label",
+                          "styles": { "fontSize": "14px", "color": "#94a3b8" },
+                          "attributes": { "htmlFor": "name", "className": "text-sm text-slate-400" },
+                          "content": "Your Name"
+                        },
+                        {
+                          "id": "name-input",
+                          "type": "div",
+                          "styles": { "padding": "12px", "borderRadius": "10px", "border": "1px solid rgba(148,163,184,0.2)", "backgroundColor": "rgba(15,23,42,0.6)", "color": "#e2e8f0" },
+                          "attributes": {
+                            "className": "w-full rounded-xl border border-slate-600 bg-slate-900/60 px-3 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "form-email",
+                      "type": "div",
+                      "styles": { "display": "flex", "flexDirection": "column", "gap": "6px" },
+                      "attributes": { "className": "space-y-1" },
+                      "content": [
+                        {
+                          "id": "email-label",
+                          "type": "label",
+                          "styles": { "fontSize": "14px", "color": "#94a3b8" },
+                          "attributes": { "htmlFor": "email", "className": "text-sm text-slate-400" },
+                          "content": "Email"
+                        },
+                        {
+                          "id": "email-input",
+                          "type": "div",
+                          "styles": { "padding": "12px", "borderRadius": "10px", "border": "1px solid rgba(148,163,184,0.2)", "backgroundColor": "rgba(15,23,42,0.6)", "color": "#e2e8f0" },
+                          "attributes": {
+                            "className": "w-full rounded-xl border border-slate-600 bg-slate-900/60 px-3 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "form-message",
+                      "type": "div",
+                      "styles": { "display": "flex", "flexDirection": "column", "gap": "6px" },
+                      "attributes": { "className": "space-y-1" },
+                      "content": [
+                        {
+                          "id": "message-label",
+                          "type": "label",
+                          "styles": { "fontSize": "14px", "color": "#94a3b8" },
+                          "attributes": { "htmlFor": "message", "className": "text-sm text-slate-400" },
+                          "content": "Message"
+                        },
+                        {
+                          "id": "message-textarea",
+                          "type": "textarea",
+                          "styles": {
+                            "padding": "12px",
+                            "borderRadius": "10px",
+                            "border": "1px solid rgba(148,163,184,0.2)",
+                            "backgroundColor": "rgba(15,23,42,0.6)",
+                            "color": "#e2e8f0",
+                            "minHeight": "120px",
+                            "resize": "vertical"
+                          },
+                          "attributes": {
+                            "id": "message",
+                            "name": "message",
+                            "placeholder": "Write something...",
+                            "className": "w-full rounded-xl border border-slate-600 bg-slate-900/60 px-3 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                          },
+                          "content": ""
+                        }
+                      ]
+                    },
+                    {
+                      "id": "form-submit",
+                      "type": "button",
+                      "styles": {
+                        "padding": "12px 16px",
+                        "borderRadius": "12px",
+                        "fontWeight": "800",
+                        "backgroundImage": "linear-gradient(90deg, #22d3ee, #a78bfa)",
+                        "color": "#0b0f17",
+                        "border": "none",
+                        "cursor": "pointer",
+                        "alignSelf": "flex-start"
+                      },
+                      "attributes": {
+                        "type": "submit",
+                        "className": "rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-3 font-extrabold text-slate-900 shadow-xl shadow-cyan-500/20 transition hover:shadow-cyan-400/30"
+                      },
+                      "content": "Send"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "styles": { "padding": "28px 20px 48px", "maxWidth": "1200px", "margin": "0 auto" },
+      "attributes": { "className": "max-w-6xl mx-auto px-4" },
+      "content": [
+        {
+          "id": "footer-inner",
+          "type": "div",
+          "styles": {
+            "display": "flex",
+            "flexDirection": "column",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "gap": "12px",
+            "paddingTop": "24px",
+            "borderTop": "1px solid rgba(148,163,184,0.15)"
+          },
+          "attributes": { "className": "flex flex-col items-center justify-center gap-3 pt-6" },
+          "content": [
+            {
+              "id": "footer-brand",
+              "type": "div",
+              "styles": { "display": "flex", "alignItems": "center", "gap": "10px" },
+              "attributes": { "className": "flex items-center gap-2" },
+              "content": [
+                {
+                  "id": "footer-logo",
+                  "type": "div",
+                  "styles": { "width": "28px", "height": "28px", "borderRadius": "50%", "backgroundImage": "linear-gradient(135deg, #22d3ee, #a78bfa)" },
+                  "attributes": { "className": "w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500" },
+                  "content": ""
+                },
+                { "id": "footer-name", "type": "span", "styles": { "fontWeight": "800", "color": "#e2e8f0" }, "attributes": { "className": "font-extrabold" }, "content": "ANKAN" }
+              ]
+            },
+            {
+              "id": "footer-text",
+              "type": "p",
+              "styles": { "margin": "0", "color": "#94a3b8", "fontSize": "14px" },
+              "attributes": { "className": "text-sm text-slate-400" },
+              "content": "© 2025 ANKAN. All rights reserved."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
