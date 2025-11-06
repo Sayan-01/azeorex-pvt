@@ -126,5 +126,4 @@ MINIMAL EXAMPLE:
 
 Generate the JSON structure now for: ${userInput}
 `;
-
 };

@@ -7,6 +7,7 @@ import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
 import { useEditor } from "../../../../providers/editor/editor-provider";
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { WebsiteBuilder } from "./website-builder";
+import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadingAnimation";
 
 export type Messages = {
   role: string;
@@ -122,8 +123,11 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         funnelPageDetails={funnelPageDetails}
         userId={userId}
       />
-      <div className="h-full container-query flex justify-center overflow-x-hidden bg-[#191919]">
+      <div className="h-full container-query flex justify-center overflow-x-hidden bg-[#191919] relative">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
+        {!loading && <div>
+          <AiLoadingAnimation loading={loading}/>
+          </div>}
       </div>
       <FunnelEditorSidebar
         messages={messages}
