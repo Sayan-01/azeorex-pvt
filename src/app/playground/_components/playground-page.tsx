@@ -1,7 +1,7 @@
 "use client"; // streamming responce 5 e casual chat + code chat er option ache
 import React, { useEffect, useState } from "react";
 import FunnelEditorSidebar from "../_components/funnel-editor-sidebar";
-import { PromptForWebPage } from "../../../../Ai/PromptForWebPage";
+import { PromptForWebPage } from "../../../../Ai/prompt-v2";
 import { toast } from "sonner";
 import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
 import { useEditor } from "../../../../providers/editor/editor-provider";

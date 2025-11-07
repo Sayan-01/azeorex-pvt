@@ -5,7 +5,7 @@ export const POST = Webhooks({
   webhookSecret: process.env.POLAR_WEBHOOK_SECRET!,
   onPayload: async (payload) => {
     try {
-      console.log("📩 Polar webhook received");
+      console.log("Polar webhook received");
 
       const type = payload?.type;
       const subscriptionId = payload?.data?.id; // subscription ID

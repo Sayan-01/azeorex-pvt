@@ -59,8 +59,8 @@ OUTPUT FORMAT - Return ONLY valid JSON (no markdown, no \`\`\`json blocks, no ex
 RULES:
 - Output ONLY JSON (no markdown, no commentary) *Strictly start with { and end with }* 
 - Keys use double quotes, no trailing commas
-- Every element has: id, type, styles?, attributes?, content?
-- "content" = string OR array of child elements
+- Every element has: id, type, styles?, attributes? (only src, className, href), content?
+- "content" = string OR array of *elements*
 - CSS in camelCase inside "styles"
 - Tailwind only inside attributes.className
 - Use semantic tags: section, div, header, footer, nav, h1-h6, p, button, article, img
