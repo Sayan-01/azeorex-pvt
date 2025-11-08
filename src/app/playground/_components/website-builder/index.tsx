@@ -191,6 +191,41 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     );
   };
 
+  const elementToHTML = (el: EditorElement): string => {
+    const Tag = el.type === "__body" ? "div" : el.type;
+
+    const styleString = Object.entries(el.styles || {})
+      .map(([key, value]) => {
+        const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
+        return `${cssKey}: ${value}`;
+      })
+      .join("; ");
+
+    let attrsString = "";
+    if (el.attributes) {
+      attrsString = Object.entries(el.attributes)
+        .map(([key, value]) => {
+          if (key === "className") {
+            return `class="${value}"`;
+          }
+          return `${key}="${value}"`;
+        })
+        .join(" ");
+    }
+
+    const allAttrs = [styleString ? `style="${styleString}"` : "", attrsString].filter(Boolean).join(" ");
+
+    if (typeof el.content === "string" && el.type !== "img") {
+      return `<${Tag} ${allAttrs}>${el.content}</${Tag}>`;
+    } else if (el.type === "img") {
+      return `<${Tag} ${allAttrs} />`;
+    }
+
+    const childrenHTML = Array.isArray(el.content) ? el.content.map(elementToHTML).join("") : "";
+
+    return `<${Tag} ${allAttrs}>${childrenHTML}</${Tag}>`;
+  };
+
   return loading ? (
     <div className="h-[calc(100vh-40.8px)] flex items-center justify-center">
       <Loader2 />
@@ -209,7 +244,30 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         position: "relative",
       }}
     >
-      <div className="border  relative">{renderElement(state.elements)}</div>
+      {state.device !== "Desktop" ? (
+        <iframe
+          className={clsx("border transition-all bg-white w-full h-[100%]")}
+          srcDoc={`
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <script src="https://cdn.tailwindcss.com"></script>
+                <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body { width: 100%; height: 100%; }
+                </style>
+              </head>
+              <body>
+                ${elementToHTML(state.elements)}
+              </body>
+            </html>
+          `}
+        />
+      ) : (
+        <div className="border relative">{renderElement(state.elements)}</div>
+      )}
       {!state.previewMode && !liveMode && (
         <>
           <GlobalHoverOverlay />

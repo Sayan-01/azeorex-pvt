@@ -20,7 +20,7 @@ const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement })
           <Tabs
             className="flex-1"
             onValueChange={(e) => updateElementStyle(selectedElement.id, "display", e)}
-            value={selectedElement?.styles?.display || "block"}
+            value={selectedElement?.styles?.display || ""}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
               <TabsTrigger
@@ -30,7 +30,7 @@ const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement })
                 F
               </TabsTrigger>
               <TabsTrigger
-                value="block"
+                value=""
                 className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
               >
                 B

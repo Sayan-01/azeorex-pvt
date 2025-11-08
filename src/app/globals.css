@@ -631,3 +631,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media (max-width: 768px) {
+  [data-element-id="hero-section"] {
+    padding: 60px 30px;
+    min-height: 300px;
+  }
+}

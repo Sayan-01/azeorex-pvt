@@ -96,7 +96,7 @@ ROOT FORMAT:
 
 MINIMAL EXAMPLE:
 {
-  "id": "__body",
+  "id": "__root",
   "type": "__body",
   "styles": { "minHeight": "100vh", "backgroundColor": "#f3f4f6", "padding": "10px" },
   "content": [

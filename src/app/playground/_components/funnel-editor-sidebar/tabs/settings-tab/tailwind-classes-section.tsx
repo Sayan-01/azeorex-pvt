@@ -50,7 +50,7 @@ const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorEl
 
   return (
     <AccordionItem
-      value="Classes"
+      value="Classes (responcive)"
       className="px-3 py-0 border-none"
     >
       <AccordionTrigger className="!no-underline font-semibold">Classes</AccordionTrigger>
