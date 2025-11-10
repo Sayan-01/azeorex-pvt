@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Banner = () => {
   return (
-    <div className=" -mt-[12rem] relative max-w-[100rem] mx-auto">
+    <div className=" -mt-[13rem] relative max-w-[100rem] mx-auto">
       <div className=" sm:w-full w-[200%] top-20 sm:top-0 relative -left-8 sm:left-0 ">
         <Image
           alt="banner"
