@@ -68,7 +68,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   };
 
   useEffect(() => {
-    if (chatMessages?.length === 1 && !loading) {
+    if (chatMessages?.length === 1 && !loading ) {
       sendMessage(chatMessages[0].content);
     }
   }, []);

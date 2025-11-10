@@ -38,6 +38,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     const handleClick = (e: React.MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      if(state.previewMode) return;
       dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: el.id } });
       dispatch({ type: "SET_SELECTED_ELEMENT", payload: { selectedElement: el } });
     };
@@ -129,7 +130,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     if (typeof el.content === "string" && el.type !== "img") {
       return (
         <Tag
-          disabled={!state.previewMode}
+          disabled={el.type === "a" && !state.previewMode}
           key={el.id}
           data-element-id={el.id}
           style={baseStyle}
@@ -268,6 +269,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       ) : (
         <div className="border relative">{renderElement(state.elements)}</div>
       )}
+      {state.selectedId}
       {!state.previewMode && !liveMode && (
         <>
           <GlobalHoverOverlay />

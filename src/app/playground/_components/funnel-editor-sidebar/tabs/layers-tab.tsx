@@ -1,6 +1,6 @@
 "use client";
 
-import { BoxSelect, ImageIcon, Move, Contact2, Columns2, TextSelect, CreditCardIcon, TypeIcon, Link2Icon, Youtube, Heading1, Heading2, Heading3 } from "lucide-react";
+import { BoxSelect, ImageIcon, Move, Contact2, Columns2, TextSelect, CreditCardIcon, TypeIcon, Link2Icon, Youtube, Heading1, Heading2, Heading3, VectorSquare } from "lucide-react";
 import { useEditor } from "../../../../../../providers/editor/editor-provider";
 import { EditorElement } from "../../../../../../providers/editor/editor-actions";
 import { Accordion, AccordionTrigger } from "@/components/ui/accordion";
@@ -52,11 +52,11 @@ export default function LayersPanel() {
             className="text-muted-foreground w-3.5"
           />
         );
-      case "link":
+      case "a":
         return (
           <Link2Icon
             size={14}
-            className="text-muted-foreground"
+            className="text-muted-foreground rotate-45"
           />
         );
       case "video":
@@ -96,7 +96,7 @@ export default function LayersPanel() {
         );
       default:
         return (
-          <BoxSelect
+          <VectorSquare
             size={14}
             className="text-muted-foreground"
           />
@@ -137,7 +137,7 @@ export default function LayersPanel() {
           style={{ marginLeft: `${depth * 16 + 8}px` }}
         >
           {el.id !== "__body" && getElementIcon(el.type)}
-          <span className="text-xs font-mono text-white">{el.type === "__body" ? "🌐 Body" : `${el.id}`}</span>
+          <span className="text-xs font-mono text-white">{el.type === "__body" ? "🌐 Body" : `${el.type}`}</span>
         </div>
         {hasChildren && <div>{(el.content as EditorElement[]).map((child) => renderLayerTree(child, depth + 1))}</div>}
       </div>

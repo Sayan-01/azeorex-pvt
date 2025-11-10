@@ -113,7 +113,6 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
           <h1 className=" text-2xl font-semibold">Your Projects</h1>
           <p className=" text-zinc-400 text-sm mt-1">All of your letest project in one palce, explore</p>
         </div>
-        
       </div>
       <section className="text-3xl mb-4 md:px-7 px-5  sm:hidden flex flex-col items-center">
         <h1 className="text-center font-bold text-2xl mb-2 mt-7">All Projects</h1>

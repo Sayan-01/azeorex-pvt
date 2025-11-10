@@ -39,7 +39,7 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
       formData.append("funnelPageId", funnelPageId);
       formData.append("userId", userId);
 
-      const response = await fetch("/api/ai-project-create", {
+      const response = await fetch("/api/ai/ai-project-create", {
         method: "POST",
         body: formData,
       });
@@ -50,9 +50,11 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
         toast.success(data.message || "Project created successfully");
         router.push(`/playground/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
       } else {
+        console.log(data);
         toast.error(data.message || "Failed to create project");
       }
     } catch (error: any) {
+      console.log(error);
       toast.error(error?.message || "Something went wrong");
     } finally {
       setLoading(false);

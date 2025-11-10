@@ -32,23 +32,18 @@ You are an expert web designer. Generate a JSON structure for a modern, responsi
   h1, h2, h3, h4, h5, h6, p, span, a, button, img, ul, ol, li etc
 
 5. TAILWIND + STYLES CONFLICT PREVENTION:
-  ⚠️ If you use Tailwind for a property, DO NOT add it to styles:
+  - Use Tailwind only for psuedo classes like hover, active, focus etc
+  - Use Tailwind only for responsive classes like md:, lg:, xl: etc. If you use Tailwind for a property, DO NOT add it to styles:
+  - For responcive use flex, grid, md:flex, lg:flex, xl:flex, md:grid, lg:grid, xl:grid, md:grid-cols-1, lg:grid-cols-2, xl:grid-cols-3 gap-* etc in attributes.className only.
    
   ❌ WRONG:
-  "attributes": { "className": "flex" },
+  "attributes": { "className": "grid md:grid-cols-3 grid-cols-1 gap-2" },
   "styles": { "display": "flex" }  // DON'T DO THIS
+  "styles": { "display": "grid" }  // DON'T DO THIS
    
   ✅ CORRECT:
-  "attributes": { "className": "flex" }
+  "attributes": { "className": "grid md:grid-cols-3 grid-cols-1 gap-2" },
   // No display in styles
-   
-  ❌ WRONG:
-  "attributes": { "className": "mx-auto" },
-  "styles": { "marginLeft": "auto", "marginRight": "auto" }
-   
-  ✅ CORRECT:
-  "attributes": { "className": "mx-auto" }
-  // No margin in styles
 
 6. IMAGE RULES:
   - Use img elements when they necessary and enhance design
