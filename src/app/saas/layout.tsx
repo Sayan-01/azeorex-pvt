@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <CreditProvider>
       <div className="w-full flex  bg-[#141414] ">
         <Sidebar />
-        <main className="min-h-screen overflow-x-hidden box-1 md:ml-[240px] ">
+        <main className="min-h-screen overflow-x-hidden box-1 md:ml-[240px] w-full">
           {children}
         </main>
       </div>

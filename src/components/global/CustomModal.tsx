@@ -14,7 +14,7 @@ const CustomModal = ({ title, subheading, children, defaultOption, width = "sm:w
       onOpenChange={setClose}
     >
       <DialogContent className={clsx(`overflow-x-hidden box md:max-h-[700px] border-none max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center `, width, className)}>
-        <DialogHeader className=" text-left">
+        <DialogHeader className=" text-left w-full">
           {title ? <DialogTitle className="pb-2">{title}</DialogTitle> : <></>}
           {subheading ? <DialogDescription className="!mb-5">{subheading}</DialogDescription> : <></>}
           {children}

@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { upsertFunnelPageForProject } from "@/lib/queries";
 import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
-import { ChevronLeft, DownloadIcon, EyeIcon, EyeOff, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
+import { ChevronLeft, Copy, DownloadIcon, EyeIcon, EyeOff, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect, useState } from "react";
@@ -53,6 +53,10 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
     }
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(JSON.stringify(state.elements, null, 2));
+    toast.success("✨Copied Editor");
+  };
   return (
     <TooltipProvider>
       <nav
@@ -184,6 +188,15 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
               Publish
             </div>
           </div>
+          <button
+            className="text-sm border-l-2 border-main-black pl-3"
+            onClick={handleCopy}
+            >
+            <Copy
+              size={16}
+              strokeWidth={1.5}
+            />
+          </button>
           <button
             className="text-sm border-l-2 border-main-black pl-3"
             onClick={handleSave}

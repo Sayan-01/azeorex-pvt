@@ -146,7 +146,7 @@ export default function LayersPanel() {
 
   return (
     <div className="p-2">
-      <div className="text-xs text-yellow-400 mb-2 px-4 py-2 bg-yellow-900/20 rounded">💡 Drag elements to reorder</div>
+      <div className="text-xs text-yellow-400 mb-2 px-4 py-2 bg-yellow-900/20 rounded">Drag elements to reorder</div>
       {renderLayerTree(state.elements)}
     </div>
   );

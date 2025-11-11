@@ -1,7 +1,7 @@
 import React from "react";
 
-const UpgrateCard = ({ credits }: { credits: number }) => {
-  if (credits <= 1000) {
+const UpgrateCard = ({ credits = 0 }: { credits: number }) => {
+  if (credits <= 100 ) {
     return (
       <div className="border rounded-xl mb-4 dark:border-zinc-800">
         <div className="p-2.5 pb-0 h-24 bg-[linear-gradient(60deg,_rgb(247,_149,_51),_rgb(243,_112,_85),_rgb(239,_78,_123),_rgb(161,_102,_171),_rgb(80,_115,_184),_rgb(16,_152,_173),_rgb(7,_179,_155),_rgb(111,_186,_130))] rounded-t-xl text-sm">

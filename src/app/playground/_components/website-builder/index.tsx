@@ -142,7 +142,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDragEnd={handleDragEnd}
-          onDrop={handleElementDrop}
+          // onDrop={handleElementDrop}
           contentEditable={!state.previewMode && isSelected && !state.liveMode}
           suppressContentEditableWarning
           onBlur={handleBlur}
@@ -165,7 +165,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDragEnd={handleDragEnd}
-          onDrop={handleElementDrop}
+          // onDrop={handleElementDrop}
           {...el.attributes}
         ></Tag>
       );

@@ -96,7 +96,7 @@ export const getProjects = async (userId: string | undefined) => {
 
 //===============================================================================
 
-export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string) => {
+export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string } , projectId: string) => {
   try {
     if (project.subDomainName) {
       const existingProject = await db.project.findFirst({
@@ -392,10 +392,10 @@ export async function getUserCurrentPlan(userId: string) {
   };
 }
 
-export const decrementCredits = async (userId: string) => {
+export const decrementCredits = async (userId: string, credits: number) => {
   await db.user.update({
     where: { id: userId },
-    data: { credits: { decrement: 100 } },
+    data: { credits: { decrement: credits } },
   });
 };
 

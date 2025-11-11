@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { getUserCurrentPlan, getUserDetails } from "@/lib/queries";
 import { upsertFunnelPageForProject, upsertProject } from "@/lib/queries";
 import { NextResponse } from "next/server";
 
@@ -18,7 +19,7 @@ export const POST = async (req: Request) => {
         subDomainName: projectId,
         liveProducts: "",
       },
-      projectId,
+      projectId
     );
 
     if (!project.success) {
@@ -26,7 +27,7 @@ export const POST = async (req: Request) => {
     }
 
     await upsertFunnelPageForProject({ id: funnelPageId, name: "Untitled", pathName: "", order: 0 }, projectId);
-    
+
     await db.chat.create({
       data: {
         chatMessage: JSON.parse(messages),

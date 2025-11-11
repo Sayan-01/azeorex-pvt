@@ -5,9 +5,10 @@ import { PromptForWebPage } from "../../../../Ai/prompt-v2";
 import { toast } from "sonner";
 import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
 import { useEditor } from "../../../../providers/editor/editor-provider";
-import { upsertFunnelPageForProject } from "@/lib/queries";
+import { decrementCredits, upsertFunnelPageForProject } from "@/lib/queries";
 import { WebsiteBuilder } from "./website-builder";
 import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadingAnimation";
+import { useCredits } from "@/hooks/credit-provider";
 
 export type Messages = {
   role: string;
@@ -18,8 +19,13 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Messages[]>(chatMessages);
   const { dispatch, state } = useEditor();
+  const {credits} = useCredits()
 
   const sendMessage = async (userInput: string) => {
+    if (credits < 100) {
+      toast.error("Not enough credits");
+      return;
+    }
     setLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
 
@@ -52,15 +58,16 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
         dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
         setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
+        decrementCredits(userId, 100);
         await savePage(aiResponse);
-      } catch (e) {
-        // If not JSON, treat as regular message
+      } catch (e:any) {
+        console.error("Error:", e);
+        toast.error(e?.message || "Network error occurred");
         setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
       }
     } catch (error: any) {
       console.error("Error:", error);
       toast.error(error?.message || "Network error occurred");
-      // Remove the user message if request failed
       setMessages((prev) => prev.slice(0, -1));
     } finally {
       setLoading(false);

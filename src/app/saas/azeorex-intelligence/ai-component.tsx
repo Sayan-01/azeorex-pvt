@@ -7,14 +7,21 @@ import Image from "next/image";
 import { v4 } from "uuid";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useCredits } from "@/hooks/credit-provider";
 
 const AiComponent = ({ userId }: { userId: string | undefined }) => {
   const [userInput, setUserInput] = useState("");
   const [referanceImage, setReferanceImage] = useState<any>();
   const [referanceImagePreview, setReferanceImagePreview] = useState<string>();
   const [loading, setLoading] = useState(false);
+  const {credits} = useCredits()
+
   const router = useRouter();
   const onSubmit = async () => {
+    if (credits < 100) {
+      toast.error("Not enough credits");
+      return;
+    }
     if (!userInput) {
       toast.error("Please fill all the fields");
       return;
