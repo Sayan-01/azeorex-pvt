@@ -7,6 +7,9 @@ export const maxDuration = 60;
 export async function POST(req: Request) {
   const { messages, userId } = await req.json();
 
+  console.log(userId);
+  
+
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -15,7 +18,9 @@ export async function POST(req: Request) {
     },
     body: JSON.stringify({
       // model: "tngtech/deepseek-r1t2-chimera:free",
-      model: "minimax/minimax-m2:free",
+      // model: "minimax/minimax-m2:free",
+      // model: "openrouter/polaris-alpha",
+      model: "mistralai/mistral-nemo:free",
       messages,
       stream: true,
     }),

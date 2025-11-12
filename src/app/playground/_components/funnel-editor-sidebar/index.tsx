@@ -43,7 +43,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
           <SheetContent
             showX={false}
             side="left"
-            className={clsx("mt-[48.8px] h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  select-none", {
+            className={clsx("mt-[48.8px] h-[calc(100%)-170px] border-b border-main-black  w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  ", {
               hidden: state.previewMode,
             })}
           >

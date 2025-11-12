@@ -137,7 +137,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           onClick={handleClick}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
-          draggable={!state.previewMode && el.id !== "__body"}
+          draggable={!state.previewMode && el.id !== "__body" && !state.liveMode}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -160,7 +160,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           onClick={handleClick}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
-          draggable={!state.previewMode && el.id !== "__body"}
+          draggable={!state.previewMode && el.id !== "__body" && !state.liveMode}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -179,7 +179,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         onClick={handleClick}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
-        draggable={!state.previewMode && el.id !== "__body"}
+        draggable={!state.previewMode && el.id !== "__body" && !state.liveMode}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}

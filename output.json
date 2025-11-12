@@ -1,0 +1,1784 @@
+{
+  "id": "__root",
+  "type": "__body",
+  "styles": {
+    "minHeight": "100vh",
+    "backgroundColor": "#f5f5f5",
+    "padding": "10px"
+  },
+  "content": [
+    {
+      "id": "site-wrapper",
+      "type": "div",
+      "styles": {
+        "maxWidth": "1200px",
+        "margin": "0 auto",
+        "backgroundColor": "#ffffff",
+        "borderRadius": "24px",
+        "padding": "32px",
+        "boxShadow": "0 18px 50px rgba(15,23,42,0.12)"
+      },
+      "content": [
+        {
+          "id": "header",
+          "type": "header",
+          "styles": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "marginBottom": "32px"
+          },
+          "content": [
+            {
+              "id": "logo-wrapper",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "10px"
+              },
+              "content": [
+                {
+                  "id": "logo-mark",
+                  "type": "div",
+                  "styles": {
+                    "width": "32px",
+                    "height": "32px",
+                    "borderRadius": "999px",
+                    "backgroundImage": "linear-gradient(135deg, #22c55e, #16a34a)",
+                    "display": "flex",
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "boxShadow": "0 6px 18px rgba(22,163,74,0.45)",
+                    "color": "#ffffff",
+                    "fontWeight": "bold",
+                    "fontSize": "18px"
+                  },
+                  "content": "S"
+                },
+                {
+                  "id": "logo-text",
+                  "type": "span",
+                  "styles": {
+                    "fontSize": "20px",
+                    "fontWeight": "700",
+                    "color": "#111827",
+                    "letterSpacing": "0.02em"
+                  },
+                  "content": "SwiftScale"
+                }
+              ]
+            },
+            {
+              "id": "nav",
+              "type": "nav",
+              "styles": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "24px"
+              },
+              "content": [
+                {
+                  "id": "nav-links",
+                  "type": "div",
+                  "styles": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "18px"
+                  },
+                  "content": [
+                    {
+                      "id": "nav-link-features",
+                      "type": "a",
+                      "styles": {
+                        "fontSize": "14px",
+                        "color": "#4b5563",
+                        "fontWeight": "500",
+                        "cursor": "pointer"
+                      },
+                      "attributes": {
+                        "href": "#"
+                      },
+                      "content": "Features"
+                    },
+                    {
+                      "id": "nav-link-solutions",
+                      "type": "a",
+                      "styles": {
+                        "fontSize": "14px",
+                        "color": "#4b5563",
+                        "fontWeight": "500",
+                        "cursor": "pointer"
+                      },
+                      "attributes": {
+                        "href": "#"
+                      },
+                      "content": "Solutions"
+                    },
+                    {
+                      "id": "nav-link-pricing",
+                      "type": "a",
+                      "styles": {
+                        "fontSize": "14px",
+                        "color": "#4b5563",
+                        "fontWeight": "500",
+                        "cursor": "pointer"
+                      },
+                      "attributes": {
+                        "href": "#"
+                      },
+                      "content": "Pricing"
+                    },
+                    {
+                      "id": "nav-link-resources",
+                      "type": "a",
+                      "styles": {
+                        "fontSize": "14px",
+                        "color": "#4b5563",
+                        "fontWeight": "500",
+                        "cursor": "pointer"
+                      },
+                      "attributes": {
+                        "href": "#"
+                      },
+                      "content": "Resources"
+                    }
+                  ]
+                },
+                {
+                  "id": "nav-ctas",
+                  "type": "div",
+                  "styles": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "10px"
+                  },
+                  "content": [
+                    {
+                      "id": "btn-login",
+                      "type": "button",
+                      "styles": {
+                        "padding": "8px 16px",
+                        "backgroundColor": "transparent",
+                        "color": "#16a34a",
+                        "borderRadius": "999px",
+                        "border": "1px solid #bbf7d0",
+                        "fontSize": "13px",
+                        "fontWeight": "500",
+                        "cursor": "pointer",
+                        "transition": "all 0.25s ease"
+                      },
+                      "content": "Log in"
+                    },
+                    {
+                      "id": "btn-get-started",
+                      "type": "button",
+                      "styles": {
+                        "padding": "9px 20px",
+                        "backgroundImage": "linear-gradient(135deg, #22c55e, #16a34a)",
+                        "color": "#ffffff",
+                        "borderRadius": "999px",
+                        "border": "none",
+                        "fontSize": "13px",
+                        "fontWeight": "600",
+                        "cursor": "pointer",
+                        "boxShadow": "0 10px 24px rgba(22,163,74,0.45)",
+                        "transition": "all 0.25s ease"
+                      },
+                      "content": "Get started"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "hero-section",
+          "type": "section",
+          "styles": {
+            "display": "grid",
+            "gridTemplateColumns": "1.6fr 1.4fr",
+            "gap": "40px",
+            "alignItems": "center",
+            "marginBottom": "40px"
+          },
+          "attributes": {
+            "className": "grid md:grid-cols-2 grid-cols-1 gap-8"
+          },
+          "content": [
+            {
+              "id": "hero-left",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": "18px"
+              },
+              "content": [
+                {
+                  "id": "hero-badge",
+                  "type": "div",
+                  "styles": {
+                    "display": "inline-flex",
+                    "alignItems": "center",
+                    "gap": "8px",
+                    "padding": "4px 10px",
+                    "borderRadius": "999px",
+                    "backgroundColor": "#ecfdf3",
+                    "color": "#16a34a",
+                    "fontSize": "11px",
+                    "fontWeight": "600",
+                    "letterSpacing": "0.12em"
+                  },
+                  "content": [
+                    {
+                      "id": "hero-badge-dot",
+                      "type": "span",
+                      "styles": {
+                        "width": "8px",
+                        "height": "8px",
+                        "borderRadius": "999px",
+                        "backgroundColor": "#22c55e",
+                        "boxShadow": "0 0 8px rgba(34,197,94,0.9)"
+                      },
+                      "content": ""
+                    },
+                    {
+                      "id": "hero-badge-text",
+                      "type": "span",
+                      "styles": {
+                        "color": "#16a34a",
+                        "fontWeight": "600"
+                      },
+                      "content": "AI-DRIVEN GROWTH PLATFORM"
+                    }
+                  ]
+                },
+                {
+                  "id": "hero-title",
+                  "type": "h1",
+                  "styles": {
+                    "fontSize": "40px",
+                    "lineHeight": "1.15",
+                    "fontWeight": "700",
+                    "color": "#0f172a"
+                  },
+                  "content": "Scale your SaaS revenue with clarity, not guesswork."
+                },
+                {
+                  "id": "hero-subtitle",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "16px",
+                    "lineHeight": "1.7",
+                    "color": "#6b7280",
+                    "maxWidth": "520px"
+                  },
+                  "content": "SwiftScale unifies product analytics, billing, and customer health into one clean workspace, helping modern teams grow faster with real-time insight."
+                },
+                {
+                  "id": "hero-actions",
+                  "type": "div",
+                  "styles": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "12px",
+                    "marginTop": "6px",
+                    "marginBottom": "4px"
+                  },
+                  "content": [
+                    {
+                      "id": "hero-primary-btn",
+                      "type": "button",
+                      "styles": {
+                        "padding": "11px 24px",
+                        "backgroundImage": "linear-gradient(135deg, #22c55e, #16a34a)",
+                        "color": "#ffffff",
+                        "borderRadius": "999px",
+                        "border": "none",
+                        "fontSize": "14px",
+                        "fontWeight": "600",
+                        "cursor": "pointer",
+                        "boxShadow": "0 14px 30px rgba(22,163,74,0.45)",
+                        "transition": "all 0.25s ease"
+                      },
+                      "content": "Start free trial"
+                    },
+                    {
+                      "id": "hero-secondary-btn",
+                      "type": "button",
+                      "styles": {
+                        "padding": "11px 20px",
+                        "backgroundColor": "#ffffff",
+                        "color": "#16a34a",
+                        "borderRadius": "999px",
+                        "border": "1px solid #bbf7d0",
+                        "fontSize": "14px",
+                        "fontWeight": "500",
+                        "cursor": "pointer",
+                        "display": "flex",
+                        "alignItems": "center",
+                        "gap": "6px",
+                        "boxShadow": "0 6px 16px rgba(15,23,42,0.06)",
+                        "transition": "all 0.25s ease"
+                      },
+                      "content": "View live demo"
+                    }
+                  ]
+                },
+                {
+                  "id": "hero-social-proof",
+                  "type": "div",
+                  "styles": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "14px",
+                    "marginTop": "6px"
+                  },
+                  "content": [
+                    {
+                      "id": "hero-users",
+                      "type": "div",
+                      "styles": {
+                        "display": "flex",
+                        "alignItems": "center"
+                      },
+                      "content": [
+                        {
+                          "id": "user-avatar-1",
+                          "type": "div",
+                          "styles": {
+                            "width": "22px",
+                            "height": "22px",
+                            "borderRadius": "999px",
+                            "backgroundColor": "#bbf7d0",
+                            "border": "2px solid #ffffff",
+                            "marginRight": "-6px"
+                          },
+                          "content": ""
+                        },
+                        {
+                          "id": "user-avatar-2",
+                          "type": "div",
+                          "styles": {
+                            "width": "22px",
+                            "height": "22px",
+                            "borderRadius": "999px",
+                            "backgroundColor": "#86efac",
+                            "border": "2px solid #ffffff",
+                            "marginRight": "-6px"
+                          },
+                          "content": ""
+                        },
+                        {
+                          "id": "user-avatar-3",
+                          "type": "div",
+                          "styles": {
+                            "width": "22px",
+                            "height": "22px",
+                            "borderRadius": "999px",
+                            "backgroundColor": "#4ade80",
+                            "border": "2px solid #ffffff"
+                          },
+                          "content": ""
+                        }
+                      ]
+                    },
+                    {
+                      "id": "hero-metric",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "11px",
+                        "color": "#6b7280"
+                      },
+                      "content": "Trusted by 4,000+ modern SaaS teams globally."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "hero-right",
+              "type": "div",
+              "styles": {
+                "backgroundColor": "#f9fafb",
+                "borderRadius": "20px",
+                "padding": "14px",
+                "border": "1px solid #ecfdf3",
+                "boxShadow": "0 14px 40px rgba(15,23,42,0.06)",
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": "10px"
+              },
+              "content": [
+                {
+                  "id": "hero-analytics-label",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "11px",
+                    "color": "#16a34a",
+                    "fontWeight": "600"
+                  },
+                  "content": "Live Revenue Overview"
+                },
+                {
+                  "id": "hero-dashboard-img",
+                  "type": "img",
+                  "styles": {
+                    "width": "100%",
+                    "height": "auto",
+                    "borderRadius": "16px",
+                    "boxShadow": "0 16px 40px rgba(15,23,42,0.12)",
+                    "objectFit": "cover"
+                  },
+                  "attributes": {
+                    "src": "https://picsum.photos/800/500",
+                    "alt": "SwiftScale analytics preview"
+                  },
+                  "content": ""
+                },
+                {
+                  "id": "hero-stacked-metrics",
+                  "type": "div",
+                  "styles": {
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                    "gap": "10px",
+                    "marginTop": "6px"
+                  },
+                  "content": [
+                    {
+                      "id": "metric-mrr",
+                      "type": "div",
+                      "styles": {
+                        "flex": "1",
+                        "padding": "8px 9px",
+                        "borderRadius": "12px",
+                        "backgroundColor": "#ffffff",
+                        "boxShadow": "0 6px 16px rgba(15,23,42,0.06)",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "gap": "3px"
+                      },
+                      "content": [
+                        {
+                          "id": "metric-mrr-label",
+                          "type": "span",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#9ca3af",
+                            "fontWeight": "500"
+                          },
+                          "content": "MRR"
+                        },
+                        {
+                          "id": "metric-mrr-value",
+                          "type": "span",
+                          "styles": {
+                            "fontSize": "15px",
+                            "fontWeight": "700",
+                            "color": "#111827"
+                          },
+                          "content": "$286,420"
+                        },
+                        {
+                          "id": "metric-mrr-change",
+                          "type": "span",
+                          "styles": {
+                            "fontSize": "9px",
+                            "color": "#16a34a",
+                            "fontWeight": "600"
+                          },
+                          "content": "+34% this quarter"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "metric-retention",
+                      "type": "div",
+                      "styles": {
+                        "flex": "1",
+                        "padding": "8px 9px",
+                        "borderRadius": "12px",
+                        "backgroundColor": "#ecfdf3",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "gap": "3px"
+                      },
+                      "content": [
+                        {
+                          "id": "metric-retention-label",
+                          "type": "span",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#16a34a",
+                            "fontWeight": "600"
+                          },
+                          "content": "Net Revenue Retention"
+                        },
+                        {
+                          "id": "metric-retention-value",
+                          "type": "span",
+                          "styles": {
+                            "fontSize": "15px",
+                            "fontWeight": "700",
+                            "color": "#111827"
+                          },
+                          "content": "128%"
+                        },
+                        {
+                          "id": "metric-retention-note",
+                          "type": "span",
+                          "styles": {
+                            "fontSize": "9px",
+                            "color": "#6b7280"
+                          },
+                          "content": "Best-in-class segment"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "logos-section",
+          "type": "section",
+          "styles": {
+            "padding": "10px 4px 26px 4px",
+            "marginBottom": "24px",
+            "borderBottom": "1px solid #f3f4f6"
+          },
+          "content": [
+            {
+              "id": "logos-label",
+              "type": "p",
+              "styles": {
+                "fontSize": "10px",
+                "textTransform": "uppercase",
+                "letterSpacing": "0.16em",
+                "color": "#9ca3af",
+                "textAlign": "center",
+                "marginBottom": "10px"
+              },
+              "content": "Loved by fast-growing SaaS teams"
+            },
+            {
+              "id": "logos-row",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "justifyContent": "center",
+                "flexWrap": "wrap",
+                "gap": "26px"
+              },
+              "content": [
+                {
+                  "id": "logo-one",
+                  "type": "span",
+                  "styles": {
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                    "color": "#6b7280"
+                  },
+                  "content": "NovaCloud"
+                },
+                {
+                  "id": "logo-two",
+                  "type": "span",
+                  "styles": {
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                    "color": "#6b7280"
+                  },
+                  "content": "Greenline HR"
+                },
+                {
+                  "id": "logo-three",
+                  "type": "span",
+                  "styles": {
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                    "color": "#6b7280"
+                  },
+                  "content": "Metricly"
+                },
+                {
+                  "id": "logo-four",
+                  "type": "span",
+                  "styles": {
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                    "color": "#6b7280"
+                  },
+                  "content": "ClarityPay"
+                },
+                {
+                  "id": "logo-five",
+                  "type": "span",
+                  "styles": {
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                    "color": "#6b7280"
+                  },
+                  "content": "LaunchPad CRM"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "features-section",
+          "type": "section",
+          "styles": {
+            "padding": "24px 0",
+            "marginBottom": "26px"
+          },
+          "content": [
+            {
+              "id": "features-header",
+              "type": "div",
+              "styles": {
+                "textAlign": "left",
+                "marginBottom": "18px"
+              },
+              "content": [
+                {
+                  "id": "features-label",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "11px",
+                    "letterSpacing": "0.14em",
+                    "color": "#16a34a",
+                    "fontWeight": "600",
+                    "marginBottom": "4px"
+                  },
+                  "content": "WHY SWIFTSCALE"
+                },
+                {
+                  "id": "features-title",
+                  "type": "h2",
+                  "styles": {
+                    "fontSize": "24px",
+                    "fontWeight": "700",
+                    "color": "#0f172a",
+                    "marginBottom": "6px"
+                  },
+                  "content": "Everything you need to grow recurring revenue in one clean view."
+                },
+                {
+                  "id": "features-subtitle",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "14px",
+                    "color": "#6b7280",
+                    "maxWidth": "550px"
+                  },
+                  "content": "Replace cluttered spreadsheets and scattered tools with a unified growth system that surfaces the right signals at the right time."
+                }
+              ]
+            },
+            {
+              "id": "features-grid",
+              "type": "div",
+              "styles": {
+                "display": "grid",
+                "gridTemplateColumns": "repeat(3, minmax(0, 1fr))",
+                "gap": "18px"
+              },
+              "attributes": {
+                "className": "grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5"
+              },
+              "content": [
+                {
+                  "id": "feature-analytics",
+                  "type": "article",
+                  "styles": {
+                    "padding": "14px",
+                    "borderRadius": "16px",
+                    "backgroundColor": "#f9fafb",
+                    "boxShadow": "0 8px 22px rgba(15,23,42,0.04)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "6px"
+                  },
+                  "content": [
+                    {
+                      "id": "feature-analytics-icon",
+                      "type": "div",
+                      "styles": {
+                        "width": "24px",
+                        "height": "24px",
+                        "borderRadius": "8px",
+                        "backgroundImage": "linear-gradient(135deg, #22c55e, #bbf7d0)",
+                        "display": "flex",
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "fontSize": "14px",
+                        "color": "#ffffff",
+                        "boxShadow": "0 6px 16px rgba(22,163,74,0.4)"
+                      },
+                      "content": "📈"
+                    },
+                    {
+                      "id": "feature-analytics-title",
+                      "type": "h3",
+                      "styles": {
+                        "fontSize": "15px",
+                        "fontWeight": "600",
+                        "color": "#111827"
+                      },
+                      "content": "Unified revenue analytics"
+                    },
+                    {
+                      "id": "feature-analytics-text",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "12px",
+                        "color": "#6b7280",
+                        "lineHeight": "1.6"
+                      },
+                      "content": "Connect billing, product usage, and CRM in minutes, not months. Spot churn risks and upsell opportunities instantly."
+                    }
+                  ]
+                },
+                {
+                  "id": "feature-playbooks",
+                  "type": "article",
+                  "styles": {
+                    "padding": "14px",
+                    "borderRadius": "16px",
+                    "backgroundColor": "#ffffff",
+                    "boxShadow": "0 8px 22px rgba(15,23,42,0.04)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "6px",
+                    "border": "1px solid #ecfdf3"
+                  },
+                  "content": [
+                    {
+                      "id": "feature-playbooks-icon",
+                      "type": "div",
+                      "styles": {
+                        "width": "24px",
+                        "height": "24px",
+                        "borderRadius": "8px",
+                        "backgroundImage": "linear-gradient(135deg, #22c55e, #16a34a)",
+                        "display": "flex",
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "fontSize": "14px",
+                        "color": "#ffffff",
+                        "boxShadow": "0 6px 16px rgba(22,163,74,0.4)"
+                      },
+                      "content": "⚡"
+                    },
+                    {
+                      "id": "feature-playbooks-title",
+                      "type": "h3",
+                      "styles": {
+                        "fontSize": "15px",
+                        "fontWeight": "600",
+                        "color": "#111827"
+                      },
+                      "content": "No-code revenue playbooks"
+                    },
+                    {
+                      "id": "feature-playbooks-text",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "12px",
+                        "color": "#6b7280",
+                        "lineHeight": "1.6"
+                      },
+                      "content": "Trigger outreach, lifecycle emails, and expansions based on live customer behavior without engineering tickets."
+                    }
+                  ]
+                },
+                {
+                  "id": "feature-insights",
+                  "type": "article",
+                  "styles": {
+                    "padding": "14px",
+                    "borderRadius": "16px",
+                    "backgroundColor": "#f9fafb",
+                    "boxShadow": "0 8px 22px rgba(15,23,42,0.04)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "6px"
+                  },
+                  "content": [
+                    {
+                      "id": "feature-insights-icon",
+                      "type": "div",
+                      "styles": {
+                        "width": "24px",
+                        "height": "24px",
+                        "borderRadius": "8px",
+                        "backgroundImage": "linear-gradient(135deg, #bbf7d0, #22c55e)",
+                        "display": "flex",
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "fontSize": "14px",
+                        "color": "#166534",
+                        "boxShadow": "0 6px 16px rgba(22,163,74,0.2)"
+                      },
+                      "content": "🔍"
+                    },
+                    {
+                      "id": "feature-insights-title",
+                      "type": "h3",
+                      "styles": {
+                        "fontSize": "15px",
+                        "fontWeight": "600",
+                        "color": "#111827"
+                      },
+                      "content": "Predictive churn insights"
+                    },
+                    {
+                      "id": "feature-insights-text",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "12px",
+                        "color": "#6b7280",
+                        "lineHeight": "1.6"
+                      },
+                      "content": "AI models highlight accounts at risk weeks in advance so your team can intervene with precision."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "metrics-section",
+          "type": "section",
+          "styles": {
+            "padding": "22px 18px",
+            "marginBottom": "28px",
+            "borderRadius": "20px",
+            "backgroundImage": "linear-gradient(135deg, #ecfdf3, #ffffff)",
+            "boxShadow": "0 14px 40px rgba(22,163,74,0.08)",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "gap": "18px"
+          },
+          "attributes": {
+            "className": "md:flex grid grid-cols-1"
+          },
+          "content": [
+            {
+              "id": "metrics-left",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": "6px",
+                "maxWidth": "420px"
+              },
+              "content": [
+                {
+                  "id": "metrics-title",
+                  "type": "h3",
+                  "styles": {
+                    "fontSize": "18px",
+                    "fontWeight": "700",
+                    "color": "#065f46"
+                  },
+                  "content": "Ship faster decisions with clean, actionable metrics."
+                },
+                {
+                  "id": "metrics-text",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "13px",
+                    "color": "#4b5563",
+                    "lineHeight": "1.7"
+                  },
+                  "content": "Leadership, RevOps, and Product teams finally align on a single, trusted view of performance without debating spreadsheets."
+                }
+              ]
+            },
+            {
+              "id": "metrics-right",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "gap": "16px"
+              },
+              "content": [
+                {
+                  "id": "metric-card-1",
+                  "type": "div",
+                  "styles": {
+                    "padding": "10px",
+                    "borderRadius": "14px",
+                    "backgroundColor": "#ffffff",
+                    "boxShadow": "0 10px 24px rgba(15,23,42,0.06)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "2px",
+                    "minWidth": "90px"
+                  },
+                  "content": [
+                    {
+                      "id": "metric-card-1-label",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#9ca3af",
+                        "fontWeight": "500"
+                      },
+                      "content": "Time-to-insight"
+                    },
+                    {
+                      "id": "metric-card-1-value",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "18px",
+                        "fontWeight": "700",
+                        "color": "#111827"
+                      },
+                      "content": "5x faster"
+                    },
+                    {
+                      "id": "metric-card-1-note",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#16a34a"
+                      },
+                      "content": "vs legacy stacks"
+                    }
+                  ]
+                },
+                {
+                  "id": "metric-card-2",
+                  "type": "div",
+                  "styles": {
+                    "padding": "10px",
+                    "borderRadius": "14px",
+                    "backgroundColor": "#dcfce7",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "2px",
+                    "minWidth": "90px"
+                  },
+                  "content": [
+                    {
+                      "id": "metric-card-2-label",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#166534",
+                        "fontWeight": "500"
+                      },
+                      "content": "Expansion revenue"
+                    },
+                    {
+                      "id": "metric-card-2-value",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "18px",
+                        "fontWeight": "700",
+                        "color": "#065f46"
+                      },
+                      "content": "+27%"
+                    },
+                    {
+                      "id": "metric-card-2-note",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#166534"
+                      },
+                      "content": "in 90 days on avg."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pricing-section",
+          "type": "section",
+          "styles": {
+            "padding": "10px 0 26px 0",
+            "marginBottom": "26px"
+          },
+          "content": [
+            {
+              "id": "pricing-header",
+              "type": "div",
+              "styles": {
+                "textAlign": "left",
+                "marginBottom": "16px"
+              },
+              "content": [
+                {
+                  "id": "pricing-label",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "11px",
+                    "letterSpacing": "0.15em",
+                    "color": "#16a34a",
+                    "fontWeight": "600",
+                    "marginBottom": "4px"
+                  },
+                  "content": "PRICING"
+                },
+                {
+                  "id": "pricing-title",
+                  "type": "h2",
+                  "styles": {
+                    "fontSize": "22px",
+                    "fontWeight": "700",
+                    "color": "#0f172a",
+                    "marginBottom": "4px"
+                  },
+                  "content": "Simple plans that scale with your ARR."
+                },
+                {
+                  "id": "pricing-subtitle",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "13px",
+                    "color": "#6b7280"
+                  },
+                  "content": "Start free for 14 days. No card. Cancel anytime."
+                }
+              ]
+            },
+            {
+              "id": "pricing-cards-wrapper",
+              "type": "div",
+              "styles": {
+                "display": "grid",
+                "gridTemplateColumns": "repeat(3, minmax(0, 1fr))",
+                "gap": "16px"
+              },
+              "attributes": {
+                "className": "grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4"
+              },
+              "content": [
+                {
+                  "id": "pricing-starter",
+                  "type": "div",
+                  "styles": {
+                    "padding": "14px",
+                    "borderRadius": "18px",
+                    "border": "1px solid #e5e7eb",
+                    "backgroundColor": "#ffffff",
+                    "boxShadow": "0 8px 20px rgba(15,23,42,0.02)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "4px"
+                  },
+                  "content": [
+                    {
+                      "id": "pricing-starter-name",
+                      "type": "h3",
+                      "styles": {
+                        "fontSize": "14px",
+                        "fontWeight": "600",
+                        "color": "#111827"
+                      },
+                      "content": "Starter"
+                    },
+                    {
+                      "id": "pricing-starter-price",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "20px",
+                        "fontWeight": "700",
+                        "color": "#16a34a"
+                      },
+                      "content": "$59/mo"
+                    },
+                    {
+                      "id": "pricing-starter-note",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "11px",
+                        "color": "#9ca3af"
+                      },
+                      "content": "For early-stage teams up to $50k MRR."
+                    },
+                    {
+                      "id": "pricing-starter-list",
+                      "type": "ul",
+                      "styles": {
+                        "marginTop": "4px",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "gap": "2px",
+                        "paddingLeft": "16px"
+                      },
+                      "content": [
+                        {
+                          "id": "pricing-starter-li-1",
+                          "type": "li",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#6b7280"
+                          },
+                          "content": "Core analytics & dashboards"
+                        },
+                        {
+                          "id": "pricing-starter-li-2",
+                          "type": "li",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#6b7280"
+                          },
+                          "content": "2 workspaces, 3 integrations"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "pricing-starter-btn",
+                      "type": "button",
+                      "styles": {
+                        "marginTop": "8px",
+                        "padding": "8px 14px",
+                        "borderRadius": "999px",
+                        "border": "1px solid #bbf7d0",
+                        "backgroundColor": "#ffffff",
+                        "color": "#16a34a",
+                        "fontSize": "11px",
+                        "fontWeight": "500",
+                        "cursor": "pointer",
+                        "transition": "all 0.25s ease"
+                      },
+                      "content": "Choose Starter"
+                    }
+                  ]
+                },
+                {
+                  "id": "pricing-growth",
+                  "type": "div",
+                  "styles": {
+                    "padding": "16px",
+                    "borderRadius": "20px",
+                    "backgroundImage": "linear-gradient(135deg, #22c55e, #16a34a)",
+                    "boxShadow": "0 18px 40px rgba(22,163,74,0.4)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "4px",
+                    "color": "#ffffff",
+                    "position": "relative"
+                  },
+                  "content": [
+                    {
+                      "id": "pricing-growth-badge",
+                      "type": "span",
+                      "styles": {
+                        "position": "absolute",
+                        "top": "10px",
+                        "right": "12px",
+                        "fontSize": "8px",
+                        "padding": "3px 7px",
+                        "borderRadius": "999px",
+                        "backgroundColor": "#ffffff",
+                        "color": "#16a34a",
+                        "fontWeight": "700",
+                        "letterSpacing": "0.08em",
+                        "boxShadow": "0 4px 10px rgba(15,23,42,0.2)"
+                      },
+                      "content": "MOST POPULAR"
+                    },
+                    {
+                      "id": "pricing-growth-name",
+                      "type": "h3",
+                      "styles": {
+                        "fontSize": "15px",
+                        "fontWeight": "700"
+                      },
+                      "content": "Growth"
+                    },
+                    {
+                      "id": "pricing-growth-price",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "22px",
+                        "fontWeight": "700"
+                      },
+                      "content": "$189/mo"
+                    },
+                    {
+                      "id": "pricing-growth-note",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "11px",
+                        "color": "#dcfce7"
+                      },
+                      "content": "For teams between $50k–$400k MRR."
+                    },
+                    {
+                      "id": "pricing-growth-list",
+                      "type": "ul",
+                      "styles": {
+                        "marginTop": "4px",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "gap": "2px",
+                        "paddingLeft": "16px"
+                      },
+                      "content": [
+                        {
+                          "id": "pricing-growth-li-1",
+                          "type": "li",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#ecfdf3"
+                          },
+                          "content": "Everything in Starter"
+                        },
+                        {
+                          "id": "pricing-growth-li-2",
+                          "type": "li",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#ecfdf3"
+                          },
+                          "content": "Unlimited integrations & playbooks"
+                        },
+                        {
+                          "id": "pricing-growth-li-3",
+                          "type": "li",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#ecfdf3"
+                          },
+                          "content": "AI churn & expansion models"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "pricing-growth-btn",
+                      "type": "button",
+                      "styles": {
+                        "marginTop": "8px",
+                        "padding": "8px 14px",
+                        "borderRadius": "999px",
+                        "border": "none",
+                        "backgroundColor": "#ffffff",
+                        "color": "#16a34a",
+                        "fontSize": "11px",
+                        "fontWeight": "600",
+                        "cursor": "pointer",
+                        "boxShadow": "0 10px 24px rgba(15,23,42,0.25)",
+                        "transition": "all 0.25s ease"
+                      },
+                      "content": "Start Growth trial"
+                    }
+                  ]
+                },
+                {
+                  "id": "pricing-scale",
+                  "type": "div",
+                  "styles": {
+                    "padding": "14px",
+                    "borderRadius": "18px",
+                    "border": "1px solid #bbf7d0",
+                    "backgroundColor": "#f9fafb",
+                    "boxShadow": "0 8px 20px rgba(15,23,42,0.02)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "4px"
+                  },
+                  "content": [
+                    {
+                      "id": "pricing-scale-name",
+                      "type": "h3",
+                      "styles": {
+                        "fontSize": "14px",
+                        "fontWeight": "600",
+                        "color": "#111827"
+                      },
+                      "content": "Scale"
+                    },
+                    {
+                      "id": "pricing-scale-price",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "20px",
+                        "fontWeight": "700",
+                        "color": "#16a34a"
+                      },
+                      "content": "Talk to us"
+                    },
+                    {
+                      "id": "pricing-scale-note",
+                      "type": "p",
+                      "styles": {
+                        "fontSize": "11px",
+                        "color": "#6b7280"
+                      },
+                      "content": "Tailored for multi-region, >$400k MRR organizations."
+                    },
+                    {
+                      "id": "pricing-scale-list",
+                      "type": "ul",
+                      "styles": {
+                        "marginTop": "4px",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "gap": "2px",
+                        "paddingLeft": "16px"
+                      },
+                      "content": [
+                        {
+                          "id": "pricing-scale-li-1",
+                          "type": "li",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#6b7280"
+                          },
+                          "content": "Dedicated CSM & onboarding"
+                        },
+                        {
+                          "id": "pricing-scale-li-2",
+                          "type": "li",
+                          "styles": {
+                            "fontSize": "10px",
+                            "color": "#6b7280"
+                          },
+                          "content": "Advanced security & SSO"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "pricing-scale-btn",
+                      "type": "button",
+                      "styles": {
+                        "marginTop": "8px",
+                        "padding": "8px 14px",
+                        "borderRadius": "999px",
+                        "border": "1px solid #16a34a",
+                        "backgroundColor": "#ffffff",
+                        "color": "#16a34a",
+                        "fontSize": "11px",
+                        "fontWeight": "500",
+                        "cursor": "pointer",
+                        "transition": "all 0.25s ease"
+                      },
+                      "content": "Book a strategy call"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "testimonial-section",
+          "type": "section",
+          "styles": {
+            "padding": "20px",
+            "marginBottom": "26px",
+            "borderRadius": "22px",
+            "backgroundColor": "#0f172a",
+            "display": "grid",
+            "gridTemplateColumns": "1.6fr 1.4fr",
+            "gap": "18px"
+          },
+          "attributes": {
+            "className": "grid md:grid-cols-2 grid-cols-1"
+          },
+          "content": [
+            {
+              "id": "testimonial-left",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": "8px"
+              },
+              "content": [
+                {
+                  "id": "testimonial-label",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "10px",
+                    "letterSpacing": "0.14em",
+                    "color": "#22c55e",
+                    "fontWeight": "600"
+                  },
+                  "content": "CUSTOMER STORIES"
+                },
+                {
+                  "id": "testimonial-quote",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "15px",
+                    "lineHeight": "1.7",
+                    "color": "#e5e7eb"
+                  },
+                  "content": "“SwiftScale replaced six tools and gave our entire GTM org a single truth for revenue. Our team closes renewals 40% faster and expansion is finally predictable.”"
+                },
+                {
+                  "id": "testimonial-author",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "11px",
+                    "color": "#9ca3af",
+                    "marginTop": "2px"
+                  },
+                  "content": "Amelia Hart • VP Revenue @ NovaCloud"
+                }
+              ]
+            },
+            {
+              "id": "testimonial-right",
+              "type": "div",
+              "styles": {
+                "display": "grid",
+                "gridTemplateColumns": "repeat(2, minmax(0,1fr))",
+                "gap": "10px"
+              },
+              "content": [
+                {
+                  "id": "testimonial-metric-1",
+                  "type": "div",
+                  "styles": {
+                    "padding": "10px",
+                    "borderRadius": "14px",
+                    "backgroundColor": "#111827",
+                    "boxShadow": "0 10px 28px rgba(15,23,42,0.6)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "1px"
+                  },
+                  "content": [
+                    {
+                      "id": "testimonial-metric-1-value",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "18px",
+                        "fontWeight": "700",
+                        "color": "#22c55e"
+                      },
+                      "content": "34%"
+                    },
+                    {
+                      "id": "testimonial-metric-1-label",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#9ca3af"
+                      },
+                      "content": "Faster renewals"
+                    }
+                  ]
+                },
+                {
+                  "id": "testimonial-metric-2",
+                  "type": "div",
+                  "styles": {
+                    "padding": "10px",
+                    "borderRadius": "14px",
+                    "backgroundColor": "#111827",
+                    "boxShadow": "0 10px 28px rgba(15,23,42,0.5)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "1px"
+                  },
+                  "content": [
+                    {
+                      "id": "testimonial-metric-2-value",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "18px",
+                        "fontWeight": "700",
+                        "color": "#22c55e"
+                      },
+                      "content": "19%"
+                    },
+                    {
+                      "id": "testimonial-metric-2-label",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#9ca3af"
+                      },
+                      "content": "Net churn reduction"
+                    }
+                  ]
+                },
+                {
+                  "id": "testimonial-metric-3",
+                  "type": "div",
+                  "styles": {
+                    "padding": "10px",
+                    "borderRadius": "14px",
+                    "backgroundColor": "#111827",
+                    "boxShadow": "0 10px 28px rgba(15,23,42,0.5)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "1px"
+                  },
+                  "content": [
+                    {
+                      "id": "testimonial-metric-3-value",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "18px",
+                        "fontWeight": "700",
+                        "color": "#22c55e"
+                      },
+                      "content": "1"
+                    },
+                    {
+                      "id": "testimonial-metric-3-label",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#9ca3af"
+                      },
+                      "content": "Unified revenue hub"
+                    }
+                  ]
+                },
+                {
+                  "id": "testimonial-metric-4",
+                  "type": "div",
+                  "styles": {
+                    "padding": "10px",
+                    "borderRadius": "14px",
+                    "backgroundColor": "#111827",
+                    "boxShadow": "0 10px 28px rgba(15,23,42,0.5)",
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "1px"
+                  },
+                  "content": [
+                    {
+                      "id": "testimonial-metric-4-value",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "18px",
+                        "fontWeight": "700",
+                        "color": "#22c55e"
+                      },
+                      "content": "14"
+                    },
+                    {
+                      "id": "testimonial-metric-4-label",
+                      "type": "span",
+                      "styles": {
+                        "fontSize": "9px",
+                        "color": "#9ca3af"
+                      },
+                      "content": "Days to full rollout"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cta-section",
+          "type": "section",
+          "styles": {
+            "padding": "22px 18px",
+            "marginBottom": "18px",
+            "borderRadius": "20px",
+            "backgroundColor": "#ffffff",
+            "border": "1px solid #ecfdf3",
+            "boxShadow": "0 12px 30px rgba(15,23,42,0.04)",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "gap": "14px"
+          },
+          "attributes": {
+            "className": "md:flex grid grid-cols-1"
+          },
+          "content": [
+            {
+              "id": "cta-left",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": "4px"
+              },
+              "content": [
+                {
+                  "id": "cta-title",
+                  "type": "h3",
+                  "styles": {
+                    "fontSize": "18px",
+                    "fontWeight": "700",
+                    "color": "#0f172a"
+                  },
+                  "content": "Ready to see SwiftScale in action?"
+                },
+                {
+                  "id": "cta-subtitle",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "13px",
+                    "color": "#6b7280"
+                  },
+                  "content": "Launch your free 14-day trial and connect your stack in under 15 minutes."
+                }
+              ]
+            },
+            {
+              "id": "cta-right",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "10px"
+              },
+              "content": [
+                {
+                  "id": "cta-primary-btn",
+                  "type": "button",
+                  "styles": {
+                    "padding": "10px 20px",
+                    "borderRadius": "999px",
+                    "backgroundImage": "linear-gradient(135deg, #22c55e, #16a34a)",
+                    "color": "#ffffff",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "border": "none",
+                    "cursor": "pointer",
+                    "boxShadow": "0 12px 26px rgba(22,163,74,0.4)",
+                    "transition": "all 0.25s ease"
+                  },
+                  "content": "Start free trial"
+                },
+                {
+                  "id": "cta-secondary-btn",
+                  "type": "button",
+                  "styles": {
+                    "padding": "10px 16px",
+                    "borderRadius": "999px",
+                    "backgroundColor": "#ffffff",
+                    "color": "#16a34a",
+                    "border": "1px solid #bbf7d0",
+                    "fontSize": "12px",
+                    "fontWeight": "500",
+                    "cursor": "pointer",
+                    "boxShadow": "0 6px 16px rgba(15,23,42,0.06)",
+                    "transition": "all 0.25s ease"
+                  },
+                  "content": "Talk to sales"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "footer",
+          "type": "footer",
+          "styles": {
+            "paddingTop": "8px",
+            "marginTop": "4px",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "gap": "10px"
+          },
+          "attributes": {
+            "className": "md:flex grid grid-cols-1"
+          },
+          "content": [
+            {
+              "id": "footer-left",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "6px"
+              },
+              "content": [
+                {
+                  "id": "footer-logo-mark",
+                  "type": "div",
+                  "styles": {
+                    "width": "18px",
+                    "height": "18px",
+                    "borderRadius": "999px",
+                    "backgroundImage": "linear-gradient(135deg, #22c55e, #16a34a)"
+                  },
+                  "content": ""
+                },
+                {
+                  "id": "footer-text",
+                  "type": "p",
+                  "styles": {
+                    "fontSize": "10px",
+                    "color": "#9ca3af"
+                  },
+                  "content": "© 2025 SwiftScale Labs. All rights reserved."
+                }
+              ]
+            },
+            {
+              "id": "footer-right",
+              "type": "div",
+              "styles": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "10px"
+              },
+              "content": [
+                {
+                  "id": "footer-link-privacy",
+                  "type": "a",
+                  "styles": {
+                    "fontSize": "10px",
+                    "color": "#6b7280",
+                    "cursor": "pointer"
+                  },
+                  "attributes": {
+                    "href": "#"
+                  },
+                  "content": "Privacy"
+                },
+                {
+                  "id": "footer-link-terms",
+                  "type": "a",
+                  "styles": {
+                    "fontSize": "10px",
+                    "color": "#6b7280",
+                    "cursor": "pointer"
+                  },
+                  "attributes": {
+                    "href": "#"
+                  },
+                  "content": "Terms"
+                },
+                {
+                  "id": "footer-link-status",
+                  "type": "a",
+                  "styles": {
+                    "fontSize": "10px",
+                    "color": "#16a34a",
+                    "cursor": "pointer"
+                  },
+                  "attributes": {
+                    "href": "#"
+                  },
+                  "content": "Status"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

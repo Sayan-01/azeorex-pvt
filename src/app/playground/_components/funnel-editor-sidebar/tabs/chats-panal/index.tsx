@@ -36,7 +36,7 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
           messages?.map((msg, index) => (
             <div
               key={index}
-              className={`flex items-center gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex items-center gap-2 se ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div className={`flex items-start gap-2 ${msg.role === "user" ? "!flex-row-reverse" : "flex-row"}`}>
                 <span className={`w-[32px] h-[32px] rounded-full ${msg.role === "user" ? "bg-green-500" : "bg-purple-500"}`}>
