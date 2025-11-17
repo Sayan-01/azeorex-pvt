@@ -32,7 +32,7 @@ export default async function Home() {
         <Technology />
         {/* </Container_y> */}
         {/* <Container_y> */}
-        <Approch />
+        {/* <Approch /> */}
         {/* </Container_y> */}
         <PriceSection />
         {/* <Container_y> */}

@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
+import clsx from "clsx";
 
-export default function GlobalHoverOverlay() {
+export default function GlobalHoverOverlay({ resizing }: { resizing: boolean }) {
   const { state } = useEditor();
   const [rect, setRect] = useState<DOMRect | null>(null);
 
@@ -38,7 +39,9 @@ export default function GlobalHoverOverlay() {
 
   return (
     <div
-      className="fixed border-2 border-dashed border-cyan-400 pointer-events-none z-[1000]"
+      className={clsx("fixed border-2  border-cyan-400 pointer-events-none z-[1000]", {
+        "hidden": resizing,
+      })}
       style={{
         left: rect.left,
         top: rect.top,

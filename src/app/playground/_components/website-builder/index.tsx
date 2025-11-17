@@ -12,6 +12,7 @@ import clsx from "clsx";
 export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: string; liveMode?: boolean }) => {
   const { state, dispatch, updateElementContent, handleDrop } = useEditor();
   const [loading, setLoading] = useState(true);
+  const [resizing, setResizing] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -272,8 +273,8 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       {state.selectedId}
       {!state.previewMode && !liveMode && (
         <>
-          <GlobalHoverOverlay />
-          <GlobalSelectedOverlay />
+          <GlobalHoverOverlay resizing={resizing}/>
+          <GlobalSelectedOverlay resizing={resizing} setResizing={setResizing}/>
           <GlobalDropIndicator />
         </>
       )}

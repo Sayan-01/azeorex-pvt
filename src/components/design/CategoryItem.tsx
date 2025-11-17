@@ -31,7 +31,7 @@ const CategoryItem = ({ item }: CategoryItemProps) => {
         </div>
         <div className="z-10 text-center lg:text-left w-full items-start flex flex-col justify-center ">
           <div className="font-medium text-[#6689ff] bg-[#0C112D] md:text-[18px] px-[10px] py-[5px] border-2 border-[#29305e74] rounded-full mb-4 lg:mt-0 -mt-[112px] lg:mx-0 mx-auto">{item.title}</div>
-          <div className=" mb-6 font-semibold leading-tight md:text-[40px] sm:text-[35px] text-[32px] ">{item.description}</div>
+          <div className=" mb-6 font-semibold leading-tight tracking-wide md:text-[40px] sm:text-[35px] text-[32px] ">{item.description}</div>
           <div className=" justify-center w-full lg:justify-start flex flex-wrap gap-x-2">
             <div className="font-medium md:text-[18px] text-base px-[7px] pr-[10px] py-[5px] bg-[#1b29811e] border-2 border-[#29305e74] rounded-full mb-3 flex items-center gap-4">
               <div className="text-[#4e76fb] font-bold">

@@ -8,10 +8,9 @@ import { useEditor } from "../../../../../providers/editor/editor-provider";
 import { Trash } from "lucide-react";
 import { getElementById } from "@/lib/utils";
 
-export default function GlobalSelectedOverlay() {
+export default function GlobalSelectedOverlay({ resizing, setResizing }: { resizing: boolean; setResizing: (value: boolean) => void }) {
   const { state, deleteElement } = useEditor();
   const [rect, setRect] = useState<DOMRect | null>(null);
-  const [resizing, setResizing] = useState(false);
 
   const selectedElement = state.selectedId ? getElementById(state.selectedId, state.elements) : null;
 
@@ -67,7 +66,7 @@ export default function GlobalSelectedOverlay() {
 
   return (
     <div
-      className="fixed border-2 border-blue-500 rounded pointer-events-none z-[1007] "
+      className="fixed border-4 border-blue-500 rounded pointer-events-none z-[1007] "
       style={{
         left: rect.left,
         top: rect.top,

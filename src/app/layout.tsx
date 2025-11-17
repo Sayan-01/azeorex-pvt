@@ -5,7 +5,7 @@ import "./globals.css";
 import { auth } from "../../auth";
 import { SessionProvider } from "next-auth/react";
 import ModalProvider from "../../providers/model-provider";
-import { Inter, Lexend, Outfit, Questrial, Righteous } from "next/font/google";
+import { Inter, Lexend, Outfit, Questrial, Righteous, Roboto_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { CreditProvider } from "@/hooks/credit-provider";
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "Convert your dream into design with precision",
 };
 
-const outfi = Inter({ subsets: ["latin"], weight: "400" });
+const outfi = Roboto_Mono({ subsets: ["latin"], weight: "400" });
 
 export default async function RootLayout({
   children,

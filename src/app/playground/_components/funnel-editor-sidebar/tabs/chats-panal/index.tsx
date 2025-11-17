@@ -24,7 +24,7 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
   return (
     <div className="flex flex-col h-full ">
       <div className="p-3 border-b">
-        <h3 className="text-lg font-semibold">Your all collections</h3>
+        <h3 className="text-lg font-semibold">Your all chats</h3>
       </div>
       <section
         ref={chatContainerRef}
