@@ -39,7 +39,7 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
               className={`flex items-center gap-2 se ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div className={`flex items-start gap-2 ${msg.role === "user" ? "!flex-row-reverse" : "flex-row"}`}>
-                <span className={`w-[32px] h-[32px] rounded-full ${msg.role === "user" ? "bg-green-500" : "bg-purple-500"}`}>
+                {/* <span className={`w-[32px] h-[32px] rounded-full ${msg.role === "user" ? "bg-green-500" : "bg-purple-500"}`}>
                   <Image
                     src={msg.role === "user" ? "/avater.svg" : "/icons/deepseek-logo.webp"}
                     alt={msg.role === "user" ? "User" : "AI"}
@@ -47,8 +47,9 @@ const Chats = ({ messages, onSend, loading }: { messages: { role: string; conten
                     height={300}
                     className="rounded-full"
                   />
-                </span>
-                <p className={`text-[#111111] p-2 rounded-lg max-w-[176px] text-xs ${msg.role === "user" ? "bg-green-500/10 text-green-500" : "bg-purple-500/10 text-purple-500"}`}>{msg.content}</p>
+                </span> */}
+                <div className="w-2 h-2 rounded-2xl bg-green-400 mt-3"></div>
+                <p className={`text-[#111111] p-2 rounded-lg max-w-[176px] text-xs ${msg.role === "user" ? "bg-green-500/10 text-green-500" : "text-white/80"}`}>{msg.content}</p>
               </div>
             </div>
           ))

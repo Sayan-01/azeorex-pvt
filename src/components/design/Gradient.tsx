@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const Gradient = ({ className }) => {
+const Gradient = ({ className }: { className?: string }) => {
   return (
     <div className={` absolute z-0 ${className}`}>
       <Image

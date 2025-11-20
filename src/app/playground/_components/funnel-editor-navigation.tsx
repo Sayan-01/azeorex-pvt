@@ -1,7 +1,6 @@
 "use client";
 import { Loader } from "@/components/global/Loader";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { upsertFunnelPageForProject } from "@/lib/queries";
@@ -9,8 +8,7 @@ import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
 import { ChevronLeft, Copy, DownloadIcon, EyeIcon, EyeOff, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { FocusEventHandler, useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { useEditor } from "../../../../providers/editor/editor-provider";
 
@@ -24,8 +22,8 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
   const { state, dispatch } = useEditor();
   const [loading, setLoading] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isPublished, setIsPublished] = useState(funnelPageDetails.published || false);
 
-  let flag = false;
 
   const undo = () => dispatch({ type: "UNDO" });
   const redo = () => dispatch({ type: "REDO" });
@@ -54,17 +52,13 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(JSON.stringify(state.elements, null, 2));
+    navigator.clipboard.writeText(JSON.stringify(state.selectedElement, null, 2));
     toast.success("✨Copied Editor");
   };
   return (
     <TooltipProvider>
-      <nav
-        className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", {
-          // "!h-0 !p-0 !overflow-hidden": state.previewMode,
-        })}
-      >
-        <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
+      <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", {})}>
+        <aside className="flex items-center gap-4 w-[378px] md:w-[260px] py-1.5">
           <Link
             href={`/saas/projects/${projectId}`}
             className="px-1.5 pl-1 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max"
@@ -178,20 +172,22 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
               strokeWidth={1.5}
             />
           </Button>
-          <div className="flex flex-col item-center mr-4">
+          {/* <div className="flex flex-col item-center mr-4">
             <div className="flex flex-row text-sm items-center gap-4">
-              Draft
+              <span className={!isPublished ? "font-medium text-white" : "text-gray-400"}>Draft</span>
               <Switch
-                disabled
-                defaultChecked={true}
+                checked={isPublished}
+                onCheckedChange={togglePublish}
+                className="data-[state=checked]:bg-indigo-600 data-[state=unchecked]:bg-gray-600"
               />
-              Publish
+              <span className={isPublished ? "font-medium text-white" : "text-gray-400"}>Published</span>
             </div>
-          </div>
+            <p className="text-xs text-gray-400 mt-1">{isPublished ? "Page is live" : "Page is in draft mode"}</p>
+          </div> */}
           <button
-            className="text-sm border-l-2 border-main-black pl-3"
+            className="text-sm border-l-2 border-main-black px-3"
             onClick={handleCopy}
-            >
+          >
             <Copy
               size={16}
               strokeWidth={1.5}

@@ -217,6 +217,7 @@ model FunnelPage {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   visits       Int       @default(0)
+  published    Boolean   @default(false)
   content      String?
   order        Int
   previewImage String?   @db.Text
@@ -333,14 +334,14 @@ model Subscription {
 }
 
 model Chat {
-  id           String   @id @default(uuid())
+  id           String     @id @default(uuid())
   chatMessage  Json
   userId       String
   projectId    String
-  funnelPageId String   @unique 
-  funnelPage   FunnelPage @relation(fields: [funnelPageId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  funnelPageId String?    @unique
+  funnelPage   FunnelPage? @relation(fields: [funnelPageId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 
   @@index([funnelPageId])
 }

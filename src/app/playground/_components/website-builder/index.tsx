@@ -39,7 +39,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     const handleClick = (e: React.MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      if(state.previewMode) return;
+      if (state.previewMode) return;
       dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: el.id } });
       dispatch({ type: "SET_SELECTED_ELEMENT", payload: { selectedElement: el } });
     };
@@ -80,7 +80,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       const height = rect.height;
 
       let position: "before" | "after" | "inside";
-      if (el.id === "__body") {
+      if (el.id === "__body" || el.id === "__root" || el.type === "__body") {
         position = "inside";
       } else {
         if (Array.isArray(el.content) && offsetY > height * 0.2 && offsetY < height * 0.8) {
@@ -123,9 +123,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       ...el.styles,
       cursor: state.previewMode ? "default" : "pointer",
       opacity: isDragging ? 0.5 : 1,
-      transition: "opacity 0.2s",
-      outline: el?.content?.length === 0 && el.type !== "img" ? "4px solid #ccc" : "none",
-      outlineOffset: "-4px",
     };
 
     if (typeof el.content === "string" && el.type !== "img") {
@@ -143,7 +140,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDragEnd={handleDragEnd}
-          // onDrop={handleElementDrop}
           contentEditable={!state.previewMode && isSelected && !state.liveMode}
           suppressContentEditableWarning
           onBlur={handleBlur}
@@ -166,7 +162,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDragEnd={handleDragEnd}
-          // onDrop={handleElementDrop}
           {...el.attributes}
         ></Tag>
       );
@@ -177,6 +172,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         key={el.id}
         data-element-id={el.id}
         style={baseStyle}
+        className={clsx({ "empty-outline": el.content.length === 0 && !state.liveMode && !state.previewMode, "!px-9 !py-9": el.content.length === 0 && !el.styles.width && !el.styles.height })}
         onClick={handleClick}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
@@ -238,7 +234,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode === true || liveMode === true,
         "!w-[850px]": state.device === "Tablet",
         "!w-[420px]": state.device === "Mobile",
-        "w-full": state.device === "Desktop",
+        "!w-full": state.device === "Desktop",
       })}
       style={{
         minHeight: "100vh",
@@ -270,11 +266,13 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       ) : (
         <div className="border relative">{renderElement(state.elements)}</div>
       )}
-      {state.selectedId}
-      {!state.previewMode && !liveMode && (
+      {!state.previewMode && !liveMode && !state.liveMode && (
         <>
-          <GlobalHoverOverlay resizing={resizing}/>
-          <GlobalSelectedOverlay resizing={resizing} setResizing={setResizing}/>
+          <GlobalHoverOverlay resizing={resizing} />
+          <GlobalSelectedOverlay
+            resizing={resizing}
+            setResizing={setResizing}
+          />
           <GlobalDropIndicator />
         </>
       )}

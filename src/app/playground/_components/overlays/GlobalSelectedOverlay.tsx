@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import ResizeHandles from "./ResizeHandler";
-// import PaddingHandles from "./PaddingHandles";
-// import MarginHandles from "./MarginHandles";
+import PaddingHandles from "./PaddingHandles";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
 import { Trash } from "lucide-react";
 import { getElementById } from "@/lib/utils";
+import MarginHandles from "./MarginHandles";
 
 export default function GlobalSelectedOverlay({ resizing, setResizing }: { resizing: boolean; setResizing: (value: boolean) => void }) {
   const { state, deleteElement } = useEditor();
@@ -66,7 +66,7 @@ export default function GlobalSelectedOverlay({ resizing, setResizing }: { resiz
 
   return (
     <div
-      className="fixed border-4 border-blue-500 rounded pointer-events-none z-[1007] "
+      className="fixed border-2 border-blue-500 rounded pointer-events-none z-[1007] "
       style={{
         left: rect.left,
         top: rect.top,
@@ -82,27 +82,29 @@ export default function GlobalSelectedOverlay({ resizing, setResizing }: { resiz
         selectedId={state.selectedId}
         setResizing={setResizing}
       />
-      {/* <PaddingHandles
+      <PaddingHandles
+        setResizing={setResizing}
         rect={rect}
         selectedId={state.selectedId}
       />
       <MarginHandles
+        setResizing={setResizing}
         rect={rect}
         selectedId={state.selectedId}
-      /> */}
+      />
 
       {/* Visual indicator when resizing */}
       {resizing && <div className="absolute inset-0 border border-blue-600 rounded pointer-events-none z-[1008]" />}
       {selectedElement?.type != "__body" && (
-        <div className="w-full relative border min-w-[112px]">
-          <div className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-5 -left-0.5 rounded z-[1008] pointer-events-auto cursor-pointer max-w-[100px]">
+        <div className="w-full relative min-w-[112px]">
+          <div className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-4.5 -left-[1px] rounded-t-sm z-[1008] pointer-events-auto cursor-pointer max-w-[100px]">
             {selectedElement?.id.slice(0, 10) + "..." || "element"}
           </div>
           <button
             onClick={handleDelete}
-            className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-5 -right-0.5 rounded z-[1008] pointer-events-auto cursor-pointer"
+            className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-4.5 -right-0.5 rounded-t-sm z-[1008] pointer-events-auto cursor-pointer"
           >
-            <Trash size={14} />
+            <Trash size={12} />
           </button>
         </div>
       )}

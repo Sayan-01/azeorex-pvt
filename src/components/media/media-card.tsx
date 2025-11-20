@@ -21,7 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Copy, MoreHorizontal, Trash } from 'lucide-react'
+import { Copy, MoreHorizontal, MoreVertical, Trash } from 'lucide-react'
 import Image from 'next/image'
 import { deleteMedia } from '@/lib/queries'
 import { toast } from 'sonner'
@@ -35,8 +35,8 @@ const MediaCard = ({ file }: Props) => {
   return (
     <AlertDialog>
       <DropdownMenu>
-        <article className="border w-full rounded-lg bg-slate-900">
-          <div className="relative w-full h-40">
+        <article className="border w-full rounded-lg bg-zinc-800 p-2">
+          <div className="relative w-full h-32">
             <Image
               src={file.link}
               alt="preview image"
@@ -45,14 +45,14 @@ const MediaCard = ({ file }: Props) => {
             />
           </div>
           <p className="opacity-0 h-0 w-0">{file.name}</p>
-          <div className="p-4 relative">
-            <p className="text-muted-foreground">
+          <div className="py-3 pb-1 relative">
+            <p>{file.name}</p>
+            <p className="text-muted-foreground text-xs mt-1">
               {file.createdAt.toDateString()}
             </p>
-            <p>{file.name}</p>
-            <div className="absolute top-4 right-4 p-[1px] cursor-pointer ">
+            <div className="absolute top-3 right-0 p-[1px] cursor-pointer ">
               <DropdownMenuTrigger>
-                <MoreHorizontal />
+                <MoreVertical />
               </DropdownMenuTrigger>
             </div>
           </div>

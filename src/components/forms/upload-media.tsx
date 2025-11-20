@@ -78,7 +78,6 @@ const UploadMediaForm = ({ projectId }: Props) => {
                   <FormLabel>Media File</FormLabel>
                   <FormControl>
                     <FileUpload
-                      className="bg-[#202124] border border-[#2c2d30]"
                       apiEndpoint="agencyLogo"
                       value={field.value}
                       onChange={field.onChange}

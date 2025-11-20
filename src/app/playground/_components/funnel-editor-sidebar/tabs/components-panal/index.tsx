@@ -1,23 +1,11 @@
 "use client";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { EditorContentType } from "@/types/types";
+import { AlignLeft, Component, Heading1, Heading2, ImageIcon, Link, SquareDashed, TextSelect } from "lucide-react";
 import React, { useState } from "react";
-import TextPlaceholder from "./text-placeholder";
-import ContainerPlaceholder from "./container-placeholder";
-import VideoPlaceholder from "./video-placeholder";
-import TwoColumnsPlaceholder from "./two-columns-placeholder";
-import LinkPlaceholder from "./link-placeholder";
-import ContactFormComponentPlaceholder from "./contact-form-placeholder";
-import CheckoutPlaceholder from "./checkout-placeholder";
-import SectionPlaceholder from "./section-placeholder";
-import { useEditor } from "../../../../../../../providers/editor/editor-provider";
-import { Button } from "@/components/ui/button";
-import ImagePlaceholder from "./image-placeholder";
-import SvgPlaceholder from "./svg-placeholder";
-import HeadingPlaceholder from "./heading-placeholder";
-import { AlignLeft, Container, Heading1, Heading2, ImageIcon, Link, SquareDashed, TextSelect } from "lucide-react";
 import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import ComponentItem from "../component-item";
+import { Button } from "@/components/ui/button";
 
 const ComponentsTab = () => {
   const { state, dispatch } = useEditor();
@@ -60,7 +48,7 @@ const ComponentsTab = () => {
         id: "temp",
         type: "p",
         name: "Text",
-        content: "New paragraph text here.",
+        content: "Hello!",
         styles: { fontSize: "16px", color: "#4b5563", lineHeight: "1.6" },
       },
       group: "elements",
@@ -75,9 +63,12 @@ const ComponentsTab = () => {
         content: [],
         styles: {
           position: "relative",
-          padding: "20px",
+          maxWidth: "940px",
           backgroundColor: "#f3f4f6",
-          minHeight: "100px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingLeft: "20px",
+          paddingRight: "20px",
         },
       },
       group: "layout",
@@ -91,12 +82,12 @@ const ComponentsTab = () => {
         name: "Section",
         content: [],
         styles: {
+          width: "100%",
           position: "relative",
-          padding: "40px",
           backgroundColor: "#ffffff",
-          borderRadius: "12px",
           marginBottom: "20px",
-          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+          paddingLeft: "20px",
+          paddingRight: "20px",
         },
       },
       group: "layout",
@@ -114,7 +105,7 @@ const ComponentsTab = () => {
         type: "img",
         name: "Image",
         content: "",
-        styles: { width: "100px", height: "100px", objectFit: "contain" },
+        styles: { width: "100%", height: "auto", objectFit: "contain" },
         attributes: { src: "/image-placeholder.png" },
       },
       group: "elements",
@@ -137,9 +128,35 @@ const ComponentsTab = () => {
       },
       group: "elements",
     },
+    {
+      icon: (
+        <Component
+          strokeWidth={1.6}
+          className="w-6 h-6"
+        />
+      ),
+      label: "Components",
+      component: {
+        id: "temp",
+        type: "button",
+        name: "Button",
+        content: "Click me!",
+        styles: {
+          padding: "10px 20px",
+          fontSize: "16px",
+          borderRadius: "10px",
+          backgroundImage: "linear-gradient(90deg, #06b6d4, #3b82f6)",
+          color: "#ffffff",
+          textDecoration: "none",
+        },
+        attributes: { className: "hover:opacity-90 transition" },
+      },
+      group: "elements",
+    },
   ];
 
   const handleDragStart = (component: EditorElement) => {
+    console.log("abc" ,component);
     dispatch({ type: "SET_DRAGGED_COMPONENT", payload: { draggedComponent: component } });
   };
 
@@ -202,24 +219,25 @@ const ComponentsTab = () => {
         <AccordionContent className="pb-0 ">
           {components.map((item: any, index: number) => {
             return (
-              <div
-                id={item.id}
-                onDragStart={(e) => {
-                  e.dataTransfer.setData("componentType", JSON.stringify(item));
-                }}
-                draggable
-                className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3"
-              >
-                {item?.name}: {item?.id?.substring(0, 8)}...
-              </div>
+              
+              <ComponentItem
+                key={index}
+                icon={item.id}
+                className="pb-1"
+                component={item}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+              />
             );
           })}
-          {/* {state.editor.selectedElement.type !== null && state.editor.selectedElement.type !== "__body" ? (
+          {state.selectedElement?.type !== null && state.selectedElement?.type !== "__body" ? (
             <Button
               size="sm"
               className="bg-[#22dd6626] hover:bg-[#22dd6626] mb-4 text-[#21DB66] w-full editor_text"
               onClick={() => {
-                setComponents([...components, state.editor.selectedElement]);
+                console.log(state.selectedElement);
+
+                setComponents((prev: any) => [...prev, state.selectedElement]);
                 console.log(components);
               }}
             >
@@ -227,7 +245,7 @@ const ComponentsTab = () => {
             </Button>
           ) : (
             <></>
-          )} */}
+          )}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

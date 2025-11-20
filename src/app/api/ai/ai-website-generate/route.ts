@@ -18,9 +18,9 @@ export async function POST(req: Request) {
     },
     body: JSON.stringify({
       // model: "tngtech/deepseek-r1t2-chimera:free",
-      // model: "minimax/minimax-m2:free",
+      model: "minimax/minimax-m2:free",
       // model: "openrouter/polaris-alpha",
-      model: "mistralai/mistral-nemo:free",
+      // model: "google/gemini-2.0-flash-exp:free",
       messages,
       stream: true,
     }),

@@ -2,10 +2,6 @@ import { auth } from "../auth";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
-
-// This example protects all routes including api/trpc routes
-// Please edit this to allow other routes to be public as needed.
-// See Auth.js documentation for more information about configuring your Middleware
 export default auth((req) => {
 
   const url = req.nextUrl;
@@ -14,15 +10,11 @@ export default auth((req) => {
   let host = req.headers.get("host");
 
   const pathWithSearchParams = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
-
-  // Define public routes (equivalent to Clerk's publicRoutes)
   const publicRoutes = ["/", "/api/uploadthing"];
   const isPublicRoute = publicRoutes.some((route) => url.pathname.startsWith(route));
 
-  // Check if user is authenticated
   const isAuthenticated = !!req.auth;
 
-  // If subdomain existst:3000
   const customSubDomain = hostname.get("host")?.split(`${process.env.NEXT_PUBLIC_URL_DOMAIN}`).filter(Boolean)[0];
 
   if (customSubDomain && host !== process.env.NEXT_PUBLIC_URL_DOMAIN) {

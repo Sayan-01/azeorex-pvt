@@ -14,7 +14,7 @@ const ImageUploadeButton = ({ projectId }: Props) => {
   const { setOpen } = useModal();
 
   return (
-    <div
+    <Button
       className="absolute bottom-2 left-2 rounded-md px-3 py-1 bg-zinc-400 border-2 border-zinc-500 z-[1002] text-xs"
       onClick={() => {
         setOpen(
@@ -28,7 +28,7 @@ const ImageUploadeButton = ({ projectId }: Props) => {
       }}
     >
       Upload
-    </div>
+    </Button>
   );
 };
 

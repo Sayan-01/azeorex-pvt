@@ -38,13 +38,6 @@ const TabList = (props: Props) => {
       >
         <Database /> Storage
       </TabsTrigger>
-
-      <TabsTrigger
-        value="AiPoward"
-        className="h-7 pl-[6px] pr-1.5 text-[12px] data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1.5 data-[state=active]:rounded-md"
-      >
-        <Ai /> Ai Components
-      </TabsTrigger>
     </TabsList>
   );
 };

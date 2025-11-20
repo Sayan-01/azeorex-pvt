@@ -52,15 +52,38 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
     );
   }
   return (
-    <div className={clsx(" w-full ", className)}>
+    <div className={clsx("w-full", className)}>
       <UploadDropzone
-        className="outline-none mt-0 border-none"
+        className="outline-none mt-0 border-none p-3"
         endpoint={apiEndpoint}
         onClientUploadComplete={(res) => {
           onChange(res?.[0].url);
         }}
         onUploadError={(error: Error) => {
           console.log(error);
+        }}
+        appearance={{
+          container: {
+            border: "1px dashed #2c2d30",
+            borderRadius: "0.5rem",
+            backgroundColor: "#202124",
+          },
+          uploadIcon: {
+            color: "#6366f1",
+          },
+          label: {
+            color: "#e2e8f0",
+          },
+          button: {
+            backgroundColor: "#4f46e5",
+            color: "white",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.375rem",
+            margin: "0.5rem 0",
+          },
+          allowedContent: {
+            color: "#9ca3af",
+          },
         }}
       />
     </div>

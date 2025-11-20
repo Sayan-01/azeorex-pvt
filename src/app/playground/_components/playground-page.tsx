@@ -19,7 +19,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Messages[]>(chatMessages);
   const { dispatch, state } = useEditor();
-  const {credits} = useCredits()
+  const { credits } = useCredits();
 
   const sendMessage = async (userInput: string) => {
     if (credits < 100) {
@@ -60,7 +60,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
         decrementCredits(userId, 100);
         await savePage(aiResponse);
-      } catch (e:any) {
+      } catch (e: any) {
         console.error("Error:", e);
         toast.error(e?.message || "Network error occurred");
         setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
@@ -75,7 +75,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   };
 
   useEffect(() => {
-    if (chatMessages?.length === 1 && !loading ) {
+    if (chatMessages?.length === 1 && !loading) {
       sendMessage(chatMessages[0].content);
     }
   }, []);
@@ -111,17 +111,17 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     }
   };
 
- useEffect(() => {
-   if (state.previewMode || state.liveMode) return;
+  useEffect(() => {
+    if (state.previewMode || state.liveMode) return;
 
-   const stopLink = (e: any) => {
-     const link = e.target.closest("a");
-     if (link) e.preventDefault();
-   };
+    const stopLink = (e: any) => {
+      const link = e.target.closest("a");
+      if (link) e.preventDefault();
+    };
 
-   document.addEventListener("click", stopLink, true);
-   return () => document.removeEventListener("click", stopLink, true);
- }, [state.previewMode, state.liveMode]);
+    document.addEventListener("click", stopLink, true);
+    return () => document.removeEventListener("click", stopLink, true);
+  }, [state.previewMode, state.liveMode]);
 
   return (
     <>
@@ -130,11 +130,13 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         funnelPageDetails={funnelPageDetails}
         userId={userId}
       />
-      <div className="h-full container-query flex justify-center overflow-x-hidden bg-[#191919] relative">
+      <div className="h-full container-query flex justify-center overflow-x-auto bg-[#191919] relative">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
-        {loading && <div>
-          <AiLoadingAnimation loading={loading}/>
-          </div>}
+        {loading && (
+          <div>
+            <AiLoadingAnimation loading={loading} />
+          </div>
+        )}
       </div>
       <FunnelEditorSidebar
         messages={messages}

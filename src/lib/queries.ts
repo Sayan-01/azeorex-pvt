@@ -157,21 +157,20 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
       name: funnelPage.name || "Untitled Page",
       order: funnelPage.order ?? 0,
       pathName: funnelPage.pathName || "",
+      published: funnelPage.published ?? false,
       content: funnelPage.content
         ? funnelPage.content
-        : JSON.stringify(
-            {
-              id: "__body",
-              type: "__body",
-              name: "Body",
-              styles: {
-                minHeight: "100vh",
-                backgroundColor: "#f8f8f8",
-                padding: "20px",
-              },
-              content: [],
+        : JSON.stringify({
+            id: "__body",
+            type: "__body",
+            name: "Body",
+            styles: {
+              minHeight: "100vh",
+              backgroundColor: "#f8f8f8",
+              padding: "20px",
             },
-          ),
+            content: [],
+          }),
       projectId,
     },
   });
@@ -179,6 +178,15 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
   await db.project.update({
     where: { id: projectId },
     data: { updatedAt: new Date() },
+  });
+
+  return response;
+};
+
+export const deployPage = async (funnelPageId: string, view: boolean) => {
+  const response = await db.funnelPage.update({
+    where: { id: funnelPageId },
+    data: { published: view },
   });
 
   return response;

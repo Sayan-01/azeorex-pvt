@@ -39,7 +39,7 @@ export default function GlobalHoverOverlay({ resizing }: { resizing: boolean }) 
 
   return (
     <div
-      className={clsx("fixed border-2  border-cyan-400 pointer-events-none z-[1000]", {
+      className={clsx("fixed border-2 border-dashed border-cyan-400 pointer-events-none z-[1000]", {
         "hidden": resizing,
       })}
       style={{
