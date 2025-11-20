@@ -172,7 +172,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         key={el.id}
         data-element-id={el.id}
         style={baseStyle}
-        className={clsx({ "empty-outline": el.content.length === 0 && !state.liveMode && !state.previewMode, "!px-9 !py-9": el.content.length === 0 && !el.styles.width && !el.styles.height })}
+        className={clsx({ "empty-outline": el.content?.length === 0 && !state.liveMode && !state.previewMode, "!px-9 !py-9": el.content?.length === 0 && !el.styles.width && !el.styles.height })}
         onClick={handleClick}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}

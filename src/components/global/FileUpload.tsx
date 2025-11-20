@@ -29,7 +29,7 @@ const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
             />
           </div>
         ) : (
-          <div className="relative flex items-center p-2 mt-2 rounded-md bg-[#202124] ">
+          <div className="relative flex items-center p-2 rounded-md bg-[#202124] ">
             <File />
             <Link
               href={value}

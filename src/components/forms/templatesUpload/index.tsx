@@ -67,8 +67,8 @@ const TemplatesUpload: React.FC<TemplatesUploadProps> = ({ defaultData }) => {
 
   return (
     <section className="w-full h-[312px] overflow-y-auto box rounded-2xl border">
-      <div className="bg-zinc-900 rounded-2xl shadow-2xl">
-        <form onSubmit={handleSubmit}>
+      <div className="bg-zinc-900 rounded-2xl shadow-2xl w-fit">
+        <form onSubmit={handleSubmit} className="w-full">
           <div className="flex flex-col gap-y-5 p-2">
             {/* Form Fields Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

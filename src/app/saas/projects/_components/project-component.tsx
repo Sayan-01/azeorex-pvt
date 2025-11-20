@@ -1,7 +1,7 @@
 "use client";
 import EmptyStatefunnel from "@/components/global/empty/empty-state-funnel";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import Card from "../../_components/card";
@@ -117,16 +117,24 @@ const ProjectComponent = ({ funnels, userId }: Props) => {
       <section className="text-3xl mb-4 md:px-7 px-5  sm:hidden flex flex-col items-center">
         <h1 className="text-center font-bold text-2xl mb-2 mt-7">All Projects</h1>
         <p className="text-center text-sm mb-5 opacity-60 w-[90%]">The best azeorex and figma templates and websites from Azeorex community.</p>{" "}
-        <div className="flex items-center h-11 bg-[#2d2f33] hover:bg-[#242529] rounded-full border border-[#545454]/30 w-full px-2">
-          <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
-            <IoSearchOutline size={20} />
+        <div className="flex items-center gap-4 w-full">
+          <div className="flex items-center h-11 bg-[#2d2f33] hover:bg-[#242529] rounded-full border border-[#545454]/30 w-full px-2">
+            <div className="h-full  pl-2 rounded-l-md flex items-center text-white/60">
+              <IoSearchOutline size={20} />
+            </div>
+            <input
+              className="h-full bg-transparent rounded-r-md px-2 text-xs max-w-[210px] w-full outline-none border-none"
+              type="text"
+              onChange={(e) => setQuery(e.target.value.toLowerCase())}
+              placeholder="Search..."
+            />
           </div>
-          <input
-            className="h-full bg-transparent rounded-r-md px-2 text-xs max-w-[210px] w-full outline-none border-none"
-            type="text"
-            onChange={(e) => setQuery(e.target.value.toLowerCase())}
-            placeholder="Search..."
-          />
+          <CreateProjectButton
+            userId={userId}
+            className="h-11 w-11 rounded-full !bg-white flex items-center justify-center text-zinc-900"
+          >
+            <Plus size={16} />
+          </CreateProjectButton>
         </div>
       </section>
       <section className="mb-6 md:px-7 px-5">

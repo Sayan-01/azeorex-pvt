@@ -135,7 +135,7 @@ const MultiSelectorTrigger = forwardRef(({ className, children, ...props }:any, 
   return (
     <div
       ref={ref}
-      className={cn("flex !-mt-0.5 !-mb-1 flex-wrap gap-x-4 gap-y-2 px-4 py-2 border border-muted rounded-lg bg-background", className)}
+      className={cn("flex !-mt-0.5 !-mb-1 flex-wrap gap-x-4 gap-y-2 px-4 py-2 border border-muted rounded-lg bg-background ", className)}
       {...props}
     >
       {value.map((item:any, index:number) => (
@@ -177,7 +177,7 @@ const MultiSelectorInput = forwardRef(({ className, ...props }:any, ref) => {
       onFocus={() => setOpen(true)}
       onClick={() => setActiveIndex(-1)}
       className={`
-        ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1
+        ml-2 bg-transparent outline-none placeholder:text-muted-foreground w-full
         ${className} ${activeIndex !== -1 ? "caret-transparent" : ""}
       `}
     />
