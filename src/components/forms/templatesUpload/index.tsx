@@ -66,7 +66,7 @@ const TemplatesUpload: React.FC<TemplatesUploadProps> = ({ defaultData }) => {
   };
 
   return (
-    <section className="w-full h-[312px] overflow-y-auto box ">
+    <section className="w-full h-full ">
       <div className="bg-zinc-900 rounded-2xl shadow-2xl w-fit">
         <form
           onSubmit={handleSubmit}

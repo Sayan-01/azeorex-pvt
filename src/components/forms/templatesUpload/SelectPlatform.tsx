@@ -21,13 +21,13 @@ const SelectPlatform = ({ value, onChange }: { value: string[]; onChange: any })
         return (
           <div
             key={item.id}
-            className=" cursor-pointer rounded-xl"
+            className=" cursor-pointer rounded-full"
           >
             <div
-              className={value.includes(item.name) ? "border-green-500 bg-green-500/10 border-2 duration-150 rounded-xl" : "border-2 rounded-xl"}
+              className={value.includes(item.name) ? "border-green-500 bg-green-500/10 border-2 duration-150 rounded-full" : "border-2 rounded-full"}
               onClick={() => onChange(item.name)}
             >
-              <div className="flex items-center justify-center text-sm gap-2 w-full h-12 ">
+              <div className="flex items-center justify-center text-sm gap-2 w-full h-9 ">
                 <Image
                   src={item.image}
                   width={400}

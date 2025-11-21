@@ -114,7 +114,9 @@ const MultiStepDialog = ({ triggerBtn, allProjects, className }: Props) => {
         </DialogTrigger>
         <DialogContent
           x={false}
-          className={cn("overflow-hidden rounded-2xl sm:p-0 bg-zinc-900 transition-all duration-300 ease-in-out w-[90%] md:w-[500px] p-0")}
+          className={cn("overflow-hidden rounded-2xl sm:p-0 bg-zinc-900 transition-all duration-300 ease-in-out w-[90%] md:w-[500px] p-0",
+            step === 3 ? "h-[calc(100%-40px)] md:h-[700px]" : ""
+          )}
         >
           {/* Step Indicator */}
           <div className="px-6 pt-6">
@@ -169,7 +171,7 @@ const MultiStepDialog = ({ triggerBtn, allProjects, className }: Props) => {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="sm:px-6 px-5 py-2">
+          <div className="sm:px-6 px-5 py-2 h-full overflow-y-auto box">
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}

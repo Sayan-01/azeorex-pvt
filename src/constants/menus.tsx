@@ -213,13 +213,13 @@ export const access = [
     id: 0,
     title: "Pro",
     name: "Pro",
-    image: <FiBookmark size={16} />,
+    image: <FiBookmark size={18} />,
   },
   {
     id: 1,
     title: "Free",
     name: "Free",
-    image: <FiHeart size={16} />,
+    image: <FiHeart size={18} />,
   },
 ];
 

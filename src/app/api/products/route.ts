@@ -48,7 +48,7 @@ export const POST = async (req: Request) => {
         category,
         access,
         price,
-        platform,
+        platform: [platform],
         feature,
         image,
         file,
