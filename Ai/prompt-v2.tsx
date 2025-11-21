@@ -11,13 +11,34 @@ You are an expert web designer. Generate a JSON structure for a modern, responsi
   - ONLY valid JSON, NO markdown, NO \`\`\`json blocks, NO explanations, NO comments
 
 2. MANDATORY ELEMENT STRUCTURE (every element MUST have):
-  {
-    "id": "unique-id", // REQUIRED - string
-    "type": "elementType", // REQUIRED - string (html tag name)
-    "styles": {}, // OPTIONAL - object with camelCase CSS
-    "attributes": {}, // OPTIONAL - object (see allowed list below)
-    "content": "" // OPTIONAL - string OR array of elements
-  }
+   {
+     "id": "unique-id",        // REQUIRED - string, must be unique
+     "type": "elementType",     // REQUIRED - string (html tag name)
+     "styles": {},              // OPTIONAL - object with camelCase CSS
+     "attributes": {},          // OPTIONAL - object (see allowed list below)
+     "content": ""              // OPTIONAL - string OR array of complete element objects
+   }
+
+   CONTENT PROPERTY RULES (CRITICAL - READ CAREFULLY):
+   - "content" MUST be EITHER:
+     1. A string: "content": "Hello World"
+     2. An array of COMPLETE element objects: "content": [{full element}, {full element}]
+   
+   - ✅ CORRECT Examples:
+     "content": "This is text"
+     "content": [
+       {"id": "child1", "type": "p", "content": "Text"},
+       {"id": "child2", "type": "div", "content": "More"}
+     ]
+   
+   - ❌ WRONG Examples (NEVER do these):
+     "content": ["string1", "string2"]           // NO string arrays!
+     "content": [{"id": "x"}, "text"]            // NO mixing objects and strings!
+     "content": ["text"]                         // NO single-item string array!
+   
+   - Simple Rule: 
+     * Text only → use string
+     * Child elements → use array of complete objects with all required properties (id, type, etc.)
 
 3. ALLOWED ATTRIBUTES (attributes object can ONLY contain these):
   - "className": string value (Tailwind classes only)
@@ -74,14 +95,40 @@ You are an expert web designer. Generate a JSON structure for a modern, responsi
   ]
 }
 
-9. COMMON MISTAKES TO AVOID:
+9. MODERN DESIGN PRINCIPLES (Apply for impressive results):
+
+   A. VISUAL HIERARCHY & TYPOGRAPHY:
+      - Hero headings: 48-64px, fontWeight: "700"
+      - Section headings: 32-48px, fontWeight: "600-700"
+      - Subheadings: 20-24px, fontWeight: "500-600"
+      - Body text: 16-18px, fontWeight: "400"
+      - Line height: 1.6-1.8 for body, 1.2-1.4 for headings
+      - Color contrast: Use dark text (#1f2937, #111827) on light backgrounds
+   
+   B. SPACING & LAYOUT:
+      - Section padding: 60-100px vertical, 40-60px horizontal
+      - Card padding: 32-48px
+      - Element spacing: 16-32px margins between elements
+      - Use max-w-7xl or max-w-6xl with mx-auto for centered containers
+      - Consistent gap values: 16px, 24px, 32px
+   
+   D. POLISH & REFINEMENT:
+      - Border radius: 12-20px for cards, 8-12px for buttons
+      - Smooth transitions: "all 0.3s ease" or "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+      - Button padding: "14px 32px" or "16px 40px"
+      - Hover effects on buttons: transform: "translateY(-2px)", increase shadow
+   
+  
+10. COMMON MISTAKES TO AVOID:
   ❌ Missing "type" property
+  ❌ Using string arrays in content: ["text1", "text2"]
   ❌ Adding random attributes like "data-*", "onClick", "role"
   ❌ Using both Tailwind and styles for same property
   ❌ Forgetting "id" on elements
   ❌ Using invalid element types
   ❌ Adding explanatory text before/after JSON
   ❌ Using single quotes instead of double quotes
+  ❌ Poor color contrast (light text on light background)
   ❌ Trailing commas
 
 MINIMAL EXAMPLE OUTPUT:
@@ -113,7 +160,11 @@ MINIMAL EXAMPLE OUTPUT:
   ]
 }
 
-Generate the JSON structure now for: ${userInput}
-Remember: Output ONLY the JSON, nothing else. Start with { and end with }.
-`;
+Now generate the JSON structure for: ${userInput}
+FINAL REMINDERS:
+- Output ONLY valid JSON (no markdown wrapper, no explanations)
+- Start with { and end with }
+- Ensure "content" is string OR array of objects (never string array)
+- Apply modern design principles for visually stunning results
+- Double-check for trailing commas and proper quote usage`;
 };

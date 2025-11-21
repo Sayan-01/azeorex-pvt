@@ -62,12 +62,12 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         await savePage(aiResponse);
       } catch (e: any) {
         console.error("Error:", e);
-        toast.error(e?.message || "Network error occurred");
-        setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+        toast.error("something went wrong.");
+        setMessages((prev) => [...prev, { role: "assistant", content: "something went wrong. Please try to regenerate" }]);
       }
     } catch (error: any) {
       console.error("Error:", error);
-      toast.error(error?.message || "Network error occurred");
+      toast.error("Network error occurred");
       setMessages((prev) => prev.slice(0, -1));
     } finally {
       setLoading(false);
