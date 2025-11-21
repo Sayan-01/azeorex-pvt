@@ -21,13 +21,13 @@ const SelectPlatform = ({ value, onChange }: { value: string[]; onChange: any })
         return (
           <div
             key={item.id}
-            className="cursor-pointer"
+            className=" cursor-pointer rounded-xl"
           >
-            <Card
-              className={value.includes(item.name) ? "border-green-400 border-2 duration-150" : "border-2"}
-              onClick={() => handlePlatformClick(item.name)}
+            <div
+              className={value.includes(item.name) ? "border-green-500 bg-green-500/10 border-2 duration-150 rounded-xl" : "border-2 rounded-xl"}
+              onClick={() => onChange(item.name)}
             >
-              <CardHeader className="flex-row items-center justify-center gap-3 h-12">
+              <div className="flex items-center justify-center text-sm gap-2 w-full h-12 ">
                 <Image
                   src={item.image}
                   width={400}
@@ -35,9 +35,9 @@ const SelectPlatform = ({ value, onChange }: { value: string[]; onChange: any })
                   className={`w-5 h-5 ${item.name === "figma" ? "" : "rounded-full"}`}
                   alt={item.title}
                 />
-                <span className="text-sm mt-0">{item.title}</span>
-              </CardHeader>
-            </Card>
+                <span>{item.title}</span>
+              </div>
+            </div>
           </div>
         );
       })}

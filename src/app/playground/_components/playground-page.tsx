@@ -57,7 +57,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         const parsedJSON = JSON.parse(aiResponse.trim());
 
         dispatch({ type: "SET_ELEMENT", payload: { elements: parsedJSON } });
-        setMessages((prev) => [...prev, { role: "assistant", content: "AI code is ready" }]);
+        setMessages((prev) => [...prev, { role: "assistant", content: "✨Congrats! Your AI code is ready! Please check the preview" }]);
         decrementCredits(userId, 100);
         await savePage(aiResponse);
       } catch (e: any) {

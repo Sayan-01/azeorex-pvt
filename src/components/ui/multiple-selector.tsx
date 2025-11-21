@@ -135,13 +135,13 @@ const MultiSelectorTrigger = forwardRef(({ className, children, ...props }:any, 
   return (
     <div
       ref={ref}
-      className={cn("flex !-mt-0.5 !-mb-1 flex-wrap gap-x-4 gap-y-2 px-4 py-2 border border-muted rounded-lg bg-background ", className)}
+      className={cn("flex !-mt-0.5 !mb-2 flex-wrap gap-x-2 gap-y-2 px-2 py-1.5  border  rounded-lg bg-zinc-800 ", className)}
       {...props}
     >
       {value.map((item:any, index:number) => (
         <Badge
           key={item}
-          className={cn("px-2 rounded-xl flex items-center gap-1", activeIndex === index && "ring-2 ring-muted-foreground ")}
+          className={cn("px-3 rounded-xl flex items-center gap-1 bg-zinc-900 py-1.5", activeIndex === index && "ring-2 ring-muted-foreground ")}
           variant={"secondary"}
         >
           <span className="text-xs">{item}</span>
@@ -177,7 +177,7 @@ const MultiSelectorInput = forwardRef(({ className, ...props }:any, ref) => {
       onFocus={() => setOpen(true)}
       onClick={() => setActiveIndex(-1)}
       className={`
-        ml-2 bg-transparent outline-none placeholder:text-muted-foreground w-full
+        bg-transparent outline-none placeholder:text-muted-foreground w-full
         ${className} ${activeIndex !== -1 ? "caret-transparent" : ""}
       `}
     />
@@ -207,7 +207,7 @@ const MultiSelectorList = forwardRef(({ className, children, ...props }:any, ref
     <CommandList
       ref={ref}
       className={`
-        p-2 flex flex-col gap-2 rounded-md scrollbar-thin scrollbar-track-transparent transition-colors scrollbar-thumb-muted-foreground dark:scrollbar-thumb-muted scrollbar-thumb-rounded-lg w-full absolute bg-background shadow-md z-10 border border-muted top-0
+        p-2 flex flex-col box gap-2 rounded-md scrollbar-thin scrollbar-track-transparent transition-colors scrollbar-thumb-muted-foreground dark:scrollbar-thumb-muted scrollbar-thumb-rounded-lg w-full absolute bg-zinc-800 shadow-md z-10 border top-0
         ${className}
       `}
       {...props}
@@ -240,7 +240,7 @@ const MultiSelectorItem = forwardRef(({ className, value, children, ...props }:a
         setInputValue("");
       }}
       className={cn(
-        "rounded-md cursor-pointer px-2 py-1 transition-colors flex justify-between ",
+        "rounded-md cursor-pointer px-2 py-1 transition-colors flex justify-between hover:bg-zinc-900",
         className,
         isIncluded && "opacity-50 cursor-default",
         props.disabled && "opacity-50 cursor-not-allowed"

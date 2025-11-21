@@ -89,7 +89,7 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
         {/* Bottom margin handle */}
         <div
           style={{ height: (element.styles as any)?.["margin-bottom"] || "0px", bottom: `-${(element.styles as any)?.["margin-bottom"]}` }}
-          className={`absolute z-[1010] left-0 right-0 bottom-0 flex items-start justify-center bg-orange-500/20 `}
+          className={`absolute z-[1010] left-0 right-0  flex items-start justify-center bg-orange-500/20 `}
         >
           <div
             onMouseDown={(e) => handleMouseDown(e, "bottom")}
