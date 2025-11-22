@@ -32,7 +32,7 @@ export const POST = async (req: Request) => {
   }
 
   try {
-    const { title, description, longDescription, theme, category, access, price, platform, feature, image, file, FunnelPages } = await req.json();
+    const { title, description, longDescription, theme, category, access, price, platform, feature, image, file, FunnelPages, subDomainName } = await req.json();
 
     if (category.length < 5 || feature.length < 2) {
       return NextResponse.json({ error: "category and feature length should be greater than 5 and 3 respectively" }, { status: 400 });
@@ -43,6 +43,7 @@ export const POST = async (req: Request) => {
         id: v4(),
         title,
         description,
+        subDomainName,
         longDescription,
         theme,
         category,

@@ -112,10 +112,11 @@ model User {
 }
 
 model Template {
-  id              String       @id @default(uuid())
+  id              String           @id @default(uuid())
   title           String
   description     String
   longDescription String
+  subDomainName       String?
   theme           String
   category        String[]
   access          String
@@ -124,13 +125,13 @@ model Template {
   feature         String[]
   image           String[]
   file            String?
-  datePublished   DateTime     @default(now())
+  datePublished   DateTime         @default(now())
   Reviews         Review[]
   userId          String
-  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  likes           Int          @default(0)
-  likesArray      String[]     @default([])
-  dislikes        Int          @default(0)
+  User            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes           Int              @default(0)
+  likesArray      String[]         @default([])
+  dislikes        Int              @default(0)
   FunnelPages     FunnelPage[]
   HtmlFunnelPages HtmlFunnelPage[]
   purchases       Purchase[]
@@ -189,23 +190,22 @@ model Media {
 }
 
 model Project {
-  id            String          @id @default(uuid())
-  name          String
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  description   String?
-  published     Boolean         @default(false)
-  subDomainName String?         @unique
-  favicon       String?         @db.Text
-  userId        String
-  User          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  FunnelPages   FunnelPage[]
+  id              String           @id @default(uuid())
+  name            String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  description     String?
+  published       Boolean          @default(false)
+  subDomainName   String?          @unique
+  favicon         String?          @db.Text
+  userId          String
+  User            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  FunnelPages     FunnelPage[]
   HtmlFunnelPages HtmlFunnelPage[]
-  CMSCollection CMSCollection[]
-  liveProducts  String?         @default("[]")
-  Media         Media[]
-  Purchase      Purchase[]
-
+  CMSCollection   CMSCollection[]
+  liveProducts    String?          @default("[]")
+  Media           Media[]
+  Purchase        Purchase[]
 
   @@index([userId])
 }
@@ -314,13 +314,11 @@ model warframeObj {
   warframe       String
 }
 
-
-
 model Subscription {
   id                   String   @id @default(uuid())
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
-  plan                 String     @default("Free Plan")
+  plan                 String   @default("Free Plan")
   price                String?
   active               Boolean  @default(false)
   userId               String
@@ -334,19 +332,17 @@ model Subscription {
 }
 
 model Chat {
-  id           String     @id @default(uuid())
+  id           String      @id @default(uuid())
   chatMessage  Json
   userId       String
   projectId    String
-  funnelPageId String?    @unique
+  funnelPageId String?     @unique
   funnelPage   FunnelPage? @relation(fields: [funnelPageId], references: [id], onDelete: Cascade)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   @@index([funnelPageId])
 }
-
-
 
 // npm install ts-node typescript @types/node --save-dev
 // npx prisma migrate dev

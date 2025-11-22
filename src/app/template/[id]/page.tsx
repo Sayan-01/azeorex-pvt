@@ -27,6 +27,7 @@ interface Template {
   title: string;
   description: string;
   longDescription: string;
+  subDomainName: string;
   theme: string;
   category: string[];
   access: string;
@@ -216,12 +217,22 @@ const page = async (props: { params: Promise<{ id: string }> }) => {
                     userId={session?.user?.id}
                   />
 
-                  <PreviewButton
-                    className="w-full"
-                    preview={oneTemplate?.image.length == 3 ? oneTemplate?.image[2] : false}
-                  >
-                    Preview
-                  </PreviewButton>
+                  {oneTemplate.subDomainName ? (
+                    <Link
+                      href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${oneTemplate.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}`}
+                      target="_blank"
+                      className="bg-[#ffffff08] h-[42px] text-white/80  rounded-lg flex items-center justify-center font-lg w-full z-20"
+                    >
+                      <div className="">View Template</div>
+                    </Link>
+                  ) : (
+                    <PreviewButton
+                      className="w-full"
+                      preview={oneTemplate?.image.length == 3 ? oneTemplate?.image[2] : false}
+                    >
+                      Preview
+                    </PreviewButton>
+                  )}
                 </div>
 
                 <div className="bg-[#ffffff08] text-white p-4 rounded-xl mt-6">

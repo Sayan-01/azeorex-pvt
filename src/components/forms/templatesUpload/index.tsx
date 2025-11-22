@@ -16,6 +16,7 @@ interface DefaultData {
   title: string;
   description: string;
   funnelPage: any;
+  subDomainName: string
 }
 
 interface TemplatesUploadProps {
@@ -47,7 +48,7 @@ const TemplatesUpload: React.FC<TemplatesUploadProps> = ({ defaultData }) => {
       cache: "no-store",
       method: "POST",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ title, description, longDescription, theme, category, access, price, platform, feature, image, file, FunnelPages }),
+      body: JSON.stringify({ title, description, longDescription, theme, category, access, price, platform, feature, image, file, FunnelPages, subDomainName: defaultData.subDomainName }),
     });
 
     const responce = await poductResponce.json();

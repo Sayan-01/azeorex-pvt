@@ -55,6 +55,7 @@ const MultiStepDialog = ({ triggerBtn, allProjects, className }: Props) => {
     funnelPage: [] as FunnelPage[],
     title: "",
     description: "",
+    subDomainName: "",
   });
 
   const resetForm = () => {
@@ -65,6 +66,7 @@ const MultiStepDialog = ({ triggerBtn, allProjects, className }: Props) => {
       funnelPage: [],
       title: "",
       description: "",
+      subDomainName: "",
     });
   };
 
@@ -243,6 +245,7 @@ const MultiStepDialog = ({ triggerBtn, allProjects, className }: Props) => {
                                 funnelPage: [...project.FunnelPages],
                                 title: project.name,
                                 description: project.description,
+                                subDomainName: project.subDomainName
                               })
                             }
                           >

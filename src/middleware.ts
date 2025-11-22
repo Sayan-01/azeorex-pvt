@@ -17,9 +17,11 @@ export default auth((req) => {
 
   const customSubDomain = hostname.get("host")?.split(`${process.env.NEXT_PUBLIC_URL_DOMAIN}`).filter(Boolean)[0];
 
-  // if (customSubDomain && host !== process.env.NEXT_PUBLIC_URL_DOMAIN) {
-  //   return NextResponse.rewrite(new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url));
-  // } 
+  if (process.env.NODE_ENV !== "development") {
+    if (customSubDomain && host !== process.env.NEXT_PUBLIC_URL_DOMAIN) {
+      return NextResponse.rewrite(new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url));
+    } 
+  }
 
   // Redirect sign-in and sign-up routes
   if (url.pathname === "/sign-in" || url.pathname === "/sign-up") {
