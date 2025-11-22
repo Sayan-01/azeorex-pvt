@@ -34,8 +34,8 @@ export const POST = async (req: Request) => {
   try {
     const { title, description, longDescription, theme, category, access, price, platform, feature, image, file, FunnelPages } = await req.json();
 
-    if (category.length < 5 || feature.length < 3) {
-      return NextResponse.json({ error: "Error in creating the template" }, { status: 400 });
+    if (category.length < 5 || feature.length < 2) {
+      return NextResponse.json({ error: "category and feature length should be greater than 5 and 3 respectively" }, { status: 400 });
     }
 
     const template = await db.template.create({

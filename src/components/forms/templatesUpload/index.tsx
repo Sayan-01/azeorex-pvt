@@ -9,8 +9,6 @@ import SelectPlatform from "./SelectPlatform";
 import SelectFeature from "./SelectFeature";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "../../buttons/SubmitBtn";
-import SelectImage from "./SelectImage";
-import UploadImages from "./uploadImages";
 import MultiFileUpload from "@/components/global/MultiFileUpload";
 import { Label as AzLabel } from "../../ui/label";
 
