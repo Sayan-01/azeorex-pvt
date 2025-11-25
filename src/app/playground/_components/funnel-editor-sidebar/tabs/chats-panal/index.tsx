@@ -66,15 +66,8 @@ const Chats = ({
         {/* 🩵 Show AI is typing... when loading */}
         {loading && (
           <div className="flex items-center gap-2 justify-start">
-            <span className={`w-[32px] h-[32px] rounded-full bg-purple-500`}>
-              <Image
-                src={"/icons/deepseek-logo.webp"}
-                alt={"AI"}
-                width={300}
-                height={300}
-                className="rounded-full"
-              />
-            </span>
+            <div className="w-2 h-2 rounded-2xl bg-purple-400 "></div>
+
             <p className="text-purple-500 p-2 rounded-lg max-w-[80%] text-xs bg-purple-500/10 animate-pulse flex items-center gap-2">
               <span>
                 <Loader
@@ -82,7 +75,7 @@ const Chats = ({
                   size={16}
                 />
               </span>
-              AI is thinking...
+              AI is generating...
             </p>
           </div>
         )}
@@ -108,12 +101,84 @@ const Chats = ({
               </SelectTrigger>
               <SelectContent className="text-sm">
                 <SelectGroup>
-                  <SelectItem className="text-sm" value="qwen/qwen3-coder:free"><Image src={"/ai/qwen.png"} alt={"Qwen"} width={300} height={300} className="rounded-full bg-white w-6 h-6 border border-zinc-600" />Qwen 3</SelectItem>
-                  <SelectItem className="text-sm" value="x-ai/grok-4.1-fast:free"><Image src={"/ai/grok.png"} alt={"Grok"} width={300} height={300} className="rounded-full bg-white w-6 h-6 border border-zinc-600" />{"Grok (free)"}</SelectItem>
-                  <SelectItem className="text-sm" value="x-ai/grok-4.1-fast"><Image src={"/ai/grok.png"} alt={"Grok"} width={300} height={300} className="rounded-full bg-white w-6 h-6 border border-zinc-600" />{"Grok (paid)"}</SelectItem>
-                  <SelectItem className="text-sm" value="tngtech/deepseek-r1t2-chimera:free"><Image src={"/ai/deepseek.webp"} alt={"Deepseek"} width={300} height={300} className="rounded-full bg-white w-6 h-6 border border-zinc-600" />Deepseek r1t2</SelectItem>
-                  <SelectItem className="text-sm" value="google/gemini-2.0-flash-exp:free"><Image src={"/ai/gemini.png"} alt={"Gemini"} width={300} height={300} className="rounded-full bg-white w-6 h-6 border border-zinc-600" />Gemini</SelectItem>
-                  <SelectItem className="text-sm" value="openai/gpt-oss-20b:free"><Image src={"/ai/gpt.png"} alt={"GPT"} width={300} height={300} className="rounded-full bg-white w-6 h-6 border border-zinc-600" />GPT-20B</SelectItem>
+                  <SelectItem
+                    className="text-sm"
+                    value="qwen/qwen3-coder:free"
+                  >
+                    <Image
+                      src={"/ai/qwen.png"}
+                      alt={"Qwen"}
+                      width={300}
+                      height={300}
+                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
+                    />
+                    Qwen 3
+                  </SelectItem>
+                  <SelectItem
+                    className="text-sm"
+                    value="x-ai/grok-4.1-fast:free"
+                  >
+                    <Image
+                      src={"/ai/grok.png"}
+                      alt={"Grok"}
+                      width={300}
+                      height={300}
+                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
+                    />
+                    {"Grok (free)"}
+                  </SelectItem>
+                  <SelectItem
+                    className="text-sm"
+                    value="x-ai/grok-4.1-fast"
+                  >
+                    <Image
+                      src={"/ai/grok.png"}
+                      alt={"Grok"}
+                      width={300}
+                      height={300}
+                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
+                    />
+                    {"Grok (paid)"}
+                  </SelectItem>
+                  <SelectItem
+                    className="text-sm"
+                    value="tngtech/deepseek-r1t2-chimera:free"
+                  >
+                    <Image
+                      src={"/ai/deepseek.webp"}
+                      alt={"Deepseek"}
+                      width={300}
+                      height={300}
+                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
+                    />
+                    Deepseek r1t2
+                  </SelectItem>
+                  <SelectItem
+                    className="text-sm"
+                    value="google/gemini-2.0-flash-exp:free"
+                  >
+                    <Image
+                      src={"/ai/gemini.png"}
+                      alt={"Gemini"}
+                      width={300}
+                      height={300}
+                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
+                    />
+                    Gemini
+                  </SelectItem>
+                  <SelectItem
+                    className="text-sm"
+                    value="openai/gpt-oss-20b:free"
+                  >
+                    <Image
+                      src={"/ai/gpt.png"}
+                      alt={"GPT"}
+                      width={300}
+                      height={300}
+                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
+                    />
+                    GPT-20B
+                  </SelectItem>
                 </SelectGroup>
                 <SelectSeparator className="mt-2" />
                 <div className="relative">

@@ -41,7 +41,7 @@ You are an expert web designer. Generate a JSON structure for a modern, responsi
      * Child elements → use array of complete objects with all required properties (id, type, etc.)
 
 3. ALLOWED ATTRIBUTES (attributes object can ONLY contain these):
-  - "className": string value (Tailwind classes only)
+  - "className": string value (Tailwind classes only). Use Tailwind classes only for layout utilities (flex, grid), responsive utilities (md:, lg:, xl:), grid column utilities (md:grid-cols-1, lg:grid-cols-2, xl:grid-cols-3), gap utilities (gap-*), and pseudo-classes (hover:, focus:, active:). Do not use Tailwind for spacing, max-width, centering, typography, colors or any other properties .
   - "src": string value (for img elements only)
   - "href": string value (for a elements only)
   - "alt": string value (for img elements only)
@@ -140,8 +140,8 @@ MINIMAL EXAMPLE OUTPUT:
     {
       "id": "section-id",
       "type": "section",
-      "styles": { "padding": "40px", "backgroundColor": "#ffffff", "borderRadius": "12px", "marginBottom": "20px", "boxShadow": "0 4px 6px rgba(0,0,0,0.1)" },
-      "attributes": { "className": "max-w-6xl mx-auto" },
+      "styles": { "padding": "40px", "backgroundColor": "#ffffff", "borderRadius": "12px", "marginBottom": "20px", "boxShadow": "0 4px 6px rgba(0,0,0,0.1)", "marginLeft": "auto", "marginRight": "auto" },
+      "attributes": { "className": "max-w-6xl" },
       "content": [
         {
           "id": "heading-id",
@@ -163,6 +163,7 @@ MINIMAL EXAMPLE OUTPUT:
 Now generate the JSON structure for: ${userInput}
 FINAL REMINDERS:
 - Output ONLY valid JSON (no markdown wrapper, no explanations)
+- Output JSON not more than ~2500 lines
 - Start with { and end with }
 - Ensure "content" is string OR array of objects (never string array)
 - Apply modern design principles for visually stunning results

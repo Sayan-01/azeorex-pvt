@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
+import { getElementById } from "@/lib/utils";
 
 type ResizeHandlesProps = {
   rect: DOMRect;
@@ -10,38 +11,49 @@ type ResizeHandlesProps = {
 };
 
 export default function ResizeHandles({ rect, selectedId, setResizing }: ResizeHandlesProps) {
-  const { updateElementStyle } = useEditor();
-  const handles = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
+  const { updateElementStyle, state } = useEditor();
+  const [activeSide, setActiveSide] = useState<"top" | "right" | "bottom" | "left" | null>(null);
 
-  const handleMouseDown = (e: React.MouseEvent, direction: string) => {
+  const element = getElementById(selectedId, state.elements);
+  if (!element) return null;
+
+  const handleMouseDown = (e: React.MouseEvent, side: "top" | "right" | "bottom" | "left") => {
     e.stopPropagation();
     e.preventDefault();
+    setActiveSide(side);
     setResizing(true);
 
     const startX = e.clientX;
     const startY = e.clientY;
-    const startWidth = Math.round(rect.width);
-    const startHeight = Math.round(rect.height);
+
+    // Parse current width/height based on side
+    let currentValue: string;
+    let styleProperty: string;
+
+    if (side === "top" || side === "bottom") {
+      currentValue = ((element.styles as any)?.height as string) || `${rect.height}px`;
+      styleProperty = "height";
+    } else {
+      currentValue = ((element.styles as any)?.width as string) || `${rect.width}px`;
+      styleProperty = "width";
+    }
+
+    const dimensionValue = parseInt(currentValue) || 0;
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
-      const deltaX = moveEvent.clientX - startX;
-      const deltaY = moveEvent.clientY - startY;
+      let delta = 0;
 
-      let newWidth = startWidth;
-      let newHeight = startHeight;
+      if (side === "top") delta = startY - moveEvent.clientY;
+      if (side === "bottom") delta = moveEvent.clientY - startY;
+      if (side === "left") delta = startX - moveEvent.clientX;
+      if (side === "right") delta = moveEvent.clientX - startX;
 
-      console.log("H",newHeight,"W", newWidth);
-      
-      if (direction.includes("e")) newWidth = startWidth + deltaX;
-      if (direction.includes("w")) newWidth = startWidth - deltaX;
-      if (direction.includes("s")) newHeight = startHeight + deltaY;
-      if (direction.includes("n")) newHeight = startHeight - deltaY;
-
-      if (newWidth > 20) updateElementStyle(selectedId, "width", `${newWidth}px`);
-      if (newHeight > 20) updateElementStyle(selectedId, "height", `${newHeight}px`);
+      const newDimension = Math.max(20, dimensionValue + delta);
+      updateElementStyle(selectedId, styleProperty, `${newDimension}px`);
     };
 
     const handleMouseUp = () => {
+      setActiveSide(null);
       setResizing(false);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
@@ -51,41 +63,49 @@ export default function ResizeHandles({ rect, selectedId, setResizing }: ResizeH
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const getHandleStyle = (direction: string): React.CSSProperties => {
-    const style: any = {
-      position: "absolute",
-      width: "8px",
-      height: "8px",
-      backgroundColor: "var(--color-blue-500)",
-      border: "1px solid white",
-      borderRadius: "10px",
-      pointerEvents: "auto",
-      zIndex: 1009,
-    };
-
-    const positions: any = {
-      nw: { top: "-5px", left: "-5px" , cursor: "nw-resize"},
-      n: { top: "-3px", left: "50%", transform: "translateX(-50%)", width: "28px", height: "4px", cursor: "n-resize" },
-      ne: { top: "-5px", right: "-5px" , cursor: "ne-resize"},
-      e: { top: "50%", right: "-3px", transform: "translateY(-50%)", width: "4px", height: "28px", cursor: "e-resize" },
-      se: { bottom: "-5px", right: "-5px" , cursor: "se-resize"},
-      s: { bottom: "-3px", left: "50%", transform: "translateX(-50%)", width: "28px", height: "4px", cursor: "s-resize" },
-      sw: { bottom: "-5px", left: "-5px" , cursor: "sw-resize"},
-      w: { top: "50%", left: "-3px", transform: "translateY(-50%)", width: "4px", height: "28px", cursor: "w-resize" },
-    };
-
-    return { ...style, ...positions[direction] };
-  };
-
   return (
     <>
-      {handles.map((direction) => (
-        <div
-          key={direction}
-          style={getHandleStyle(direction)}
-          onMouseDown={(e) => handleMouseDown(e, direction)}
-        />
-      ))}
+      <div className="pointer-events-auto">
+        {/* Top Handle */}
+        <div className="absolute z-[1009] left-0 right-0  flex items-center justify-center">
+          <div
+            onMouseDown={(e) => handleMouseDown(e, "top")}
+            className={`w-7 h-1 bg-blue-500 border-white border rounded-full -translate-y-[3px] cursor-ns-resize hover:bg-blue-600 hover:w-8 duration-200 ${
+              String(element.styles?.height ?? "").includes("%") ? "hidden" : ""
+            }`}
+          />
+        </div>
+
+        {/* Right Handle */}
+        <div className="absolute z-[1009] top-0 bottom-0 right-0 flex items-center justify-center">
+          <div
+            onMouseDown={(e) => handleMouseDown(e, "right")}
+            className={`h-7 w-1 bg-blue-500 border-white border rounded-full translate-x-[3px] cursor-ew-resize hover:bg-blue-600 hover:h-8 duration-200 ${
+              String(element.styles?.width ?? "").includes("%") ? "hidden" : ""
+            }`}
+          />
+        </div>
+
+        {/* Bottom Handle */}
+        <div className="absolute z-[1009] bottom-0 left-0 right-0  flex items-center justify-center">
+          <div
+            onMouseDown={(e) => handleMouseDown(e, "bottom")}
+            className={`w-7 h-1 bg-blue-500 border-white border rounded-full translate-y-[3px] cursor-ns-resize hover:bg-blue-600 hover:w-8 duration-200    ${
+              String(element.styles?.height ?? "").includes("%") ? "hidden" : ""
+            }`}
+          />
+        </div>
+
+        {/* Left Handle */}
+        <div className="absolute z-[1009] top-0 bottom-0 left-0 flex items-center justify-center">
+          <div
+            onMouseDown={(e) => handleMouseDown(e, "left")}
+            className={`h-7 w-1 bg-blue-500 border-white border rounded-full -translate-x-[3px] cursor-ew-resize hover:bg-blue-600 hover:h-8 duration-200 ${
+              String(element.styles?.width ?? "").includes("%") ? "hidden" : ""
+            }`}
+          />
+        </div>
+      </div>
     </>
   );
 }
