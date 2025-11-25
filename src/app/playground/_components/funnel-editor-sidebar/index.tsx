@@ -21,11 +21,13 @@ type Props = {
     role: string;
     content: string;
   }[]
+  model: string
+  setModel: any
   sendMessage: any
   loading: boolean
 };
 
-const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading }: Props) => {
+const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading, setModel, model}: Props) => {
   const { state, dispatch } = useEditor();
  
 
@@ -51,8 +53,10 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
               <TabsContent value="Chats">
                 <Chats
                   messages={messages}
+                  setModel={setModel}
                   onSend={sendMessage}
                   loading={loading}
+                  model={model}
                 />
               </TabsContent>
               <TabsContent

@@ -3,19 +3,18 @@ import React, { useEffect, useState } from "react";
 import "./AiLoadingAnimation.css"
 
 const LoadingStages = [
-  "🤖 AI is analyzing your request...",
-  "🎨 Designing the perfect layout...",
-  "✨ Crafting beautiful components...",
-  "🔧 Optimizing responsive design...",
-  "📝 Writing clean code...",
-  "🚀 Almost ready...",
+  "AI is analyzing your request...",
+  "Designing the perfect layout...",
+  "Crafting beautiful components...",
+  "Optimizing responsive design...",
+  "Writing clean code...",
+  "Almost ready...",
 ];
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 
 const AiLoadingAnimation = ({loading}: {loading: boolean}) => {
   const [loadingStage, setLoadingStage] = useState(0);
-  // Cycle through loading stages
   useEffect(() => {
     if (!loading) {
       setLoadingStage(0);
@@ -24,13 +23,12 @@ const AiLoadingAnimation = ({loading}: {loading: boolean}) => {
 
     const interval = setInterval(() => {
       setLoadingStage((prev) => (prev + 1) % LoadingStages.length);
-    }, 5000); // Change stage every 2 seconds
-
+    }, 5000);
     return () => clearInterval(interval);
   }, [loading]);
   return (
     <div className={`absolute ${roboto.className} inset-0 z-[9999] flex items-start pb-24 justify-center pt-20 bg-black/50 backdrop-blur-sm `}>
-      <div className="bg-gradient-to-br from-purple-800 to-blue-800 rounded-3xl shadow-2xl p-5 md:max-w-lg max-w-sm w-full mx-4 animate-in fade-in slide-in-from-top-4 duration-500 ">
+      <div className="bg-zinc-900 rounded-3xl shadow-2xl p-5 mx-4 animate-in fade-in slide-in-from-top-4 duration-500 lg:w-[480px] md:w-[400px] w-[300px] lg:scale-100 md:scale-90 scale-75">
         <div className="flex flex-col items-center space-y-6">
           {/* Animated Spinner */}
 

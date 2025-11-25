@@ -270,6 +270,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         <>
           <GlobalHoverOverlay resizing={resizing} />
           <GlobalSelectedOverlay
+          type= {state.selectedElement?.type !== "__body"}
             resizing={resizing}
             setResizing={setResizing}
           />

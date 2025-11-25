@@ -8,7 +8,7 @@ import { Trash } from "lucide-react";
 import { getElementById } from "@/lib/utils";
 import MarginHandles from "./MarginHandles";
 
-export default function GlobalSelectedOverlay({ resizing, setResizing }: { resizing: boolean; setResizing: (value: boolean) => void }) {
+export default function GlobalSelectedOverlay({ resizing, setResizing, type }: { resizing: boolean; setResizing: (value: boolean) => void; type: boolean }) {
   const { state, deleteElement } = useEditor();
   const [rect, setRect] = useState<DOMRect | null>(null);
 
@@ -77,22 +77,27 @@ export default function GlobalSelectedOverlay({ resizing, setResizing }: { resiz
       onClick={handleOverlayClick}
       onMouseDown={(e) => e.stopPropagation()}
     >
-      <ResizeHandles
-        rect={rect}
-        selectedId={state.selectedId}
-        setResizing={setResizing}
-      />
-      <PaddingHandles
-        setResizing={setResizing}
-        rect={rect}
-        selectedId={state.selectedId}
-      />
-      <MarginHandles
-        setResizing={setResizing}
-        rect={rect}
-        selectedId={state.selectedId}
-      />
-
+      {type && (
+        <ResizeHandles
+          rect={rect}
+          selectedId={state.selectedId}
+          setResizing={setResizing}
+        />
+      )}
+      {type && (
+        <PaddingHandles
+          setResizing={setResizing}
+          rect={rect}
+          selectedId={state.selectedId}
+        />
+      )}
+      {type && (
+        <MarginHandles
+          setResizing={setResizing}
+          rect={rect}
+          selectedId={state.selectedId}
+        />
+      )}
       {/* Visual indicator when resizing */}
       {resizing && <div className="absolute inset-0 border border-blue-600 rounded pointer-events-none z-[1008]" />}
       {selectedElement?.type != "__body" && (

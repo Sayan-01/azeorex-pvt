@@ -5,7 +5,7 @@ export const runtime = "edge";
 export const maxDuration = 60;
 
 export async function POST(req: Request) {
-  const { messages, userId } = await req.json();
+  const { messages, userId, model } = await req.json();
 
   console.log(userId);
   
@@ -23,9 +23,8 @@ export async function POST(req: Request) {
       // model: "google/gemini-2.0-flash-exp:free",
 
       // good
-      model: "qwen/qwen3-coder:free",
+      model: model || "x-ai/grok-4.1-fast",
 
-      // model: "qwen/qwen3-14b:free",
       messages,
       stream: true,
     }),

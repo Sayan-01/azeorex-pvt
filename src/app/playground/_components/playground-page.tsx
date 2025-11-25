@@ -18,6 +18,7 @@ export type Messages = {
 const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: { funnelPageDetails: any; userId: string; projectId: string; chatMessages: Messages[] }) => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Messages[]>(chatMessages);
+  const [model, setModel] = useState("x-ai/grok-4.1-fast");
   const { dispatch, state } = useEditor();
   const { credits } = useCredits();
 
@@ -36,6 +37,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         body: JSON.stringify({
           messages: [{ role: "user", content: PromptForWebPage({ userInput }) }],
           userId,
+          model,
         }),
       });
 
@@ -141,6 +143,8 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       <FunnelEditorSidebar
         messages={messages}
         sendMessage={sendMessage}
+        model={model}
+        setModel={setModel}
         userId={userId}
         projectId={projectId}
         loading={loading}
