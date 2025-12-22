@@ -41,11 +41,11 @@ Azeorex is an all-in-one Web Design & Development Agency, a powerful No-Code Saa
 - AI Design Suggestions - Smart recommendations for design elements
 - AI Code Generation - Convert Figma designs into Azeorex templates
 
-### Analytics Dashboard
+<!-- ### Analytics Dashboard
 - Track performance metrics
 - Monitor downloads and sales
 - Visitor statistics
-- Performance insights
+- Performance insights -->
 
 ## Getting Started ==>
 1. Sign up for an account

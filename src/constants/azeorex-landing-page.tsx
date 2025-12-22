@@ -11,12 +11,12 @@ import { GoDatabase } from "react-icons/go";
 import { GoLock } from "react-icons/go";
 import Image from "next/image";
 
-type NavMenu ={
-  id: number
-  title: string
-  url: string
-  icon: string
-}
+type NavMenu = {
+  id: number;
+  title: string;
+  url: string;
+  icon: string;
+};
 
 export const navMenu: NavMenu[] = [
   {
@@ -63,80 +63,39 @@ type Card = {
 export const card: Card[] = [
   {
     id: 1,
-    title: "Website Template",
+    title: "AI Website Generation",
     description: (
       <h1>
-        High-quality <span className="text-violet-500">modern templates</span> for Websites and Apps.
+        Create responsive websites <span className="text-violet-500">with smart AI generation</span> in just minutes.{" "}
       </h1>
     ),
-    img_url: "/cards/template.svg",
+    img_url: "/cards/fullstack.svg",
     url: "/saas/templates",
     feature: ["Customizable", "User-friendly", "Responsive Design"],
   },
   {
     id: 2,
-    title: "Website Component",
+    title: "Design Tools",
     description: (
       <h1>
-        Reusable, sleek <span className="text-violet-500">components</span> to enhance your website design & look.
+        Advanced <span className="text-violet-500">design controls</span>, layouts & styling tools directly inside the builder.
       </h1>
     ),
-    img_url: "/cards/component.svg",
+    img_url: "/cards/template.svg",
     url: "/saas/templates",
     feature: ["Modular", "Scalable", "High Performance"],
   },
   {
     id: 3,
-    title: "Backend Management",
+    title: "Azeorex Marketplace",
     description: (
       <h1>
-        Efficient <span className="text-violet-500">backend solutions</span> for smooth, reliable operations.
+        Azeorex <span className="text-violet-500">design marketplace</span>. Buy and sell templates.
       </h1>
     ),
     img_url: "/cards/backend.svg",
     url: "connection/backend-management",
     feature: ["Secure", "Scalable", "Reliable"],
-  },
-  {
-    id: 4,
-    title: "Full Stack Projects",
-    description: (
-      <h1>
-        Complete <span className="text-violet-500">full stack projects</span> developed with new technologies.
-      </h1>
-    ),
-    img_url: "/cards/fullstack.svg",
-    url: "connection/full-stack-projects",
-    feature: ["Comprehensive", "End-to-End Solutions", "Seamless Integration"],
-  },
-  {
-    id: 5,
-    title: "Custom Designs",
-    description: (
-      <h1>
-        Tailored{" "}
-        <span className="text-violet-500">
-          custom
-          <br className="sm:hidden block" /> design
-        </span>{" "}
-        solutions to meet your unique needs.
-      </h1>
-    ),
-    img_url: "/cards/custom.svg",
-    url: "connection/custom-designs",
-    feature: ["Unique Aesthetics", "Client-focused", "Innovative Designs"],
-  },
-  {
-    id: 6,
-    title: "Personal Website",
-    description: (
-      <h1>
-        Craft standout <span className="text-violet-500">personal website</span> to showcase your work.
-      </h1>
-    ),
-    img_url: "/cards/personal.svg",
-    url: "connection/personal-website",
-    feature: ["Personal Branding", "Portfolio Showcase", "Interactive Features"],
   },
 ];
 
@@ -162,10 +121,10 @@ export const theme = [
 ];
 
 type Category = {
-  id: number
-  label: string
-  value: string
-}
+  id: number;
+  label: string;
+  value: string;
+};
 
 export const category: Category[] = [
   { id: 1, label: "All", value: "" },

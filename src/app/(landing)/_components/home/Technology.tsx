@@ -5,17 +5,20 @@ import Link from "next/link";
 import Heading from "@/components/design/Heading";
 import Wrapper from "@/components/design/Wrapper";
 import Button from "@/components/buttons/Button";
+import { PenTool, Settings } from "lucide-react";
 
 const Technology = () => {
   return (
     <>
-      <Wrapper className={"flex flex-col items-center justify-center mb-36 relative"}>
+      <Wrapper className={"flex flex-col items-center justify-center md:mt-32 mt-20  relative "}>
+        
         <Heading
-          className={"mb-20 "}
+          className={"mb-20"}
           h3={"-: Tech part :-"}
           h1={"Technologies That We Use"}
           p={"Explore our cutting-edge technologies that drive innovation and deliver top-tier solutions for your needs."}
         />
+
         <div className="w-[200%] sm:w-full relative sm:left-0 left-[52%]">
           <Image
             alt="tech1"

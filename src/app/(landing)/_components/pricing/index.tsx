@@ -23,7 +23,7 @@ export const PricingSection = async () => {
   const products = await polar.products.list({ isArchived: false });
   return (
     <section
-      className="w-full md:pt-32 md:mt-8 flex flex-col items-center gap-y-5"
+      className="w-full  flex flex-col  mb-36 items-center gap-y-5"
       id="pricing"
     >
       <Heading

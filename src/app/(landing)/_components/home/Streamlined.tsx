@@ -1,49 +1,67 @@
-'use client'
+"use client";
 import Gradient from "@/components/design/Gradient";
 import Heading from "@/components/design/Heading";
 import Wrapper from "@/components/design/Wrapper";
-import { ArrowRight, Layout, Palette, Rocket } from "lucide-react";
+import { ArrowRight, Layout, Palette, Rocket, Upload } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 const Streamlined = () => {
-  const streamlined = [
+  const steps = [
     {
-      logo: (
-        <Layout
-          className="group-hover:scale-110 transition-transform duration-300"
-          size={26}
-        />
+      step: "1. Choose template",
+      desc: "Kick off by crafting a script with a prompt or by choosing from available template suggestions.",
+      title: "Enter Your Story Topic",
+      mock: (
+        <div className="bg-[#1A1D29] p-4 rounded-lg space-y-3">
+          <div className="text-xs text-gray-500">Write a story about Spanish lullaby</div>
+          <div className="h-2 w-full bg-white/5 rounded"></div>
+          <div className="flex gap-2">
+            <span className="px-2 py-1 bg-purple-500/20 text-purple-300 text-[10px] rounded border border-purple-500/30">Funny ×</span>
+            <span className="px-2 py-1 bg-purple-500/20 text-purple-300 text-[10px] rounded border border-purple-500/30">Fairy ×</span>
+            <span className="px-2 py-1 bg-purple-500/20 text-purple-300 text-[10px] rounded border border-purple-500/30">Lullaby ×</span>
+          </div>
+        </div>
       ),
-      title: "Four Simple Steps to Success",
-      description: "Choose from a wide variety of templates.",
-      color: "from-purple-500/20 to-purple-600/10",
-      iconColor: "text-purple-400",
     },
     {
-      logo: (
-        <Palette
-          className="group-hover:scale-110 transition-transform duration-300"
-          size={26}
-        />
+      step: "2. Customize Your Site",
+      desc: "Select orientation and pick a background scene and music from free templates.",
+      title: "Video Orientation",
+      mock: (
+        <div className="space-y-4">
+          <div className="flex gap-2 overflow-hidden">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="w-16 h-10 bg-white/5 rounded border border-white/10 shrink-0 relative overflow-hidden"
+              >
+                <img
+                  src={`https://picsum.photos/id/${100 + i}/100/100`}
+                  className="opacity-50 object-cover w-full h-full"
+                />
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-between text-[10px] text-gray-400 bg-[#1A1D29] p-2 rounded">
+            <span>Beach Mermaid</span>
+            <span>Deep Ocean</span>
+          </div>
+        </div>
       ),
-      title: "Customize Your Site",
-      description: "Use our intuitive drag-and-drop editor for customization.",
-      color: "from-blue-500/20 to-blue-600/10",
-      iconColor: "text-blue-400",
     },
     {
-      logo: (
-        <Rocket
-          className="group-hover:scale-110 transition-transform duration-300"
-          size={26}
-        />
+      step: "3. Launch with a Click",
+      desc: "Select the export format and download the generated videos, script, or narration.",
+      title: "Download",
+      mock: (
+        <div className="flex items-center justify-center h-full py-4">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.4)] animate-pulse-slow">
+            <Upload className="w-8 h-8 text-white" />
+          </div>
+        </div>
       ),
-      title: "Launch with a Click",
-      description: "Go live and start sharing your content instantly.",
-      color: "from-emerald-500/20 to-emerald-600/10",
-      iconColor: "text-emerald-400",
     },
   ];
 
@@ -70,7 +88,6 @@ const Streamlined = () => {
     },
   };
 
-
   return (
     <section>
       <div className="absolute inset-0 -z-10">
@@ -86,47 +103,31 @@ const Streamlined = () => {
           h1={"Build Website in Minutes"}
           p={"Creating a stunning website has never been easier. Follow our simple steps to bring your vision to life."}
         />
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-3 gap-6 relative z-10"
-        >
-          {streamlined.map((step, index) => (
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {steps.map((item, index) => (
             <motion.div
               key={index}
-              variants={item}
-              className={cn("border group relative overflow-hidden rounded-2xl p-px transition-all duration-500  hover:shadow-white/5", `bg-gradient-to-br ${step.color} via-transparent`)}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+              viewport={{ once: true }}
+              className="bg-[#0F111A]/90 border border-white/10 rounded-2xl p-1 overflow-hidden hover:border-blue-400/30 transition-colors"
             >
-              <div className="relative z-10 flex flex-col h-full p-6 bg-gradient-to-br from-gray-900 to-gray-950/90 rounded-2xl">
-                <div
-                  className={cn(
-                    "w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300",
-                    "bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/5 group-hover:border-white/10",
-                    step.iconColor
-                  )}
-                >
-                  {step.logo}
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
-                <p className="text-gray-400 mb-6">{step.description}</p>
-                <div className="mt-auto flex items-center text-sm font-medium text-white/60 group-hover:text-white transition-colors">
-                  Learn more
-                  <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </div>
-
-                {/* Animated gradient border effect */}
-                <div className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className={cn("absolute inset-0 rounded-2xl", "bg-[radial-gradient(400px_circle_at_var(--mouse-x,0px)_var(--mouse-y,0px),rgba(255,255,255,0.05),transparent_40%)]")} />
-                </div>
+              <div className="bg-[#151722] rounded-xl p-6 h-48 mb-1 flex flex-col justify-center border-b border-white/5">
+                <div className="text-xs text-gray-500 mb-2 uppercase tracking-wider">{item.title}</div>
+                {item.mock}
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">{item.step}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </Wrapper>
     </section>
-  );
+  );  
 };
 
 export default Streamlined;
