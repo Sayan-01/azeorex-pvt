@@ -1,4 +1,3 @@
-import { PenTool, Settings } from "lucide-react";
 import React from "react";
 
 const Agency = () => {
