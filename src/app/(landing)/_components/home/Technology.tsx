@@ -5,7 +5,6 @@ import Link from "next/link";
 import Heading from "@/components/design/Heading";
 import Wrapper from "@/components/design/Wrapper";
 import Button from "@/components/buttons/Button";
-import { PenTool, Settings } from "lucide-react";
 
 const Technology = () => {
   return (
