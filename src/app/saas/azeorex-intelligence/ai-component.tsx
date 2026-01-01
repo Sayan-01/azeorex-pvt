@@ -68,7 +68,7 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
     }
   };
   return (
-    <section className="flex items-center flex-col w-full max-w-3xl mx-auto  mt-8">
+    <section className="flex items-center flex-col w-full max-w-3xl mx-auto  md:mt-8 mt-10 p-6">
       <div className="w-full mb-6">
         <div className="flex items-center justify-start ">
           <Link
@@ -80,7 +80,7 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
           </Link>
         </div>
       </div>
-      <h1 className="text-3xl font-semibold">
+      <h1 className="md:text-3xl text-2xl font-semibold text-center">
         Generate with <span className="text-orange-300">Creative AI</span>
       </h1>
       <p className="text-sm opacity-60 mt-1">What would like to create today</p>
