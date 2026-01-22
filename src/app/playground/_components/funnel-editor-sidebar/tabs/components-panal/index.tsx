@@ -156,7 +156,8 @@ const ComponentsTab = () => {
   ];
 
   const handleDragStart = (component: EditorElement) => {
-    console.log("abc" ,component);
+    console.log(component);
+    
     dispatch({ type: "SET_DRAGGED_COMPONENT", payload: { draggedComponent: component } });
   };
 
@@ -235,10 +236,7 @@ const ComponentsTab = () => {
               size="sm"
               className="bg-[#22dd6626] hover:bg-[#22dd6626] mb-4 text-[#21DB66] w-full editor_text"
               onClick={() => {
-                console.log(state.selectedElement);
-
                 setComponents((prev: any) => [...prev, state.selectedElement]);
-                console.log(components);
               }}
             >
               Create components

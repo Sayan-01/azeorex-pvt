@@ -5,10 +5,6 @@
 
 Azeorex is an all-in-one Web Design & Development Agency, a powerful No-Code SaaS platform for building and deploying websites, and a vibrant Template Marketplace.
 
-<p align="center">
-
-
-</p>
 
 <table>
   <tr>

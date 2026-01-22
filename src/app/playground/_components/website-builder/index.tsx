@@ -37,6 +37,8 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     const Tag = el.type === "__body" ? "div" : el.type;
 
     const handleClick = (e: React.MouseEvent) => {
+      console.log(el.id);
+      
       e.preventDefault();
       e.stopPropagation();
       if (state.previewMode) return;
