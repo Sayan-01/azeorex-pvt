@@ -7,11 +7,10 @@ import Smart from "./_components/home/Smart";
 import Footer from "./_components/home/Footer";
 import ReviewSection from "./_components/home/ReviewSection";
 import Streamlined from "./_components/home/Streamlined";
-import { ReactLenis } from "lenis/react";
-import ParallaxContainer from "@/components/global/animation/ParalexComp";
 import Agency from "./_components/home/Agency";
+import { PricingSection } from "./_components/pricing";
 
-const PriceSection = dynamic(() => import("./_components/pricing").then((component) => component.PricingSection), { ssr: true });
+// const PriceSection = dynamic(() => import("./_components/pricing").then((component) => component.PricingSection), { ssr: true });
 const Marquee = dynamic(() => import("./_components/home/Marquee").then((component) => component.default), { ssr: true });
 const Category = dynamic(() => import("./_components/home/Category").then((component) => component.default), { ssr: true });
 
@@ -20,23 +19,16 @@ export default async function Home() {
     <div className="bg-bcgc x relative">
       <Header /> {/* sm:h-[85px] h-[70px] -> sm:pt-[95px] pt-[75px] sm:mb-[95px] mb-[75px] */}
       <div className=" overflow-hidden w-full relative ">
-        <ReactLenis root />
         <Hero />
-        {/* <Container_y> */}
         <Banner />
-        {/* </Container_y> */}
-        {/* <Container_y> */}
         <Marquee />
-        {/* </Container_y> */}
         <Streamlined />
         <Category />
-        {/* <Container_y> */}
-        <PriceSection />
+        <PricingSection />
         <Agency/>
         <Technology />
         <ReviewSection />
         <Smart />
-        {/* </Container_y> */}
       </div>
       <Footer />
     </div>

@@ -137,7 +137,7 @@ export default function LayersPanel() {
           style={{ marginLeft: `${depth * 16 + 8}px` }}
         >
           {el.id !== "__body" && getElementIcon(el.type)}
-          <span className="text-xs font-mono text-white">{el.type === "__body" ? "🌐 Body" : `${el.type}`}</span>
+          <span className="text-xs font-mono text-white">{el.type === "__body" ? "🌐 Body" : `${el.id}`}</span>
         </div>
         {hasChildren && <div>{(el.content as EditorElement[]).map((child) => renderLayerTree(child, depth + 1))}</div>}
       </div>

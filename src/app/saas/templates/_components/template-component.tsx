@@ -61,8 +61,8 @@ const TemplateComponent = ({ templates }: Props) => {
           </div>
         </div>
       </Header>
-      <section className="mb-4 md:mb-6 md:px-7 px-5 sm:block hidden">
-        <div className="bg-[#ffffff08] rounded-xl md:p-6 p-4 flex gap-3 items-center">
+      <section className="mb-4 md:mb-6 md:px-7 px-5">
+        <div className="bg-[#ffffff08] rounded-xl p-4 flex gap-3 items-center">
           <svg
             width="12"
             height="18"
@@ -133,7 +133,12 @@ const TemplateComponent = ({ templates }: Props) => {
             templates
               .filter((item) => item.title.toLowerCase().includes(query) && (filterQuery === "" || item.category.includes(filterQuery)))
               .map((item) => {
-                return <TemplateCard item={item} key={item.id} />;
+                return (
+                  <TemplateCard
+                    item={item}
+                    key={item.id}
+                  />
+                );
               })
           ) : (
             <></>

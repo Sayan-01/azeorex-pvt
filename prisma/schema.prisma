@@ -116,7 +116,7 @@ model Template {
   title           String
   description     String
   longDescription String
-  subDomainName       String?
+  subDomainName   String?
   theme           String
   category        String[]
   access          String

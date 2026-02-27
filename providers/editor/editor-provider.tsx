@@ -334,7 +334,17 @@ export const EditorProvider = ({ children, userId, projectId, funnelPageId, funn
     // Handle new component drop from sidebar
     if (state.draggedComponent && state.dropTargetId && state.dropPosition) {
       const newId = `${state.draggedComponent.type}-${Date.now()}`;
-      const newElement = { ...state.draggedComponent, id: newId };
+      const updateIds = (element: EditorElement): EditorElement => ({
+        ...element,
+        id: `${element.type}-${Math.random().toString(36).substr(2, 9)}`,
+        content: Array.isArray(element.content) ? element.content.map(updateIds) : element.content,
+      });
+
+      const newElement = {
+        ...updateIds(state.draggedComponent),
+        id: newId,
+      };
+      console.log(newElement);
 
       const newElements = insertElement(newElement, state.dropTargetId, state.dropPosition, state.elements);
       saveToHistory(newElements, state.selectedId);

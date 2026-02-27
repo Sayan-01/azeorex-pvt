@@ -10,7 +10,8 @@ export default auth((req) => {
   let host = req.headers.get("host");
 
   const pathWithSearchParams = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
-  const publicRoutes = ["/", "/api/uploadthing"];
+  const publicRoutes = ["/", "/auth/login", "/auth/register", "/api/uploadthing", "/auth"];
+
   const isPublicRoute = publicRoutes.some((route) => url.pathname.startsWith(route));
 
   const isAuthenticated = !!req.auth;
