@@ -2,13 +2,13 @@ export type DeviceType = "Desktop" | "Tablet" | "Mobile";
 export type DropPosition = "before" | "after" | "inside";
 
 /**
- * "section"     → <section> — বড় ব্লক, সাধারণত full-width row
- * "container"   → <div>    — grouping করার জন্য wrapper
+ * "section"     → <section> — block element with full width by default
+ * "container"   → <div>    — wrapper for group elements
  * "column"      → <div>    — flex/grid column
  * "text"        → <p>      — paragraph text
- * "heading"     → <h1>-<h6> — শিরোনাম
- * "image"       → <img>    — ছবি
- * "button"      → <button> — click করার বোতাম
+ * "heading"     → <h1>-<h6> — headings
+ * "image"       → <img>    — image
+ * "button"      → <button> — clickable button
  * "link"        → <a>      — hyperlink
  * "video"       → <video>  — video player
  * "form"        → <form>   — form wrapper
