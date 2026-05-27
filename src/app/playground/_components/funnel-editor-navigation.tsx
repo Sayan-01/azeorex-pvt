@@ -21,8 +21,6 @@ type Props = {
 const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props) => {
   const { state, dispatch } = useEditor();
   const [loading, setLoading] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [isPublished, setIsPublished] = useState(funnelPageDetails.published || false);
 
 
   const undo = () => dispatch({ type: "UNDO" });

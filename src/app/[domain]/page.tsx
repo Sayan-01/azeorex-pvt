@@ -29,13 +29,9 @@ const Page = async (props: { params: Promise<{ domain: string }> }) => {
     },
   });
 
+
   return (
-    <EditorProvider
-      userId={domainData.userId}
-      projectId={domainData.id}
-      funnelPageDetails={pageData}
-      funnelPageId={pageData.id}
-    >
+    <EditorProvider>
        <WebsiteBuilder
           funnelPageId={pageData.id}
           liveMode={true}

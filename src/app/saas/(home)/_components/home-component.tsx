@@ -72,7 +72,7 @@ const HomeComponent = ({ funnels, templates, userId }: Props) => {
         </div>
       </Header>
       <section className="md:mb-4 md:px-7 px-5 sm:block hidden mb-10">
-        <div className="bg-[#ffffff08] rounded-xl p-6 flex gap-3 items-center">
+        <div className="bg-[#ffffff08] rounded-xl p-4 flex gap-3 items-center">
           <svg
             width="12"
             height="18"

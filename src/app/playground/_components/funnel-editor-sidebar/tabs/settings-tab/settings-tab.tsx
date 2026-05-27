@@ -32,7 +32,18 @@ function SettingsTab() {
       >
         <SrcHrefSection selectedElement={selectedElement} />
         <DiamentionSection selectedElement={selectedElement} />
-        {selectedElement?.type === "p" && <TypographySection selectedElement={selectedElement} />}
+        {(selectedElement?.type === "text" ||
+          selectedElement?.type === "link" ||
+          selectedElement?.type === "button" ||
+          selectedElement?.type === "h1" ||
+          selectedElement?.type === "h2" ||
+          selectedElement?.type === "h3" ||
+          selectedElement?.type === "h4" ||
+          selectedElement?.type === "h5" ||
+          selectedElement?.type === "h6" ||
+          selectedElement?.type === "input" ||
+          selectedElement?.type === "textarea" ||
+          selectedElement?.type === "select") && <TypographySection selectedElement={selectedElement} />}
         <SpacingSection selectedElement={selectedElement} />
         <PositionSection selectedElement={selectedElement} />
         <BackgroundSection selectedElement={selectedElement} />

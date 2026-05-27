@@ -3,10 +3,10 @@ import { AccordionItem, AccordionTrigger, AccordionContent } from "@/components/
 import { Input } from "@/components/ui/custom-input";
 import { Button } from "@/components/ui/button";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
-import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../../providers/editor/editor-types";
 
 const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
-  const { updateElementAttribute } = useEditor();
+  const { updateAttribute } = useEditor();
   const [classes, setClasses] = useState<string[]>([]);
   const [newClass, setNewClass] = useState("");
 
@@ -20,7 +20,7 @@ const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorEl
 
   const updateElementClasses = (updatedClasses: string[]) => {
     const classString = updatedClasses.join(" ");
-    updateElementAttribute(selectedElement.id, "className", classString);
+    updateAttribute(selectedElement.id, "className", classString);
   };
 
   //Remove a class

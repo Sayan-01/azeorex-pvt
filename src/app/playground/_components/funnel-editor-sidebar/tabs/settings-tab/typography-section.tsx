@@ -4,11 +4,11 @@ import { Input } from "@/components/ui/custom-input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight, CircleOff, Underline } from "lucide-react";
-import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../../providers/editor/editor-types";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 
 const TypographySection = ({ selectedElement }: { selectedElement: EditorElement }) => {
-  const { updateElementStyle } = useEditor();
+  const { updateStyle } = useEditor();
 
   return (
     <AccordionItem
@@ -23,7 +23,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
           <Tabs
             className="flex-1"
             value={selectedElement?.styles?.textAlign || "left"}
-            onValueChange={(e) => updateElementStyle(selectedElement.id, "textAlign", e)}
+            onValueChange={(e) => updateStyle(selectedElement.id, "textAlign", e)}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit flex-1">
               <TabsTrigger
@@ -61,7 +61,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
             placeholder="Default"
             id="DM Sans"
             value={selectedElement?.styles?.fontFamily}
-            onChange={(e) => updateElementStyle(selectedElement.id, "fontFamily", e.target.value)}
+            onChange={(e) => updateStyle(selectedElement.id, "fontFamily", e.target.value)}
           />
         </div>
         {/* 3rd color */}
@@ -78,7 +78,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
                 type="color"
                 id="color"
                 placeholder="transparent"
-                onChange={(e) => updateElementStyle(selectedElement.id, "color", e.target.value)}
+                onChange={(e) => updateStyle(selectedElement.id, "color", e.target.value)}
                 value={selectedElement?.styles?.color || ""}
               />
             </div>
@@ -87,7 +87,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
               id="color"
               placeholder="transparent"
               value={selectedElement?.styles?.color || ""}
-              onChange={(e) => updateElementStyle(selectedElement.id, "color", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "color", e.target.value)}
             />
           </div>
         </div>
@@ -96,7 +96,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
           <p className="text-muted-foreground text-xs w-20">Weight</p>
           <Select
             onValueChange={(e) => {
-              updateElementStyle(selectedElement.id, "fontWeight", e);
+              updateStyle(selectedElement.id, "fontWeight", e);
             }}
             value={selectedElement?.styles?.fontWeight?.toString() || ""}
           >
@@ -125,7 +125,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
             className="w-[136px]"
             placeholder="px"
             id="fontSize"
-            onChange={(e) => updateElementStyle(selectedElement.id, "fontSize", e.target.value)}
+            onChange={(e) => updateStyle(selectedElement.id, "fontSize", e.target.value)}
             value={selectedElement?.styles?.fontSize || ""}
           />
         </div>
@@ -136,7 +136,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
             className="w-[136px]"
             id="lineHeight"
             placeholder="auto"
-            onChange={(e) => updateElementStyle(selectedElement.id, "lineHeight", e.target.value)}
+            onChange={(e) => updateStyle(selectedElement.id, "lineHeight", e.target.value)}
             value={selectedElement?.styles?.lineHeight || ""}
           />
         </div>
@@ -146,7 +146,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
             className="w-[136px]"
             placeholder="auto"
             id="letterSpacing"
-            onChange={(e) => updateElementStyle(selectedElement.id, "letterSpacing", e.target.value)}
+            onChange={(e) => updateStyle(selectedElement.id, "letterSpacing", e.target.value)}
             value={selectedElement?.styles?.letterSpacing || ""}
           />
         </div>
@@ -155,7 +155,7 @@ const TypographySection = ({ selectedElement }: { selectedElement: EditorElement
 
           <Tabs
             className="flex-1"
-            onValueChange={(e) => updateElementStyle(selectedElement.id, "textDecoration", e)}
+            onValueChange={(e) => updateStyle(selectedElement.id, "textDecoration", e)}
             value={String(selectedElement?.styles?.textDecoration || "none")}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit flex-1">

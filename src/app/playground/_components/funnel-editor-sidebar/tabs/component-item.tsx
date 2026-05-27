@@ -1,6 +1,6 @@
 "use client";
 
-import { EditorElement } from "../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../providers/editor/editor-types";
 
 type ComponentItemProps = {
   icon?: React.ReactNode;

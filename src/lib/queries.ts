@@ -7,7 +7,6 @@ import { success, z } from "zod";
 import { auth } from "../../auth";
 import { db } from "./db";
 import { sendOtpViaNodeMailer } from "./sendOtpViaNodeMailer";
-import { initialJSON } from "../../providers/editor/editor-actions";
 
 //============================================================
 
@@ -72,7 +71,7 @@ export const getProject = async (projectId: string) => {
     include: {
       FunnelPages: {
         orderBy: {
-          order: "asc",
+          updatedAt: "desc",
         },
       },
     },
@@ -96,7 +95,7 @@ export const getProjects = async (userId: string | undefined) => {
 
 //===============================================================================
 
-export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string } , projectId: string) => {
+export const upsertProject = async (userId: string, project: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }, projectId: string) => {
   try {
     if (project.subDomainName) {
       const existingProject = await db.project.findFirst({
@@ -161,15 +160,33 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
       content: funnelPage.content
         ? funnelPage.content
         : JSON.stringify({
-            id: "__body",
-            type: "__body",
-            name: "Body",
-            styles: {
-              minHeight: "100vh",
-              backgroundColor: "#f8f8f8",
-              padding: "20px",
+            __body: {
+              id: "__body",
+              name: "Body",
+              type: "__body",
+              parentId: null,
+              children: ["title-1"],
+              styles: {
+                minHeight: "100vh",
+                backgroundColor: "#f3f4f6",
+                padding: "20px",
+              },
             },
-            content: [],
+
+            "title-1": {
+              id: "title-1",
+              name: "Heading 1",
+              type: "h1",
+              parentId: "__body",
+              children: [],
+              content: "Welcome to AI Website Builder",
+              styles: {
+                fontSize: "36px",
+                fontWeight: "bold",
+                color: "#1f2937",
+                marginBottom: "16px",
+              },
+            },
           }),
       projectId,
     },

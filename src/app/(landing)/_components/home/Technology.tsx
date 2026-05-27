@@ -9,7 +9,7 @@ import Button from "@/components/buttons/Button";
 const Technology = () => {
   return (
     <>
-      <Wrapper className={"flex flex-col items-center justify-center md:mt-32 mt-20  relative "}>
+      <Wrapper className={"flex flex-col items-center justify-center  relative "}>
         
         <Heading
           className={"mb-20"}

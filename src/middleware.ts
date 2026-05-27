@@ -18,7 +18,7 @@ export default auth((req) => {
 
   const customSubDomain = hostname.get("host")?.split(`${process.env.NEXT_PUBLIC_URL_DOMAIN}`).filter(Boolean)[0];
 
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.MODE !== "DEV") {
     if (customSubDomain && host !== process.env.NEXT_PUBLIC_URL_DOMAIN) {
       return NextResponse.rewrite(new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url));
     } 

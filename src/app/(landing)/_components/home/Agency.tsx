@@ -2,7 +2,7 @@ import React from "react";
 
 const Agency = () => {
   return (
-    <div className="relative min-h-[600px] flex flex-col justify-center items-center overflow-hidden bg-[#020617] p-4">
+    <div className="relative min-h-[600px] flex flex-col justify-center items-center overflow-hidden bg-[#020617] p-4 mb-36">
       {/* Background Glow Container */}
       <div className="absolute md:inset-x-4 inset-x-0 bottom-4 top-4 md:rounded-[40px] glow-bottom border-b border-sky-500/20 pointer-events-none"></div>
 

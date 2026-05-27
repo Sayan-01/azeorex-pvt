@@ -3,10 +3,10 @@ import { Input } from "@/components/ui/custom-input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlignHorizontalJustifyCenterIcon, AlignHorizontalJustifyEndIcon, AlignHorizontalJustifyStart, AlignHorizontalSpaceAround, AlignHorizontalSpaceBetween, AlignVerticalJustifyCenter, AlignVerticalJustifyEnd, AlignVerticalJustifyStart, AlignVerticalSpaceBetween, ArrowRightLeft, MoveDown, MoveRight } from "lucide-react";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
-import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../../providers/editor/editor-types";
 
 const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
-  const {updateElementStyle} = useEditor();
+  const {updateStyle} = useEditor();
   return (
     <AccordionItem
       value="Flexbox"
@@ -19,7 +19,7 @@ const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement })
 
           <Tabs
             className="flex-1"
-            onValueChange={(e) => updateElementStyle(selectedElement.id, "display", e)}
+            onValueChange={(e) => updateStyle(selectedElement.id, "display", e)}
             value={selectedElement?.styles?.display || ""}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
@@ -48,7 +48,7 @@ const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement })
           <p className=" text-muted-foreground text-xs w-20"> Direction</p>
           <Tabs
             className="flex-1"
-            onValueChange={(e) => updateElementStyle(selectedElement.id, "flexFlow", e)}
+            onValueChange={(e) => updateStyle(selectedElement.id, "flexFlow", e)}
             value={selectedElement?.styles?.flexFlow || "row"}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
@@ -78,7 +78,7 @@ const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement })
             <p className="text-muted-foreground text-xs w-20">{selectedElement?.styles?.flexFlow === "column" ? "Align Y" : "Align X"}</p>
             <Tabs
               className="flex-1"
-              onValueChange={(e) => updateElementStyle(selectedElement.id, "justifyContent", e)}
+              onValueChange={(e) => updateStyle(selectedElement.id, "justifyContent", e)}
               value={selectedElement?.styles?.justifyContent || "center"}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit">
@@ -119,7 +119,7 @@ const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement })
             <p className="text-muted-foreground text-xs w-20">{selectedElement?.styles?.flexFlow === "column" ? "Align X" : "Align Y"}</p>
             <Tabs
               className="flex-1"
-              onValueChange={(e) => updateElementStyle(selectedElement.id, "alignItems", e)}
+              onValueChange={(e) => updateStyle(selectedElement.id, "alignItems", e)}
               value={selectedElement?.styles?.alignItems || "normal"}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[2px] rounded-md bg-[#272727] h-fit ">
@@ -156,7 +156,7 @@ const FlexboxSection = ({ selectedElement }: { selectedElement: EditorElement })
               className="w-[136px]"
               placeholder="0"
               id="gap"
-              onChange={(e) => updateElementStyle(selectedElement.id, "gap", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "gap", e.target.value)}
               value={selectedElement?.styles?.gap || ""}
             />
           </div>

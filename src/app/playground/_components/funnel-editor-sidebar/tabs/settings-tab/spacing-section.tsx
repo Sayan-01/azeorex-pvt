@@ -2,11 +2,11 @@ import { AccordionItem, AccordionTrigger, AccordionContent } from "@/components/
 import PM from "@/icons/p-m";
 import React from "react";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
-import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../../providers/editor/editor-types";
 import { Input } from "@/components/ui/custom-input";
 
 const SpacingSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
-  const { updateElementStyle } = useEditor();
+  const { updateStyle } = useEditor();
 
   return (
     <AccordionItem
@@ -23,57 +23,57 @@ const SpacingSection = ({ selectedElement }: { selectedElement: EditorElement })
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
             id="marginTop"
             placeholder="16px"
-            value={(selectedElement?.styles as any)?.["margin-top"] || ""}
-            onChange={(e) => updateElementStyle(selectedElement.id, "margin-top", e.target.value)}
+            value={(selectedElement?.styles as any)?.["marginTop"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "marginTop", e.target.value)}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
             placeholder="16px"
             id="marginBottom"
-            onChange={(e) => updateElementStyle(selectedElement.id, "margin-bottom", e.target.value)}
-            value={(selectedElement?.styles as any)?.["margin-bottom"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "marginBottom", e.target.value)}
+            value={(selectedElement?.styles as any)?.["marginBottom"] || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
             placeholder="16px"
             id="marginLeft"
-            onChange={(e) => updateElementStyle(selectedElement.id, "margin-left", e.target.value)}
-            value={(selectedElement?.styles as any)?.["margin-left"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "marginLeft", e.target.value)}
+            value={(selectedElement?.styles as any)?.["marginLeft"] || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
             placeholder="16px"
             id="marginRight"
-            onChange={(e) => updateElementStyle(selectedElement.id, "margin-right", e.target.value)}
-            value={(selectedElement?.styles as any)?.["margin-right"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "marginRight", e.target.value)}
+            value={(selectedElement?.styles as any)?.["marginRight"] || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-8 left-1/2 -translate-x-1/2"
             placeholder="16px"
             id="paddingTop"
-            onChange={(e) => updateElementStyle(selectedElement.id, "padding-top", e.target.value)}
-            value={(selectedElement?.styles as any)?.["padding-top"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "paddingTop", e.target.value)}
+            value={(selectedElement?.styles as any)?.["paddingTop"] || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-8 left-1/2 -translate-x-1/2"
             placeholder="16px"
             id="paddingBottom"
-            onChange={(e) => updateElementStyle(selectedElement.id, "padding-bottom", e.target.value)}
-            value={(selectedElement?.styles as any)?.["padding-bottom"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "paddingBottom", e.target.value)}
+            value={(selectedElement?.styles as any)?.["paddingBottom"] || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 left-9 -translate-y-1/2"
             placeholder="16px"
             id="paddingLeft"
-            onChange={(e) => updateElementStyle(selectedElement.id, "padding-left", e.target.value)}
-            value={(selectedElement?.styles as any)?.["padding-left"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "paddingLeft", e.target.value)}
+            value={(selectedElement?.styles as any)?.["paddingLeft"] || ""}
           />
           <input
             className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-9 -translate-y-1/2"
             placeholder="16px"
             id="paddingRight"
-            onChange={(e) => updateElementStyle(selectedElement.id, "padding-right", e.target.value)}
-            value={(selectedElement?.styles as any)?.["padding-right"] || ""}
+            onChange={(e) => updateStyle(selectedElement.id, "paddingRight", e.target.value)}
+            value={(selectedElement?.styles as any)?.["paddingRight"] || ""}
           />
         </div>
         <div className="flex flex-col gap-3 mt-2">
@@ -83,7 +83,7 @@ const SpacingSection = ({ selectedElement }: { selectedElement: EditorElement })
               className="flex-1"
               placeholder="px"
               id="padding"
-              onChange={(e) => updateElementStyle(selectedElement.id, "padding", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "padding", e.target.value)}
               value={(selectedElement?.styles as any)?.padding || ""}
             />
           </div>
@@ -93,7 +93,7 @@ const SpacingSection = ({ selectedElement }: { selectedElement: EditorElement })
               className="flex-1"
               placeholder="px"
               id="margin"
-              onChange={(e) => updateElementStyle(selectedElement.id, "margin", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "margin", e.target.value)}
               value={(selectedElement?.styles as any)?.margin || ""}
             />
           </div>

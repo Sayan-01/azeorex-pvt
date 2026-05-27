@@ -23,9 +23,9 @@ export default async function Home() {
         <Banner />
         <Marquee />
         <Streamlined />
-        <Category />
         <PricingSection />
-        <Agency/>
+        <Agency />
+        <Category />
         <Technology />
         <ReviewSection />
         <Smart />

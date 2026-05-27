@@ -3,11 +3,11 @@ import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Position from "@/icons/position";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
-import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../../providers/editor/editor-types";
 import { Input } from "@/components/ui/custom-input";
 
 const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
-  const { updateElementStyle } = useEditor();
+  const { updateStyle } = useEditor();
   return (
     <AccordionItem
       value="Border"
@@ -26,7 +26,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
               className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
               id="borderTopWidth"
               placeholder="0px"
-              onChange={(e) => updateElementStyle(selectedElement.id, "borderTopWidth", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "borderTopWidth", e.target.value)}
               value={selectedElement?.styles?.borderTopWidth || ""}
             />
             {/* Bottom Border */}
@@ -34,7 +34,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
               className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
               placeholder="0px"
               id="borderBottomWidth"
-              onChange={(e) => updateElementStyle(selectedElement.id, "borderBottomWidth", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "borderBottomWidth", e.target.value)}
               value={selectedElement?.styles?.borderBottomWidth || ""}
             />
             {/* Left Border */}
@@ -42,7 +42,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
               className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
               placeholder="0px"
               id="borderLeftWidth"
-              onChange={(e) => updateElementStyle(selectedElement.id, "borderLeftWidth", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "borderLeftWidth", e.target.value)}
               value={selectedElement?.styles?.borderLeftWidth || ""}
             />
             {/* Right Border */}
@@ -50,7 +50,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
               className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
               placeholder="0px"
               id="borderRightWidth"
-              onChange={(e) => updateElementStyle(selectedElement.id, "borderRightWidth", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "borderRightWidth", e.target.value)}
               value={selectedElement?.styles?.borderRightWidth || ""}
             />
           </div>
@@ -58,7 +58,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
           <div className="flex items-center">
             <p className="text-muted-foreground text-xs w-20">Border Style</p>
             <Select
-              onValueChange={(e) => updateElementStyle(selectedElement.id, "borderStyle", e)}
+              onValueChange={(e) => updateStyle(selectedElement.id, "borderStyle", e)}
               value={selectedElement?.styles?.borderStyle || "solid"}
             >
               <SelectTrigger className="flex-1 px-2 !h-[30px] border-2 border-[#272727] text-xs">
@@ -90,7 +90,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
                   type="color"
                   id="borderColor"
                   placeholder="transparent"
-                  onChange={(e) => updateElementStyle(selectedElement.id, "borderColor", e.target.value)}
+                  onChange={(e) => updateStyle(selectedElement.id, "borderColor", e.target.value)}
                   value={selectedElement?.styles?.borderColor || ""}
                 />
               </div>
@@ -98,7 +98,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
                 className="h-[30px] w-20 border-y-2 group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                 id="borderColor"
                 placeholder="transparent"
-                onChange={(e) => updateElementStyle(selectedElement.id, "borderColor", e.target.value)}
+                onChange={(e) => updateStyle(selectedElement.id, "borderColor", e.target.value)}
                 value={selectedElement?.styles?.borderColor || ""}
               />
             </div>
@@ -115,7 +115,7 @@ const BorderShadowSection = ({ selectedElement }: { selectedElement: EditorEleme
                   const currentShadow = selectedElement?.styles?.boxShadow || "0px 0px 0px 0px rgba(0,0,0,0)";
                   const parts = currentShadow.split(" ");
                   parts[0] = e.target.value || "0px";
-                  updateElementStyle(selectedElement.id, "boxShadow", parts.join(" "));
+                  updateStyle(selectedElement.id, "boxShadow", parts.join(" "));
                 }}
                 value={selectedElement?.styles?.boxShadow || ""}
               />
