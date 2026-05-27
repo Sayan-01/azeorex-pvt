@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { EditorElement } from "../../providers/editor/editor-actions";
+import { EditorElement } from "../../providers/editor/editor-types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -34,13 +34,34 @@ export const ddmmyyyy = (date: Date) => {
 };
 
 // Helper: Get element by ID
-export const getElementById = (id: string, root: EditorElement): EditorElement | null => {
-  if (root.id === id) return root;
-  if (Array.isArray(root.content)) {
-    for (const child of root.content) {
-      const found = getElementById(id, child);
-      if (found) return found;
+export const getElementById = (id: string, elements: Record<string, EditorElement>): EditorElement | null => {
+  return elements[id] || null;
+};
+
+// Helper: Flatten old nested structure
+export const flattenOldStructure = (nested: any): Record<string, EditorElement> => {
+  const elements: Record<string, EditorElement> = {};
+
+  const traverse = (node: any, parentId: string | null) => {
+    if (!node || !node.id) return;
+    const id = node.id;
+    const childrenIds: string[] = [];
+
+    if (Array.isArray(node.content)) {
+      node.content.forEach((child: any) => {
+        childrenIds.push(child.id);
+        traverse(child, id);
+      });
     }
-  }
-  return null;
+
+    elements[id] = {
+      ...node,
+      parentId,
+      children: childrenIds,
+      content: typeof node.content === "string" ? node.content : null,
+    };
+  };
+
+  traverse(nested, null);
+  return elements;
 };

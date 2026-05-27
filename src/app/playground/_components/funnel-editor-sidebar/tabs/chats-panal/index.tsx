@@ -9,6 +9,39 @@ import { Roboto_Mono } from "next/font/google";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
+const modelOptions = [
+  {
+    value: "qwen/qwen3-coder:free",
+    label: "Qwen 3",
+    image: "/ai/qwen.png",
+  },
+  {
+    value: "x-ai/grok-4.1-fast:free",
+    label: "Grok (free)",
+    image: "/ai/grok.png",
+  },
+  {
+    value: "x-ai/grok-4.1-fast",
+    label: "Grok (paid)",
+    image: "/ai/grok.png",
+  },
+  {
+    value: "tngtech/deepseek-r1t2-chimera:free",
+    label: "Deepseek r1t2",
+    image: "/ai/deepseek.webp",
+  },
+  {
+    value: "google/gemini-2.0-flash-exp:free",
+    label: "Gemini",
+    image: "/ai/gemini.png",
+  },
+  {
+    value: "openai/gpt-oss-20b:free",
+    label: "GPT-20B",
+    image: "/ai/gpt.png",
+  },
+];
+
 const Chats = ({
   messages,
   onSend,
@@ -48,7 +81,7 @@ const Chats = ({
         className="flex-1 p-3 pb-0 overflow-y-auto box space-y-4 flex flex-col mb-3 "
       >
         {messages?.length === 0 ? (
-          <p className="text-center text-zinc-500">Chat with AI</p>
+          <p className="text-center text-sm text-zinc-500">Chat with AI</p>
         ) : (
           messages?.map((msg, index) => (
             <div
@@ -101,84 +134,22 @@ const Chats = ({
               </SelectTrigger>
               <SelectContent className="text-sm">
                 <SelectGroup>
-                  <SelectItem
-                    className="text-sm"
-                    value="qwen/qwen3-coder:free"
-                  >
-                    <Image
-                      src={"/ai/qwen.png"}
-                      alt={"Qwen"}
-                      width={300}
-                      height={300}
-                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
-                    />
-                    Qwen 3
-                  </SelectItem>
-                  <SelectItem
-                    className="text-sm"
-                    value="x-ai/grok-4.1-fast:free"
-                  >
-                    <Image
-                      src={"/ai/grok.png"}
-                      alt={"Grok"}
-                      width={300}
-                      height={300}
-                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
-                    />
-                    {"Grok (free)"}
-                  </SelectItem>
-                  <SelectItem
-                    className="text-sm"
-                    value="x-ai/grok-4.1-fast"
-                  >
-                    <Image
-                      src={"/ai/grok.png"}
-                      alt={"Grok"}
-                      width={300}
-                      height={300}
-                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
-                    />
-                    {"Grok (paid)"}
-                  </SelectItem>
-                  <SelectItem
-                    className="text-sm"
-                    value="tngtech/deepseek-r1t2-chimera:free"
-                  >
-                    <Image
-                      src={"/ai/deepseek.webp"}
-                      alt={"Deepseek"}
-                      width={300}
-                      height={300}
-                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
-                    />
-                    Deepseek r1t2
-                  </SelectItem>
-                  <SelectItem
-                    className="text-sm"
-                    value="google/gemini-2.0-flash-exp:free"
-                  >
-                    <Image
-                      src={"/ai/gemini.png"}
-                      alt={"Gemini"}
-                      width={300}
-                      height={300}
-                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
-                    />
-                    Gemini
-                  </SelectItem>
-                  <SelectItem
-                    className="text-sm"
-                    value="openai/gpt-oss-20b:free"
-                  >
-                    <Image
-                      src={"/ai/gpt.png"}
-                      alt={"GPT"}
-                      width={300}
-                      height={300}
-                      className="rounded-full bg-white w-6 h-6 border border-zinc-600"
-                    />
-                    GPT-20B
-                  </SelectItem>
+                  {modelOptions.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className="text-sm"
+                    >
+                      <Image
+                        src={option.image}
+                        alt={option.label}
+                        width={300}
+                        height={300}
+                        className="rounded-full bg-white w-6 h-6 border border-zinc-600"
+                      />
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
                 <SelectSeparator className="mt-2" />
                 <div className="relative">

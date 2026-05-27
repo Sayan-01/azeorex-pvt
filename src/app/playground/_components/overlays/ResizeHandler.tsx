@@ -11,7 +11,7 @@ type ResizeHandlesProps = {
 };
 
 export default function ResizeHandles({ rect, selectedId, setResizing }: ResizeHandlesProps) {
-  const { updateElementStyle, state } = useEditor();
+  const { updateStyle, state } = useEditor();
   const [activeSide, setActiveSide] = useState<"top" | "right" | "bottom" | "left" | null>(null);
 
   const element = getElementById(selectedId, state.elements);
@@ -49,7 +49,7 @@ export default function ResizeHandles({ rect, selectedId, setResizing }: ResizeH
       if (side === "right") delta = moveEvent.clientX - startX;
 
       const newDimension = Math.max(20, dimensionValue + delta);
-      updateElementStyle(selectedId, styleProperty, `${newDimension}px`);
+      updateStyle(selectedId, styleProperty, `${newDimension}px`);
     };
 
     const handleMouseUp = () => {

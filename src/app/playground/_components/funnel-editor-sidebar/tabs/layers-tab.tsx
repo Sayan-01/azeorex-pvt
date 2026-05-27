@@ -2,11 +2,26 @@
 
 import { BoxSelect, ImageIcon, Move, Contact2, Columns2, TextSelect, CreditCardIcon, TypeIcon, Link2Icon, Youtube, Heading1, Heading2, Heading3, VectorSquare } from "lucide-react";
 import { useEditor } from "../../../../../../providers/editor/editor-provider";
-import { EditorElement } from "../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../providers/editor/editor-types";
 import { Accordion, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function LayersPanel() {
-  const { state, dispatch, handleDrop } = useEditor();
+  const { state, dispatch, insertElement, moveElement } = useEditor();
+
+  const handleDrop = () => {
+    const { draggedId, draggedComponent, dropTargetId, dropPosition } = state;
+    if (!dropTargetId || !dropPosition) return;
+
+    if (draggedComponent) {
+      insertElement(draggedComponent, dropTargetId, dropPosition);
+      dispatch({ type: "SET_DRAGGED_COMPONENT", payload: { draggedComponent: null } });
+    } else if (draggedId) {
+      moveElement(draggedId, dropTargetId, dropPosition);
+      dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
+    }
+
+    dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
+  };
 
   const getElementIcon = (type: string) => {
     switch (type) {
@@ -107,7 +122,8 @@ export default function LayersPanel() {
   const renderLayerTree = (el: EditorElement, depth = 0): React.ReactNode => {
     const isSelected = el.id === state.selectedId;
     const isDragging = el.id === state.draggedId;
-    const hasChildren = Array.isArray(el.content) && el.content.length > 0;
+    const children = el.children.map((childId) => state.elements[childId]).filter(Boolean);
+    const hasChildren = children.length > 0;
 
     return (
       <div key={el.id}>
@@ -139,7 +155,7 @@ export default function LayersPanel() {
           {el.id !== "__body" && getElementIcon(el.type)}
           <span className="text-xs font-mono text-white">{el.type === "__body" ? "🌐 Body" : `${el.id}`}</span>
         </div>
-        {hasChildren && <div>{(el.content as EditorElement[]).map((child) => renderLayerTree(child, depth + 1))}</div>}
+        {hasChildren && <div>{children.map((child) => renderLayerTree(child, depth + 1))}</div>}
       </div>
     );
   };
@@ -147,7 +163,9 @@ export default function LayersPanel() {
   return (
     <div className="p-2">
       <div className="text-xs text-yellow-400 mb-2 px-4 py-2 bg-yellow-900/20 rounded">Drag elements to reorder</div>
-      {renderLayerTree(state.elements)}
+      {Object.values(state.elements)
+        .filter((el) => el.parentId === null)
+        .map((el) => renderLayerTree(el))}
     </div>
   );
 }

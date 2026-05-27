@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../../providers/editor/editor-types";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
 import { Input } from "@/components/ui/custom-input";
 import { Button } from "@/components/ui/button";
@@ -7,13 +7,14 @@ import { ImageIcon, Link } from "lucide-react";
 import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const SrcHrefSection = ({selectedElement}: {selectedElement: EditorElement}) => {
-  const { updateElementAttribute } = useEditor();
+  const { updateAttribute } = useEditor();
   const [href, setHref] = useState("");
   const [src, setSrc] = useState("");
 
-  const isLinkElement = selectedElement?.type === "a" || selectedElement?.type === "button";
-  const isImageElement = selectedElement?.type === "img";
-  const showAttributes = isLinkElement || isImageElement;
+  const isLinkElement = selectedElement?.type === "link" || selectedElement?.type === "button";
+  const isImageElement = selectedElement?.type === "image";
+  const isVideoElement = selectedElement?.type === "video";
+  const showAttributes = isLinkElement || isImageElement || isVideoElement;
 
   useEffect(() => {
     if (!selectedElement) {
@@ -29,12 +30,12 @@ const SrcHrefSection = ({selectedElement}: {selectedElement: EditorElement}) => 
 
   const updateHref = () => {
     if (!selectedElement) return;
-    updateElementAttribute(selectedElement.id, "href", href);
+    updateAttribute(selectedElement.id, "href", href);
   };
 
   const updateSrc = () => {
     if (!selectedElement) return;
-    updateElementAttribute(selectedElement.id, "src", src);
+    updateAttribute(selectedElement.id, "src", src);
   };
 
   const handleKeyPress = (e: any, updateFunction: () => void) => {
@@ -112,13 +113,13 @@ return (
         </>
       )}
 
-      {/* Image Attributes */}
-      {isImageElement && (
+      {/* Image / Video Attributes */}
+      {(isImageElement || isVideoElement) && (
         <>
           <div className="space-y-2">
             <label className="text-xs text-gray-400 flex items-center gap-1">
               <ImageIcon className="w-3 h-3" />
-              Image URL (src)
+              {isVideoElement ? "Video URL (src)" : "Image URL (src)"}
             </label>
             <div className="flex gap-2">
               <Input
@@ -126,7 +127,7 @@ return (
                 value={src}
                 onChange={(e) => setSrc(e.target.value)}
                 onKeyPress={(e) => handleKeyPress(e, updateSrc)}
-                placeholder="https://example.com/image.jpg"
+                placeholder={isVideoElement ? "https://example.com/video.mp4" : "https://example.com/image.jpg"}
               />
               <Button
                 className="h-[32px] px-3"
@@ -140,20 +141,28 @@ return (
 
           
 
-          {/* Image Preview */}
+          {/* Image/Video Preview */}
           {src && (
             <div className="space-y-2">
               <label className="text-xs text-gray-400">Preview</label>
               <div className="border border-gray-700 rounded p-2 bg-gray-800">
-                <img
-                  src={src}
-                  alt={ "Preview"}
-                  className="max-w-full h-auto max-h-[200px] object-contain mx-auto"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23333' width='200' height='200'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3EInvalid URL%3C/text%3E%3C/svg%3E";
-                  }}
-                />
+                {isVideoElement ? (
+                  <video
+                    src={src}
+                    controls
+                    className="max-w-full h-auto max-h-[200px] mx-auto"
+                  />
+                ) : (
+                  <img
+                    src={src}
+                    alt={ "Preview"}
+                    className="max-w-full h-auto max-h-[200px] object-contain mx-auto"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23333' width='200' height='200'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3EInvalid URL%3C/text%3E%3C/svg%3E";
+                    }}
+                  />
+                )}
               </div>
             </div>
           )}

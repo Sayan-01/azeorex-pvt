@@ -5,10 +5,10 @@ import { BoxSelect, Eye, EyeClosed, MoveHorizontal, MoveVertical, Spline } from 
 import { Angle } from "@/icons/angle";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEditor } from "../../../../../../../providers/editor/editor-provider";
-import { EditorElement } from "../../../../../../../providers/editor/editor-actions";
+import { EditorElement } from "../../../../../../../providers/editor/editor-types";
 
 const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) => {
-  const { updateElementStyle } = useEditor();
+  const { updateStyle } = useEditor();
 
   return (
     <AccordionItem
@@ -23,7 +23,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
               placeholder="Auto"
               id="width"
               value={selectedElement?.styles?.width || ""}
-              onChange={(e) => updateElementStyle(selectedElement.id, "width", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "width", e.target.value)}
               children="W"
             />
           </div>
@@ -32,7 +32,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
               id="height"
               placeholder="Auto"
               value={selectedElement?.styles?.height || ""}
-              onChange={(e) => updateElementStyle(selectedElement.id, "height", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "height", e.target.value)}
               children="H"
             />
           </div>
@@ -44,7 +44,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
               placeholder="Auto"
               id="maxWidth"
               value={selectedElement?.styles?.maxWidth || ""}
-              onChange={(e) => updateElementStyle(selectedElement.id, "maxWidth", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "maxWidth", e.target.value)}
             >
               <MoveHorizontal size={13} />
             </Input>
@@ -53,7 +53,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
             <Input
               id="maxHeight"
               placeholder="Auto"
-              onChange={(e) => updateElementStyle(selectedElement.id, "maxHeight", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "maxHeight", e.target.value)}
               value={selectedElement?.styles?.maxHeight || ""}
             >
               <MoveVertical size={13} />
@@ -67,7 +67,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
               id="rotate"
               placeholder="0deg"
               value={selectedElement?.styles?.rotate || ""}
-              onChange={(e) => updateElementStyle(selectedElement.id, "rotate", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "rotate", e.target.value)}
             >
               <Angle />
             </Input>
@@ -77,7 +77,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
               id="borderRadius"
               placeholder="0px"
               value={selectedElement?.styles?.borderRadius || ""}
-              onChange={(e) => updateElementStyle(selectedElement.id, "borderRadius", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "borderRadius", e.target.value)}
             >
               <Spline size={13} />
             </Input>
@@ -90,7 +90,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
               id="opacity"
               placeholder="100%"
               value={selectedElement?.styles?.opacity || ""}
-              onChange={(e) => updateElementStyle(selectedElement.id, "opacity", e.target.value)}
+              onChange={(e) => updateStyle(selectedElement.id, "opacity", e.target.value)}
             >
               <BoxSelect size={13} />
             </Input>
@@ -98,7 +98,7 @@ const DiamentionSection = ({selectedElement}: {selectedElement: EditorElement}) 
           <div className="flex flex-col w-full">
             <Tabs
               value={selectedElement?.styles?.overflow || "visible"}
-              onValueChange={(e) => updateElementStyle(selectedElement.id, "overflow", e)}
+              onValueChange={(e) => updateStyle(selectedElement.id, "overflow", e)}
             >
               <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-0">
                 <TabsTrigger

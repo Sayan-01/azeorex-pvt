@@ -1,430 +1,178 @@
 "use client";
-import type { EditorContentType } from "@/types/types";
-import React, { useRef } from "react";
-
-import type { FunnelPage } from "@prisma/client";
-import { type Dispatch, createContext, useContext, useReducer, useState } from "react";
-import { DeviceType, EditorElement, EditorState, initialJSON } from "./editor-actions";
-import { getElementById } from "@/lib/utils";
-import { toast } from "sonner";
-
-type EditorAction =
-  | { type: "SET_ELEMENT"; payload: { elements: EditorElement } }
-  | { type: "UPDATE_ELEMENT"; payload: { elementDetails: EditorElement } }
-  | { type: "SET_SELECTED_ID"; payload: { selectedId: string | null } }
-  | { type: "SET_SELECTED_ELEMENT"; payload: { selectedElement: EditorElement | null } }
-  | { type: "SET_HOVER_ID"; payload: { hoverId: string | null } }
-  | { type: "SET_DRAGGED_ID"; payload: { draggedId: string | null } }
-  | { type: "SET_DRAGGED_COMPONENT"; payload: { draggedComponent: EditorElement | null } }
-  | { type: "SET_DROP_TARGET"; payload: { dropTargetId: string | null; dropPosition: "before" | "after" | "inside" | null } }
-  | { type: "SET_DEVICE"; payload: { device: DeviceType } }
-  | { type: "TOGGLE_PREVIEW_MODE" }
-  | { type: "DELETE_ELEMENT"; payload: { elementId: string } }
-  | { type: "UNDO" }
-  | { type: "REDO" }
-  | { type: "SAVE_TO_HISTORY"; payload: { elements: EditorElement; selectedId: string | null } }
-  | { type: "LOAD_DATA"; payload: { elements: EditorElement; liveMode: boolean } };
-
-const initialState: EditorState = {
-  elements: initialJSON,
-  selectedId: null,
-  selectedElement: null,
-  hoverId: null,
-  draggedId: null,
-  draggedComponent: null,
-  dropTargetId: null,
-  dropPosition: null,
-  history: [{ elements: initialJSON, selectedId: null }],
-  historyIndex: 0,
-  device: "Desktop",
-  previewMode: false,
-  liveMode: false,
-  saveLoading: false,
-};
-
-const removeElement = (id: string, root: EditorElement): EditorElement => {
-  if (Array.isArray(root.content)) {
-    const filtered = root.content.filter((child) => child.id !== id);
-    return {
-      ...root,
-      content: filtered.map((child) => removeElement(id, child)),
-    };
-  }
-  return root;
-};
-
-const updateElementById = (root: EditorElement, elementDetails: EditorElement): EditorElement => {
-  if (root.id === elementDetails.id) {
-    return elementDetails;
-  }
-  if (Array.isArray(root.content)) {
-    return {
-      ...root,
-      content: root.content.map((child) => updateElementById(child, elementDetails)),
-    };
-  }
-  return root;
-};
-
-const editorReducer = (state: EditorState, action: EditorAction): EditorState => {
-  switch (action.type) {
-    case "SET_ELEMENT":
-      return { ...state, elements: action.payload.elements };
-
-    case "UPDATE_ELEMENT":
-      const newElement = action.payload.elementDetails;
-      const updatedElements = updateElementById(state.elements, newElement);
-      return { ...state, elements: updatedElements };
-
-    case "SET_SELECTED_ID": {
-      const selectedElement = action.payload.selectedId ? getElementById(action.payload.selectedId, state.elements) : null;
-
-      return {
-        ...state,
-        selectedId: action.payload.selectedId,
-        selectedElement: selectedElement,
-      };
-    }
-
-    case "SET_HOVER_ID":
-      return { ...state, hoverId: action.payload.hoverId };
-
-    case "SET_DRAGGED_ID":
-      return { ...state, draggedId: action.payload.draggedId };
-
-    case "SET_DRAGGED_COMPONENT":
-      return { ...state, draggedComponent: action.payload.draggedComponent };
-
-    case "SET_DROP_TARGET":
-      return {
-        ...state,
-        dropTargetId: action.payload.dropTargetId,
-        dropPosition: action.payload.dropPosition,
-      };
-
-    case "SET_DEVICE":
-      return { ...state, device: action.payload.device };
-
-    case "TOGGLE_PREVIEW_MODE":
-      return { ...state, previewMode: !state.previewMode };
-
-    case "DELETE_ELEMENT": {
-      const updatedElementsAfterDelete = removeElement(action.payload.elementId, state.elements);
-
-      if (action.payload.elementId === "__body") {
-        return state;
-      }
-
-      return {
-        ...state,
-        elements: updatedElementsAfterDelete,
-        selectedId: null,
-        selectedElement: null,
-        history: [...state.history.slice(0, state.historyIndex + 1), { elements: updatedElementsAfterDelete, selectedId: null }],
-        historyIndex: state.historyIndex + 1,
-      };
-    }
-
-    case "SAVE_TO_HISTORY": {
-      const newHistory = state.history.slice(0, state.historyIndex + 1);
-      newHistory.push({ elements: action.payload.elements, selectedId: action.payload.selectedId });
-      return {
-        ...state,
-        elements: action.payload.elements,
-        selectedId: action.payload.selectedId,
-        history: newHistory,
-        historyIndex: newHistory.length - 1,
-      };
-    }
-
-    case "UNDO": {
-      if (state.historyIndex > 0) {
-        const prevState = state.history[state.historyIndex - 1];
-
-        return {
-          ...state,
-          elements: prevState.elements,
-          selectedId: prevState.selectedId,
-          historyIndex: state.historyIndex - 1,
-        };
-      }
-      return state;
-    }
-
-    case "REDO": {
-      if (state.historyIndex < state.history.length - 1) {
-        const nextState = state.history[state.historyIndex + 1];
-
-        return {
-          ...state,
-          elements: nextState.elements,
-          selectedId: nextState.selectedId,
-          historyIndex: state.historyIndex + 1,
-        };
-      }
-      return state;
-    }
-    case "LOAD_DATA": {
-      return {
-        ...state,
-        elements: action.payload.elements,
-        liveMode: !!action.payload.liveMode,
-        historyIndex: 0,
-        selectedElement: null,
-        selectedId: null,
-      };
-    }
-
-    default:
-      return state;
-  }
-};
+import React, { createContext, useCallback, useContext, useMemo, useReducer, ReactNode } from "react";
+import type { EditorElement, DropPosition, DeviceType, EditorState } from "./editor-types";
+import { initialState } from "./editor-types";
+import { EditorAction, editorReducer } from "./editor-reducer";
 
 type EditorContextType = {
-  state: EditorState;
-  dispatch: React.Dispatch<EditorAction>;
-  updateElementStyle: (id: string, property: string, value: string) => void;
-  updateElementContent: (id: string, newContent: string) => void;
-  updateElementAttribute: (id: string, attributeName: string, value: string) => void;
-  removeElement: (id: string, root: EditorElement) => EditorElement;
-  insertElement: (element: EditorElement, targetId: string, position: "before" | "after" | "inside", root: EditorElement) => EditorElement;
-  handleDrop: () => void;
-  saveToHistory: (newElements: EditorElement, newSelectedId: string | null) => void;
-  deleteElement: (elementId: string) => void;
-  userId: string;
-  projectId: string;
-  funnelPageId: string;
-  funnelPageDetails: FunnelPage;
+  state: EditorState; // পুরো state
+  dispatch: React.Dispatch<EditorAction>; // action পাঠানোর function
+
+  // নিচেরগুলো "helper functions" — dispatch সরাসরি না লিখে
+  // এই functions দিয়ে কাজ করলে কোড পরিষ্কার থাকে
+  selectElement: (id: string | null) => void;
+  deleteElement: (id: string) => void;
+  updateStyle: (id: string, property: string, value: string) => void;
+  updateAttribute: (id: string, attributeName: string, value: string) => void;
+  updateContent: (id: string, content: string) => void;
+  insertElement: (element: EditorElement, targetId: string, position: DropPosition) => void;
+  moveElement: (id: string, targetId: string, position: DropPosition) => void;
+  duplicateElement: (id: string) => void;
+  batchUpdateStyles: (id: string, styles: Record<string, string>) => void;
+  undo: () => void;
+  redo: () => void;
+  setDevice: (device: DeviceType) => void;
+  togglePreview: () => void;
 };
 
-const EditorContext = createContext<EditorContextType | null>(null);
+// ─────────────────────────────────────────────────────────────────────────────
+// Context
+// ─────────────────────────────────────────────────────────────────────────────
 
-type EditorProviderProps = {
-  children: React.ReactNode;
-  userId: string;
-  projectId: string;
-  funnelPageId: string;
-  funnelPageDetails: FunnelPage;
-};
+const EditorContext = createContext<EditorContextType | undefined>(undefined);
 
-export const EditorProvider = ({ children, userId, projectId, funnelPageId, funnelPageDetails }: EditorProviderProps) => {
+// ─────────────────────────────────────────────────────────────────────────────
+// Provider
+// ─────────────────────────────────────────────────────────────────────────────
+
+export function EditorProvider({ children }: { children: ReactNode }) {
+  // ★★★ এই লাইনটাই সব কিছুর কেন্দ্র ★★★
+  //
+  // useReducer নেয়: (reducer function, initial state)
+  // দেয়:           [current state,   dispatch function]
+  //
+  // state   = এই মুহূর্তের পুরো editor state
+  // dispatch = যেকোনো action পাঠানোর function
+  //            dispatch({ type: "DELETE_ELEMENT", payload: { id: "x" } })
+  //            → React এটাকে editorReducer-এ পাঠায়
+  //            → reducer নতুন state return করে
+  //            → React re-render করে
   const [state, dispatch] = useReducer(editorReducer, initialState);
 
-  // Save to history
-  const saveToHistory = (newElements: EditorElement, newSelectedId: string | null) => {
-    dispatch({ type: "SAVE_TO_HISTORY", payload: { elements: newElements, selectedId: newSelectedId } });
-  };
+  // ─────────────────────────────────────────────────────────────────────────
+  // Helper functions
+  //
+  // এগুলো dispatch-এর উপরে পাতলা wrapper।
+  // Component থেকে প্রতিবার { type, payload } লেখার বদলে
+  // selectElement("text-1") এভাবে call করা যাবে।
+  //
+  // useCallback — এই functions-গুলো re-render-এ নতুন করে তৈরি হবে না
+  //               (performance optimization)
+  // ─────────────────────────────────────────────────────────────────────────
 
-  // Update element style
-  const updateElementStyle = (id: string, property: string, value: string) => {
-    const updateElement = (el: EditorElement): EditorElement => {
-      if (el.id === id) {
-        return { ...el, styles: { ...el.styles, [property]: value } };
-      }
-      if (Array.isArray(el.content)) {
-        return { ...el, content: el.content.map(updateElement) };
-      }
-      return el;
-    };
-    saveToHistory(updateElement(state.elements), state.selectedId);
-  };
+  const selectElement = useCallback((id: string | null) => {
+    dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: id } });
+  }, []);
 
-  // Update element content
-  const updateElementContent = (id: string, newContent: string) => {
-    const updateElement = (el: EditorElement): EditorElement => {
-      if (el.id === id) {
-        return { ...el, content: newContent };
-      }
-      if (Array.isArray(el.content)) {
-        return { ...el, content: el.content.map(updateElement) };
-      }
-      return el;
-    };
-    saveToHistory(updateElement(state.elements), state.selectedId);
-  };
+  const deleteElement = useCallback((id: string) => {
+    dispatch({ type: "DELETE_ELEMENT", payload: { id } });
+  }, []);
 
-  //update element attribute
-  const updateElementAttribute = (id: string, attributeName: string, value: string) => {
-    const updateElement = (el: EditorElement): EditorElement => {
-      if (el.id === id) {
-        return {
-          ...el,
-          attributes: {
-            ...el.attributes,
-            [attributeName]: value,
-          },
-        };
-      }
-      if (Array.isArray(el.content)) {
-        return { ...el, content: el.content.map(updateElement) };
-      }
-      return el;
-    };
+  const updateStyle = useCallback((id: string, property: string, value: string) => {
+    dispatch({ type: "UPDATE_STYLE", payload: { id, property, value } });
+  }, []);
 
-    const newElements = updateElement(state.elements);
-    saveToHistory(newElements, state.selectedId);
-    
-  };
+  const updateAttribute = useCallback((id: string, attributeName: string, value: string) => {
+    dispatch({ type: "UPDATE_ATTRIBUTE", payload: { id, attributeName, value } });
+  }, []);
 
+  const updateContent = useCallback((id: string, content: string) => {
+    dispatch({ type: "UPDATE_CONTENT", payload: { id, content } });
+  }, []);
 
-  // Check if parent contains child (prevent circular drops)
-  const isDescendant = (parentId: string, childId: string): boolean => {
-    const parent = getElementById(parentId, state.elements);
-    if (!parent || !Array.isArray(parent.content)) return false;
+  const insertElement = useCallback((element: EditorElement, targetId: string, position: DropPosition) => {
+    dispatch({ type: "INSERT_ELEMENT", payload: { element, targetId, position } });
+  }, []);
 
-    const checkChildren = (element: EditorElement): boolean => {
-      if (element.id === childId) return true;
-      if (Array.isArray(element.content)) {
-        return element.content.some(checkChildren);
-      }
-      return false;
-    };
+  const moveElement = useCallback((id: string, targetId: string, position: DropPosition) => {
+    dispatch({ type: "MOVE_ELEMENT", payload: { id, targetId, position } });
+  }, []);
 
-    return parent.content.some(checkChildren);
-  };
+  const duplicateElement = useCallback((id: string) => {
+    dispatch({ type: "DUPLICATE_ELEMENT", payload: { id } });
+  }, []);
 
-  // Insert element
-  const insertElement = (element: EditorElement, targetId: string, position: "before" | "after" | "inside", root: EditorElement): EditorElement => {
-    if (root.id === targetId && position === "inside" && Array.isArray(root.content)) {
-      return {
-        ...root,
-        content: [...root.content, element],
-      };
-    }
+  const batchUpdateStyles = useCallback((id: string, styles: Record<string, string>) => {
+    dispatch({ type: "BATCH_UPDATE_STYLES", payload: { id, styles } });
+  }, []);
 
-    if (Array.isArray(root.content)) {
-      const newContent: EditorElement[] = [];
-      for (const child of root.content) {
-        if (child.id === targetId) {
-          // Found target element
-          if (position === "before") {
-            if (root.id === "__body") {
-              newContent.push(element);
-            }
-            newContent.push(element);
-            newContent.push(child);
-          } else if (position === "after") {
-            newContent.push(child);
-            newContent.push(element);
-          } else if (position === "inside") {
-            // Insert inside target
-            if (Array.isArray(child.content)) {
-              newContent.push({
-                ...child,
-                content: [...child.content, element],
-              });
-            } else {
-              // Target has string content, can't insert inside
-              console.warn(`Cannot insert inside element with string content: ${child.id}`);
-              newContent.push(child);
-            }
-          }
-        } else {
-          // Not target, recurse deeper
-          newContent.push(insertElement(element, targetId, position, child));
-        }
-      }
-      return { ...root, content: newContent };
-    }
-    return root;
-  };
+  const undo = useCallback(() => dispatch({ type: "UNDO" }), []);
+  const redo = useCallback(() => dispatch({ type: "REDO" }), []);
 
-  // Handle drop
-  const handleDrop = () => {
-    // Handle new component drop from sidebar
-    if (state.draggedComponent && state.dropTargetId && state.dropPosition) {
-      const newId = `${state.draggedComponent.type}-${Date.now()}`;
-      const updateIds = (element: EditorElement): EditorElement => ({
-        ...element,
-        id: `${element.type}-${Math.random().toString(36).substr(2, 9)}`,
-        content: Array.isArray(element.content) ? element.content.map(updateIds) : element.content,
-      });
+  const setDevice = useCallback((device: DeviceType) => {
+    dispatch({ type: "SET_DEVICE", payload: { device } });
+  }, []);
 
-      const newElement = {
-        ...updateIds(state.draggedComponent),
-        id: newId,
-      };
-      console.log(newElement);
+  const togglePreview = useCallback(() => {
+    dispatch({ type: "TOGGLE_PREVIEW_MODE" });
+  }, []);
 
-      const newElements = insertElement(newElement, state.dropTargetId, state.dropPosition, state.elements);
-      saveToHistory(newElements, state.selectedId);
+  // ─────────────────────────────────────────────────────────────────────────
+  // Context-এ কী পাঠাবো সেটা একসাথে বানাই
+  //
+  // useMemo — এই object-টা re-render-এ নতুন করে তৈরি হবে না
+  //            যদি না state বা function-গুলো বদলায়
+  // ─────────────────────────────────────────────────────────────────────────
 
-      dispatch({ type: "SET_DRAGGED_COMPONENT", payload: { draggedComponent: null } });
-      dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
-      return;
-    }
-
-    // Handle existing element move
-    if (!state.draggedId || !state.dropTargetId || !state.dropPosition || state.draggedId === state.dropTargetId) {
-      dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
-      dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
-      return;
-    }
-
-    // Prevent dropping parent into its own child
-    if (isDescendant(state.draggedId, state.dropTargetId)) {
-      console.log("Cannot drop parent into its own child");
-      dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
-      dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
-      return;
-    }
-
-    const draggedElement = getElementById(state.draggedId, state.elements);
-    if (!draggedElement) {
-      dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
-      dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
-      return;
-    }
-
-    // Remove from old position
-    let newElements = removeElement(state.draggedId, state.elements);
-
-    // Insert at new position
-    newElements = insertElement(draggedElement, state.dropTargetId, state.dropPosition, newElements);
-
-    saveToHistory(newElements, state.selectedId);
-    dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
-    dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
-    dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: state.draggedId } });
-    dispatch({ type: "SET_HOVER_ID", payload: { hoverId: null } });
-  };
-
-  const deleteElement = (elementId: string) => {
-    if (elementId === "__body") {
-      toast.error("Cannot delete body element");
-      return;
-    }
-
-    dispatch({ type: "DELETE_ELEMENT", payload: { elementId } });
-    toast.success("Element deleted");
-  };
-
-  return (
-    <EditorContext.Provider
-      value={{
-        state,
-        dispatch,
-        updateElementStyle,
-        updateElementContent,
-        updateElementAttribute,
-        removeElement,
-        insertElement,
-        handleDrop,
-        saveToHistory,
-        deleteElement,
-        userId,
-        projectId,
-        funnelPageId,
-        funnelPageDetails,
-      }}
-    >
-      {children}
-    </EditorContext.Provider>
+  const value = useMemo<EditorContextType>(
+    () => ({
+      state,
+      dispatch,
+      selectElement,
+      deleteElement,
+      updateStyle,
+      updateContent,
+      updateAttribute,
+      insertElement,
+      moveElement,
+      duplicateElement,
+      batchUpdateStyles,
+      undo,
+      redo,
+      setDevice,
+      togglePreview,
+    }),
+    [
+      state, // state বদলালে নতুন value তৈরি হবে → child re-render হবে
+      selectElement,
+      deleteElement,
+      updateStyle,
+      updateContent,
+      updateAttribute,
+      insertElement,
+      moveElement,
+      duplicateElement,
+      batchUpdateStyles,
+      undo,
+      redo,
+      setDevice,
+      togglePreview,
+    ],
   );
-};
+
+  // EditorContext.Provider — এই component-এর ভেতরে যা আছে সবাই
+  // context থেকে value নিতে পারবে
+  return <EditorContext.Provider value={value}>{children}</EditorContext.Provider>;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ধাপ ৪ — useEditor hook
+//
+// এটা হলো "চাবি"।
+// যেকোনো component এই hook call করলে context থেকে
+// state ও সব helper function পেয়ে যাবে।
+//
+// ব্যবহার:
+//   const { state, selectElement, deleteElement } = useEditor();
+//
+// Error guard: যদি EditorProvider-এর বাইরে call করা হয়
+// তাহলে সাথে সাথে error দেবে — চুপচাপ undefined পাবে না।
+// ─────────────────────────────────────────────────────────────────────────────
 
 export const useEditor = () => {
   const context = useContext(EditorContext);
-  if (!context) throw new Error("useEditor must be used within EditorProvider");
+  if (!context) {
+    throw new Error("useEditor() কে EditorProvider-এর ভেতরে রাখতে হবে।\n" + "তোমার app-এ <EditorProvider> দিয়ে wrap করেছো কি?");
+  }
   return context;
 };

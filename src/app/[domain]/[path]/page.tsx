@@ -14,12 +14,7 @@ const Page = async (props: { params: Promise<{ domain: string; path: string }> }
   if (!pageData?.content || !domainData) return notFound();
 
   return (
-    <EditorProvider
-      userId={domainData.userId}
-      projectId={domainData.id}
-      funnelPageDetails={pageData}
-      funnelPageId={pageData.id}
-    >
+    <EditorProvider>
       <WebsiteBuilder
         funnelPageId={pageData.id}
         liveMode={true}

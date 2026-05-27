@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
 import { getElementById } from "@/lib/utils";
 
@@ -10,11 +10,22 @@ type PaddingHandlesProps = {
   setResizing: (value: boolean) => void;
 };
 
+// Map side to both possible style key formats (camelCase and kebab-case)
+const CAMEL: Record<string, string> = { top: "paddingTop", right: "paddingRight", bottom: "paddingBottom", left: "paddingLeft" };
+const KEBAB: Record<string, string> = { top: "padding-top", right: "padding-right", bottom: "padding-bottom", left: "padding-left" };
+
+/** Read padding value checking both camelCase and kebab-case keys */
+function getPaddingValue(styles: any, side: string): string {
+  return styles?.[CAMEL[side]] || styles?.[KEBAB[side]] || "0px";
+}
+
 export default function PaddingHandles({ rect, selectedId, setResizing }: PaddingHandlesProps) {
-  const { updateElementStyle, state } = useEditor();
+  const { updateStyle, state } = useEditor();
   const [activeSide, setActiveSide] = useState<"top" | "right" | "bottom" | "left" | null>(null);
 
-  const element = getElementById(selectedId, state.elements);
+  const element = useMemo(() => {
+    return getElementById(selectedId, state.elements);
+  }, [selectedId, state.elements]);
   if (!element) return null;
 
   const handleMouseDown = (e: React.MouseEvent, side: "top" | "right" | "bottom" | "left") => {
@@ -26,20 +37,21 @@ export default function PaddingHandles({ rect, selectedId, setResizing }: Paddin
     const startX = e.clientX;
     const startY = e.clientY;
 
-    // Parse current padding
-    const currentPadding = ((element.styles as any)[`padding-${side}`] as string) || "0px";
+    // Parse current padding (check both camelCase and kebab-case)
+    const currentPadding = getPaddingValue(element.styles, side);
     const paddingValue = parseInt(currentPadding) || 0;
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
       let delta = 0;
 
-      if (side === "top") delta = startY - moveEvent.clientY;
-      if (side === "bottom") delta = moveEvent.clientY - startY;
-      if (side === "left") delta = startX - moveEvent.clientX;
-      if (side === "right") delta = moveEvent.clientX - startX;
+      // For padding, dragging inward = positive delta = increase padding
+      if (side === "top") delta = moveEvent.clientY - startY;
+      if (side === "bottom") delta = startY - moveEvent.clientY;
+      if (side === "left") delta = moveEvent.clientX - startX;
+      if (side === "right") delta = startX - moveEvent.clientX;
 
-      const newPadding = Math.max(0, paddingValue - delta);
-      updateElementStyle(selectedId, `padding-${side}`, `${newPadding}px`);
+      const newPadding = Math.max(0, paddingValue + delta);
+      updateStyle(selectedId, CAMEL[side], `${newPadding}px`);
     };
 
     const handleMouseUp = () => {
@@ -53,19 +65,17 @@ export default function PaddingHandles({ rect, selectedId, setResizing }: Paddin
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleStyle: React.CSSProperties = {
-    position: "absolute",
-    backgroundColor: activeSide ? "#10b981" : "rgba(16, 185, 129, 0.5)",
-    pointerEvents: "auto",
-    zIndex: 1008,
-    cursor: "move",
-  };
+  // Read padding values (both formats)
+  const pt = getPaddingValue(element.styles, "top");
+  const pr = getPaddingValue(element.styles, "right");
+  const pb = getPaddingValue(element.styles, "bottom");
+  const pl = getPaddingValue(element.styles, "left");
 
   return (
     <>
       <div className="pointer-events-auto ">
         <div
-          style={{ height: (element.styles as any)?.["padding-top"] }}
+          style={{ height: pt }}
           className="absolute z-[1008] left-0 right-0 flex items-end justify-center bg-green-500/20"
         >
           <div
@@ -75,7 +85,7 @@ export default function PaddingHandles({ rect, selectedId, setResizing }: Paddin
         </div>
 
         <div
-          style={{ width: (element.styles as any)?.["padding-right"] }}
+          style={{ width: pr }}
           className="absolute z-[1008] top-0 right-0 bottom-0 flex items-center justify-start bg-green-500/20"
         >
           <div
@@ -85,7 +95,7 @@ export default function PaddingHandles({ rect, selectedId, setResizing }: Paddin
         </div>
 
         <div
-          style={{ height: (element.styles as any)?.["padding-bottom"] }}
+          style={{ height: pb }}
           className="absolute z-[1008] bottom-0 left-0 right-0 flex items-start justify-center bg-green-500/20"
         >
           <div
@@ -95,7 +105,7 @@ export default function PaddingHandles({ rect, selectedId, setResizing }: Paddin
         </div>
 
         <div
-          style={{ width: (element.styles as any)?.["padding-left"] }}
+          style={{ width: pl }}
           className="absolute z-[1008] top-0 left-0 bottom-0 flex items-center justify-end bg-green-500/20"
         >
           <div

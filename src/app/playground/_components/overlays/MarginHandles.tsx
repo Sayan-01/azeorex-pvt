@@ -10,8 +10,17 @@ type MarginHandlesProps = {
   setResizing: (value: boolean) => void;
 };
 
+// Map side to both possible style key formats (camelCase and kebab-case)
+const CAMEL: Record<string, string> = { top: "marginTop", right: "marginRight", bottom: "marginBottom", left: "marginLeft" };
+const KEBAB: Record<string, string> = { top: "margin-top", right: "margin-right", bottom: "margin-bottom", left: "margin-left" };
+
+/** Read margin value checking both camelCase and kebab-case keys */
+function getMarginValue(styles: any, side: string): string {
+  return styles?.[CAMEL[side]] || styles?.[KEBAB[side]] || "0px";
+}
+
 export default function MarginHandles({ rect, selectedId, setResizing }: MarginHandlesProps) {
-  const { updateElementStyle, state } = useEditor();
+  const { updateStyle, state } = useEditor();
   const [activeSide, setActiveSide] = useState<"top" | "right" | "bottom" | "left" | null>(null);
 
   const element = getElementById(selectedId, state.elements);
@@ -26,8 +35,8 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
     const startX = e.clientX;
     const startY = e.clientY;
 
-    // Parse current margin
-    const currentMargin = ((element.styles as any)[`margin-${side}`] as string) || "0px";
+    // Parse current margin (check both camelCase and kebab-case)
+    const currentMargin = getMarginValue(element.styles, side);
     const marginValue = parseInt(currentMargin) || 0;
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
@@ -38,8 +47,9 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
       if (side === "left") delta = startX - moveEvent.clientX;
       if (side === "right") delta = moveEvent.clientX - startX;
 
-      const newMargin = Math.max(0, marginValue - delta);
-      updateElementStyle(selectedId, `margin-${side}`, `${newMargin}px`);
+      // Dragging outward = positive delta = increase margin
+      const newMargin = Math.max(0, marginValue + delta);
+      updateStyle(selectedId, CAMEL[side], `${newMargin}px`);
     };
 
     const handleMouseUp = () => {
@@ -53,21 +63,19 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleStyle: React.CSSProperties = {
-    position: "absolute",
-    backgroundColor: activeSide ? "#f59e0b" : "rgba(245, 158, 11, 0.5)",
-    pointerEvents: "auto",
-    zIndex: 1007,
-    cursor: "move",
-  };
+  // Read margin values (both formats)
+  const mt = getMarginValue(element.styles, "top") ;
+  const mr = getMarginValue(element.styles, "right");
+  const mb = getMarginValue(element.styles, "bottom");
+  const ml = getMarginValue(element.styles, "left");
 
   return (
     <>
       <div className="pointer-events-auto">
         {/* Top margin handle */}
         <div
-          style={{ height: (element.styles as any)?.["margin-top"] || "0px", top: `-${(element.styles as any)?.["margin-top"]}` }}
-          className={`absolute z-[1010] left-0 right-0 flex items-end justify-center bg-orange-500/20 `}
+          style={{ height: mt == "auto" ? 0 : mt, top: mt == "auto" ? "0" : `-${mt}` }}
+          className="absolute z-[1010] left-0 right-0 flex items-end justify-center bg-orange-500/20 height-0 top-0"
         >
           <div
             onMouseDown={(e) => handleMouseDown(e, "top")}
@@ -77,19 +85,18 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
 
         {/* Right margin handle */}
         <div
-          style={{ width: (element.styles as any)?.["margin-right"] || "0px", right: `-${(element.styles as any)?.["margin-right"]}` }}
-          className={`absolute z-[1010] top-0 bottom-0 right-0 flex items-center justify-start bg-orange-500/20`}
+          style={{ width: mr == "auto" ? 0 : mr, right: mr == "auto" ? "0" : `-${mr}` }}
+          className="absolute z-[1010] top-0 bottom-0 right-0 flex items-center justify-start bg-orange-500/20 width-0 right-0"
         >
           <div className="translate-x-[12px]" onMouseDown={(e) => handleMouseDown(e, "right")}>
-
             <div className="h-5 hover:h-6 duration-200 w-1 bg-orange-400 border-white border rounded-full cursor-ew-resize hover:bg-orange-600" />
           </div>
         </div>
 
         {/* Bottom margin handle */}
         <div
-          style={{ height: (element.styles as any)?.["margin-bottom"] || "0px", bottom: `-${(element.styles as any)?.["margin-bottom"]}` }}
-          className={`absolute z-[1010] left-0 right-0 bottom-0 flex items-start justify-center bg-orange-500/20 `}
+          style={{ height: mb == "auto" ? "auto" : mb, bottom: `${mb == "0" ? "" : `-${mb}`}` }}
+          className="absolute z-[1010] left-0 right-0 bottom-0 flex items-start justify-center bg-orange-500/20 height-0 bottom-0"
         >
           <div
             onMouseDown={(e) => handleMouseDown(e, "bottom")}
@@ -99,14 +106,14 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
 
         {/* Left margin handle */}
         <div
-          style={{ width: (element.styles as any)?.["margin-left"] || "0px", left: `-${(element.styles as any)?.["margin-left"]}` }}
-          className={`absolute z-[1010] top-0 bottom-0 left-0 flex items-center justify-end bg-orange-500/20`}
+          style={{ width: ml == "auto" ? 0 : ml, left: `${ml == "0" ? "" : `-${ml}`}` }}
+          className="absolute z-[1010] top-0 bottom-0 left-0 flex items-center justify-end bg-orange-500/20 width-0 left-0"
         >
           <div
             className="-translate-x-[12px]"
             onMouseDown={(e) => handleMouseDown(e, "left")}
           >
-            <div className="h-5 hover:h-6 duration-200 w-1 bg-orange-400 border-white border rounded-full cursor-ew-resize hover:bg-orange-600 " />
+            <div className="h-5 hover:h-6 duration-200 w-1 bg-orange-400 border-white border rounded-full cursor-ew-resize hover:bg-orange-600" />
           </div>
         </div>
       </div>

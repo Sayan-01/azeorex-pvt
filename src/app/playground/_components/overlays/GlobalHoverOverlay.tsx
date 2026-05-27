@@ -1,52 +1,62 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useRef } from "react";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
 
 export default function GlobalHoverOverlay({ resizing }: { resizing: boolean }) {
   const { state } = useEditor();
-  const [rect, setRect] = useState<DOMRect | null>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+  const hasTargetRef = useRef(false);
 
-  useEffect(() => {
+  const update = useCallback(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
     if (!state.hoverId || state.hoverId === state.selectedId) {
-      setRect(null);
+      overlay.style.display = "none";
+      hasTargetRef.current = false;
       return;
     }
 
     const element = document.querySelector(`[data-element-id="${state.hoverId}"]`);
-    if (!element) return;
+    if (!element) {
+      overlay.style.display = "none";
+      hasTargetRef.current = false;
+      return;
+    }
 
-    const updateRect = () => {
-      setRect(element.getBoundingClientRect());
+    const rect = element.getBoundingClientRect();
+    overlay.style.display = resizing ? "none" : "";
+    overlay.style.left = `${rect.left}px`;
+    overlay.style.top = `${rect.top}px`;
+    overlay.style.width = `${rect.width}px`;
+    overlay.style.height = `${rect.height}px`;
+    hasTargetRef.current = true;
+  }, [state.hoverId, state.selectedId, resizing]);
+
+  // Use rAF loop for zero-lag tracking during scroll / drag
+  useLayoutEffect(() => {
+    update();
+
+    const tick = () => {
+      update();
+      rafRef.current = requestAnimationFrame(tick);
     };
+    rafRef.current = requestAnimationFrame(tick);
 
-    updateRect();
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [update]);
 
-    const observer = new ResizeObserver(updateRect);
-    observer.observe(element);
-    window.addEventListener("scroll", updateRect, true);
-    window.addEventListener("resize", updateRect);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", updateRect, true);
-      window.removeEventListener("resize", updateRect);
-    };
-  }, [state.hoverId, state.selectedId]);
-
-  if (!rect || !state.hoverId || state.hoverId === state.selectedId) return null;
-
+  // Always render the div so the ref is available
   return (
     <div
-      className={clsx("fixed border-2 border-dashed border-cyan-400 pointer-events-none z-[1000]", {
-        "hidden": resizing,
-      })}
+      ref={overlayRef}
+      className="fixed border-2 border-dashed border-cyan-400 pointer-events-none z-[1000]"
       style={{
-        left: rect.left,
-        top: rect.top,
-        width: rect.width,
-        height: rect.height,
+        display: "none",
+        willChange: "left, top, width, height",
       }}
     />
   );
