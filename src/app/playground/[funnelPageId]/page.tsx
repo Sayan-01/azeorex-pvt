@@ -2,6 +2,7 @@ import React from "react";
 import PlaygroundPage, { Messages } from "../_components/playground-page";
 import { db } from "@/lib/db";
 import { EditorProvider } from "../../../../providers/editor/editor-provider";
+import { auth } from "../../../../auth";
  
 type Props = {
   params: Promise<{
@@ -16,10 +17,13 @@ type Props = {
 const page = async (props: Props) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
-  const userId = searchParams.userId;
-  const projectId = searchParams.projectId;
-  if (!userId || !projectId) {
-    return null;
+
+  const session = await auth();
+  const currentUserId = session?.user?.id;
+
+  let userId = currentUserId || searchParams.userId;
+  if (userId === "undefined") {
+    userId = undefined;
   }
 
   const funnelPageDetails = await db.funnelPage.findFirst({
@@ -29,6 +33,12 @@ const page = async (props: Props) => {
   });
 
   if (!funnelPageDetails) {
+    return null;
+  }
+
+  const projectId = funnelPageDetails.projectId || searchParams.projectId;
+
+  if (!userId || !projectId) {
     return null;
   }
 

@@ -35,7 +35,7 @@ export function removeElement(id: string, elements: ElementMap): ElementMap {
 
 /** Deep-clone a dragged element and its subtree with new unique IDs */
 export function cloneDraggedElement(element: EditorElement, newParentId: string | null, elements: ElementMap): { cloned: ElementMap; newRootId: string } {
-  const newId = `${element.name}-${Math.random().toString(36).slice(2, 8)}`;
+  const newId = `el-${Math.random().toString(36).slice(2, 8)}`;
   const cloned: ElementMap = {};
 
   const newChildren: string[] = [];

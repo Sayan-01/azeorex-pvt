@@ -8,7 +8,6 @@ export async function POST(req: Request) {
   const { messages, userId, model } = await req.json();
 
   console.log(userId);
-  
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
@@ -17,18 +16,14 @@ export async function POST(req: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      // model: "tngtech/deepseek-r1t2-chimera:free",
-      // model: "minimax/minimax-m2:free",
-      // model: "openrouter/polaris-alpha",
-      // model: "google/gemini-2.0-flash-exp:free",
-
-      // good
       model: model || "x-ai/grok-4.1-fast",
 
       messages,
       stream: true,
     }),
   });
+
+  console.log("response", response);
 
   if (!response.ok) {
     return NextResponse.json({ error: "OpenRouter API error" }, { status: response.status });
@@ -54,13 +49,14 @@ export async function POST(req: Request) {
           // Decode chunk and add to buffer
           buffer += decoder.decode(value, { stream: true });
 
-          // Split by double newlines (SSE format)
-          const lines = buffer.split("\n\n");
+          // Split by newline to handle line-by-line streaming
+          const lines = buffer.split("\n");
           buffer = lines.pop() || ""; // Keep incomplete line in buffer
 
           for (const line of lines) {
-            if (line.startsWith("data: ")) {
-              const data = line.slice(6).trim();
+            const trimmed = line.trim();
+            if (trimmed.startsWith("data: ")) {
+              const data = trimmed.slice(6).trim();
 
               // OpenRouter sends [DONE] when stream ends
               if (data === "[DONE]") continue;
@@ -73,6 +69,25 @@ export async function POST(req: Request) {
                 }
               } catch (e) {
                 console.error("Failed to parse SSE data:", data);
+              }
+            }
+          }
+        }
+
+        // Process any remaining content in the buffer
+        if (buffer.trim()) {
+          const trimmed = buffer.trim();
+          if (trimmed.startsWith("data: ")) {
+            const data = trimmed.slice(6).trim();
+            if (data !== "[DONE]") {
+              try {
+                const parsed = JSON.parse(data);
+                const content = parsed.choices?.[0]?.delta?.content;
+                if (content) {
+                  controller.enqueue(new TextEncoder().encode(content));
+                }
+              } catch (e) {
+                console.error("Failed to parse remaining SSE data:", data);
               }
             }
           }

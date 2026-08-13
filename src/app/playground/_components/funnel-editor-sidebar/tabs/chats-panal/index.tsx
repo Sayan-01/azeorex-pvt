@@ -11,6 +11,11 @@ const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
 const modelOptions = [
   {
+    value: "poolside/laguna-s-2.1:free",
+    label: "Laguna",
+    image: "/ai/laguna.png",
+  },
+  {
     value: "qwen/qwen3-coder:free",
     label: "Qwen 3",
     image: "/ai/qwen.png",

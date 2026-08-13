@@ -57,7 +57,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       if (response.content) {
         try {
           const parsed = JSON.parse(response.content);
-          console.log("PARSED", parsed);
           const elements = parsed;
 
           dispatch({
@@ -82,10 +81,10 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     if (!dropTargetId || !dropPosition) return;
 
     if (draggedComponent) {
-      insertElement(draggedComponent,dropTargetId,dropPosition)
+      insertElement(draggedComponent, dropTargetId, dropPosition);
       dispatch({ type: "SET_DRAGGED_COMPONENT", payload: { draggedComponent: null } });
     } else if (draggedId) {
-      moveElement(draggedId,dropTargetId,dropPosition)
+      moveElement(draggedId, dropTargetId, dropPosition);
       dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
     }
 
@@ -97,8 +96,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
 
   const renderElement = (el: EditorElement): React.ReactNode => {
     if (!el) return null;
-
-    console.log(el);
 
     const isSelected = el.id === state.selectedId;
     const isDragging = el.id === state.draggedId;
@@ -194,7 +191,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       ...(canDrag ? { draggable: true, onDragStart: handleDragStart, onDragEnd: handleDragEnd } : {}),
     };
 
-
     // void (img, hr, input)
     if (isVoid) {
       return (
@@ -204,9 +200,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           {...el.attributes}
         />
       );
-    }
-
-    else if (el.type === "textarea") {
+    } else if (el.type === "textarea") {
       return (
         <textarea
           key={el.id}
@@ -217,16 +211,13 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           {...el.attributes}
         />
       );
-    }
-
-    else if(el.type==="text" || el.type==="h1" || el.type==="h2" || el.type==="h3" || el.type==="h4" || el.type==="h5" || el.type==="h6" || el.type==="link")
-    {
+    } else if (el.type === "text" || el.type === "h1" || el.type === "h2" || el.type === "h3" || el.type === "h4" || el.type === "h5" || el.type === "h6" || el.type === "link") {
       return (
         <Tag
           key={el.id}
           {...sharedProps}
           contentEditable={isSelected && !state.previewMode && !state.liveMode}
-          disabled={!state.liveMode && !state.previewMode && (el.type==="link" )}
+          disabled={!state.liveMode && !state.previewMode && el.type === "link"}
           suppressContentEditableWarning
           onBlur={handleBlur}
           {...el.attributes}
@@ -335,4 +326,4 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       )}
     </div>
   );
-};;
+};

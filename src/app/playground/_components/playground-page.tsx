@@ -11,6 +11,7 @@ import { WebsiteBuilder } from "./website-builder";
 import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadingAnimation";
 import { useCredits } from "@/hooks/credit-provider";
 import { flattenStructure } from "@/lib/flattenStructure";
+import { validateFlatMap } from "../../../../validators/ai-output-json-validator";
 
 export type Messages = {
   role: string;
@@ -27,7 +28,7 @@ type Props = {
 const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: Props) => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Messages[]>(chatMessages);
-  const [model, setModel] = useState("x-ai/grok-4.1-fast");
+  const [model, setModel] = useState("poolside/laguna-s-2.1:free");
 
   const { dispatch, state } = useEditor();
   const { credits } = useCredits();
@@ -44,6 +45,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
 
     try {
+      // ── 1. API call ──────────────────────────────────────────────────────────
       const res = await fetch("/api/ai/ai-website-generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -55,6 +57,8 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       });
 
       if (!res.ok || !res.body) throw new Error("No response stream");
+
+      console.log("res-sayan-debug", res);
 
       // ── stream read ──────────────────────────────────────────────────────
       const reader = res.body.getReader();
@@ -69,16 +73,31 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
       // ── parse + flatten ──────────────────────────────────────────────────
       // AI generates nested JSON → flattenStructure() → flat ElementMap
-      const trimmed = aiResponse.trim();
+      let trimmed = aiResponse.trim();
 
-      // strip accidental markdown code fences if model adds them
-      const jsonStr = trimmed.startsWith("```") ? trimmed.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "") : trimmed;
+      // Extract JSON content if wrapped in markdown code blocks or surrounding text
+      const firstBrace = trimmed.indexOf("{");
+      const lastBrace = trimmed.lastIndexOf("}");
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        trimmed = trimmed.slice(firstBrace, lastBrace + 1);
+      }
 
-      const parsed = JSON.parse(jsonStr);
-      const elements = flattenStructure(parsed);
+      console.log("trimmed: ", trimmed);
+
+      const parsed = JSON.parse(trimmed);
+      console.log("before validate: ", parsed);
+
+      let elements = validateFlatMap(parsed);
+      console.log("elements: ", elements);
+
+      if (!elements) {
+        // fallback: AI gave nested format — flatten it
+        const { flattenStructure } = await import("@/lib/flattenStructure");
+        elements = flattenStructure(parsed);
+      }
 
       if (Object.keys(elements).length === 0) {
-        throw new Error("Empty elements after flatten");
+        throw new Error("Empty elements after processing");
       }
 
       dispatch({

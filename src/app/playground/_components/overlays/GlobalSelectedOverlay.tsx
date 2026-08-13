@@ -96,7 +96,7 @@ export default function GlobalSelectedOverlay({
   return (
     <div
       ref={overlayRef}
-      className="fixed border-2 border-blue-500 rounded pointer-events-none z-[1007]"
+      className="fixed border-2 border-blue-500 rounded pointer-events-none z-[1007] rounded-[4px]"
       style={{
         display: isVisible ? "" : "none",
         backgroundColor: "rgba(59, 130, 246, 0.1)",

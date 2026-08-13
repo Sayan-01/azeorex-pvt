@@ -53,7 +53,7 @@ export default function GlobalHoverOverlay({ resizing }: { resizing: boolean }) 
   return (
     <div
       ref={overlayRef}
-      className="fixed border-2 border-dashed border-cyan-400 pointer-events-none z-[1000]"
+      className="fixed border-2 border-dashed border-blue-500 pointer-events-none z-[1000]"
       style={{
         display: "none",
         willChange: "left, top, width, height",
