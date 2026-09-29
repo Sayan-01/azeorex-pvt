@@ -47,6 +47,16 @@ const modelOptions = [
   },
 ];
 
+const SECTIONS = [
+  { value: "nav", label: "Navigation" },
+  { value: "hero", label: "Hero Banner" },
+  { value: "features", label: "Features Grid" },
+  { value: "testimonials", label: "Testimonials" },
+  { value: "pricing", label: "Pricing Table" },
+  { value: "cta-banner", label: "CTA Banner" },
+  { value: "footer", label: "Footer" },
+] as const;
+
 const Chats = ({
   messages,
   onSend,
@@ -55,12 +65,19 @@ const Chats = ({
   setModel,
 }: {
   messages: { role: string; content: string }[];
-  onSend: (message: string) => void;
+  onSend: (message: string, selectedSections: string[]) => void;
   loading: boolean;
   model: string;
   setModel: any;
 }) => {
   const [input, setInput] = useState("");
+  const [selectedSections, setSelectedSections] = useState<string[]>([
+    "nav",
+    "hero",
+    "features",
+    "cta-banner",
+    "footer",
+  ]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -69,9 +86,21 @@ const Chats = ({
     }
   }, [messages, loading]);
 
+  useEffect(() => {
+    if (messages?.length === 1 && messages[0].role === "user" && input === "") {
+      setInput(messages[0].content);
+    }
+  }, [messages]);
+
+  const toggleSection = (val: string) => {
+    setSelectedSections((prev) =>
+      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]
+    );
+  };
+
   const handleSend = () => {
-    if (input.trim() !== "") {
-      onSend(input.trim());
+    if (input.trim() !== "" && selectedSections.length > 0) {
+      onSend(input.trim(), selectedSections);
       setInput("");
     }
   };
@@ -118,6 +147,25 @@ const Chats = ({
           </div>
         )}
       </section>
+
+      {/* Checklist UI */}
+      <div className="px-3 pb-2 border-t pt-2 bg-zinc-900/10">
+        <p className="text-[10px] font-semibold text-zinc-400 mb-2 tracking-wider">SELECT SECTIONS TO GENERATE:</p>
+        <div className="grid grid-cols-2 gap-2 text-[10px] text-zinc-300">
+          {SECTIONS.map((sec) => (
+            <label key={sec.value} className="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
+              <input
+                type="checkbox"
+                checked={selectedSections.includes(sec.value)}
+                onChange={() => toggleSection(sec.value)}
+                className="accent-[#21DB66] rounded border-zinc-600 bg-zinc-800 h-3.5 w-3.5"
+              />
+              <span className="truncate">{sec.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
       <div className="sticky bottom-0 p-3 py-0 ">
         <div className="flex flex-col items-center gap-2 bg-zinc-800/40 border-2 rounded-lg p-2 relative z-20 text-xs">
           <Textarea
@@ -174,8 +222,9 @@ const Chats = ({
             </Select>
 
             <button
-              className="h-8 w-8 flex items-center justify-center ml-auto bg-gradient-to-br from-zinc-50 to-zinc-200 rounded-full"
+              className="h-8 w-8 flex items-center justify-center ml-auto bg-gradient-to-br from-zinc-50 to-zinc-200 rounded-full disabled:opacity-30 disabled:cursor-not-allowed"
               onClick={handleSend}
+              disabled={input.trim() === "" || selectedSections.length === 0 || loading}
             >
               {loading ? (
                 <Loader2

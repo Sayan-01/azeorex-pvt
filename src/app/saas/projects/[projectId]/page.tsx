@@ -84,10 +84,8 @@ const FunnelPage = async (props: Props) => {
 
                 <DomainEditButton projectId={projectId} />
               </div>
-              
             </div>
 
-            
             <Menubar>
               <MenubarMenu>
                 <div className="relative w-full">
@@ -95,11 +93,7 @@ const FunnelPage = async (props: Props) => {
                     asChild
                     className="absolute sm:right-[114px] right-0 top-[24px]"
                   >
-                    <Button
-                      className="bg-blue-500 hover:bg-blue-600 h-9 text-white hover:text-white rounded-[16px]"
-                    >
-                      + Create Page
-                    </Button>
+                    <Button className="bg-blue-500 hover:bg-blue-600 h-9 text-white hover:text-white rounded-[16px]">+ Create Page</Button>
                   </MenubarTrigger>
 
                   <MenubarContent className="bg-[#272727] absolute -right-[147px] w-max  ">

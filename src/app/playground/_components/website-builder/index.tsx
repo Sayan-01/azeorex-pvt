@@ -42,9 +42,25 @@ const getHTMLTag = (el: EditorElement) => {
 };
 
 export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: string; liveMode?: boolean }) => {
-  const { state, dispatch, updateContent, insertElement, moveElement } = useEditor();
+  const { state, dispatch, updateContent, insertElement, moveElement, deleteElement } = useEditor();
   const [loading, setLoading] = useState(true);
   const [resizing, setResizing] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      const isInput = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable;
+      if (isInput) return;
+
+      if ((e.key === "Backspace" || e.key === "Delete") && state.selectedId && state.selectedId !== "__body") {
+        e.preventDefault();
+        deleteElement(state.selectedId);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [state.selectedId, deleteElement]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -297,15 +313,15 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         <iframe
           className="border transition-all bg-white w-full h-full"
           srcDoc={`<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>* { margin: 0; padding: 0; box-sizing: border-box; }</style>
-  </head>
-  <body>${rootElements.map(elementToHTML).join("")}</body>
-</html>`}
+            <html>
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <script src="https://cdn.tailwindcss.com"></script>
+                <style>* { margin: 0; padding: 0; box-sizing: border-box; }</style>
+              </head>
+              <body>${rootElements.map(elementToHTML).join("")}</body>
+            </html>`}
         />
       ) : (
         /* desktop → direct render */

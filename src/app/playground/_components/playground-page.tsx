@@ -35,7 +35,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
   // ── AI generate ─────────────────────────────────────────────────────────────
 
-  const sendMessage = async (userInput: string) => {
+  const sendMessage = async (userInput: string, selectedSections: string[] = ["nav", "hero", "features", "cta-banner", "footer"]) => {
     if (credits < 100) {
       toast.error("Not enough credits");
       return;
@@ -50,55 +50,26 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [{ role: "user", content: PromptForWebPage({ userInput }) }],
+          prompt: userInput,
+          selectedSections,
           userId,
           model,
         }),
       });
 
-      if (!res.ok || !res.body) throw new Error("No response stream");
-
-      console.log("res-sayan-debug", res);
-
-      // ── stream read ──────────────────────────────────────────────────────
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let aiResponse = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        aiResponse += decoder.decode(value, { stream: true });
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to generate website elements");
       }
 
-      // ── parse + flatten ──────────────────────────────────────────────────
-      // AI generates nested JSON → flattenStructure() → flat ElementMap
-      let trimmed = aiResponse.trim();
-
-      // Extract JSON content if wrapped in markdown code blocks or surrounding text
-      const firstBrace = trimmed.indexOf("{");
-      const lastBrace = trimmed.lastIndexOf("}");
-      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-        trimmed = trimmed.slice(firstBrace, lastBrace + 1);
+      const data = await res.json();
+      if (!data.success || !data.elements) {
+        throw new Error("Invalid response elements from AI generator");
       }
 
-      console.log("trimmed: ", trimmed);
+      const elements = data.elements;
 
-      const parsed = JSON.parse(trimmed);
-      console.log("before validate: ", parsed);
-
-      let elements = validateFlatMap(parsed);
-      console.log("elements: ", elements);
-
-      if (!elements) {
-        // fallback: AI gave nested format — flatten it
-        const { flattenStructure } = await import("@/lib/flattenStructure");
-        elements = flattenStructure(parsed);
-      }
-
-      if (Object.keys(elements).length === 0) {
-        throw new Error("Empty elements after processing");
-      }
+      console.log("sayan-1st-playground page e ja dekhabe", elements);
 
       dispatch({
         type: "LOAD_DATA",
@@ -109,22 +80,17 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
       decrementCredits(userId, 100);
       await savePage(JSON.stringify({ elements }));
-    } catch (e) {
+    } catch (e: any) {
       console.error("AI generation error:", e);
-      toast.error("Something went wrong. Please try again.");
-      setMessages((prev) => [...prev, { role: "assistant", content: "Something went wrong. Please try to regenerate." }]);
+      toast.error(e?.message || "Something went wrong. Please try again.");
+      setMessages((prev) => [...prev, { role: "assistant", content: e?.message || "Something went wrong. Please try to regenerate." }]);
     } finally {
       setLoading(false);
     }
   };
 
   // ── Auto-send first message ──────────────────────────────────────────────────
-
-  useEffect(() => {
-    if (chatMessages?.length === 1 && !loading) {
-      sendMessage(chatMessages[0].content);
-    }
-  }, []);
+  // Auto-send removed: users must choose sections from the checklist first.
 
   // ── Save chat messages ───────────────────────────────────────────────────────
 
@@ -142,6 +108,8 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     });
   }, [messages]);
 
+  console.log("sayan-funnelPageDetailss", funnelPageDetails);
+  // console.log("sayan-content", elements);
   // ── Save page to DB ──────────────────────────────────────────────────────────
 
   const savePage = async (content: string) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ResizeHandles from "./ResizeHandler";
 import PaddingHandles from "./PaddingHandles";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
@@ -8,15 +8,7 @@ import { Trash } from "lucide-react";
 import { getElementById } from "@/lib/utils";
 import MarginHandles from "./MarginHandles";
 
-export default function GlobalSelectedOverlay({
-  resizing,
-  setResizing,
-  type,
-}: {
-  resizing: boolean;
-  setResizing: (value: boolean) => void;
-  type: boolean;
-}) {
+export default function GlobalSelectedOverlay({ resizing, setResizing, type }: { resizing: boolean; setResizing: (value: boolean) => void; type: boolean }) {
   const { state, deleteElement } = useEditor();
   const overlayRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
@@ -25,6 +17,8 @@ export default function GlobalSelectedOverlay({
 
   const selectedElement = state.selectedId ? getElementById(state.selectedId, state.elements) : null;
 
+  // Direct DOM mutation for zero-lag positioning; only setState when the
+  // rect actually changed, so children don't re-render on every call.
   const update = useCallback(() => {
     const overlay = overlayRef.current;
     if (!overlay) return;
@@ -46,14 +40,12 @@ export default function GlobalSelectedOverlay({
 
     const r = element.getBoundingClientRect();
 
-    // Direct DOM mutation for zero-lag positioning
     overlay.style.display = "";
     overlay.style.left = `${r.left}px`;
     overlay.style.top = `${r.top}px`;
     overlay.style.width = `${r.width}px`;
     overlay.style.height = `${r.height}px`;
 
-    // Only trigger React re-render when rect actually changes (for child components)
     const prev = lastRectRef.current;
     if (!prev || prev.l !== r.left || prev.t !== r.top || prev.w !== r.width || prev.h !== r.height) {
       lastRectRef.current = { l: r.left, t: r.top, w: r.width, h: r.height };
@@ -61,9 +53,10 @@ export default function GlobalSelectedOverlay({
     }
   }, [state.selectedId]);
 
-  // rAF loop for zero-lag tracking
+  // Zero-lag tracking DURING an active resize/drag only. This is the only
+  // time we actually need per-frame getBoundingClientRect() calls.
   useLayoutEffect(() => {
-    update();
+    if (!resizing) return;
 
     const tick = () => {
       update();
@@ -72,12 +65,36 @@ export default function GlobalSelectedOverlay({
     rafRef.current = requestAnimationFrame(tick);
 
     return () => cancelAnimationFrame(rafRef.current);
-  }, [update]);
+  }, [resizing, update]);
 
-  // Also force update whenever elements change (style/content changes)
+  // When idle (not resizing), stay in sync via events instead of polling:
+  // - selection/content change -> update immediately
+  // - element resizes (e.g. text reflow, prop-driven size change) -> ResizeObserver
+  // - page scrolls/viewport resizes -> passive listeners
   useLayoutEffect(() => {
     update();
-  }, [state.elements, update]);
+    if (resizing || !state.selectedId) return;
+
+    const element = document.querySelector(`[data-element-id="${state.selectedId}"]`);
+    if (!element) return;
+
+    const ro = new ResizeObserver(update);
+    ro.observe(element);
+
+    return () => ro.disconnect();
+    // Re-run when selection or element tree changes so we observe the right node.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.selectedId, state.elements, resizing, update]);
+
+  useEffect(() => {
+    if (resizing) return;
+    window.addEventListener("scroll", update, { passive: true, capture: true });
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [resizing, update]);
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -90,8 +107,8 @@ export default function GlobalSelectedOverlay({
     }
   };
 
-  // Always render the div so the ref is available; hide via display:none when inactive
   const isVisible = !!rect && !!state.selectedId;
+  const shortId = selectedElement?.id ? (selectedElement.id.length > 10 ? selectedElement.id.slice(0, 10) + "..." : selectedElement.id) : "element";
 
   return (
     <div
@@ -124,12 +141,11 @@ export default function GlobalSelectedOverlay({
           />
         </>
       )}
-      {/* Visual indicator when resizing */}
       {resizing && <div className="absolute inset-0 border border-blue-600 rounded pointer-events-none z-[1008]" />}
       {isVisible && selectedElement?.type != "__body" && (
         <div className="w-full relative min-w-[112px]">
           <div className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-4.5 -left-[1px] rounded-t-sm z-[1008] pointer-events-auto cursor-pointer max-w-[100px]">
-            {selectedElement?.id.slice(0, 10) + "..." || "element"}
+            {shortId}
           </div>
           <button
             onClick={handleDelete}
