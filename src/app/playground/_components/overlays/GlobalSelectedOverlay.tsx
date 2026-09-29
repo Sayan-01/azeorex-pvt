@@ -12,13 +12,16 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
   const { state, deleteElement } = useEditor();
   const overlayRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
+
+  // rect is the viewport DOMRect — passed to child handles so their
+  // pointer-event math (which uses clientX/Y) stays unchanged.
   const [rect, setRect] = useState<DOMRect | null>(null);
   const lastRectRef = useRef<{ l: number; t: number; w: number; h: number } | null>(null);
 
   const selectedElement = state.selectedId ? getElementById(state.selectedId, state.elements) : null;
 
-  // Direct DOM mutation for zero-lag positioning; only setState when the
-  // rect actually changed, so children don't re-render on every call.
+  // Position the overlay using container-relative (absolute) coordinates so
+  // that browser scroll moves it automatically — zero JS lag during scroll.
   const update = useCallback(() => {
     const overlay = overlayRef.current;
     if (!overlay) return;
@@ -38,63 +41,62 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
       return;
     }
 
-    const r = element.getBoundingClientRect();
+    const elRect = element.getBoundingClientRect();
+
+    // offsetParent = the scrollable canvas container (position:relative).
+    // We calculate position relative to it so the overlay rides with scroll.
+    const container = overlay.offsetParent as HTMLElement | null;
+    let absTop = elRect.top;
+    let absLeft = elRect.left;
+    if (container) {
+      const cRect = container.getBoundingClientRect();
+      absTop = elRect.top - cRect.top + container.scrollTop;
+      absLeft = elRect.left - cRect.left + container.scrollLeft;
+    }
 
     overlay.style.display = "";
-    overlay.style.left = `${r.left}px`;
-    overlay.style.top = `${r.top}px`;
-    overlay.style.width = `${r.width}px`;
-    overlay.style.height = `${r.height}px`;
+    overlay.style.left = `${absLeft}px`;
+    overlay.style.top = `${absTop}px`;
+    overlay.style.width = `${elRect.width}px`;
+    overlay.style.height = `${elRect.height}px`;
 
+    // Store viewport rect for children (ResizeHandles, etc. use clientX/Y).
     const prev = lastRectRef.current;
-    if (!prev || prev.l !== r.left || prev.t !== r.top || prev.w !== r.width || prev.h !== r.height) {
-      lastRectRef.current = { l: r.left, t: r.top, w: r.width, h: r.height };
-      setRect(r);
+    if (!prev || prev.l !== elRect.left || prev.t !== elRect.top || prev.w !== elRect.width || prev.h !== elRect.height) {
+      lastRectRef.current = { l: elRect.left, t: elRect.top, w: elRect.width, h: elRect.height };
+      setRect(elRect);
     }
   }, [state.selectedId]);
 
-  // Zero-lag tracking DURING an active resize/drag only. This is the only
-  // time we actually need per-frame getBoundingClientRect() calls.
+  // RAF loop only during active resize/drag — keeps overlay in sync while
+  // element size is changing (no scroll involved).
   useLayoutEffect(() => {
     if (!resizing) return;
-
     const tick = () => {
       update();
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
-
     return () => cancelAnimationFrame(rafRef.current);
   }, [resizing, update]);
 
-  // When idle (not resizing), stay in sync via events instead of polling:
-  // - selection/content change -> update immediately
-  // - element resizes (e.g. text reflow, prop-driven size change) -> ResizeObserver
-  // - page scrolls/viewport resizes -> passive listeners
+  // Update on selection / element-tree change + observe element size changes.
   useLayoutEffect(() => {
     update();
     if (resizing || !state.selectedId) return;
-
     const element = document.querySelector(`[data-element-id="${state.selectedId}"]`);
     if (!element) return;
-
     const ro = new ResizeObserver(update);
     ro.observe(element);
-
     return () => ro.disconnect();
-    // Re-run when selection or element tree changes so we observe the right node.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedId, state.elements, resizing, update]);
 
+  // Only viewport resize needed — scroll is handled by CSS (position:absolute).
   useEffect(() => {
-    if (resizing) return;
-    window.addEventListener("scroll", update, { passive: true, capture: true });
     window.addEventListener("resize", update, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", update, true);
-      window.removeEventListener("resize", update);
-    };
-  }, [resizing, update]);
+    return () => window.removeEventListener("resize", update);
+  }, [update]);
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -113,7 +115,9 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
   return (
     <div
       ref={overlayRef}
-      className="fixed border-2 border-blue-500 rounded pointer-events-none z-[1007] rounded-[4px]"
+      // position:absolute — lives inside the scrollable container, so it
+      // moves with content during scroll with zero JavaScript involvement.
+      className="absolute border-2 border-blue-500 rounded pointer-events-none z-[1007] rounded-[4px]"
       style={{
         display: isVisible ? "" : "none",
         backgroundColor: "rgba(59, 130, 246, 0.1)",

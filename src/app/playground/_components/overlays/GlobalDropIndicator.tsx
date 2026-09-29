@@ -28,31 +28,42 @@ export default function GlobalDropIndicator() {
       return;
     }
 
-    const rect = element.getBoundingClientRect();
+    const elRect = element.getBoundingClientRect();
+
+    // Use container-relative (absolute) coords so scroll moves it for free.
+    const container = overlay.offsetParent as HTMLElement | null;
+    let absTop = elRect.top;
+    let absLeft = elRect.left;
+    if (container) {
+      const cRect = container.getBoundingClientRect();
+      absTop = elRect.top - cRect.top + container.scrollTop;
+      absLeft = elRect.left - cRect.left + container.scrollLeft;
+    }
+
     overlay.style.display = "";
     overlay.style.pointerEvents = "none";
     overlay.style.zIndex = "1002";
-    overlay.style.position = "fixed";
+    overlay.style.position = "absolute";
 
     if (state.dropPosition === "before") {
-      overlay.style.left = `${rect.left}px`;
-      overlay.style.top = `${rect.top - 2}px`;
-      overlay.style.width = `${rect.width}px`;
+      overlay.style.left = `${absLeft}px`;
+      overlay.style.top = `${absTop - 2}px`;
+      overlay.style.width = `${elRect.width}px`;
       overlay.style.height = "3px";
       overlay.style.backgroundColor = "#10b981";
       overlay.style.border = "none";
     } else if (state.dropPosition === "after") {
-      overlay.style.left = `${rect.left}px`;
-      overlay.style.top = `${rect.bottom - 1}px`;
-      overlay.style.width = `${rect.width}px`;
+      overlay.style.left = `${absLeft}px`;
+      overlay.style.top = `${absTop + elRect.height - 1}px`;
+      overlay.style.width = `${elRect.width}px`;
       overlay.style.height = "3px";
       overlay.style.backgroundColor = "#10b981";
       overlay.style.border = "none";
     } else {
-      overlay.style.left = `${rect.left}px`;
-      overlay.style.top = `${rect.top}px`;
-      overlay.style.width = `${rect.width}px`;
-      overlay.style.height = `${rect.height}px`;
+      overlay.style.left = `${absLeft}px`;
+      overlay.style.top = `${absTop}px`;
+      overlay.style.width = `${elRect.width}px`;
+      overlay.style.height = `${elRect.height}px`;
       overlay.style.border = "2px dashed #10b981";
       overlay.style.backgroundColor = "rgba(16, 185, 129, 0.1)";
     }
@@ -70,7 +81,6 @@ export default function GlobalDropIndicator() {
     return () => cancelAnimationFrame(rafRef.current);
   }, [update]);
 
-  // Always render the div so the ref is available
   return (
     <div
       ref={overlayRef}

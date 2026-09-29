@@ -306,7 +306,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         "!w-[420px]": state.device === "Mobile",
         "!w-full": state.device === "Desktop",
       })}
-      style={{ minHeight: "100vh", transition: "width 0.3s", position: "relative" }}
+      style={{ minHeight: "100vh", transition: "width 0.3s", position: "relative", overflowX: "hidden" }}
     >
       {/* tablet / mobile → iframe */}
       {state.device !== "Desktop" ? (
