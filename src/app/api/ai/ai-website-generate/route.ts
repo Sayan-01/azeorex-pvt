@@ -2,7 +2,8 @@ import { PromptForWebPage } from "../../../../../Ai/prompt-v2";
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY!;
 
-export const runtime = "nodejs";
+export const runtime = "edge";
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
   const { prompt, selectedSections, model } = await req.json();

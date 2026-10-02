@@ -3,6 +3,8 @@ import { getUserCurrentPlan, getUserDetails } from "@/lib/queries";
 import { upsertFunnelPageForProject, upsertProject } from "@/lib/queries";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60;
+
 export const POST = async (req: Request) => {
   try {
     const formData = await req.formData();

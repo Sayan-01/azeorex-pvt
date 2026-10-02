@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60;
+export const runtime = "edge";
+
 export const POST = async (req: any) => {
   const {messages} = await req.json();
   console.log("sayan",messages);

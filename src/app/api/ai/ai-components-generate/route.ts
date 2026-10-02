@@ -3,6 +3,8 @@ import { geminiModel } from "../../../../../Ai/AiModel";
 import { db } from "@/lib/db";
 import { auth } from "../../../../../auth";
 
+export const maxDuration = 60;
+
 export const POST = async (req: any) => {
   const { prompt } = await req.json();
   const session = await auth();
