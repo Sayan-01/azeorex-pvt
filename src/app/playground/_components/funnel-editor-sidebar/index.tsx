@@ -11,7 +11,7 @@ import WarframeTab from "./tabs/warframe-tab";
 import SettingsTab from "./tabs/settings-tab/settings-tab";
 import Chats from "./tabs/chats-panal";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
-import AiTab from "./tabs/ai-tab";
+// import AiTab from "./tabs/ai-tab";
 
 type Props = {
   userId: string;
@@ -100,7 +100,7 @@ const FunnelEditorSidebar = ({ userId, projectId, messages, sendMessage, loading
                 <MediaBucketTab projectId={projectId} />
               </TabsContent>
               <TabsContent value="AiPoward">
-                <AiTab />
+                {/* <AiTab /> */}
               </TabsContent>
             </div>
           </SheetContent>
