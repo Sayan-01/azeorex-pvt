@@ -14,7 +14,7 @@ const AiTab = () => {
     const prompt = AiPromptForComponent({ userInput: userInput });
     setLoading(true);
     try {
-      const res = await fetch("/api/ai-template-generate", {
+      const res = await fetch("/api/ai-components-generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

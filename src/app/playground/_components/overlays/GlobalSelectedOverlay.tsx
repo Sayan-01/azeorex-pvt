@@ -171,7 +171,7 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
       {isVisible && selectedElement?.type != "__body" && (
         <div className="w-full relative min-w-[112px]">
           <div className="absolute bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-0.5 h-[18px] -top-4.5 -left-[1px] rounded-t-sm z-[1008] pointer-events-auto cursor-pointer max-w-[100px]">
-            {shortId}
+            {shortId} | {selectedElement?.type}
           </div>
           <button
             onClick={handleDelete}

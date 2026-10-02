@@ -1,0 +1,1115 @@
+{
+  "__body": {
+    "id": "__body",
+    "name": "Body",
+    "type": "__body",
+    "parentId": null,
+    "children": ["nav", "hero", "stats", "features", "testimonials", "cta", "footer"],
+    "styles": {
+      "minHeight": "100vh",
+      "backgroundColor": "\n#050505",
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "color": "\n#ffffff"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "nav": {
+    "id": "nav",
+    "name": "Navigation",
+    "type": "section",
+    "parentId": "__body",
+    "children": ["nav-inner"],
+    "styles": {
+      "position": "sticky",
+      "top": "0px",
+      "zIndex": "50",
+      "backgroundColor": "rgba(5,5,5,0.7)",
+      "backdropFilter": "blur(16px)",
+      "borderBottom": "1px solid rgba(34,255,136,0.12)",
+      "padding": "18px 60px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "nav-inner": {
+    "id": "nav-inner",
+    "name": "Nav Inner",
+    "type": "container",
+    "parentId": "nav",
+    "children": ["nav-logo", "nav-links", "nav-cta"],
+    "styles": {
+      "display": "flex",
+      "alignItems": "center",
+      "justifyContent": "space-between",
+      "maxWidth": "1200px",
+      "marginLeft": "auto",
+      "marginRight": "auto"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "nav-logo": {
+    "id": "nav-logo",
+    "name": "Logo",
+    "type": "text",
+    "parentId": "nav-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "24px",
+      "fontWeight": "800",
+      "letterSpacing": "0.12em",
+      "color": "\n#22ff88",
+      "textShadow": "0 0 18px rgba(34,255,136,0.6)"
+    },
+    "attributes": {},
+    "content": "VOLTA"
+  },
+  "nav-links": {
+    "id": "nav-links",
+    "name": "Nav Links",
+    "type": "container",
+    "parentId": "nav-inner",
+    "children": ["nav-l1", "nav-l2", "nav-l3"],
+    "styles": {
+      "display": "flex",
+      "gap": "36px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "nav-l1": {
+    "id": "nav-l1",
+    "name": "Link Programs",
+    "type": "link",
+    "parentId": "nav-links",
+    "children": [],
+    "styles": {
+      "color": "\n#94a3b8",
+      "fontSize": "15px",
+      "fontWeight": "500",
+      "textDecoration": "none"
+    },
+    "attributes": {
+      "href": "#features",
+      "className": "hover:opacity-70 transition-all"
+    },
+    "content": "Programs"
+  },
+  "nav-l2": {
+    "id": "nav-l2",
+    "name": "Link Results",
+    "type": "link",
+    "parentId": "nav-links",
+    "children": [],
+    "styles": {
+      "color": "\n#94a3b8",
+      "fontSize": "15px",
+      "fontWeight": "500",
+      "textDecoration": "none"
+    },
+    "attributes": {
+      "href": "#results",
+      "className": "hover:opacity-70 transition-all"
+    },
+    "content": "Results"
+  },
+  "nav-l3": {
+    "id": "nav-l3",
+    "name": "Link Community",
+    "type": "link",
+    "parentId": "nav-links",
+    "children": [],
+    "styles": {
+      "color": "\n#94a3b8",
+      "fontSize": "15px",
+      "fontWeight": "500",
+      "textDecoration": "none"
+    },
+    "attributes": {
+      "href": "#community",
+      "className": "hover:opacity-70 transition-all"
+    },
+    "content": "Community"
+  },
+  "nav-cta": {
+    "id": "nav-cta",
+    "name": "Nav CTA",
+    "type": "button",
+    "parentId": "nav-inner",
+    "children": [],
+    "styles": {
+      "padding": "10px 24px",
+      "borderRadius": "10px",
+      "backgroundImage": "linear-gradient(135deg, \n#22ff88 0%, \n#00c46a 100%)",
+      "color": "\n#021a0d",
+      "fontWeight": "700",
+      "border": "none",
+      "cursor": "pointer",
+      "boxShadow": "0 0 24px rgba(34,255,136,0.35)"
+    },
+    "attributes": {
+      "className": "hover:opacity-90 transition-all"
+    },
+    "content": "Join Now"
+  },
+  "hero": {
+    "id": "hero",
+    "name": "Hero Section",
+    "type": "section",
+    "parentId": "__body",
+    "children": ["hero-inner"],
+    "styles": {
+      "paddingTop": "120px",
+      "paddingBottom": "100px",
+      "paddingLeft": "60px",
+      "paddingRight": "60px",
+      "backgroundImage": "radial-gradient(ellipse at 50% 0%, rgba(34,255,136,0.18) 0%, rgba(5,5,5,0) 60%)",
+      "textAlign": "center"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "hero-inner": {
+    "id": "hero-inner",
+    "name": "Hero Inner",
+    "type": "container",
+    "parentId": "hero",
+    "children": ["hero-label", "hero-h1", "hero-p", "hero-btns", "hero-img"],
+    "styles": {
+      "maxWidth": "960px",
+      "marginLeft": "auto",
+      "marginRight": "auto"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "hero-label": {
+    "id": "hero-label",
+    "name": "Hero Label",
+    "type": "text",
+    "parentId": "hero-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "color": "\n#22ff88",
+      "marginBottom": "24px"
+    },
+    "attributes": {},
+    "content": "Train smarter. Recover deeper. Evolve."
+  },
+  "hero-h1": {
+    "id": "hero-h1",
+    "name": "Hero Heading",
+    "type": "h1",
+    "parentId": "hero-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "72px",
+      "fontWeight": "800",
+      "lineHeight": "1.1",
+      "letterSpacing": "-0.02em",
+      "color": "\n#ffffff",
+      "marginBottom": "24px"
+    },
+    "attributes": {},
+    "content": "Power Your Body. Upgrade Your Life."
+  },
+  "hero-p": {
+    "id": "hero-p",
+    "name": "Hero Subtitle",
+    "type": "text",
+    "parentId": "hero-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "18px",
+      "lineHeight": "1.7",
+      "color": "\n#94a3b8",
+      "maxWidth": "640px",
+      "marginLeft": "auto",
+      "marginRight": "auto",
+      "marginBottom": "40px"
+    },
+    "attributes": {},
+    "content": "Data-driven training, elite coaching and recovery science in one minimal platform built for people who refuse average."
+  },
+  "hero-btns": {
+    "id": "hero-btns",
+    "name": "Hero Buttons",
+    "type": "container",
+    "parentId": "hero-inner",
+    "children": ["hero-btn1", "hero-btn2"],
+    "styles": {
+      "display": "flex",
+      "justifyContent": "center",
+      "gap": "16px",
+      "marginBottom": "72px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "hero-btn1": {
+    "id": "hero-btn1",
+    "name": "Primary Button",
+    "type": "button",
+    "parentId": "hero-btns",
+    "children": [],
+    "styles": {
+      "padding": "14px 36px",
+      "borderRadius": "10px",
+      "backgroundImage": "linear-gradient(135deg, \n#22ff88 0%, \n#00c46a 100%)",
+      "color": "\n#021a0d",
+      "fontWeight": "700",
+      "border": "none",
+      "cursor": "pointer",
+      "boxShadow": "0 0 40px rgba(34,255,136,0.4)",
+      "transition": "all 0.3s ease"
+    },
+    "attributes": {
+      "className": "hover:scale-105 transition-all"
+    },
+    "content": "Start Free Trial"
+  },
+  "hero-btn2": {
+    "id": "hero-btn2",
+    "name": "Secondary Button",
+    "type": "button",
+    "parentId": "hero-btns",
+    "children": [],
+    "styles": {
+      "padding": "14px 36px",
+      "borderRadius": "10px",
+      "backgroundColor": "transparent",
+      "color": "\n#22ff88",
+      "fontWeight": "600",
+      "border": "1px solid rgba(34,255,136,0.5)",
+      "cursor": "pointer",
+      "transition": "all 0.3s ease"
+    },
+    "attributes": {
+      "className": "hover:opacity-80 transition-all"
+    },
+    "content": "Watch Demo"
+  },
+  "hero-img": {
+    "id": "hero-img",
+    "name": "Hero Image",
+    "type": "image",
+    "parentId": "hero-inner",
+    "children": [],
+    "styles": {
+      "width": "100%",
+      "height": "460px",
+      "objectFit": "cover",
+      "borderRadius": "24px",
+      "border": "1px solid rgba(34,255,136,0.2)",
+      "boxShadow": "0 0 80px rgba(34,255,136,0.18)"
+    },
+    "attributes": {
+      "src": "https://picsum.photos/seed/fitness-hero/1200/600",
+      "alt": "Athlete training in a dark gym"
+    },
+    "content": ""
+  },
+  "stats": {
+    "id": "stats",
+    "name": "Stats Section",
+    "type": "section",
+    "parentId": "__body",
+    "children": ["stats-grid"],
+    "styles": {
+      "paddingTop": "60px",
+      "paddingBottom": "60px",
+      "paddingLeft": "60px",
+      "paddingRight": "60px",
+      "backgroundColor": "\n#0d0e10",
+      "borderTop": "1px solid rgba(255,255,255,0.06)",
+      "borderBottom": "1px solid rgba(255,255,255,0.06)"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "stats-grid": {
+    "id": "stats-grid",
+    "name": "Stats Grid",
+    "type": "container",
+    "parentId": "stats",
+    "children": ["stat-1", "stat-2", "stat-3"],
+    "styles": {
+      "maxWidth": "1200px",
+      "marginLeft": "auto",
+      "marginRight": "auto",
+      "textAlign": "center"
+    },
+    "attributes": {
+      "className": "grid grid-cols-1 md:grid-cols-3 gap-8"
+    },
+    "content": ""
+  },
+  "stat-1": {
+    "id": "stat-1",
+    "name": "Stat Members",
+    "type": "container",
+    "parentId": "stats-grid",
+    "children": ["stat-1-n", "stat-1-l"],
+    "styles": {},
+    "attributes": {},
+    "content": ""
+  },
+  "stat-1-n": {
+    "id": "stat-1-n",
+    "name": "Stat Number",
+    "type": "h3",
+    "parentId": "stat-1",
+    "children": [],
+    "styles": {
+      "fontSize": "48px",
+      "fontWeight": "800",
+      "color": "\n#22ff88",
+      "textShadow": "0 0 24px rgba(34,255,136,0.5)"
+    },
+    "attributes": {},
+    "content": "250K+"
+  },
+  "stat-1-l": {
+    "id": "stat-1-l",
+    "name": "Stat Label",
+    "type": "text",
+    "parentId": "stat-1",
+    "children": [],
+    "styles": {
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "color": "\n#94a3b8"
+    },
+    "attributes": {},
+    "content": "Active Members"
+  },
+  "stat-2": {
+    "id": "stat-2",
+    "name": "Stat Coaches",
+    "type": "container",
+    "parentId": "stats-grid",
+    "children": ["stat-2-n", "stat-2-l"],
+    "styles": {},
+    "attributes": {},
+    "content": ""
+  },
+  "stat-2-n": {
+    "id": "stat-2-n",
+    "name": "Stat Number",
+    "type": "h3",
+    "parentId": "stat-2",
+    "children": [],
+    "styles": {
+      "fontSize": "48px",
+      "fontWeight": "800",
+      "color": "\n#22ff88",
+      "textShadow": "0 0 24px rgba(34,255,136,0.5)"
+    },
+    "attributes": {},
+    "content": "1,200"
+  },
+  "stat-2-l": {
+    "id": "stat-2-l",
+    "name": "Stat Label",
+    "type": "text",
+    "parentId": "stat-2",
+    "children": [],
+    "styles": {
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "color": "\n#94a3b8"
+    },
+    "attributes": {},
+    "content": "Certified Coaches"
+  },
+  "stat-3": {
+    "id": "stat-3",
+    "name": "Stat Rating",
+    "type": "container",
+    "parentId": "stats-grid",
+    "children": ["stat-3-n", "stat-3-l"],
+    "styles": {},
+    "attributes": {},
+    "content": ""
+  },
+  "stat-3-n": {
+    "id": "stat-3-n",
+    "name": "Stat Number",
+    "type": "h3",
+    "parentId": "stat-3",
+    "children": [],
+    "styles": {
+      "fontSize": "48px",
+      "fontWeight": "800",
+      "color": "\n#22ff88",
+      "textShadow": "0 0 24px rgba(34,255,136,0.5)"
+    },
+    "attributes": {},
+    "content": "4.9/5"
+  },
+  "stat-3-l": {
+    "id": "stat-3-l",
+    "name": "Stat Label",
+    "type": "text",
+    "parentId": "stat-3",
+    "children": [],
+    "styles": {
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "color": "\n#94a3b8"
+    },
+    "attributes": {},
+    "content": "Average Rating"
+  },
+  "features": {
+    "id": "features",
+    "name": "Features Section",
+    "type": "section",
+    "parentId": "__body",
+    "children": ["feat-inner"],
+    "styles": {
+      "paddingTop": "120px",
+      "paddingBottom": "120px",
+      "paddingLeft": "60px",
+      "paddingRight": "60px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "feat-inner": {
+    "id": "feat-inner",
+    "name": "Features Inner",
+    "type": "container",
+    "parentId": "features",
+    "children": ["feat-label", "feat-h2", "feat-grid"],
+    "styles": {
+      "maxWidth": "1200px",
+      "marginLeft": "auto",
+      "marginRight": "auto",
+      "textAlign": "center"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "feat-label": {
+    "id": "feat-label",
+    "name": "Features Label",
+    "type": "text",
+    "parentId": "feat-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "0.08em",
+      "textTransform": "uppercase",
+      "color": "\n#22ff88",
+      "marginBottom": "16px"
+    },
+    "attributes": {},
+    "content": "Built different"
+  },
+  "feat-h2": {
+    "id": "feat-h2",
+    "name": "Features Heading",
+    "type": "h2",
+    "parentId": "feat-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "44px",
+      "fontWeight": "700",
+      "lineHeight": "1.2",
+      "color": "\n#ffffff",
+      "marginBottom": "64px"
+    },
+    "attributes": {},
+    "content": "Everything you need to perform at your peak"
+  },
+  "feat-grid": {
+    "id": "feat-grid",
+    "name": "Features Grid",
+    "type": "container",
+    "parentId": "feat-inner",
+    "children": ["card-1", "card-2", "card-3"],
+    "styles": {
+      "textAlign": "left"
+    },
+    "attributes": {
+      "className": "grid grid-cols-1 md:grid-cols-3 gap-8"
+    },
+    "content": ""
+  },
+  "card-1": {
+    "id": "card-1",
+    "name": "Card Training",
+    "type": "container",
+    "parentId": "feat-grid",
+    "children": ["card-1-icon", "card-1-h", "card-1-p"],
+    "styles": {
+      "padding": "44px",
+      "borderRadius": "20px",
+      "backgroundColor": "\n#111214",
+      "border": "1px solid rgba(34,255,136,0.12)",
+      "boxShadow": "0 4px 32px rgba(0,0,0,0.4)"
+    },
+    "attributes": {
+      "className": "hover:scale-105 transition-all"
+    },
+    "content": ""
+  },
+  "card-1-icon": {
+    "id": "card-1-icon",
+    "name": "Icon",
+    "type": "container",
+    "parentId": "card-1",
+    "children": [],
+    "styles": {
+      "width": "52px",
+      "height": "52px",
+      "borderRadius": "50%",
+      "backgroundImage": "linear-gradient(135deg, \n#22ff88 0%, \n#00c46a 100%)",
+      "boxShadow": "0 0 28px rgba(34,255,136,0.5)",
+      "marginBottom": "28px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "card-1-h": {
+    "id": "card-1-h",
+    "name": "Card Title",
+    "type": "h3",
+    "parentId": "card-1",
+    "children": [],
+    "styles": {
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "color": "\n#ffffff",
+      "marginBottom": "12px"
+    },
+    "attributes": {},
+    "content": "Adaptive Training"
+  },
+  "card-1-p": {
+    "id": "card-1-p",
+    "name": "Card Text",
+    "type": "text",
+    "parentId": "card-1",
+    "children": [],
+    "styles": {
+      "fontSize": "16px",
+      "lineHeight": "1.7",
+      "color": "\n#94a3b8"
+    },
+    "attributes": {},
+    "content": "AI-tuned workouts that adjust every session to your strength, sleep and recovery data."
+  },
+  "card-2": {
+    "id": "card-2",
+    "name": "Card Nutrition",
+    "type": "container",
+    "parentId": "feat-grid",
+    "children": ["card-2-icon", "card-2-h", "card-2-p"],
+    "styles": {
+      "padding": "44px",
+      "borderRadius": "20px",
+      "backgroundColor": "\n#111214",
+      "border": "1px solid rgba(34,255,136,0.12)",
+      "boxShadow": "0 4px 32px rgba(0,0,0,0.4)"
+    },
+    "attributes": {
+      "className": "hover:scale-105 transition-all"
+    },
+    "content": ""
+  },
+  "card-2-icon": {
+    "id": "card-2-icon",
+    "name": "Icon",
+    "type": "container",
+    "parentId": "card-2",
+    "children": [],
+    "styles": {
+      "width": "52px",
+      "height": "52px",
+      "borderRadius": "50%",
+      "backgroundImage": "linear-gradient(135deg, \n#22ff88 0%, \n#00c46a 100%)",
+      "boxShadow": "0 0 28px rgba(34,255,136,0.5)",
+      "marginBottom": "28px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "card-2-h": {
+    "id": "card-2-h",
+    "name": "Card Title",
+    "type": "h3",
+    "parentId": "card-2",
+    "children": [],
+    "styles": {
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "color": "\n#ffffff",
+      "marginBottom": "12px"
+    },
+    "attributes": {},
+    "content": "Precision Nutrition"
+  },
+  "card-2-p": {
+    "id": "card-2-p",
+    "name": "Card Text",
+    "type": "text",
+    "parentId": "card-2",
+    "children": [],
+    "styles": {
+      "fontSize": "16px",
+      "lineHeight": "1.7",
+      "color": "\n#94a3b8"
+    },
+    "attributes": {},
+    "content": "Simple meal plans and macro tracking designed around your goals, not fad diets."
+  },
+  "card-3": {
+    "id": "card-3",
+    "name": "Card Recovery",
+    "type": "container",
+    "parentId": "feat-grid",
+    "children": ["card-3-icon", "card-3-h", "card-3-p"],
+    "styles": {
+      "padding": "44px",
+      "borderRadius": "20px",
+      "backgroundColor": "\n#111214",
+      "border": "1px solid rgba(34,255,136,0.12)",
+      "boxShadow": "0 4px 32px rgba(0,0,0,0.4)"
+    },
+    "attributes": {
+      "className": "hover:scale-105 transition-all"
+    },
+    "content": ""
+  },
+  "card-3-icon": {
+    "id": "card-3-icon",
+    "name": "Icon",
+    "type": "container",
+    "parentId": "card-3",
+    "children": [],
+    "styles": {
+      "width": "52px",
+      "height": "52px",
+      "borderRadius": "50%",
+      "backgroundImage": "linear-gradient(135deg, \n#22ff88 0%, \n#00c46a 100%)",
+      "boxShadow": "0 0 28px rgba(34,255,136,0.5)",
+      "marginBottom": "28px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "card-3-h": {
+    "id": "card-3-h",
+    "name": "Card Title",
+    "type": "h3",
+    "parentId": "card-3",
+    "children": [],
+    "styles": {
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "color": "\n#ffffff",
+      "marginBottom": "12px"
+    },
+    "attributes": {},
+    "content": "Recovery Science"
+  },
+  "card-3-p": {
+    "id": "card-3-p",
+    "name": "Card Text",
+    "type": "text",
+    "parentId": "card-3",
+    "children": [],
+    "styles": {
+      "fontSize": "16px",
+      "lineHeight": "1.7",
+      "color": "\n#94a3b8"
+    },
+    "attributes": {},
+    "content": "Guided mobility, breathwork and sleep protocols so you come back stronger every day."
+  },
+  "testimonials": {
+    "id": "testimonials",
+    "name": "Testimonials Section",
+    "type": "section",
+    "parentId": "__body",
+    "children": ["test-inner"],
+    "styles": {
+      "paddingTop": "100px",
+      "paddingBottom": "100px",
+      "paddingLeft": "60px",
+      "paddingRight": "60px",
+      "backgroundColor": "\n#0d0e10"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "test-inner": {
+    "id": "test-inner",
+    "name": "Testimonials Inner",
+    "type": "container",
+    "parentId": "testimonials",
+    "children": ["test-h2", "test-grid"],
+    "styles": {
+      "maxWidth": "1200px",
+      "marginLeft": "auto",
+      "marginRight": "auto",
+      "textAlign": "center"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "test-h2": {
+    "id": "test-h2",
+    "name": "Testimonials Heading",
+    "type": "h2",
+    "parentId": "test-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "44px",
+      "fontWeight": "700",
+      "color": "\n#ffffff",
+      "marginBottom": "56px"
+    },
+    "attributes": {},
+    "content": "Real people. Real transformations."
+  },
+  "test-grid": {
+    "id": "test-grid",
+    "name": "Testimonials Grid",
+    "type": "container",
+    "parentId": "test-inner",
+    "children": ["test-1", "test-2"],
+    "styles": {
+      "textAlign": "left"
+    },
+    "attributes": {
+      "className": "grid grid-cols-1 md:grid-cols-2 gap-8"
+    },
+    "content": ""
+  },
+  "test-1": {
+    "id": "test-1",
+    "name": "Testimonial Arjun",
+    "type": "container",
+    "parentId": "test-grid",
+    "children": ["test-1-q", "test-1-n", "test-1-r"],
+    "styles": {
+      "padding": "40px",
+      "borderRadius": "20px",
+      "backgroundColor": "\n#111214",
+      "border": "1px solid rgba(255,255,255,0.08)",
+      "boxShadow": "0 0 40px rgba(34,255,136,0.08)"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "test-1-q": {
+    "id": "test-1-q",
+    "name": "Quote",
+    "type": "text",
+    "parentId": "test-1",
+    "children": [],
+    "styles": {
+      "fontSize": "18px",
+      "lineHeight": "1.7",
+      "color": "\n#e2e8f0",
+      "marginBottom": "28px"
+    },
+    "attributes": {},
+    "content": "Down 14kg and stronger than I have ever been. The adaptive plans just work."
+  },
+  "test-1-n": {
+    "id": "test-1-n",
+    "name": "Name",
+    "type": "h3",
+    "parentId": "test-1",
+    "children": [],
+    "styles": {
+      "fontSize": "18px",
+      "fontWeight": "600",
+      "color": "\n#22ff88"
+    },
+    "attributes": {},
+    "content": "Arjun Mehta"
+  },
+  "test-1-r": {
+    "id": "test-1-r",
+    "name": "Role",
+    "type": "text",
+    "parentId": "test-1",
+    "children": [],
+    "styles": {
+      "fontSize": "14px",
+      "color": "\n#64748b"
+    },
+    "attributes": {},
+    "content": "Software Engineer, Member since 2024"
+  },
+  "test-2": {
+    "id": "test-2",
+    "name": "Testimonial Sara",
+    "type": "container",
+    "parentId": "test-grid",
+    "children": ["test-2-q", "test-2-n", "test-2-r"],
+    "styles": {
+      "padding": "40px",
+      "borderRadius": "20px",
+      "backgroundColor": "\n#111214",
+      "border": "1px solid rgba(255,255,255,0.08)",
+      "boxShadow": "0 0 40px rgba(34,255,136,0.08)"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "test-2-q": {
+    "id": "test-2-q",
+    "name": "Quote",
+    "type": "text",
+    "parentId": "test-2",
+    "children": [],
+    "styles": {
+      "fontSize": "18px",
+      "lineHeight": "1.7",
+      "color": "\n#e2e8f0",
+      "marginBottom": "28px"
+    },
+    "attributes": {},
+    "content": "Recovery tools fixed my sleep and my lifts. It feels like a pro team in my pocket."
+  },
+  "test-2-n": {
+    "id": "test-2-n",
+    "name": "Name",
+    "type": "h3",
+    "parentId": "test-2",
+    "children": [],
+    "styles": {
+      "fontSize": "18px",
+      "fontWeight": "600",
+      "color": "\n#22ff88"
+    },
+    "attributes": {},
+    "content": "Sara Khan"
+  },
+  "test-2-r": {
+    "id": "test-2-r",
+    "name": "Role",
+    "type": "text",
+    "parentId": "test-2",
+    "children": [],
+    "styles": {
+      "fontSize": "14px",
+      "color": "\n#64748b"
+    },
+    "attributes": {},
+    "content": "Marathon Runner, Member since 2023"
+  },
+  "cta": {
+    "id": "cta",
+    "name": "CTA Banner",
+    "type": "section",
+    "parentId": "__body",
+    "children": ["cta-h2", "cta-p", "cta-btn"],
+    "styles": {
+      "paddingTop": "110px",
+      "paddingBottom": "110px",
+      "paddingLeft": "60px",
+      "paddingRight": "60px",
+      "textAlign": "center",
+      "backgroundImage": "radial-gradient(ellipse at 50% 100%, rgba(34,255,136,0.28) 0%, rgba(5,5,5,0) 65%)"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "cta-h2": {
+    "id": "cta-h2",
+    "name": "CTA Heading",
+    "type": "h2",
+    "parentId": "cta",
+    "children": [],
+    "styles": {
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "color": "\n#ffffff",
+      "marginBottom": "20px"
+    },
+    "attributes": {},
+    "content": "Your strongest self starts today."
+  },
+  "cta-p": {
+    "id": "cta-p",
+    "name": "CTA Text",
+    "type": "text",
+    "parentId": "cta",
+    "children": [],
+    "styles": {
+      "fontSize": "18px",
+      "lineHeight": "1.7",
+      "color": "\n#94a3b8",
+      "marginBottom": "36px"
+    },
+    "attributes": {},
+    "content": "Try VOLTA free for 14 days. No credit card required."
+  },
+  "cta-btn": {
+    "id": "cta-btn",
+    "name": "CTA Button",
+    "type": "button",
+    "parentId": "cta",
+    "children": [],
+    "styles": {
+      "padding": "16px 44px",
+      "borderRadius": "10px",
+      "backgroundImage": "linear-gradient(135deg, \n#22ff88 0%, \n#00c46a 100%)",
+      "color": "\n#021a0d",
+      "fontWeight": "700",
+      "border": "none",
+      "cursor": "pointer",
+      "boxShadow": "0 0 48px rgba(34,255,136,0.45)",
+      "transition": "all 0.3s ease"
+    },
+    "attributes": {
+      "className": "hover:scale-105 transition-all"
+    },
+    "content": "Claim Free Trial"
+  },
+  "footer": {
+    "id": "footer",
+    "name": "Footer",
+    "type": "section",
+    "parentId": "__body",
+    "children": ["footer-inner"],
+    "styles": {
+      "paddingTop": "48px",
+      "paddingBottom": "48px",
+      "paddingLeft": "60px",
+      "paddingRight": "60px",
+      "backgroundColor": "\n#020202",
+      "borderTop": "1px solid rgba(34,255,136,0.12)"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "footer-inner": {
+    "id": "footer-inner",
+    "name": "Footer Inner",
+    "type": "container",
+    "parentId": "footer",
+    "children": ["footer-logo", "footer-links", "footer-copy"],
+    "styles": {
+      "display": "flex",
+      "alignItems": "center",
+      "justifyContent": "space-between",
+      "maxWidth": "1200px",
+      "marginLeft": "auto",
+      "marginRight": "auto"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "footer-logo": {
+    "id": "footer-logo",
+    "name": "Footer Logo",
+    "type": "text",
+    "parentId": "footer-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "20px",
+      "fontWeight": "800",
+      "letterSpacing": "0.12em",
+      "color": "\n#22ff88"
+    },
+    "attributes": {},
+    "content": "VOLTA"
+  },
+  "footer-links": {
+    "id": "footer-links",
+    "name": "Footer Links",
+    "type": "container",
+    "parentId": "footer-inner",
+    "children": ["fl-1", "fl-2", "fl-3"],
+    "styles": {
+      "display": "flex",
+      "gap": "28px"
+    },
+    "attributes": {},
+    "content": ""
+  },
+  "fl-1": {
+    "id": "fl-1",
+    "name": "Footer Link",
+    "type": "link",
+    "parentId": "footer-links",
+    "children": [],
+    "styles": {
+      "color": "\n#64748b",
+      "fontSize": "14px",
+      "textDecoration": "none"
+    },
+    "attributes": {
+      "href": "#privacy",
+      "className": "hover:opacity-70 transition-all"
+    },
+    "content": "Privacy"
+  },
+  "fl-2": {
+    "id": "fl-2",
+    "name": "Footer Link",
+    "type": "link",
+    "parentId": "footer-links",
+    "children": [],
+    "styles": {
+      "color": "\n#64748b",
+      "fontSize": "14px",
+      "textDecoration": "none"
+    },
+    "attributes": {
+      "href": "#terms",
+      "className": "hover:opacity-70 transition-all"
+    },
+    "content": "Terms"
+  },
+  "fl-3": {
+    "id": "fl-3",
+    "name": "Footer Link",
+    "type": "link",
+    "parentId": "footer-links",
+    "children": [],
+    "styles": {
+      "color": "\n#64748b",
+      "fontSize": "14px",
+      "textDecoration": "none"
+    },
+    "attributes": {
+      "href": "#contact",
+      "className": "hover:opacity-70 transition-all"
+    },
+    "content": "Contact"
+  },
+  "footer-copy": {
+    "id": "footer-copy",
+    "name": "Copyright",
+    "type": "text",
+    "parentId": "footer-inner",
+    "children": [],
+    "styles": {
+      "fontSize": "14px",
+      "color": "\n#64748b"
+    },
+    "attributes": {},
+    "content": "© 2026 VOLTA. All rights reserved."
+  }
+}

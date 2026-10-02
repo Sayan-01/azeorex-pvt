@@ -1,246 +1,229 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowUp, Loader, Loader2, Pencil } from "lucide-react";
-import Image from "next/image";
+import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowUp, Loader2, Pencil, X } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
-import { Roboto_Mono } from "next/font/google";
-
-const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
 const modelOptions = [
-  {
-    value: "poolside/laguna-s-2.1:free",
-    label: "Laguna",
-    image: "/ai/laguna.png",
-  },
-  {
-    value: "qwen/qwen3-coder:free",
-    label: "Qwen 3",
-    image: "/ai/qwen.png",
-  },
-  {
-    value: "x-ai/grok-4.1-fast:free",
-    label: "Grok (free)",
-    image: "/ai/grok.png",
-  },
-  {
-    value: "x-ai/grok-4.1-fast",
-    label: "Grok (paid)",
-    image: "/ai/grok.png",
-  },
-  {
-    value: "tngtech/deepseek-r1t2-chimera:free",
-    label: "Deepseek r1t2",
-    image: "/ai/deepseek.webp",
-  },
-  {
-    value: "google/gemini-2.0-flash-exp:free",
-    label: "Gemini",
-    image: "/ai/gemini.png",
-  },
-  {
-    value: "openai/gpt-oss-20b:free",
-    label: "GPT-20B",
-    image: "/ai/gpt.png",
-  },
+  { value: "poolside/laguna-s-2.1:free", label: "Laguna M.1" },
+  { value: "cohere/north-mini-code:free", label: "Cohere North" },
+  { value: "nvidia/nemotron-3.5-lightning:free", label: "Nemotron Lightning" },
+  { value: "qwen/qwen3-8b:free", label: "Qwen 3 (8B)" },
 ];
+
+const CUSTOM = "__custom__";
 
 const SECTIONS = [
   { value: "nav", label: "Navigation" },
-  { value: "hero", label: "Hero Banner" },
-  { value: "features", label: "Features Grid" },
+  { value: "hero", label: "Hero" },
+  { value: "features", label: "Features" },
   { value: "testimonials", label: "Testimonials" },
-  { value: "pricing", label: "Pricing Table" },
-  { value: "cta-banner", label: "CTA Banner" },
+  { value: "pricing", label: "Pricing" },
+  { value: "cta-banner", label: "CTA" },
   { value: "footer", label: "Footer" },
 ] as const;
 
-const Chats = ({
-  messages,
-  onSend,
-  loading,
-  model,
-  setModel,
-}: {
+type Props = {
   messages: { role: string; content: string }[];
   onSend: (message: string, selectedSections: string[]) => void;
   loading: boolean;
   model: string;
-  setModel: any;
-}) => {
+  setModel: (model: string) => void;
+};
+
+const Chats = ({ messages, onSend, loading, model, setModel }: Props) => {
   const [input, setInput] = useState("");
-  const [selectedSections, setSelectedSections] = useState<string[]>([
-    "nav",
-    "hero",
-    "features",
-    "cta-banner",
-    "footer",
-  ]);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const [customMode, setCustomMode] = useState(false);
+  const [selectedSections, setSelectedSections] = useState<string[]>(["nav", "hero", "features", "cta-banner", "footer"]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages, loading]);
 
   useEffect(() => {
     if (messages?.length === 1 && messages[0].role === "user" && input === "") {
       setInput(messages[0].content);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
-  const toggleSection = (val: string) => {
-    setSelectedSections((prev) =>
-      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]
-    );
-  };
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 140)}px`;
+  }, [input]);
+
+  const toggleSection = (val: string) => setSelectedSections((prev) => (prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]));
+
+  const canSend = input.trim() !== "" && selectedSections.length > 0 && !loading;
 
   const handleSend = () => {
-    if (input.trim() !== "" && selectedSections.length > 0) {
-      onSend(input.trim(), selectedSections);
-      setInput("");
+    if (!canSend) return;
+    onSend(input.trim(), selectedSections);
+    setInput("");
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const onModelChange = (v: string) => {
+    if (v === CUSTOM) {
+      setCustomMode(true);
+      setModel("");
+    } else {
+      setModel(v);
     }
   };
 
   return (
-    <div className="flex flex-col h-full ">
-      <div className="p-3 border-b">
-        <h3 className="text-lg font-semibold">Your all chats</h3>
+    <div className="flex h-full flex-col bg-[#0a0a0a] text-zinc-200">
+      <div className="flex h-12 shrink-0 items-center border-b border-white/[0.08] px-4">
+        <h3 className="text-sm font-medium text-zinc-100">Chat</h3>
       </div>
+
       <section
-        ref={chatContainerRef}
-        className="flex-1 p-3 pb-0 overflow-y-auto box space-y-4 flex flex-col mb-3 "
+        ref={scrollRef}
+        className="flex flex-1 flex-col gap-5 overflow-y-auto px-4 py-4"
       >
         {messages?.length === 0 ? (
-          <p className="text-center text-sm text-zinc-500">Chat with AI</p>
-        ) : (
-          messages?.map((msg, index) => (
-            <div
-              key={index}
-              className={`flex items-center gap-2 se ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-            >
-              <div className={`flex items-start gap-2 ${msg.role === "user" ? "!flex-row-reverse" : "flex-row"}`}>
-                <div className="w-2 h-2 rounded-2xl bg-green-400 mt-3"></div>
-                <p className={`text-[#111111] p-2 rounded-lg max-w-[176px] text-xs ${msg.role === "user" ? "bg-green-500/10 text-green-500" : "text-white/80"}`}>{msg.content}</p>
-              </div>
-            </div>
-          ))
-        )}
-
-        {/* 🩵 Show AI is typing... when loading */}
-        {loading && (
-          <div className="flex items-center gap-2 justify-start">
-            <div className="w-2 h-2 rounded-2xl bg-purple-400 "></div>
-
-            <p className="text-purple-500 p-2 rounded-lg max-w-[80%] text-xs bg-purple-500/10 animate-pulse flex items-center gap-2">
-              <span>
-                <Loader
-                  className="animate-spin"
-                  size={16}
-                />
-              </span>
-              AI is generating...
-            </p>
+          <div className="m-auto max-w-[200px] text-center">
+            <p className="text-sm text-zinc-300">Describe your website</p>
+            <p className="mt-1 text-xs leading-relaxed text-zinc-500">Choose the sections below, then write what it should look like.</p>
           </div>
+        ) : (
+          messages.map((msg, i) =>
+            msg.role === "user" ? (
+              <div
+                key={i}
+                className="flex justify-end"
+              >
+                <p className="max-w-[85%] rounded-2xl rounded-br-md bg-white/[0.08] px-3 py-2 text-[13px] leading-relaxed text-zinc-100">{msg.content}</p>
+              </div>
+            ) : (
+              <p
+                key={i}
+                className="text-[13px] leading-relaxed text-zinc-300"
+              >
+                {msg.content}
+              </p>
+            ),
+          )
         )}
+        {loading && <p className="animate-pulse text-[13px] text-zinc-500">Generating…</p>}
       </section>
 
-      {/* Checklist UI */}
-      <div className="px-3 pb-2 border-t pt-2 bg-zinc-900/10">
-        <p className="text-[10px] font-semibold text-zinc-400 mb-2 tracking-wider">SELECT SECTIONS TO GENERATE:</p>
-        <div className="grid grid-cols-2 gap-2 text-[10px] text-zinc-300">
-          {SECTIONS.map((sec) => (
-            <label key={sec.value} className="flex items-center gap-1.5 cursor-pointer hover:text-white select-none">
-              <input
-                type="checkbox"
-                checked={selectedSections.includes(sec.value)}
-                onChange={() => toggleSection(sec.value)}
-                className="accent-[#21DB66] rounded border-zinc-600 bg-zinc-800 h-3.5 w-3.5"
-              />
-              <span className="truncate">{sec.label}</span>
-            </label>
-          ))}
-        </div>
-      </div>
+      <div className="shrink-0 px-3 pb-3">
+        <div className="rounded-2xl border border-white/[0.1] bg-[#141414] p-2 transition-colors focus-within:border-white/25">
+          {/* Sections: always visible, tap to toggle */}
+          <div className="flex flex-wrap gap-1 border-b border-white/[0.06] px-0.5 pb-2">
+            {SECTIONS.map((sec) => {
+              const active = selectedSections.includes(sec.value);
+              return (
+                <button
+                  key={sec.value}
+                  type="button"
+                  onClick={() => toggleSection(sec.value)}
+                  aria-pressed={active}
+                  className={`rounded-full border px-2 py-0.5 text-[11px] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-400 ${
+                    active ? "border-zinc-100 bg-zinc-100 text-black" : "border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300"
+                  }`}
+                >
+                  {sec.label}
+                </button>
+              );
+            })}
+          </div>
 
-      <div className="sticky bottom-0 p-3 py-0 ">
-        <div className="flex flex-col items-center gap-2 bg-zinc-800/40 border-2 rounded-lg p-2 relative z-20 text-xs">
-          <Textarea
+          <textarea
+            ref={textareaRef}
+            rows={1}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="border-none dark:bg-transparent bg-transparent p-0 pb-2 text-xs "
-            placeholder="Imagine Something...✦˚"
+            onKeyDown={onKeyDown}
+            placeholder="Describe the site you want"
+            className="block max-h-36 min-h-[40px] w-full resize-none bg-transparent px-1.5 pt-2 text-[13px] leading-relaxed text-zinc-100 outline-none placeholder:text-zinc-600"
           />
-          <div className="flex items-center gap-2 w-full justify-end">
-            <Select
-              value={model}
-              onValueChange={setModel}
-            >
-              <SelectTrigger className="relative p-1 text-sm">
-                <SelectValue
-                  placeholder="Select a model"
-                  className="border-none dark:bg-transparent bg-transparent p-0 pb-2 text-xs"
-                />
-              </SelectTrigger>
-              <SelectContent className="text-sm">
-                <SelectGroup>
-                  {modelOptions.map((option) => (
-                    <SelectItem
-                      key={option.value}
-                      value={option.value}
-                      className="text-sm"
-                    >
-                      <Image
-                        src={option.image}
-                        alt={option.label}
-                        width={300}
-                        height={300}
-                        className="rounded-full bg-white w-6 h-6 border border-zinc-600"
-                      />
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-                <SelectSeparator className="mt-2" />
-                <div className="relative">
+
+          <div className="mt-1 flex items-center gap-2">
+            <div className="min-w-0 flex-1">
+              {customMode ? (
+                <div className="flex items-center gap-1">
                   <Input
-                    type="text"
-                    placeholder="Enter custom model name"
+                    autoFocus
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
-                    className="px-2"
+                    placeholder="provider/model"
+                    className="h-8 min-w-0 flex-1 border-white/10 bg-transparent px-2 text-xs text-zinc-200 placeholder:text-zinc-600"
                   />
-                  <Pencil
-                    className="absolute right-2 top-1/2 -translate-y-1/2"
-                    size={14}
-                  />
+                  <button
+                    type="button"
+                    aria-label="Back to model list"
+                    onClick={() => {
+                      setCustomMode(false);
+                      setModel(modelOptions[0].value);
+                    }}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-zinc-500 hover:bg-white/[0.06] hover:text-zinc-200"
+                  >
+                    <X size={14} />
+                  </button>
                 </div>
-              </SelectContent>
-            </Select>
+              ) : (
+                <Select
+                  value={model}
+                  onValueChange={onModelChange}
+                >
+                  <SelectTrigger className="h-8 w-full max-w-full justify-start gap-1.5 rounded-full border-0 bg-transparent px-2 text-xs text-zinc-400 shadow-none hover:bg-white/[0.06] hover:text-zinc-200 focus:ring-0 dark:bg-transparent dark:hover:bg-white/[0.06] [&>span]:truncate [&>svg]:ml-auto [&>svg]:shrink-0">
+                    <SelectValue placeholder="Model" />
+                  </SelectTrigger>
+                  <SelectContent className="border-white/10 bg-[#141414] text-sm">
+                    {modelOptions.map((o) => (
+                      <SelectItem
+                        key={o.value}
+                        value={o.value}
+                        className="text-sm"
+                      >
+                        {o.label}
+                      </SelectItem>
+                    ))}
+                    <SelectSeparator />
+                    <SelectItem
+                      value={CUSTOM}
+                      className="text-sm"
+                    >
+                      <span className="flex items-center gap-2 text-zinc-400">
+                        <Pencil size={14} /> Custom model
+                      </span>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
 
             <button
-              className="h-8 w-8 flex items-center justify-center ml-auto bg-gradient-to-br from-zinc-50 to-zinc-200 rounded-full disabled:opacity-30 disabled:cursor-not-allowed"
+              type="button"
               onClick={handleSend}
-              disabled={input.trim() === "" || selectedSections.length === 0 || loading}
+              disabled={!canSend}
+              aria-label="Send"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-black transition-opacity hover:bg-white disabled:cursor-not-allowed disabled:opacity-20"
             >
               {loading ? (
                 <Loader2
-                  className="animate-spin text-[#444444]"
-                  size={16}
+                  size={15}
+                  className="animate-spin"
                 />
               ) : (
-                <ArrowUp
-                  color="#444444"
-                  size={16}
-                />
+                <ArrowUp size={15} />
               )}
             </button>
           </div>
         </div>
-        <div className="bg-editor-bcgc h-5 -mt-2" />
       </div>
     </div>
   );

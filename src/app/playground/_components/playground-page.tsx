@@ -11,7 +11,7 @@ import { WebsiteBuilder } from "./website-builder";
 import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadingAnimation";
 import { useCredits } from "@/hooks/credit-provider";
 import { flattenStructure } from "@/lib/flattenStructure";
-import { validateFlatMap } from "../../../../validators/ai-output-json-validator";
+import { htmlToElementMap, validateElementMap } from "@/lib/html-to-element-map";
 
 export type Messages = {
   role: string;
@@ -45,43 +45,86 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
 
     try {
-      // ── 1. API call ──────────────────────────────────────────────────────────
       const res = await fetch("/api/ai/ai-website-generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt: userInput,
-          selectedSections,
-          userId,
-          model,
-        }),
+        body: JSON.stringify({ prompt: userInput, selectedSections, userId, model }),
       });
 
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || "Failed to generate website elements");
+      if (!res.ok || !res.body) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to generate");
       }
 
-      const data = await res.json();
-      if (!data.success || !data.elements) {
-        throw new Error("Invalid response elements from AI generator");
+      // ── Read OpenRouter SSE stream, accumulate delta tokens ──────────────────
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let accumulated = "";
+      let lastPreviewTime = 0;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const payload = line.slice(6).trim();
+          if (payload === "[DONE]") continue;
+          try {
+            const chunk = JSON.parse(payload);
+            const delta = chunk?.choices?.[0]?.delta?.content ?? "";
+            if (delta) {
+              accumulated += delta;
+              
+              // Live preview every ~400ms
+              const now = Date.now();
+              if (now - lastPreviewTime > 400) {
+                lastPreviewTime = now;
+                let rawHTML = accumulated;
+                // Strip markdown code blocks if present
+                const match = rawHTML.match(/```(?:html)?\s*([\s\S]*?)```/);
+                if (match) rawHTML = match[1].trim();
+                else rawHTML = rawHTML.replace(/^```(?:html)?\s*/, ""); // Strip opening fence if partial
+                
+                try {
+                  const elements = htmlToElementMap(rawHTML);
+                  if (elements && elements["__body"]) {
+                    validateElementMap(elements);
+                    dispatch({ type: "LOAD_DATA", payload: { elements, liveMode: true } });
+                  }
+                } catch (e) { /* ignore parse errors during live preview */ }
+              }
+            }
+          } catch { /* skip malformed */ }
+        }
       }
 
-      const elements = data.elements;
+      // ── Parse the accumulated HTML ───────────────────────────────────────────
+      if (!accumulated.trim()) throw new Error("Empty response from AI");
 
-      console.log("sayan-1st-playground page e ja dekhabe", elements);
+      // Strip markdown code blocks if model wraps output
+      let raw = accumulated.trim();
+      const match = raw.match(/```(?:html)?\s*([\s\S]*?)```/);
+      if (match) raw = match[1].trim();
+      
+      const elements = htmlToElementMap(raw);
+      validateElementMap(elements);
 
-      dispatch({
-        type: "LOAD_DATA",
-        payload: { elements, liveMode: false },
-      });
+      if (!elements?.__body) throw new Error("Invalid structure: missing __body");
 
+      console.log("AI_GENERATED_ELEMENT", elements);
+
+      dispatch({ type: "LOAD_DATA", payload: { elements, liveMode: false } });
       setMessages((prev) => [...prev, { role: "assistant", content: "✨ Your page is ready! Check the preview." }]);
 
       decrementCredits(userId, 100);
-
-      console.log("AI_GENERATED_ELEMENT", elements);
       await savePage(JSON.stringify(elements));
+
     } catch (e: any) {
       console.error("AI generation error:", e);
       toast.error(e?.message || "Something went wrong. Please try again.");
@@ -147,7 +190,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
       <div className="h-full container-query flex justify-center overflow-x-auto bg-[#191919] relative">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
-        {loading && <AiLoadingAnimation loading={loading} />}
+        {/* {loading && <AiLoadingAnimation loading={loading} />} */}
       </div>
 
       <FunnelEditorSidebar

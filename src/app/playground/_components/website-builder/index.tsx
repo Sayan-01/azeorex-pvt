@@ -229,7 +229,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           {...el.attributes}
         />
       );
-    } else if (el.type === "text" || el.type === "h1" || el.type === "h2" || el.type === "h3" || el.type === "h4" || el.type === "h5" || el.type === "h6" || el.type === "link") {
+    } else if (el.type === "text" || el.type === "h1" || el.type === "h2" || el.type === "h3" || el.type === "h4" || el.type === "h5" || el.type === "h6" || el.type === "link" || el.type === "button") {
       return (
         <Tag
           key={el.id}
