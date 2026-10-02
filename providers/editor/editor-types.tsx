@@ -96,7 +96,6 @@ export const initialElements: ElementMap = {
     styles: {
       minHeight: "100vh",
       backgroundColor: "#f3f4f6",
-      padding: "20px",
     },
   },
 

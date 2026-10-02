@@ -52,7 +52,7 @@ export function htmlToElementMap(html: string): ElementMap {
     type: "__body",
     parentId: null,
     children: [],
-    styles: { minHeight: "100vh", backgroundColor: "#f3f4f6", padding: "20px" },
+    styles: { minHeight: "100vh", backgroundColor: "#f3f4f6"},
     attributes: {},
     content: ""
   };
