@@ -8,12 +8,10 @@ import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-panal";
 import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
-// import AiTab from "./tabs/ai-tab";
 import SettingsTab from "./tabs/settings-tab/settings-tab";
 import Chats from "./tabs/chats-panal";
 import { useEditor } from "../../../../../providers/editor/editor-provider";
 import AiTab from "./tabs/ai-tab";
-// import LayoutTab from "./tabs/layout";
 
 type Props = {
   userId: string;
