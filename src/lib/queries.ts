@@ -183,7 +183,7 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
               styles: {
                 fontSize: "36px",
                 fontWeight: "bold",
-                color: "#1f2937",
+                color: "#333333",
                 marginBottom: "16px",
               },
             },

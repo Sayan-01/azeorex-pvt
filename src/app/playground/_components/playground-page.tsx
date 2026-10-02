@@ -79,7 +79,9 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       setMessages((prev) => [...prev, { role: "assistant", content: "✨ Your page is ready! Check the preview." }]);
 
       decrementCredits(userId, 100);
-      await savePage(JSON.stringify({ elements }));
+
+      console.log("AI_GENERATED_ELEMENT", elements);
+      await savePage(JSON.stringify(elements));
     } catch (e: any) {
       console.error("AI generation error:", e);
       toast.error(e?.message || "Something went wrong. Please try again.");
@@ -108,8 +110,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     });
   }, [messages]);
 
-  console.log("sayan-funnelPageDetailss", funnelPageDetails);
-  // console.log("sayan-content", elements);
+  
   // ── Save page to DB ──────────────────────────────────────────────────────────
 
   const savePage = async (content: string) => {

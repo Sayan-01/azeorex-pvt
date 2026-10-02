@@ -31,7 +31,7 @@ const page = async (props: Props) => {
       id: params.funnelPageId,
     },
   });
-
+  
   if (!funnelPageDetails) {
     return null;
   }

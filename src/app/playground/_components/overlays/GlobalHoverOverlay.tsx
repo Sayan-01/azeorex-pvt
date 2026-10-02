@@ -7,6 +7,19 @@ export default function GlobalHoverOverlay({ resizing }: { resizing: boolean }) 
   const { state } = useEditor();
   const overlayRef = useRef<HTMLDivElement>(null);
 
+  // Walk up the DOM to check if element itself or any ancestor is fixed/sticky.
+  const hasFixedOrStickyAncestor = (el: Element): boolean => {
+    let node: Element | null = el;
+    let el_id = el.getAttribute("data-element-id") as string;
+    while (node && node !== document.documentElement && el_id !== "__body") {
+      const pos = getComputedStyle(node).position;
+      if (pos === "fixed" || pos === "sticky") return true;
+      node = node.parentElement;
+      el_id = node?.getAttribute("data-element-id") as string;
+    }
+    return false;
+  };
+
   // Position using container-relative (absolute) coordinates — browser handles
   // scroll movement automatically, no JS polling needed.
   const update = useCallback(() => {
@@ -26,19 +39,28 @@ export default function GlobalHoverOverlay({ resizing }: { resizing: boolean }) 
 
     const elRect = element.getBoundingClientRect();
 
-    // offsetParent = scrollable canvas container (position:relative).
-    const container = overlay.offsetParent as HTMLElement | null;
-    let absTop = elRect.top;
-    let absLeft = elRect.left;
-    if (container) {
-      const cRect = container.getBoundingClientRect();
-      absTop = elRect.top - cRect.top + container.scrollTop;
-      absLeft = elRect.left - cRect.left + container.scrollLeft;
+    // If element OR any ancestor is fixed/sticky → overlay must be fixed too.
+    const isFixed = hasFixedOrStickyAncestor(element);
+
+    if (isFixed) {
+      overlay.style.position = "fixed";
+      overlay.style.left = `${elRect.left}px`;
+      overlay.style.top = `${elRect.top}px`;
+    } else {
+      overlay.style.position = "absolute";
+      const container = overlay.offsetParent as HTMLElement | null;
+      let absTop = elRect.top;
+      let absLeft = elRect.left;
+      if (container) {
+        const cRect = container.getBoundingClientRect();
+        absTop = elRect.top - cRect.top + container.scrollTop;
+        absLeft = elRect.left - cRect.left + container.scrollLeft;
+      }
+      overlay.style.left = `${absLeft}px`;
+      overlay.style.top = `${absTop}px`;
     }
 
     overlay.style.display = "";
-    overlay.style.left = `${absLeft}px`;
-    overlay.style.top = `${absTop}px`;
     overlay.style.width = `${elRect.width}px`;
     overlay.style.height = `${elRect.height}px`;
   }, [state.hoverId, state.selectedId, resizing]);

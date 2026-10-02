@@ -109,7 +109,7 @@
 //         {
 //           "id": "heading-id",
 //           "type": "h1",
-//           "styles": { "fontSize": "36px", "fontWeight": "bold", "color": "#1f2937", "marginBottom": "16px" },
+//           "styles": { "fontSize": "36px", "fontWeight": "bold", "color": "#333333", "marginBottom": "16px" },
 //           "content": "Heading Text"
 //         },
 //         {
