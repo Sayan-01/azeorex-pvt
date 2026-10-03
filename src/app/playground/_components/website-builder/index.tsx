@@ -96,16 +96,18 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
 
   const handleDrop = () => {
     const { draggedId, draggedComponent, dropTargetId, dropPosition } = state;
-    if (!dropTargetId || !dropPosition) return;
 
-    if (draggedComponent) {
-      insertElement(draggedComponent, dropTargetId, dropPosition);
-      dispatch({ type: "SET_DRAGGED_COMPONENT", payload: { draggedComponent: null } });
-    } else if (draggedId) {
-      moveElement(draggedId, dropTargetId, dropPosition);
-      dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
+    if (dropTargetId && dropPosition) {
+      if (draggedComponent) {
+        insertElement(draggedComponent, dropTargetId, dropPosition);
+      } else if (draggedId) {
+        moveElement(draggedId, dropTargetId, dropPosition);
+      }
     }
 
+    // Always clean up drag state regardless of drop success
+    dispatch({ type: "SET_DRAGGED_COMPONENT", payload: { draggedComponent: null } });
+    dispatch({ type: "SET_DRAGGED_ID", payload: { draggedId: null } });
     dispatch({ type: "SET_DROP_TARGET", payload: { dropTargetId: null, dropPosition: null } });
   };
 
@@ -206,6 +208,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       onMouseOut: handleMouseOut,
       onDragOver: handleDragOver,
       onDragLeave: handleDragLeave,
+      
       ...(canDrag ? { draggable: true, onDragStart: handleDragStart, onDragEnd: handleDragEnd } : {}),
     };
 

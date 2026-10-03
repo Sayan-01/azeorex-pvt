@@ -1,5 +1,6 @@
 "use client";
 import MediaComponent from "@/components/media";
+import MediaUploadButton from "@/components/media/upload-buttons";
 import { getMedia } from "@/lib/queries";
 import { GetMediaFiles } from "@/types/types";
 import React, { useEffect, useState } from "react";
@@ -20,7 +21,10 @@ const MediaBucketTab = (props: Props) => {
   }, []);
 
   return (
-    <div className="h-[900px] bg-editor-bcgc overflow-x-scroll box-1 p-4 select-none">
+    <div className="h-[calc(100%-0px)] bg-editor-bcgc overflow-y-hidden box-1 pt-3 select-none">
+      <div className="border-b px-4">
+        <h3 className="text font-semibold mb-4">Media Bucket</h3>
+      </div>
       <MediaComponent
         data={data}
         projectId={props.projectId}

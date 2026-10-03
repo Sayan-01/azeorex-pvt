@@ -83,9 +83,9 @@ const Chats = ({ messages, onSend, loading, model, setModel }: Props) => {
   };
 
   return (
-    <div className="flex h-full flex-col bg-[#0a0a0a] text-zinc-200">
+    <div className="flex h-full flex-col bg-editor-bcgc text-zinc-200">
       <div className="flex h-12 shrink-0 items-center border-b border-white/[0.08] px-4">
-        <h3 className="text-sm font-medium text-zinc-100">Chat</h3>
+        <h3 className="text font-semibold">Chat Section</h3>
       </div>
 
       <section

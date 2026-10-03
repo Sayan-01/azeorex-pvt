@@ -149,7 +149,7 @@ export default function LayersPanel() {
             e.stopPropagation();
             handleDrop();
           }}
-          className={`px-2 py-2 cursor-pointer hover:bg-gray-700 flex items-center gap-2 border-b rounded ${isSelected ? "bg-blue-600" : ""} ${isDragging ? "opacity-50" : ""}`}
+          className={`px-2 py-2 cursor-pointer hover:bg-gray-700 flex items-center gap-2 ${isSelected ? "bg-blue-600" : ""} ${isDragging ? "opacity-50" : ""}`}
           style={{ marginLeft: `${depth * 16 + 8}px` }}
         >
           {el.id !== "__body" && getElementIcon(el.type)}
@@ -161,11 +161,15 @@ export default function LayersPanel() {
   };
 
   return (
-    <div className="p-2">
-      <div className="text-xs text-yellow-400 mb-2 px-4 py-2 bg-yellow-900/20 rounded">Drag elements to reorder</div>
-      {Object.values(state.elements)
-        .filter((el) => el.parentId === null)
-        .map((el) => renderLayerTree(el))}
+    <div>
+      <div className="px-4 border-b pt-3">
+        <h3 className="text font-semibold mb-4">Layers</h3>
+      </div>
+      <div className="py-2 overflow-y-auto box">
+        {Object.values(state.elements)
+          .filter((el) => el.parentId === null)
+          .map((el) => renderLayerTree(el))}
+      </div>
     </div>
   );
 }

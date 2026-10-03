@@ -124,13 +124,6 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
     e.stopPropagation();
   };
 
-  const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (state.selectedId) {
-      deleteElement(state.selectedId);
-    }
-  };
-
   const isVisible = !!rect && !!state.selectedId;
   const shortId = selectedElement?.id ? (selectedElement.id.length > 10 ? selectedElement.id.slice(0, 10) + "..." : selectedElement.id) : "element";
 
