@@ -80,7 +80,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
             const delta = chunk?.choices?.[0]?.delta?.content ?? "";
             if (delta) {
               accumulated += delta;
-              
+
               // Live preview every ~400ms
               const now = Date.now();
               if (now - lastPreviewTime > 400) {
@@ -90,17 +90,21 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
                 const match = rawHTML.match(/```(?:html)?\s*([\s\S]*?)```/);
                 if (match) rawHTML = match[1].trim();
                 else rawHTML = rawHTML.replace(/^```(?:html)?\s*/, ""); // Strip opening fence if partial
-                
+
                 try {
                   const elements = htmlToElementMap(rawHTML);
                   if (elements && elements["__body"]) {
                     validateElementMap(elements);
                     dispatch({ type: "LOAD_DATA", payload: { elements, liveMode: true } });
                   }
-                } catch (e) { /* ignore parse errors during live preview */ }
+                } catch (e) {
+                  /* ignore parse errors during live preview */
+                }
               }
             }
-          } catch { /* skip malformed */ }
+          } catch {
+            /* skip malformed */
+          }
         }
       }
 
@@ -111,7 +115,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       let raw = accumulated.trim();
       const match = raw.match(/```(?:html)?\s*([\s\S]*?)```/);
       if (match) raw = match[1].trim();
-      
+
       const elements = htmlToElementMap(raw);
       validateElementMap(elements);
 
@@ -124,11 +128,18 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
       decrementCredits(userId, 100);
       await savePage(JSON.stringify(elements));
-
     } catch (e: any) {
-      console.error("AI generation error:", e);
-      toast.error(e?.message || "Something went wrong. Please try again.");
-      setMessages((prev) => [...prev, { role: "assistant", content: e?.message || "Something went wrong. Please try to regenerate." }]);
+      let errMsg = e?.message || "Something went wrong. Please try again.";
+      try {
+        const parsed = JSON.parse(errMsg);
+        if (parsed?.error) {
+          errMsg = parsed.error.metadata?.raw || parsed.error.message || errMsg;
+        }
+      } catch (parseError) {
+        
+      }
+      toast.error(errMsg);
+      setMessages((prev) => [...prev, { role: "assistant", content: errMsg }]);
     } finally {
       setLoading(false);
     }
@@ -153,7 +164,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     });
   }, [messages]);
 
-  
   // ── Save page to DB ──────────────────────────────────────────────────────────
 
   const savePage = async (content: string) => {
@@ -188,7 +198,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         userId={userId}
       />
 
-      <div className="h-full container-query flex justify-center overflow-x-auto bg-[#191919] relative">
+      <div className="h-full container-query flex justify-center overflow-x-auto bg-[#191919] relative bg-[#191919] bg-[radial-gradient(#3a3a3a_1px,transparent_1px)] [background-size:16px_16px]">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
         {/* {loading && <AiLoadingAnimation loading={loading} />} */}
       </div>

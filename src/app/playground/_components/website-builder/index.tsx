@@ -229,7 +229,17 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           {...el.attributes}
         />
       );
-    } else if (el.type === "text" || el.type === "h1" || el.type === "h2" || el.type === "h3" || el.type === "h4" || el.type === "h5" || el.type === "h6" || el.type === "link" || el.type === "button") {
+    } else if (
+      el.type === "text" ||
+      el.type === "h1" ||
+      el.type === "h2" ||
+      el.type === "h3" ||
+      el.type === "h4" ||
+      el.type === "h5" ||
+      el.type === "h6" ||
+      el.type === "link" ||
+      el.type === "button"
+    ) {
       return (
         <Tag
           key={el.id}
@@ -302,7 +312,8 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     </div>
   ) : (
     <div
-      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#191919] transition-all box !relative pt-3 px-3 pb-[61px]", {
+      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px]  transition-all box !relative pt-4 px-4 pb-[61px] overflow-x-hidden ", {
+        "animate-none !transition-none !duration-0 [&_*]:!transition-none [&_*]:!duration-0 [&_*]:!animate-none": !state.previewMode && !liveMode,
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode || liveMode,
         "!w-[850px]": state.device === "Tablet", // lowercase — DeviceType
         "!w-[420px]": state.device === "Mobile",
@@ -313,7 +324,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       {/* tablet / mobile → iframe */}
       {state.device !== "Desktop" ? (
         <iframe
-          className="border transition-all bg-white w-full h-full"
+          className="transition-all bg-white w-full h-full box overflow-x-hidden overflow-y-auto"
           srcDoc={`<!DOCTYPE html>
             <html>
               <head>
@@ -322,12 +333,12 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
                 <script src="https://cdn.tailwindcss.com"></script>
                 <style>* { margin: 0; padding: 0; box-sizing: border-box; }</style>
               </head>
-              <body>${rootElements.map(elementToHTML).join("")}</body>
+              <body class="box-1" >${rootElements.map(elementToHTML).join("")}</body>
             </html>`}
         />
       ) : (
         /* desktop → direct render */
-        <div className="border relative">{rootElements.map((el) => renderElement(el))}</div>
+        <div className=" relative">{rootElements.map((el) => renderElement(el))}</div>
       )}
 
       {/* overlays */}

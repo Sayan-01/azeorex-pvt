@@ -90,7 +90,7 @@ const Chats = ({ messages, onSend, loading, model, setModel }: Props) => {
 
       <section
         ref={scrollRef}
-        className="flex flex-1 flex-col gap-5 overflow-y-auto px-4 py-4"
+        className="flex flex-1 flex-col gap-5 overflow-y-auto px-4 py-4 box-1"
       >
         {messages?.length === 0 ? (
           <div className="m-auto max-w-[200px] text-center">
@@ -109,7 +109,7 @@ const Chats = ({ messages, onSend, loading, model, setModel }: Props) => {
             ) : (
               <p
                 key={i}
-                className="text-[13px] leading-relaxed text-zinc-300"
+                className="max-w-[85%] break-all text-[13px] leading-relaxed text-zinc-300"
               >
                 {msg.content}
               </p>
