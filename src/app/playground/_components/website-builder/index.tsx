@@ -321,11 +321,11 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     </div>
   ) : (
     <div
-      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px]  transition-all box !relative pt-4 px-4 pb-[61px] overflow-x-hidden ", {
+      className={clsx("use-automation-zoom-in h-[calc(100%-40.8px)] overflow-y-auto mx-[240px] bg-[#202020] transition-all box !relative pt-4 px-4 pb-[61px] overflow-x-hidden", {
         "animate-none !transition-none !duration-0 [&_*]:!transition-none [&_*]:!duration-0 [&_*]:!animate-none": !state.previewMode && !liveMode,
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode || liveMode,
         "!w-[850px]": state.device === "Tablet", // lowercase — DeviceType
-        "!w-[420px]": state.device === "Mobile",
+        "!w-[420px]": state.device === "Mobile", 
         "!w-full": state.device === "Desktop",
       })}
       style={{ minHeight: "100vh", transition: "width 0.3s", position: "relative", overflowX: "hidden" }}
@@ -342,7 +342,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
                 <script src="https://cdn.tailwindcss.com"></script>
                 <style>* { margin: 0; padding: 0; box-sizing: border-box; }</style>
               </head>
-              <body class="box-1" >${rootElements.map(elementToHTML).join("")}</body>
+              <body>${rootElements.map(elementToHTML).join("")}</body>
             </html>`}
         />
       ) : (

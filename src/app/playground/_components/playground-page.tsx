@@ -198,7 +198,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         userId={userId}
       />
 
-      <div className="h-full container-query flex justify-center overflow-x-auto bg-[#1e1e1e] relative bg-[radial-gradient(#3a3a3a_1px,transparent_1px)] [background-size:16px_16px]">
+      <div className="h-full container-query flex justify-center overflow-x-auto bg-[#1e1e1e] relative ">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
         {loading && (
           <AiLoadingAnimation
