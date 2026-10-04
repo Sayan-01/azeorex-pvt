@@ -49,10 +49,6 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
     }
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(JSON.stringify(state.selectedElement, null, 2));
-    toast.success("✨Copied Editor");
-  };
   return (
     <TooltipProvider>
       <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", {})}>
@@ -182,15 +178,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
             </div>
             <p className="text-xs text-gray-400 mt-1">{isPublished ? "Page is live" : "Page is in draft mode"}</p>
           </div> */}
-          <button
-            className="text-sm border-l-2 border-main-black px-3"
-            onClick={handleCopy}
-          >
-            <Copy
-              size={16}
-              strokeWidth={1.5}
-            />
-          </button>
+          
           <button
             className="text-sm border-l-2 border-main-black pl-3"
             onClick={handleSave}

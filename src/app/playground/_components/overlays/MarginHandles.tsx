@@ -16,7 +16,30 @@ const KEBAB: Record<string, string> = { top: "margin-top", right: "margin-right"
 
 /** Read margin value checking both camelCase and kebab-case keys */
 function getMarginValue(styles: any, side: string): string {
-  return styles?.[CAMEL[side]] || styles?.[KEBAB[side]] || "0px";
+  // Always check specific side first, as it overrides the shorthand
+  const specificMargin = styles?.[CAMEL[side]] || styles?.[KEBAB[side]];
+  if (specificMargin !== undefined) {
+    return specificMargin;
+  }
+
+  if (styles?.margin) {
+    const parts = styles.margin.trim().split(/\s+/);
+    if (parts.length === 1) {
+      return parts[0];
+    } else if (parts.length === 2) {
+      return side === "top" || side === "bottom" ? parts[0] : parts[1];
+    } else if (parts.length === 3) {
+      if (side === "top") return parts[0];
+      if (side === "left" || side === "right") return parts[1];
+      if (side === "bottom") return parts[2];
+    } else if (parts.length >= 4) {
+      if (side === "top") return parts[0];
+      if (side === "right") return parts[1];
+      if (side === "bottom") return parts[2];
+      if (side === "left") return parts[3];
+    }
+  }
+  return "0px";
 }
 
 export default function MarginHandles({ rect, selectedId, setResizing }: MarginHandlesProps) {

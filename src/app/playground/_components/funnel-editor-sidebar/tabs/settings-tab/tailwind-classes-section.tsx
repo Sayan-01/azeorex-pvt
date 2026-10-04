@@ -8,7 +8,16 @@ import { EditorElement } from "../../../../../../../providers/editor/editor-type
 const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorElement }) => {
   const { updateAttribute } = useEditor();
   const [classes, setClasses] = useState<string[]>([]);
-  const [newClass, setNewClass] = useState("");
+
+  // States for different inputs
+  const [inputs, setInputs] = useState({
+    normal: "",
+    hover: "",
+    active: "",
+    sm: "",
+    md: "",
+    lg: "",
+  });
 
   //load initial classes
   useEffect(() => {
@@ -31,42 +40,47 @@ const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorEl
   };
 
   //Add new class
-  const addClass = () => {
-    const trimmed = newClass.trim();
+  const addClass = (type: keyof typeof inputs, prefix: string) => {
+    let trimmed = inputs[type].trim();
     if (!trimmed) return;
+
+    // Auto add prefix if not present
+    if (prefix && !trimmed.startsWith(prefix + ":")) {
+      trimmed = `${prefix}:${trimmed}`;
+    }
+
     if (!classes.includes(trimmed)) {
       const updated = [...classes, trimmed];
       setClasses(updated);
       updateElementClasses(updated);
     }
-    setNewClass("");
+
+    setInputs({ ...inputs, [type]: "" });
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, type: keyof typeof inputs, prefix: string) => {
     if (e.key === "Enter") {
-      addClass();
+      addClass(type, prefix);
     }
   };
 
-  return (
-    <AccordionItem
-      value="Classes (responcive)"
-      className="px-3 py-0 border-none"
-    >
-      <AccordionTrigger className="!no-underline font-semibold">Classes</AccordionTrigger>
+  const renderClassGroup = (title: string, type: keyof typeof inputs, prefix: string) => {
+    const filteredClasses = prefix === "" ? classes.filter((c) => !c.includes(":")) : classes.filter((c) => c.startsWith(prefix + ":"));
 
-      <AccordionContent className="flex flex-col gap-3">
-        <div className="flex flex-wrap gap-2">
-          {classes.length > 0 ? (
-            classes.map((cls) => (
+    return (
+      <div className="flex flex-col gap-2 mb-4 border border-zinc-800 p-2 rounded-md">
+        <div className="text-xs font-semibold text-gray-300">{title}</div>
+        <div className="flex flex-wrap gap-1">
+          {filteredClasses.length > 0 ? (
+            filteredClasses.map((cls) => (
               <span
                 key={cls}
-                className="flex text-xs items-center gap-1 px-2 py-1 rounded-full bg-zinc-800 border border-zinc-700"
+                className="flex text-[10px] items-center gap-1 px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700"
               >
                 {cls}
                 <button
                   onClick={() => removeClass(cls)}
-                  className="ml-1 text-red-500 hover:text-red-700 text-base leading-none"
+                  className="ml-1 text-red-500 hover:text-red-700 text-sm leading-none"
                   aria-label={`Remove ${cls} class`}
                 >
                   ×
@@ -74,26 +88,42 @@ const TailwindClassesSection = ({ selectedElement }: { selectedElement: EditorEl
               </span>
             ))
           ) : (
-            <span className="text-gray-400 text-xs">No classes applied</span>
+            <span className="text-gray-500 text-[10px]">No {title.toLowerCase()} classes</span>
           )}
         </div>
-
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-1">
           <Input
-            className="h-[30px] flex-1"
-            value={newClass}
-            onChange={(e) => setNewClass(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Add Tailwind class..."
+            value={inputs[type]}
+            onChange={(e) => setInputs({ ...inputs, [type]: e.target.value })}
+            onKeyPress={(e) => handleKeyPress(e, type, prefix)}
+            placeholder={`Add class...`}
           />
           <Button
-            className="h-[30px]"
+            className="h-[30px] text-xs px-2"
             type="button"
-            onClick={addClass}
+            onClick={() => addClass(type, prefix)}
           >
             Add
           </Button>
         </div>
+      </div>
+    );
+  };
+
+  return (
+    <AccordionItem
+      value="Classes (responcive)"
+      className="px-3 py-0 border-none"
+    >
+      <AccordionTrigger className="!no-underline font-semibold">Tailwind Classes</AccordionTrigger>
+
+      <AccordionContent className="flex flex-col gap-1">
+        {renderClassGroup("Normal", "normal", "")}
+        {renderClassGroup("Hover State", "hover", "hover")}
+        {renderClassGroup("Click State", "active", "active")}
+        {renderClassGroup("Small (sm)", "sm", "sm")}
+        {renderClassGroup("Medium (md)", "md", "md")}
+        {renderClassGroup("Large (lg)", "lg", "lg")}
       </AccordionContent>
     </AccordionItem>
   );
