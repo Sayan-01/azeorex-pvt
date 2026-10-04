@@ -26,8 +26,7 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
   const hasFixedOrStickyAncestor = (el: Element): boolean => {
     let node: Element | null = el;
     let el_id = el.getAttribute("data-element-id");
-    
-    
+
     while (node && node !== document.documentElement && el_id !== "__body") {
       const pos = getComputedStyle(node).position;
       if (pos === "fixed" || pos === "sticky") return true;
@@ -65,7 +64,6 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
       overlay.style.left = `${elRect.left}px`;
       overlay.style.top = `${elRect.top}px`;
     } else {
-      overlay.style.position = "absolute";
       const container = overlay.offsetParent as HTMLElement | null;
       let absTop = elRect.top;
       let absLeft = elRect.left;

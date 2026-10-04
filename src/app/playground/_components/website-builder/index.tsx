@@ -212,13 +212,19 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       ...(canDrag ? { draggable: true, onDragStart: handleDragStart, onDragEnd: handleDragEnd } : {}),
     };
 
+    const attributes = { ...el.attributes };
+    if (!state.previewMode && !state.liveMode && typeof attributes.className === "string") {
+      // Strip out hover:, focus:, active: classes during editing to prevent jumpiness
+      attributes.className = attributes.className.replace(/(hover|focus|active):[^\s]+/g, "").trim();
+    }
+
     // void (img, hr, input)
     if (isVoid) {
       return (
         <Tag
           key={el.id}
           {...sharedProps}
-          {...el.attributes}
+          {...attributes}
         />
       );
     } else if (el.type === "textarea") {
@@ -229,7 +235,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           defaultValue={el.content}
           disabled={!state.liveMode && !state.previewMode}
           onBlur={(e) => updateContent(el.id, e.currentTarget.value)}
-          {...el.attributes}
+          {...attributes}
         />
       );
     } else if (
@@ -251,7 +257,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           disabled={!state.liveMode && !state.previewMode && el.type === "link"}
           suppressContentEditableWarning
           onBlur={handleBlur}
-          {...el.attributes}
+          {...attributes}
         >
           {el.content}
         </Tag>
@@ -265,12 +271,12 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       <Tag
         key={el.id}
         {...sharedProps}
-        className={clsx({
+        {...attributes}
+        className={clsx(attributes.className, {
           "empty-outline": childElements.length === 0 && !state.liveMode && !state.previewMode,
           "!px-9 !py-9": childElements.length === 0 && !el.styles?.width && !el.styles?.height,
         })}
         onDrop={handleDropEvent}
-        {...el.attributes}
       >
         {el.content}
         {childElements.map((child) => renderElement(child))}

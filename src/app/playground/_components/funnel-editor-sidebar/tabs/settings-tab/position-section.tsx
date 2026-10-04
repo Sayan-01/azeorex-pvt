@@ -32,12 +32,12 @@ const PositionSection = ({ selectedElement }: { selectedElement: EditorElement }
             >
               A
             </TabsTrigger>
-            <TabsTrigger
+            {/* <TabsTrigger
               value="fixed"
               className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950 "
             >
               F
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger
               value="sticky"
               className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950 "
