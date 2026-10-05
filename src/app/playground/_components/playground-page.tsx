@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import FunnelEditorSidebar from "../_components/funnel-editor-sidebar";
-import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
-import { PromptForWebPage } from "../../../../Ai/prompt-v2";
-import { toast } from "sonner";
-import { useEditor } from "../../../../providers/editor/editor-provider";
-import { decrementCredits, upsertFunnelPageForProject } from "@/lib/queries";
-import { WebsiteBuilder } from "./website-builder";
 import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadingAnimation";
 import { useCredits } from "@/hooks/credit-provider";
-import { flattenStructure } from "@/lib/flattenStructure";
 import { htmlToElementMap, validateElementMap } from "@/lib/html-to-element-map";
+import { decrementCredits, upsertFunnelPageForProject } from "@/lib/queries";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useEditor } from "../../../../providers/editor/editor-provider";
+import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
+import FunnelEditorSidebar from "../_components/funnel-editor-sidebar";
+import { WebsiteBuilder } from "./website-builder";
 
 export type Messages = {
   role: string;

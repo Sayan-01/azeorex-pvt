@@ -8,7 +8,7 @@ export const maxDuration = 200;
 export async function POST(req: Request) {
   const { prompt, selectedSections, model } = await req.json();
 
-  const systemPrompt = PromptForWebPage({ userInput: prompt });
+  const systemPrompt = PromptForWebPage();
   const userMessage = `Sections to generate: ${selectedSections?.join(", ") ?? "all"}.\n\nUser request: ${prompt}`;
 
   const upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {

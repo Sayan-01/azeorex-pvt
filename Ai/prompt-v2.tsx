@@ -1,6 +1,6 @@
 import dedent from "dedent";
 
-export const PromptForWebPage = ({ userInput }: { userInput?: string } = {}) => {
+export const PromptForWebPage = () => {
   return dedent`
 You are a world-class UI/UX designer and front-end developer.
 Generate a visually stunning, modern, fully responsive webpage as raw HTML.
@@ -83,6 +83,5 @@ Every section must be complete and polished. Never output a tiny or placeholder 
 - Layout properties are in class, visual properties are in style, nothing duplicated.
 - Every grid/row collapses to one column on mobile; headings use clamp().
 - Output starts with "<" and ends with ">", with no markdown.
-${userInput ? `\nNow generate the raw HTML for: ${userInput}` : ""}
 `;
-};
+}
