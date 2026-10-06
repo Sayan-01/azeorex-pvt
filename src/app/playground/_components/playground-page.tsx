@@ -26,7 +26,7 @@ type Props = {
 const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: Props) => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Messages[]>(chatMessages);
-  const [model, setModel] = useState("poolside/laguna-s-2.1:free");
+  const [model, setModel] = useState("openai/gpt-oss-120b");
 
   const { dispatch, state } = useEditor();
   const { credits } = useCredits();

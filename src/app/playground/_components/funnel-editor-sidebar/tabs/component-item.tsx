@@ -24,7 +24,7 @@ export default function ComponentItem({ icon, label, component, onDragStart, onD
           e.stopPropagation();
           onDragEnd();
         }}
-        className="p-3 w-full border-2 flex justify-center items-center border-dashed border-zinc-600/80 rounded-lg bg-zinc-700/40 cursor-move"
+        className="p-3 w-full border-2 flex justify-center items-center border-dashed border-zinc-600/80 rounded-lg bg-zinc-700/40 cursor-grab"
       >
         <div className="text-gray-400">{icon}</div>
       </div>

@@ -196,7 +196,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
     // shared style
     const baseStyle: React.CSSProperties = {
       ...el.styles,
-      cursor: state.previewMode ? "default" : "pointer",
+      cursor: state.previewMode || state.liveMode ? "default" : "grab",
       opacity: isDragging ? 0.5 : 1,
     };
 

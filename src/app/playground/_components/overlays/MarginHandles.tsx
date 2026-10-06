@@ -99,7 +99,7 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
             draggable pill at z-[1009] (above selection border) */}
         <div
           style={{ height: mt == "auto" ? 0 : mt, top: mt == "auto" ? "0" : `-${mt}` }}
-          className="absolute z-[1004] left-0 right-0 flex items-end justify-center bg-orange-500/20 height-0 top-0"
+          className="absolute z-[1004] pointer-events-none left-0 right-0 flex items-end justify-center bg-orange-500/20 height-0 top-0"
         >
           <div className="absolute inset-0 flex items-end justify-center z-[1009] pointer-events-none">
             <div
@@ -112,7 +112,7 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
         {/* Right margin handle */}
         <div
           style={{ width: mr == "auto" ? 0 : mr, right: mr == "auto" ? "0" : `-${mr}` }}
-          className="absolute z-[1004] top-0 bottom-0 right-0 flex items-center justify-start bg-orange-500/20 width-0 right-0"
+          className="absolute z-[1004] pointer-events-none top-0 bottom-0 right-0 flex items-center justify-start bg-orange-500/20 width-0 right-0"
         >
           <div className="absolute inset-0 flex items-center justify-start z-[1009] pointer-events-none">
             <div className="translate-x-[12px]" onMouseDown={(e) => handleMouseDown(e, "right")}>
@@ -124,7 +124,7 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
         {/* Bottom margin handle */}
         <div
           style={{ height: mb == "auto" ? "auto" : mb, bottom: `${mb == "0" ? "" : `-${mb}`}` }}
-          className="absolute z-[1004] left-0 right-0 bottom-0 flex items-start justify-center bg-orange-500/20 height-0 bottom-0"
+          className="absolute z-[1004] pointer-events-none left-0 right-0 bottom-0 flex items-start justify-center bg-orange-500/20 height-0 bottom-0"
         >
           <div className="absolute inset-0 flex items-start justify-center z-[1009] pointer-events-none">
             <div
@@ -137,7 +137,7 @@ export default function MarginHandles({ rect, selectedId, setResizing }: MarginH
         {/* Left margin handle */}
         <div
           style={{ width: ml == "auto" ? 0 : ml, left: `${ml == "0" ? "" : `-${ml}`}` }}
-          className="absolute z-[1004] top-0 bottom-0 left-0 flex items-center justify-end bg-orange-500/20 width-0 left-0"
+          className="absolute z-[1004] pointer-events-none top-0 bottom-0 left-0 flex items-center justify-end bg-orange-500/20 width-0 left-0"
         >
           <div className="absolute inset-0 flex items-center justify-end z-[1009] pointer-events-none">
             <div
