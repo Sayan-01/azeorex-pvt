@@ -5,6 +5,7 @@ import { ArrowUp, Loader2, Pencil, X } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 
 const modelOptions = [
+  { value: "openai/gpt-oss-120b", label: "GPT OSS (120B)" },
   { value: "poolside/laguna-s-2.1:free", label: "Laguna M.1" },
   { value: "cohere/north-mini-code:free", label: "Cohere North" },
   { value: "nvidia/nemotron-3.5-lightning:free", label: "Nemotron Lightning" },

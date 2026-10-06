@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       "X-Title": "Azeorex Website Builder",
     },
     body: JSON.stringify({
-      model: model || "google/gemini-2.0-flash-exp:free",
+      model: model || "openai/gpt-oss-120b",
       stream: true,
       messages: [
         { role: "system", content: systemPrompt },

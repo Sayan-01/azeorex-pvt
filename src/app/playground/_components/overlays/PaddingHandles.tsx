@@ -105,41 +105,41 @@ export default function PaddingHandles({ rect, selectedId, setResizing }: Paddin
       <div className="pointer-events-auto ">
         <div
           style={{ height: pt }}
-          className="absolute z-[1008] left-0 right-0 flex items-end justify-center bg-green-500/20"
+          className="absolute pointer-events-none z-[1008] left-0 right-0 flex items-end justify-center bg-green-500/20"
         >
           <div
             onMouseDown={(e) => handleMouseDown(e, "top")}
-            className="w-5 hover:w-6  duration-200 h-1 bg-green-500 border-white border rounded-full cursor-ns-resize hover:bg-green-600 -mb-[12px]"
+            className="pointer-events-auto w-5 hover:w-6 duration-200 h-1 bg-green-500 border-white border rounded-full cursor-ns-resize hover:bg-green-600 -mb-[12px]"
           />
         </div>
 
         <div
           style={{ width: pr }}
-          className="absolute z-[1008] top-0 right-0 bottom-0 flex items-center justify-start bg-green-500/20"
+          className="absolute pointer-events-none z-[1008] top-0 right-0 bottom-0 flex items-center justify-start bg-green-500/20"
         >
           <div
             onMouseDown={(e) => handleMouseDown(e, "right")}
-            className="h-5 w-1 hover:h-6 duration-200 bg-green-500 border-white border rounded-full cursor-ew-resize hover:bg-green-600 -ml-[12px]"
+            className="pointer-events-auto h-5 w-1 hover:h-6 duration-200 bg-green-500 border-white border rounded-full cursor-ew-resize hover:bg-green-600 -ml-[12px]"
           />
         </div>
 
         <div
           style={{ height: pb }}
-          className="absolute z-[1008] bottom-0 left-0 right-0 flex items-start justify-center bg-green-500/20"
+          className="absolute pointer-events-none z-[1008] bottom-0 left-0 right-0 flex items-start justify-center bg-green-500/20"
         >
           <div
             onMouseDown={(e) => handleMouseDown(e, "bottom")}
-            className="w-5 hover:w-6 duration-200 h-1 bg-green-500 border-white border rounded-full cursor-ns-resize hover:bg-green-600 -mt-[12px]"
+            className="pointer-events-auto w-5 hover:w-6 duration-200 h-1 bg-green-500 border-white border rounded-full cursor-ns-resize hover:bg-green-600 -mt-[12px]"
           />
         </div>
 
         <div
           style={{ width: pl }}
-          className="absolute z-[1008] top-0 left-0 bottom-0 flex items-center justify-end bg-green-500/20"
+          className="absolute pointer-events-none z-[1008] top-0 left-0 bottom-0 flex items-center justify-end bg-green-500/20"
         >
           <div
             onMouseDown={(e) => handleMouseDown(e, "left")}
-            className="h-5 w-1 hover:h-6 duration-200 bg-green-500 border-white border rounded-full cursor-ew-resize hover:bg-green-600 -mr-[12px]"
+            className="pointer-events-auto h-5 w-1 hover:h-6 duration-200 bg-green-500 border-white border rounded-full cursor-ew-resize hover:bg-green-600 -mr-[12px]"
           />
         </div>
       </div>
