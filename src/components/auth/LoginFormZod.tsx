@@ -31,8 +31,8 @@ const LoginForm = () => {
   });
   const onSubmit = async (values: any) => {
     setLoading(true); // Set loading to true
-    const email = await values.email;
-    const password = await values.password;
+    const email = values.email?.toLowerCase().trim();
+    const password = values.password;
 
     if (!email || !password) {
       return setError("Filled all details");
@@ -40,7 +40,7 @@ const LoginForm = () => {
       try {
         let res = await fetch("/api/auth/login", {
           method: "POST",
-          body: JSON.stringify(values),
+          body: JSON.stringify({ ...values, email }),
         });
         let data = await res.json();
         if (res.ok) {

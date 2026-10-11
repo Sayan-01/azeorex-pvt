@@ -67,7 +67,7 @@ const RegisterForm = () => {
   const onSubmit = async (values: { username: string; email: string; password: string; otp: string }) => {
     setLoading(true); // Set loading to true
     const username = await values.username;
-    const email = await values.email;
+    const email = await values.email.toLowerCase();
     const password = await values.password;
     const otp = await values.otp;
 
@@ -78,7 +78,7 @@ const RegisterForm = () => {
       try {
         let res = await fetch("/api/auth/register", {
           method: "POST",
-          body: JSON.stringify({ ...values, expires }),
+          body: JSON.stringify({ ...values, email, expires }),
         });
         let data = await res.json();
         if (res.ok) {

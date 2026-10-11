@@ -41,9 +41,10 @@ export const updateUser = async (data: any, id: string) => {
 //=============================================================
 
 export const IsUserEmailExist = async (email: string) => {
+  const normalizedEmail = email?.toLowerCase().trim();
   const response = await db.user.findFirst({
     where: {
-      email: email,
+      email: normalizedEmail,
     },
   });
 

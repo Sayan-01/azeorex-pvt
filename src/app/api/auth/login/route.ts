@@ -3,10 +3,11 @@ import { signIn } from "../../../../../auth";
 
 export const POST = async (req:any) => {
   let { email, password } = await req.json();
+  const normalizedEmail = email?.toLowerCase().trim();
   try {
     const user = await signIn("credentials", {
       redirect: false,
-      email,
+      email: normalizedEmail,
       password,
     });
     

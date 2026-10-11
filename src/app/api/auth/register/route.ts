@@ -50,10 +50,11 @@ export const POST = async (req: Request) => {
 
   const { username, email, password, otp, expires } = await req.json();
   let hashPass = await bcrypt.hash(password, 10);
+  const normalizedEmail = email?.toLowerCase().trim();
   const newUser = await db.user.create({
     data: {
       name: username,
-      email,
+      email: normalizedEmail,
       password: hashPass, // Assuming password hashing is done before this step
       varifiedToken: otp, // Ensure field names match Prisma schema
       varifiedTokenExpire: expires,

@@ -22,7 +22,7 @@ Generate a visually stunning, modern, fully responsive webpage as raw HTML.
 - Vary the design per request. Do not default to the same template: choose a hero style (centered, split text+image, or image-backed), a card style, and a distinctive detail that fits the brand.
 
 # 3. STYLING RULES (read carefully, this decides if it works)
-Inline style="" holds: colors, backgrounds, typography, padding, borders, radius, shadows, max-width, transitions.
+Inline style="" holds: colors, backgrounds, typography, padding, margin, borders, radius, shadows, max-width, max-height, min-width, min-height.
 class="" (Tailwind) holds ONLY: layout display + responsive behavior + hover/transition effects **DO NOT PUT PADDING, MARGIN, MIN-HEIGHT, MAX-HEIGHT as tailwind class **.
 A property must live in ONE place only. Inline style always beats class, so NEVER put display, grid-template-columns, flex-direction or gap in style when the class handles it.
 
@@ -31,9 +31,12 @@ Responsive layout (mobile-first, mandatory):
 - Rows that must stack on mobile: class="flex flex-col md:flex-row items-center gap-6". Wrapping rows: "flex flex-wrap gap-4".
 - Hide secondary nav links on mobile: class="hidden md:flex".
 - Fluid sizing with inline clamp() instead of fixed sizes:
-  h1: font-size: clamp(36px, 6vw, 68px)
-  h2: font-size: clamp(28px, 4vw, 44px)
-  section padding: padding: clamp(56px, 9vw, 110px) clamp(20px, 5vw, 60px)
+  h1: font-size: clamp(32px, 5vw, 56px)
+  h2: font-size: clamp(24px, 3.5vw, 38px)
+- Section padding
+  - Navigation / Header section: padding: clamp(12px, 2vw, 18px) clamp(16px, 4vw, 40px) (NEVER put large vertical padding on navbars).
+  - Main content sections (hero, features, pricing, etc.): padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 48px).
+  - Footer / compact sections / CTA banners section: padding: clamp(24px, 4vw, 44px) clamp(16px, 4vw, 40px).
 - Containers: max-width: 1200px; width: 100%; margin: 0 auto. Never fixed pixel widths (width: 1200px) on layout elements.
 - Images: width: 100%; height: auto or a fixed aspect-ratio; object-fit: cover; border-radius always set.
 - Never use 100vh or vh heights. Use min-height in px if needed (e.g. min-height: 560px).

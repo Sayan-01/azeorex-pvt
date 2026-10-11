@@ -31,16 +31,16 @@ const BackgroundSection = ({ selectedElement }: { selectedElement: EditorElement
                 type="color"
                 id="backgroundColor"
                 placeholder="transparent"
-                onChange={(e) => updateStyle(selectedElement.id, "backgroundColor", e.target.value)}
                 value={selectedElement?.styles?.backgroundColor || ""}
+                onChange={(e) => updateStyle(selectedElement.id, "backgroundColor", e.target.value)}
               />
             </div>
             <input
               className="h-[30px] w-20 border-y-2  group-hover:border-[#6A6A6A] bg-[#272727] items-center text-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none   disabled:cursor-not-allowed disabled:opacity-50 "
               id="backgroundColor"
               placeholder="transparent"
-              onChange={(e) => updateStyle(selectedElement.id, "backgroundColor", e.target.value)}
               value={selectedElement?.styles?.backgroundColor || ""}
+              onChange={(e) => updateStyle(selectedElement.id, "backgroundColor", e.target.value)}
             />
           </div>
         </div>

@@ -64,6 +64,7 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
       overlay.style.left = `${elRect.left}px`;
       overlay.style.top = `${elRect.top}px`;
     } else {
+      overlay.style.position = "absolute";
       const container = overlay.offsetParent as HTMLElement | null;
       let absTop = elRect.top;
       let absLeft = elRect.left;
@@ -130,7 +131,7 @@ export default function GlobalSelectedOverlay({ resizing, setResizing, type }: {
       ref={overlayRef}
       // position:absolute — lives inside the scrollable container, so it
       // moves with content during scroll with zero JavaScript involvement.
-      className="absolute border-2 border-blue-500 rounded pointer-events-none z-[1007] rounded-[4px]"
+      className="absolute border-2 border-blue-500 pointer-events-none z-[1007] rounded-[4px]"
       style={{
         display: isVisible ? "" : "none",
         backgroundColor: "rgba(59, 130, 246, 0.1)",

@@ -14,7 +14,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       async authorize(credentials) {
-         const email = credentials.email as string;
+         const email = (credentials.email as string)?.toLowerCase().trim();
          const password = credentials.password as string
 
         if (!email || !password) {
@@ -22,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
         const user = await db.user.findUnique({
           where: {
-            email: email as string,
+            email: email,
           },
           select: {
             id: true,
