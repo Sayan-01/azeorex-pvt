@@ -127,7 +127,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
 
     // events
     const handleClick = (e: React.MouseEvent) => {
-      e.preventDefault();
+      if (!state.previewMode && !state.liveMode) e.preventDefault();
       e.stopPropagation();
       if (state.previewMode) return;
       dispatch({ type: "SET_SELECTED_ID", payload: { selectedId: el.id } });
@@ -208,7 +208,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
       onMouseOut: handleMouseOut,
       onDragOver: handleDragOver,
       onDragLeave: handleDragLeave,
-      
+
       ...(canDrag ? { draggable: true, onDragStart: handleDragStart, onDragEnd: handleDragEnd } : {}),
     };
 
@@ -233,35 +233,61 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           key={el.id}
           {...sharedProps}
           defaultValue={el.content}
-          disabled={!state.liveMode && !state.previewMode}
           onBlur={(e) => updateContent(el.id, e.currentTarget.value)}
           {...attributes}
         />
       );
-    } else if (
-      el.type === "text" ||
-      el.type === "h1" ||
-      el.type === "h2" ||
-      el.type === "h3" ||
-      el.type === "h4" ||
-      el.type === "h5" ||
-      el.type === "h6" ||
-      el.type === "link" ||
-      el.type === "button"
-    ) {
+    } else if (el.type === "text" || el.type === "h1" || el.type === "h2" || el.type === "h3" || el.type === "h4" || el.type === "h5" || el.type === "h6") {
       return (
         <Tag
           key={el.id}
           {...sharedProps}
           contentEditable={isSelected && !state.previewMode && !state.liveMode}
-          disabled={!state.liveMode && !state.previewMode && el.type === "link"}
+          disabled={!state.liveMode && !state.previewMode}
           suppressContentEditableWarning
           onBlur={handleBlur}
+          {...attributes}
+          className="outline-none"
+        >
+          {el.content}
+        </Tag>
+      );
+    } else if (el.type === "button") {
+      return (
+        <Tag
+          key={el.id}
+          {...sharedProps}
           {...attributes}
         >
           {el.content}
         </Tag>
       );
+    } else if (el.type === "link") {
+      if (!state.liveMode && !state.previewMode) {
+        return (
+          <p
+            key={el.id}
+            {...sharedProps}
+            contentEditable={isSelected && !state.previewMode && !state.liveMode}
+            suppressContentEditableWarning
+            onBlur={handleBlur}
+            {...attributes}
+          >
+            {el.content}
+          </p>
+        );
+      } else {
+        return (
+         
+          <a
+            key={el.id}
+            {...sharedProps}
+            {...attributes}
+          >
+            {el.content}
+          </a>
+        );
+      }
     }
 
     // children
@@ -325,7 +351,7 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
         "animate-none !transition-none !duration-0 [&_*]:!transition-none [&_*]:!duration-0 [&_*]:!animate-none": !state.previewMode && !liveMode,
         "!p-0 !mr-0 !mx-0 h-full": state.previewMode || liveMode,
         "!w-[850px]": state.device === "Tablet", // lowercase — DeviceType
-        "!w-[420px]": state.device === "Mobile", 
+        "!w-[420px]": state.device === "Mobile",
         "!w-full": state.device === "Desktop",
       })}
       style={{ minHeight: "100vh", transition: "width 0.3s", position: "relative", overflowX: "hidden" }}

@@ -3,7 +3,7 @@ import PlaygroundPage, { Messages } from "../_components/playground-page";
 import { db } from "@/lib/db";
 import { EditorProvider } from "../../../../providers/editor/editor-provider";
 import { auth } from "../../../../auth";
- 
+
 type Props = {
   params: Promise<{
     funnelPageId: string;
@@ -31,7 +31,7 @@ const page = async (props: Props) => {
       id: params.funnelPageId,
     },
   });
-  
+
   if (!funnelPageDetails) {
     return null;
   }
@@ -50,8 +50,7 @@ const page = async (props: Props) => {
 
   return (
     <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#191919]  overflow-hidden `}>
-      <EditorProvider
-      >
+      <EditorProvider>
         <PlaygroundPage
           funnelPageDetails={funnelPageDetails || {}}
           userId={userId}

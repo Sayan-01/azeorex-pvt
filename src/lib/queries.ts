@@ -7,6 +7,7 @@ import { success, z } from "zod";
 import { auth } from "../../auth";
 import { db } from "./db";
 import { sendOtpViaNodeMailer } from "./sendOtpViaNodeMailer";
+import { initialElements } from "../../providers/editor/editor-types";
 
 //============================================================
 
@@ -71,6 +72,19 @@ export const getProject = async (projectId: string) => {
     where: { id: projectId },
     include: {
       FunnelPages: {
+        select: {
+          id: true,
+          name: true,
+          pathName: true,
+          createdAt: true,
+          updatedAt: true,
+          visits: true,
+          published: true,
+          order: true,
+          previewImage: true,
+          projectId: true,
+          templateId: true,
+        },
         orderBy: {
           updatedAt: "desc",
         },
@@ -160,35 +174,7 @@ export const upsertFunnelPageForProject = async (funnelPage: any, projectId: str
       published: funnelPage.published ?? false,
       content: funnelPage.content
         ? funnelPage.content
-        : JSON.stringify({
-            __body: {
-              id: "__body",
-              name: "Body",
-              type: "__body",
-              parentId: null,
-              children: ["title-1"],
-              styles: {
-                minHeight: "100vh",
-                backgroundColor: "#f3f4f6",
-                padding: "20px",
-              },
-            },
-
-            "title-1": {
-              id: "title-1",
-              name: "Heading 1",
-              type: "h1",
-              parentId: "__body",
-              children: [],
-              content: "Welcome to AI Website Builder",
-              styles: {
-                fontSize: "36px",
-                fontWeight: "bold",
-                color: "#333333",
-                marginBottom: "16px",
-              },
-            },
-          }),
+        : JSON.stringify(initialElements),
       projectId,
     },
   });

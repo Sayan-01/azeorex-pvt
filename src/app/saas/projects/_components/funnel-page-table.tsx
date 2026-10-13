@@ -128,7 +128,7 @@ export const columns = (session: any, router: any, subDomainName: string): Colum
   },
 ];
 
-export function FunnelPageTable({ pageDetails, subDomainName }: { pageDetails: FunnelPage[]; subDomainName: string }) {
+export function FunnelPageTable({ pageDetails, subDomainName }: { pageDetails: any; subDomainName: string }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});

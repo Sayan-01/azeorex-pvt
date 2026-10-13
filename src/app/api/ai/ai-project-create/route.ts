@@ -21,7 +21,7 @@ export const POST = async (req: Request) => {
         subDomainName: projectId,
         liveProducts: "",
       },
-      projectId
+      projectId,
     );
 
     if (!project.success) {
@@ -30,14 +30,6 @@ export const POST = async (req: Request) => {
 
     await upsertFunnelPageForProject({ id: funnelPageId, name: "Untitled", pathName: "", order: 0 }, projectId);
 
-    await db.chat.create({
-      data: {
-        chatMessage: JSON.parse(messages),
-        userId,
-        projectId,
-        funnelPageId,
-      },
-    });
 
     return NextResponse.json({ success: true, message: "Project created successfully" }, { status: 200 });
   } catch (error: any) {

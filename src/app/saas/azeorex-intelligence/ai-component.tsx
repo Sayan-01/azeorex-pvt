@@ -14,7 +14,7 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
   const [referanceImage, setReferanceImage] = useState<any>();
   const [referanceImagePreview, setReferanceImagePreview] = useState<string>();
   const [loading, setLoading] = useState(false);
-  const {credits} = useCredits()
+  const { credits } = useCredits();
 
   const router = useRouter();
   const onSubmit = async () => {

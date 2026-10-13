@@ -14,11 +14,11 @@ async function getTemplates() {
 const Home = async () => {
   const session = await auth();
   const funnels = await getProjects(session?.user?.id);
-  if (!funnels || !session?.user?.id) return <Unauthorized/>;
-  const { templates }:any = await getTemplates();
-  
+  if (!funnels || !session?.user?.id) return <Unauthorized />;
+  const { templates }: any = await getTemplates();
+
   const user = await db.user.findUnique({ where: { id: session?.user?.id } });
-  
+
   return (
     <HomeComponent
       funnels={funnels}

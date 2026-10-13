@@ -55,7 +55,8 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
         <aside className="flex items-center gap-4 w-[378px] md:w-[260px] py-1.5">
           <Link
             href={`/saas/projects/${projectId}`}
-            className="px-1.5 pl-1 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max"
+            prefetch={true}
+            className="px-1.5 pl-1 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max hover:bg-zinc-600 transition-colors"
           >
             <ChevronLeft
               size={20}

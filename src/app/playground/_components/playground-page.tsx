@@ -3,7 +3,7 @@
 import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadingAnimation";
 import { useCredits } from "@/hooks/credit-provider";
 import { htmlToElementMap, validateElementMap } from "@/lib/html-to-element-map";
-import { decrementCredits, upsertFunnelPageForProject } from "@/lib/queries";
+import { upsertFunnelPageForProject } from "@/lib/queries";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useEditor } from "../../../../providers/editor/editor-provider";
@@ -29,12 +29,12 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
   const [model, setModel] = useState("openai/gpt-oss-120b");
 
   const { dispatch, state } = useEditor();
-  const { credits } = useCredits();
+  const { credits, decrementCredits } = useCredits();
 
   // ── AI generate ─────────────────────────────────────────────────────────────
 
   const sendMessage = async (userInput: string, selectedSections: string[] = ["nav", "hero", "features", "cta-banner", "footer"]) => {
-    if (credits < 100) {
+    if (credits < 500) {
       toast.error("Not enough credits");
       return;
     }
@@ -124,7 +124,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       dispatch({ type: "LOAD_DATA", payload: { elements, liveMode: false } });
       setMessages((prev) => [...prev, { role: "assistant", content: "✨ Your page is ready! Check the preview." }]);
 
-      decrementCredits(userId, 100);
+      await decrementCredits(100);
       await savePage(JSON.stringify(elements));
     } catch (e: any) {
       let errMsg = e?.message || "Something went wrong. Please try again.";
@@ -133,9 +133,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
         if (parsed?.error) {
           errMsg = parsed.error.metadata?.raw || parsed.error.message || errMsg;
         }
-      } catch (parseError) {
-        
-      }
+      } catch (parseError) {}
       toast.error(errMsg);
       setMessages((prev) => [...prev, { role: "assistant", content: errMsg }]);
     } finally {
@@ -173,7 +171,6 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     }
   };
 
-  // ── Prevent link navigation in editor mode ───────────────────────────────────
 
   useEffect(() => {
     if (state.previewMode || state.liveMode) return;
@@ -198,11 +195,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
       <div className="h-full container-query flex justify-center overflow-x-auto bg-[#1e1e1e] relative ">
         <WebsiteBuilder funnelPageId={funnelPageDetails.id} />
-        {loading && (
-          <AiLoadingAnimation
-            loading={loading}
-          />
-        )}
+        {loading && <AiLoadingAnimation loading={loading} />}
       </div>
 
       <FunnelEditorSidebar

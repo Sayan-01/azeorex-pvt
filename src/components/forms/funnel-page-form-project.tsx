@@ -40,6 +40,14 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
     },
   });
 
+  const currentOrder = defaultData?.order ?? order;
+  const name = form.watch("name");
+  const pathName = form.watch("pathName");
+  const isSaveDisabled =
+    form.formState.isSubmitting ||
+    !name?.trim() ||
+    (currentOrder !== 0 && !pathName?.trim());
+
   useEffect(() => {
     if (defaultData) {
       form.reset({ name: defaultData.name, pathName: defaultData.pathName });
@@ -48,7 +56,16 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
 
   const onSubmit = async (values: z.infer<typeof FunnelPageSchema>) => {
     try {
-      console.log(values);
+      if (!values.name?.trim()) {
+        form.setError("name", { message: "Name is required" });
+        return;
+      }
+
+      if (currentOrder !== 0 && !values.pathName?.trim()) {
+        form.setError("pathName", { message: "Path name is required" });
+        return;
+      }
+
       const response = await upsertFunnelPageForProject(
         {
           ...values,
@@ -56,7 +73,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
           order: defaultData?.order || order,
           pathName: values.pathName?.toLowerCase() || "",
         },
-        projectId
+        projectId,
       );
       router.refresh();
 
@@ -98,7 +115,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                     pathName: `${defaultData.pathName?.toLowerCase()}copy`,
                     content: defaultData.content,
                   },
-                  projectId
+                  projectId,
                 );
                 toast("Success", {
                   description: "Saves Funnel Page Details",
@@ -125,7 +142,9 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel className="opacity-80">Name</FormLabel>
+                  <FormLabel className="opacity-80">
+                    Name <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       className="!mt-0 outline-none rounded-lg text-zinc-400"
@@ -138,12 +157,14 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
               )}
             />
             <FormField
-              disabled={order === 0}
+              disabled={currentOrder === 0}
               control={form.control}
               name="pathName"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel className="opacity-80">Path Name</FormLabel>
+                  <FormLabel className="opacity-80">
+                    Path Name {currentOrder !== 0 && <span className="text-red-500">*</span>}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Path for the page"
@@ -161,7 +182,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
                 <div className="flex flex-row w-full space-x-4">
                   <Button
                     className="flex-1 rounded-lg self-end"
-                    disabled={form.formState.isSubmitting}
+                    disabled={isSaveDisabled}
                     type="submit"
                   >
                     {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save Page"}
@@ -171,7 +192,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, projec
               ) : (
                 <Button
                   className=" rounded-full self-end"
-                  disabled={form.formState.isSubmitting}
+                  disabled={isSaveDisabled}
                   type="submit"
                 >
                   {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : "Save Page"}

@@ -129,7 +129,7 @@ const FunnelPage = async (props: Props) => {
               </MenubarMenu>
             </Menubar>
             <FunnelPageTable
-              pageDetails={project.FunnelPages}
+              pageDetails={project.FunnelPages }
               subDomainName={project.subDomainName || ""}
             />
           </div>

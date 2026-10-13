@@ -1,4 +1,4 @@
-import { PromptForWebPage } from "../../../../../Ai/prompt-v2";
+import { buildUserMessage, PromptForWebPage } from "../../../../../Ai/prompt-v2";
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY!;
 
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   const { prompt, selectedSections, model } = await req.json();
 
   const systemPrompt = PromptForWebPage();
-  const userMessage = `Sections to generate: ${selectedSections?.join(", ") ?? "all"}.\n\nUser request: ${prompt}`;
+  const userMessage = buildUserMessage(prompt, selectedSections);
 
   const upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
