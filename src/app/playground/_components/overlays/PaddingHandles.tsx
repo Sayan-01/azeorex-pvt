@@ -94,11 +94,6 @@ export default function PaddingHandles({ rect, selectedId, setResizing }: Paddin
   const pb = getPaddingValue(element.styles, "bottom");
   const pl = getPaddingValue(element.styles, "left");
   const p = element.styles?.padding || "0px";
-  console.log("pt", pt);
-  console.log("pr", pr);
-  console.log("pb", pb);
-  console.log("pl", pl);
-  console.log("p", p);
 
   return (
     <>

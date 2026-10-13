@@ -75,8 +75,6 @@ export const WebsiteBuilder = ({ funnelPageId, liveMode }: { funnelPageId: strin
           // content is always stored as flat elements object: { __body: {...}, "el-id": {...} }
           const elements = JSON.parse(response.content);
 
-          console.log("elements", elements);
-
           dispatch({
             type: "LOAD_DATA",
             payload: {

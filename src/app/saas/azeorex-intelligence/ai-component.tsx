@@ -54,6 +54,7 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
       const data = await response.json();
 
       if (data.success) {
+        sessionStorage.setItem(`initial-ai-prompt:${projectId}`, userInput.trim());
         toast.success(data.message || "Project created successfully");
         router.push(`/playground/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
       } else {

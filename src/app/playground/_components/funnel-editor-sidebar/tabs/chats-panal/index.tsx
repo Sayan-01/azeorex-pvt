@@ -110,7 +110,7 @@ const Chats = ({ messages, onSend, loading, model, setModel }: Props) => {
             ) : (
               <p
                 key={i}
-                className="max-w-[85%] break-all text-[13px] leading-relaxed text-zinc-300"
+                className="max-w-[85%] text-wrap text-[13px] leading-relaxed text-zinc-300"
               >
                 {msg.content}
               </p>

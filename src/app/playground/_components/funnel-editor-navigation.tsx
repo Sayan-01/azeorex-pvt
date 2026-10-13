@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useEditor } from "../../../../providers/editor/editor-provider";
+import { useRouter } from "next/navigation";
 
 type Props = {
   projectId: string;
@@ -21,7 +22,7 @@ type Props = {
 const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props) => {
   const { state, dispatch } = useEditor();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
 
   const undo = () => dispatch({ type: "UNDO" });
   const redo = () => dispatch({ type: "REDO" });
@@ -53,16 +54,15 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
     <TooltipProvider>
       <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", {})}>
         <aside className="flex items-center gap-4 w-[378px] md:w-[260px] py-1.5">
-          <Link
-            href={`/saas/projects/${projectId}`}
-            prefetch={true}
+          <button
+            onClick={() => router.push(`/saas/projects/${projectId}`)}
             className="px-1.5 pl-1 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max hover:bg-zinc-600 transition-colors"
           >
             <ChevronLeft
               size={20}
               strokeWidth={1.1}
             />
-          </Link>
+          </button>
         </aside>
         <aside>
           <Tabs

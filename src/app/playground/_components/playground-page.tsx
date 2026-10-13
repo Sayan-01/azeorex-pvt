@@ -4,7 +4,7 @@ import AiLoadingAnimation from "@/components/global/ai-loading-animation/AiLoadi
 import { useCredits } from "@/hooks/credit-provider";
 import { htmlToElementMap, validateElementMap } from "@/lib/html-to-element-map";
 import { upsertFunnelPageForProject } from "@/lib/queries";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useEditor } from "../../../../providers/editor/editor-provider";
 import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
@@ -41,7 +41,7 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
     setLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
-
+    
     try {
       const res = await fetch("/api/ai/ai-website-generate", {
         method: "POST",
@@ -140,6 +140,25 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
       setLoading(false);
     }
   };
+
+  const hasAutoSent = useRef(false);
+
+  useEffect(() => {
+    if (hasAutoSent.current) return;
+
+    const key = `initial-ai-prompt:${projectId}`;
+    const prompt = sessionStorage.getItem(key)?.trim();
+    if (!prompt) return;
+
+    // Credits load asynchronously. Wait for them, or the prompt gets lost.
+    if (credits < 500) return;
+
+    hasAutoSent.current = true;
+    sessionStorage.removeItem(key);
+    sendMessage(prompt);
+    // sendMessage is omitted on purpose: the ref guard makes this run once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [credits, projectId]);
 
   // ── Auto-send first message ──────────────────────────────────────────────────
   // Auto-send removed: users must choose sections from the checklist first.
