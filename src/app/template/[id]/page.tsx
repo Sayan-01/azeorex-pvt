@@ -241,7 +241,7 @@ const page = async (props: { params: Promise<{ id: string }> }) => {
                       {/* Profile picture */}
                       <div className="relative h-10 w-10">
                         <Image
-                          src={oneTemplate?.User?.avatarUrl || ""}
+                          src={oneTemplate?.User?.avatarUrl || "/user.png"}
                           width={100}
                           height={100}
                           alt="aximoris profile"

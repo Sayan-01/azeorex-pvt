@@ -24,7 +24,13 @@ type Props = {
 };
 
 const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: Props) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(() => {
+    if (typeof window !== "undefined") {
+      const key = `initial-ai-prompt:${projectId}`;
+      return Boolean(sessionStorage.getItem(key)?.trim());
+    }
+    return false;
+  });
   const [messages, setMessages] = useState<Messages[]>(chatMessages);
   const [model, setModel] = useState("openai/gpt-oss-120b");
 
@@ -33,14 +39,20 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
 
   // ── AI generate ─────────────────────────────────────────────────────────────
 
-  const sendMessage = async (userInput: string, selectedSections: string[] = ["nav", "hero", "features", "cta-banner", "footer"]) => {
-    if (credits < 500) {
+  const sendMessage = async (
+    userInput: string,
+    selectedSections: string[] = ["nav", "hero", "features", "cta-banner", "footer"],
+    skipCreditCheck = false
+  ) => {
+    if (!skipCreditCheck && credits < 100) {
       toast.error("Not enough credits");
       return;
     }
 
     setLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: userInput }]);
+    
+    console.log("sayan play");
     
     try {
       const res = await fetch("/api/ai/ai-website-generate", {
@@ -150,15 +162,11 @@ const PlaygroundPage = ({ funnelPageDetails, userId, projectId, chatMessages }: 
     const prompt = sessionStorage.getItem(key)?.trim();
     if (!prompt) return;
 
-    // Credits load asynchronously. Wait for them, or the prompt gets lost.
-    if (credits < 500) return;
-
     hasAutoSent.current = true;
     sessionStorage.removeItem(key);
-    sendMessage(prompt);
-    // sendMessage is omitted on purpose: the ref guard makes this run once.
+    sendMessage(prompt, undefined, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [credits, projectId]);
+  }, [projectId]);
 
   // ── Auto-send first message ──────────────────────────────────────────────────
   // Auto-send removed: users must choose sections from the checklist first.

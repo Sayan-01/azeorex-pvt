@@ -34,14 +34,11 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
     try {
       const projectId = v4();
       const funnelPageId = v4();
-      const message = [
-        {
-          role: "user",
-          content: userInput,
-        },
-      ];
+
+      sessionStorage.setItem(`initial-ai-prompt:${projectId}`, userInput.trim());
+      router.prefetch(`/playground/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
+
       const formData = new FormData();
-      formData.append("messages", JSON.stringify(message));
       formData.append("projectId", projectId);
       formData.append("funnelPageId", funnelPageId);
       formData.append("userId", userId);
@@ -54,10 +51,11 @@ const AiComponent = ({ userId }: { userId: string | undefined }) => {
       const data = await response.json();
 
       if (data.success) {
-        sessionStorage.setItem(`initial-ai-prompt:${projectId}`, userInput.trim());
         toast.success(data.message || "Project created successfully");
         router.push(`/playground/${funnelPageId}?userId=${userId}&projectId=${projectId}`);
       } else {
+        sessionStorage.removeItem(`initial-ai-prompt:${projectId}`);
+        setLoading(false);
         console.log(data);
         toast.error(data.message || "Failed to create project");
       }

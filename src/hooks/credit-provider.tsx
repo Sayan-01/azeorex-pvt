@@ -9,15 +9,23 @@ interface CreditContextType {
 
 const CreditContext = createContext<CreditContextType | undefined>(undefined);
 
-export const CreditProvider = ({ children }: { children: ReactNode }) => {
-  const [credits, setCredits] = useState<number>(0);
+export const CreditProvider = ({
+  children,
+  initialCredits = 0,
+}: {
+  children: ReactNode;
+  initialCredits?: number;
+}) => {
+  const [credits, setCredits] = useState<number>(initialCredits);
 
   useEffect(() => {
     const fetchCredits = async () => {
       try {
         const res = await fetch("/api/user/credits");
         const data = await res.json();
-        setCredits(data.credits);
+        if (typeof data?.credits === "number") {
+          setCredits(data.credits);
+        }
       } catch (err) {
         console.error(err);
       }

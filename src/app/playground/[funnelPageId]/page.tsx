@@ -26,11 +26,18 @@ const page = async (props: Props) => {
     userId = undefined;
   }
 
-  const funnelPageDetails = await db.funnelPage.findFirst({
-    where: {
-      id: params.funnelPageId,
-    },
-  });
+  const [funnelPageDetails, chatDetails] = await Promise.all([
+    db.funnelPage.findFirst({
+      where: {
+        id: params.funnelPageId,
+      },
+    }),
+    db.chat.findUnique({
+      where: {
+        funnelPageId: params.funnelPageId,
+      },
+    }),
+  ]);
 
   if (!funnelPageDetails) {
     return null;
@@ -41,12 +48,6 @@ const page = async (props: Props) => {
   if (!userId || !projectId) {
     return null;
   }
-
-  const chatDetails = await db.chat.findUnique({
-    where: {
-      funnelPageId: params.funnelPageId,
-    },
-  });
 
   return (
     <div className={`fixed top-0 bottom-0 left-0 right-0 z-20 bg-[#191919]  overflow-hidden `}>
