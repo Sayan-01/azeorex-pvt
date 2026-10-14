@@ -55,7 +55,7 @@ const FunnelEditorNavigation = ({ projectId, funnelPageDetails, userId }: Props)
       <nav className={clsx("border-b border-bor-editor flex items-center justify-between px-4 py-1 gap-2 transition-all bg-editor-bcgc relative z-[1010] ", {})}>
         <aside className="flex items-center gap-4 w-[378px] md:w-[260px] py-1.5">
           <button
-            onClick={() => router.push(`/saas/projects/${projectId}`)}
+            onClick={() => router.back()}
             className="px-1.5 pl-1 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max hover:bg-zinc-600 transition-colors"
           >
             <ChevronLeft
