@@ -1,7 +1,8 @@
 # Azeorex Platform Features
 
 
-![MIT License](https://img.shields.io/badge/License-MIT-green.svg)
+[![License](https://img.shields.io/badge/License-All_Rights_Reserved-red.svg)](./LICENSE)
+[![Live Demo](https://img.shields.io/badge/Demo-azeorex.vercel.app-blue)](https://azeorex.vercel.app)
 
 Azeorex is an all-in-one Web Design & Development Agency, a powerful No-Code SaaS platform for building and deploying websites, and a vibrant Template Marketplace.
 
@@ -89,24 +90,33 @@ Azeorex is an all-in-one Web Design & Development Agency, a powerful No-Code Saa
 
 ---
 
-*For more information, visit our Azeorex(https://azeorex.vercel.app) or contact our support team.*
+## 🌐 Live Demo
 
-📬 Contact:
+- **Live Application:** [azeorex.vercel.app](https://azeorex.vercel.app)
+- **Official Website:** [azeorex.com](https://azeorex.com)
 
-For support or partnerships:
-📧 azeorex01@gmail.com or sayandas61668@gmail.com
-🌐 https://azeorex.com
-## Authors
+---
 
-- [@sayandas](https://github.com/Sayan-01)
+## 📬 Contact & Inquiries
+
+For support, partnerships, or business inquiries:
+- 📧 **Email:** [sayandas61668@gmail.com](mailto:sayandas61668@gmail.com) / [azeorex01@gmail.com](mailto:azeorex01@gmail.com)
+- 🌐 **Website:** [azeorex.com](https://azeorex.com)
+
+---
+
+## 👨‍💻 Author
+
+- **Sayan Das** — [@sayandas](https://github.com/Sayan-01)
+
+---
+
+## 📄 License & Intellectual Property
+
+Copyright © 2024–2026 Sayan Das. All rights reserved.
+
+> **Notice:** This repository is publicly accessible **strictly for portfolio display, technical review, and recruitment/evaluation purposes**.  
+> Unauthorized copying, reproduction, modification, distribution, commercial deployment, or rebranding of this codebase and platform without explicit written permission is strictly prohibited.
 
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
-
-## Demo
-
-...
 

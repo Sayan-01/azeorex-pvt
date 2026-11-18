@@ -1,21 +1,17 @@
-MIT License
+Copyright (c) 2024-2026 Sayan Das. All rights reserved.
 
-Copyright (c) 2024 Sayan Das
+This repository and its contents constitute proprietary software and intellectual property. The source code is published publicly solely for technical evaluation, code review, recruitment, and portfolio demonstration purposes.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+TERMS AND CONDITIONS:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. Permitted Use:
+   - You may view, read, and examine the source code for the purpose of personal learning, code review, or employment/recruitment evaluation.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.x
+2. Prohibited Uses:
+   - Reproduction & Distribution: You may not copy, clone, reproduce, modify, merge, publish, distribute, sublicense, or sell copies of this software or substantial portions thereof.
+   - Commercial Exploitation: You may not use this software, its database architecture, API designs, or UI/UX implementations to operate, deploy, or power any commercial service, SaaS product, or competing platform.
+   - Derivative Works: You may not create derivative works or rebrand this software for public or private distribution without prior explicit written permission from the copyright owner.
+
+For permissions, business inquiries, or partnerships, please contact:
+Email: sayandas61668@gmail.com / azeorex01@gmail.com
+Website: https://azeorex.vercel.app
